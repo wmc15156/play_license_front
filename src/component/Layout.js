@@ -13,6 +13,10 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+
+  input:focus {
+    outline: none;
+  }
   
   @font-face {
     font-family: "Gotham Medium";
