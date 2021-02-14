@@ -1,65 +1,78 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import styled from "styled-components";
+import Slider from "../src/component/Home/Slider";
+import Hot from "../src/component/Home/Hot";
+import New from "../src/component/Home/New";
+import ComingSoon from "../src/component/Home/ComingSoon";
 
-export default function Home() {
+const Container = styled.div`
+  max-width: 1024px;
+  display: flex;
+  min-height: 100%;
+  padding: 0 1rem;
+  flex-direction: column;
+  margin: 0 auto;
+`;
+
+const CarouselSection = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+const HotSection = styled.div`
+  width: 100%;
+  height: 500px;
+`;
+
+const NewSection = styled.div`
+  width: 100%;
+  height: 710px;
+`;
+
+const UpcomingSection = styled.div`
+  width: 100%;
+  height: 710px;
+`;
+const BannerSection = styled.div`
+  width: 100%;
+  height: auto;
+  margin-bottom: 115px;
+  & > img {
+    width: 100%;
+  }
+`;
+
+const Home = () => {
   return (
-    <div className={styles.container}>
+    <Container>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <meta charSet="utf-8" />
+        <meta name="description" content="상상마루 - 플레이스테이션" />
+        <meta property="og:locale" content="ko_KR" />
+        <meta property="og:url" content="https://playlicense.com" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="상상마루 - 플레이스테이션" />
+        <meta property="og:description" content="상상마루 - 플레이스테이션" />
+        <meta property="og:image" content="" />
+        <title>상상마루 - playlicense</title>
       </Head>
+      <CarouselSection>
+        <Slider />
+      </CarouselSection>
+      <BannerSection>
+        <img src="/assets/image/Banner_startBuyer.png" />
+      </BannerSection>
+      <HotSection>
+        <Hot />
+      </HotSection>
+      <NewSection>
+        <New />
+      </NewSection>
+      <UpcomingSection>
+        <ComingSoon />
+      </UpcomingSection>
+    </Container>
+  );
+};
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
-}
+export default Home;
