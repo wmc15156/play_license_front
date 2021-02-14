@@ -1,0 +1,80 @@
+.container {
+  max-width: 1024px;
+  display: flex;
+  margin: 48px auto;
+  padding: 0 1rem;
+  align-items: center;
+}
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+/* .logoImg {
+  background-image: url("/assets/image/logo.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 90px;
+  height: 58px;
+  display: block;
+} */
+
+.logo img {
+  width: 91px;
+  height: 58px;
+  display: block;
+  margin-right: 20px;
+}
+.logoText {
+  font-family: "FreightSansBlackSC";
+  font-size: 24px;
+  letter-spacing: 0.86px;
+}
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  margin-left: auto;
+}
+.list li {
+  border: 0.5px solid #f5f5f5;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  width: 117px;
+  height: 45px;
+  padding-left: 26px;
+  position: relative;
+}
+
+.list li:hover {
+  font-family: "Gotham Medium";
+  font-size: 14px;
+  background-color: #ff6f69;
+  color: #ffffff;
+  transition: all 0.3s ease-in-out;
+}
+
+.list li img {
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+}
+
+.text {
+  font-family: "Gotham Medium";
+  font-size: 14px;
+  position: absolute;
+  bottom: 0;
+  left: 70px;
+}
+
+.clickedText {
+  font-size: 14px;
+  position: absolute;
+  bottom: 0;
+  right: 26px;
+  color: #ffffff;
+}
