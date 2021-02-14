@@ -5,6 +5,10 @@ import Layout from "../src/component/Layout";
 import Header from "../src/component/Header";
 import Footer from "../src/component/Footer";
 import Menu from "../src/component/Menu";
+import axios from "axios";
+import wrapper from "../store/configureStore";
+
+axios.defaults.baseURL = "http://localhost:8000/api";
 
 const MyApp = ({ Component, pageProps }) => {
   const [menu, setMenu] = useState(false);
@@ -38,4 +42,4 @@ const MyApp = ({ Component, pageProps }) => {
   );
 };
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

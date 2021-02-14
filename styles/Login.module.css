@@ -1,0 +1,48 @@
+.Email{
+    font-family: "Apple SD Gothic Neo", Arial, sans-serif;
+    margin-bottom: 113px;
+}
+.Email div {
+    cursor: pointer;
+}
+
+.Para {
+    font-family: "Apple SD Gothic Neo", Arial, sans-serif;
+    /*display: 'inline-block';*/
+    /*font-size: '13px';*/
+    /*width: '132px';*/
+    display: inline-block;
+    font-size: 13px;
+    width: 132px;
+}
+.Para div {
+    cursor: pointer;
+}
+.Email div {
+    font-family: "Apple SD Gothic Neo", Arial, sans-serif;
+    font-size: 14px;
+}
+.Sns {
+    font-size: 21px;
+    font-family: "Apple SD Gothic Neo", Arial, sans-serif;
+
+}
+.Naver {
+
+}
+.Logo {
+    display: flex;
+    margin-top: 41px;
+    position: relative;
+    left: 16px;
+}
+
+.Logo img {
+    border-radius: 50%;
+    width: 98px;
+    height: 98px;
+    margin-right: 64px;
+}
+.Logo img:hover {
+    cursor: pointer;
+}

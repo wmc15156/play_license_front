@@ -1,0 +1,135 @@
+.Parent {
+    margin: 106px auto auto auto;
+    width: 580px;
+    display:flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-family: Helvetica, sans-serif;
+}
+
+.Te {
+    font-size: 36px;
+    font-family: Helvetica, sans-serif;
+    height: 40px;
+}
+
+.Title {
+    font-family: Helvetica, sans-serif;
+    font-size: 36px;
+    color: #000000;
+    letter-spacing: 1.29px;
+}
+
+.NameComment {
+    margin-top: 60px;
+    width: 580px;
+}
+
+.GrayLine {
+    width: 580px;
+    border-color: #FFCC5C;;
+    margin-top: 27px;
+}
+
+.NameInput {
+    width: 580px;
+    height: 60px;
+    background-color: #F5F5F5;
+    border: none;
+    border-radius: 8px;
+    text-indent: 22px;
+    margin-top: 37px;
+}
+
+
+.RedColor {
+    color: #FF6F69;
+    font-weight: bold;
+}
+
+.CheckBox {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background-color: #F5F5F5;
+    margin-top: 35px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-right: 30px;
+}
+.CheckIconBlue {
+    font-size: 15px;
+    border: 10px;
+    font-weight: bolder;
+    color: #4c6ef5;
+}
+
+.CheckIcon {
+    font-size: 15px;
+}
+.CheckIcon:hover {
+    cursor: pointer;
+}
+
+.CheckBox:hover {
+    cursor: pointer;
+}
+
+.Agreement {
+    opacity: 0.4;
+    font-size: 13px;
+    text-decoration: underline;
+    position: relative;
+    left: 290px;
+}
+.Agreement:hover {
+    cursor: pointer;
+}
+
+/*.LoginInput {*/
+/*    width: 580px;*/
+/*    height: 60px;*/
+/*    background-color: #F5F5F5;*/
+/*    border: none;*/
+/*    border-radius: 8px;*/
+/*    text-indent: 22px;*/
+/*    margin-top: 44px;*/
+/*}*/
+
+/*.PasswordMargin {*/
+/*    margin-top: 74px;*/
+/*}*/
+
+/*.PasswordCheck {*/
+/*    margin-top: 20px;*/
+/*}*/
+
+/*.NextButton {*/
+/*    width: 580px;*/
+/*    height: 60px;*/
+/*    border-radius: 8px;*/
+/*    border: none;*/
+/*    background-color: #FF6F69;*/
+/*    color: white;*/
+/*    font-family: Helvetica, sans-serif;*/
+/*    font-size: 21px;*/
+/*    margin-top: 68px*/
+/*}*/
+
+/*.NextButton:hover {*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.PasswordCheckComment {*/
+/*    position: relative;*/
+/*    left: 541px;*/
+/*    opacity: 0.4;*/
+/*    font-size: 14px;*/
+/*    bottom: 39px;*/
+/*}*/
+
+/*!*.EmailComment span {*!*/
+/*!*    color: #FF6F69;*!*/
+/*!*}*!*/
