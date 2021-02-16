@@ -118,7 +118,7 @@ function SignUpFirst() {
       </div>
       <hr className={styles.GrayLine} />
       <hr className={styles.YellowLine} />
-      <div className={styles.Test}>
+      <div>
         <form>
           <div>
             로그인에 사용할{" "}

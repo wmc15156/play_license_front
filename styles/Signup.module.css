@@ -1,96 +1,99 @@
 .Parent {
-    margin: 110px auto auto auto;
-    width: 580px;
-    display:flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  margin: 110px auto auto auto;
+  width: 580px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 21px;
 }
 
-
-
 .Title {
-    font-size: 36px;
-    font-family: Helvetica, sans-serif
+  font-size: 36px;
+  font-family: "FreightSansBlackSC";
 }
 
 .SubTitle {
-    font-family: Helvetica, sans-serif;
-    font-size: 36px;
-    color: #000000;
-    letter-spacing: 1.29px;
+  font-family: "FreightSansBlackSC";
+  font-size: 36px;
+  color: #000000;
+  letter-spacing: 1.29px;
 }
 
 .GrayLine {
-    width: 580px;
-    border-color: #9E9E9E;
-    margin-top: 27px;
+  width: 580px;
+  background-color: #9E9E9E;
+  height: 3px;
+  border: none;
+  margin-top: 27px;
 }
+
 .YellowLine {
-    width: 290px;
-    border-color: #FFCC5C;
-    z-index: 5;
-    position: relative;
-    bottom: 18px;
-    margin-left: 0;
-    height: 0;
+  width: 290px;
+  background-color: #FFCC5C;
+  z-index: 5;
+  height: 3px;
+  border: none;
+  position: relative;
+  bottom: 24px;
+  margin-left: 0;
 }
 
 .Test {
-    font-family: Helvetica, sans-serif;
-    font-size: 21px;
-    line-height: 18px;
-    margin-top: 60px;
+  font-family: Helvetica, sans-serif;
+  font-size: 21px;
+  line-height: 18px;
+  margin-top: 60px;
 }
 
 .RedColor {
-    color: #FF6F69
+  color: #FF6F69
 }
 
 .LoginInput {
-    width: 580px;
-    height: 60px;
-    background-color: #F5F5F5;
-    border: none;
-    border-radius: 8px;
-    text-indent: 22px;
-    margin-top: 30px;
+  width: 580px;
+  height: 60px;
+  background-color: #F5F5F5;
+  border: none;
+  border-radius: 8px;
+  text-indent: 22px;
+  margin-top: 30px;
 }
 
 .CheckValidation {
-    color: #c92a2a;
-    font-size: 15px;
-    margin-top: 18px;
+  color: #c92a2a;
+  font-size: 15px;
+  margin-top: 18px;
 }
 
 .PasswordMargin {
-    margin-top: 74px;
+  margin-top: 74px;
 }
 
 
 .PasswordCheck {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .NextButton {
-    width: 580px;
-    height: 60px;
-    border-radius: 8px;
-    border: none;
-    background-color: #FF6F69;
-    color: white;
-    font-family: Helvetica, sans-serif;
-    font-size: 21px;
-    margin-top: 68px
+  width: 580px;
+  height: 60px;
+  border-radius: 8px;
+  border: none;
+  background-color: #FF6F69;
+  color: white;
+  font-family: Helvetica, sans-serif;
+  font-size: 21px;
+  margin-top: 68px
 }
 
 .NextButton:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .PasswordCheckComment {
-    position: relative;
-    left: 541px;
-    opacity: 0.4;
-    font-size: 14px;
-    bottom: 39px;
+  position: relative;
+  left: 541px;
+  opacity: 0.4;
+  font-size: 14px;
+  bottom: 39px;
 }

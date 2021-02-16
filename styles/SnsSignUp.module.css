@@ -8,6 +8,10 @@
   font-size: 21px;
 }
 
+.Parent input {
+  font-size: 16px;
+}
+
 .Parent strong {
   font-weight: bold;
   font-family: "FreightSansBlackSC";
@@ -94,56 +98,21 @@
 
 .FormBox {
   width: 100%;
+  font-size: 16px;
 }
 
 .SnsComment {
   display: flex;
-  justify-self: flex-end;
+  justify-content: flex-end;
   width: 100%;
 }
 
-/*.LoginInput {*/
-/*    width: 580px;*/
-/*    height: 60px;*/
-/*    background-color: #F5F5F5;*/
-/*    border: none;*/
-/*    border-radius: 8px;*/
-/*    text-indent: 22px;*/
-/*    margin-top: 44px;*/
-/*}*/
+.SnsComment div {
+  font-size: 14px;
+}
 
-/*.PasswordMargin {*/
-/*    margin-top: 74px;*/
-/*}*/
-
-/*.PasswordCheck {*/
-/*    margin-top: 20px;*/
-/*}*/
-
-/*.NextButton {*/
-/*    width: 580px;*/
-/*    height: 60px;*/
-/*    border-radius: 8px;*/
-/*    border: none;*/
-/*    background-color: #FF6F69;*/
-/*    color: white;*/
-/*    font-family: Helvetica, sans-serif;*/
-/*    font-size: 21px;*/
-/*    margin-top: 68px*/
-/*}*/
-
-/*.NextButton:hover {*/
-/*    cursor: pointer;*/
-/*}*/
-
-/*.PasswordCheckComment {*/
-/*    position: relative;*/
-/*    left: 541px;*/
-/*    opacity: 0.4;*/
-/*    font-size: 14px;*/
-/*    bottom: 39px;*/
-/*}*/
-
-/*!*.EmailComment span {*!*/
-/*!*    color: #FF6F69;*!*/
-/*!*}*!*/
+.EmailErrorComment {
+  position: relative;
+  top: 17px;
+  color: red;
+}
