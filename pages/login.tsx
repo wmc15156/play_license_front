@@ -1,103 +1,92 @@
 import styles from "../styles/Login.module.css";
 import useInput from "../utils/useInput";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginThunk } from "../reducers/user";
 import { login } from "../core/api/user";
+import { RootState } from "../reducers";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 function Login() {
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
-
+  const [emailInputError, setEmailInutError] = useState(false);
+  const [passwordInputError, setPasswordInputError] = useState(false);
   const dispatch = useDispatch();
+  const router = useRouter();
 
-  const onSubmitHandler = (e) => {
+  const loginError = useSelector((state: RootState) => state.users?.me?.error);
+  const me = useSelector((state: RootState) => state.users?.me?.data);
+
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
+
+    if (!email) {
+      setEmailInutError(true);
+      return;
+    }
+
+    if (!password) {
+      setPasswordInputError(true);
+      return;
+    }
     if (email && password) {
       const data = { email, password };
       dispatch(loginThunk(data));
     }
   };
 
+  useEffect(() => {
+    if (me) {
+      router.replace("/");
+    }
+  }, [me]);
+
   return (
-    <div
-      style={{
-        margin: "158px auto auto auto",
-        width: "580px",
-        display: "flex",
-        justifyContent: "center",
-        flexWrap: "wrap",
-      }}
-    >
-      <div style={{ fontSize: "36px", marginBottom: "22px" }}>
-        <strong
-          style={{
-            fontSize: "36px",
-            fontWeight: "bold",
-            fontFamily: "Helvetica",
-          }}
-        >
-          BUYER{" "}
-        </strong>
+    <div className={styles.Parent}>
+      <div style={{ marginBottom: "22px" }}>
+        <strong>BUYER </strong>
         로그인
       </div>
-      <hr
-        style={{ width: "580px", borderColor: "#FFCC5C", marginBottom: "27px" }}
-      />
+      <hr className={styles.Line} />
       <form onSubmit={onSubmitHandler}>
         <div>
           <input
-            style={{
-              width: "580px",
-              height: "60px",
-              backgroundColor: "#F5F5F5",
-              border: "none",
-              borderRadius: "8px",
-              marginBottom: "11px",
-              textIndent: "22px",
-            }}
+            className={styles.LoginInput}
             placeholder={"아이디(이메일)을 입력해주세요"}
             value={email}
             onChange={onChangeEmail}
           />
         </div>
+        {emailInputError && (
+          <div className={styles.EmailError}>이메일을 입력해주세요.</div>
+        )}
         <div>
           <input
-            style={{
-              width: "580px",
-              height: "60px",
-              backgroundColor: "#F5F5F5",
-              border: "none",
-              borderRadius: "8px",
-              marginBottom: "11px",
-              textIndent: "22px",
-            }}
+            className={styles.LoginInput}
             placeholder={"비밀번호를 입력해주세요."}
             value={password}
             onChange={onChangePassword}
+            type="password"
           />
         </div>
-        <button
-          style={{
-            width: "580px",
-            height: "60px",
-            borderRadius: "8px",
-            border: "none",
-            backgroundColor: "#FF6F69",
-            color: "white",
-            fontFamily: "Roboto Apple SD Gothic Neo",
-            fontSize: "21px",
-            marginBottom: "17px",
-          }}
-        >
-          {" "}
-          로그인하기{" "}
-        </button>
+        {loginError && (
+          <div className={styles.LoginError}>
+            가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.
+          </div>
+        )}
+        {passwordInputError && (
+          <div className={styles.EmailError}>비밀번호를 입력해주세요.</div>
+        )}
+        <button className={styles.LoginButton}> 로그인하기 </button>
       </form>
-      <div
-        className={styles.Email}
-        style={{ width: "580px", fontSize: "14px" }}
-      >
-        <div className={styles.Para}>이메일로 간편가입하기</div>
+      <div className={styles.Email} style={{ width: "100%", fontSize: "14px" }}>
+        <div className={styles.Para}>
+          <Link href="/signup/first">
+            <a>이메일로 간편가입하기</a>
+          </Link>
+        </div>
         <div
           style={{
             display: "inline-block",
@@ -113,7 +102,9 @@ function Login() {
               cursor: "pointer",
             }}
           >
-            아아디(이메일) 찾기
+            <Link href="/user/help">
+              <a>아아디(이메일) 찾기</a>
+            </Link>
           </div>
           <div
             style={{
@@ -132,7 +123,9 @@ function Login() {
               width: "81px",
             }}
           >
-            비밀번호 찾기
+            <Link href="/user/help">
+              <a>비밀번호 찾기</a>
+            </Link>
           </div>
         </div>
       </div>
@@ -146,18 +139,24 @@ function Login() {
       >
         <div className={styles.Sns}>SNS 계정으로 로그인하기</div>
         <div className={styles.Logo}>
-          <img
-            className={styles.Logo}
-            src="https://user-images.githubusercontent.com/60249156/107473831-a2876680-6bb4-11eb-976a-166b32c5f253.png"
-          />
-          <img
-            className={styles.Logo}
-            src="https://user-images.githubusercontent.com/60249156/107473421-08bfb980-6bb4-11eb-9dd9-adad9a4221f3.png"
-          />
-          <img
-            className={styles.Logo}
-            src="https://user-images.githubusercontent.com/60249156/107471758-f85a0f80-6bb0-11eb-918a-c25463c00651.png"
-          />
+          <a href="http://localhost:8000/api/auth/google">
+            <img
+              className={styles.Logo}
+              src="https://user-images.githubusercontent.com/60249156/107981737-03280080-7006-11eb-9536-1c26c58f5c04.png"
+            />
+          </a>
+          <a href="http://localhost:8000/api/auth/naver">
+            <img
+              className={styles.Logo}
+              src="https://user-images.githubusercontent.com/60249156/107981747-058a5a80-7006-11eb-80c1-c8bfa6fed440.png"
+            />
+          </a>
+          <a href="http://localhost:8000/api/auth/kakao">
+            <img
+              className={styles.Logo}
+              src="https://user-images.githubusercontent.com/60249156/107981743-04f1c400-7006-11eb-9332-dae6db0b9411.png"
+            />
+          </a>
         </div>
       </div>
     </div>
