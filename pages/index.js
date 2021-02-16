@@ -10,6 +10,7 @@ import { loadMyInfoThunk } from "../reducers/user";
 import { useSelector } from "react-redux";
 import { RootState } from "../reducers";
 import { useRouter } from "next/router";
+import styles from "../styles/colors";
 
 const Container = styled.div`
   max-width: 1024px;

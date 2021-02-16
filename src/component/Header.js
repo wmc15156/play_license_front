@@ -12,7 +12,7 @@ const Header = () => {
     setIsOpen(true);
   };
 
-  const close = () => {
+  const onCloseHandler = () => {
     setIsOpen(false);
   };
 
@@ -88,7 +88,7 @@ const Header = () => {
               </ListItem>
             </List>
           </Container2>
-          <Menu close={close} />
+          <Menu onCloseHandler={onCloseHandler} />
         </OpenContainer>
       )}
     </>
