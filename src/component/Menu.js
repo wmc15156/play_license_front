@@ -2,7 +2,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
-const Menu = (props) => {
+const Menu = ({ onCloseHandler }) => {
   const go = () => {
     window.open(
       "https://docs.google.com/forms/d/e/1FAIpQLSdzYdGv-9NTKf2EllUgNy4ATbKi7z7LzSy-QJ7grj4oZkprLA/viewform",
@@ -10,34 +10,21 @@ const Menu = (props) => {
     );
   };
 
-  const router = useRouter();
-  const handleClick = (e) => {
-    e.preventDefault();
-    console.log(e, "eee");
-    router.push(e.target.attributes.href.value);
-  };
-
   return (
     <Container>
       <ListKo>
         <li>
           <Link href="/">
-            <a>홈</a>
+            <a onClick={onCloseHandler}>홈</a>
           </Link>
         </li>
         <li>
-          <a href="/market" onClick={handleClick}>
-            {/* <a
-            onClick={(e) => {
-              e.preventDefault();
-              router.push("/market");
-            }}
-          > */}
+          <a href="/market" onClick={onCloseHandler}>
             공연마켓
           </a>
         </li>
         <li>
-          <a href="/about" onClick={handleClick}>
+          <a href="/about" onClick={onCloseHandler}>
             서비스 소개
           </a>
         </li>
@@ -71,7 +58,7 @@ const Menu = (props) => {
           <div onClick={go}>Register your work</div>
         </li>
       </ListEn>
-      <CloseBtn onClick={props.close}>X icon</CloseBtn>
+      <CloseBtn onClick={onCloseHandler}>X icon</CloseBtn>
     </Container>
   );
 };

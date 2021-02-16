@@ -12,7 +12,6 @@ axios.defaults.baseURL = "http://localhost:8000/api";
 axios.defaults.withCredentials = true;
 
 const MyApp = ({ Component, pageProps }) => {
-  const [menu, setMenu] = useState(false);
   const router = useRouter();
   const path = [
     "/login",
