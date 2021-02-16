@@ -1,7 +1,7 @@
 import styles from "../../styles/SignupSecond.module.css";
 import styled from "styled-components";
 import SignUpInput from "../../src/component/Input/SignUpInput";
-import { FaCheck } from "react-icons/Fa";
+import { FaCheck } from "react-icons/fa";
 import SignUpButton from "../../src/component/Button/SignUpButton";
 import useInput from "../../utils/useInput";
 import axios from "axios";

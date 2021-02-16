@@ -10,7 +10,7 @@ const Container = styled.div`
   display: flex;
 `;
 
-const Hot = () => {
+const ComingSoon = () => {
   const [item, setItem] = useState([]);
 
   const getList = () => {
@@ -30,4 +30,4 @@ const Hot = () => {
   );
 };
 
-export default Hot;
+export default ComingSoon;

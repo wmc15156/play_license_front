@@ -1,5 +1,4 @@
 // 공통 레이아웃 적용
-import { useState } from "react";
 import Head from "next/head";
 import Layout from "../src/component/Layout";
 import Header from "../src/component/Header";
@@ -11,15 +10,6 @@ import wrapper from "../store/configureStore";
 axios.defaults.baseURL = "http://localhost:8000/api";
 
 const MyApp = ({ Component, pageProps }) => {
-  const [menu, setMenu] = useState(false);
-
-  const open = () => {
-    setMenu(true);
-  };
-
-  const close = () => {
-    setMenu(false);
-  };
   return (
     <>
       <Head>
@@ -27,14 +17,7 @@ const MyApp = ({ Component, pageProps }) => {
         <title>상상마루 - playlicense</title>
       </Head>
       <Layout>
-        <Header open={open} close={close} status={menu} />
-        {menu === true ? (
-          <>
-            <Menu close={close} status={menu} />
-          </>
-        ) : (
-          <></>
-        )}
+        <Header />
         <Component {...pageProps} />
         <Footer />
       </Layout>

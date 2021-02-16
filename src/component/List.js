@@ -1,28 +1,128 @@
-import React, { useEffect, useState } from "react";
-// import Image from "next/image";
-import axios from "axios";
-import { API_URL } from "../../config/API_URL";
-import ListItems from "./ListItems";
+import styled from "styled-components";
+import Link from "next/link";
+import KeyWord from "./KeyWord";
+import Filter from "../../src/component/Filter";
 
-const List = () => {
-  const [list, setList] = useState([]);
-
-  const getList = () => {
-    axios.get(API_URL.home.hotItems).then((res) => {
-      // console.log(res.data);
-      setList(res.data);
-    });
-  };
-
-  useEffect(() => {
-    getList();
-  }, []);
-
+const List = ({ list }) => {
+  const keywordArr = ["a", "공연", "c"];
   return (
-    <div>
-      <ListItems list={list} />
-    </div>
+    <Container>
+      <HeadSection>
+        <Title>
+          새로 등록된 작품<Count>{list.length}개</Count>
+        </Title>
+        <Filter />
+      </HeadSection>
+      <ListSt>
+        {list.map((item) => (
+          <Link href={`/performances/${item.id}`}>
+            <Item key={item.id}>
+              <a>
+                <ItemImg>
+                  <img src={item.image_link} alt={item.name} />
+                </ItemImg>
+              </a>
+              <a>
+                <ItemDesc>
+                  <Category>
+                    <KeyWord words={keywordArr} />
+                  </Category>
+                  <Ptitle>title:</Ptitle>
+                  <PInfo>
+                    <div>데{}</div>
+                    <Divider>|</Divider>
+                    <div>이{}</div>
+                    <Divider>|</Divider>
+                    <div>터{}</div>
+                  </PInfo>
+                </ItemDesc>
+              </a>
+            </Item>
+          </Link>
+        ))}
+      </ListSt>
+    </Container>
   );
 };
 
 export default List;
+
+const Category = styled.div`
+  width: 100%;
+  height: 28px;
+  display: flex;
+`;
+
+const Divider = styled.div`
+  margin: 0 6px;
+`;
+
+const PInfo = styled.div`
+  display: flex;
+  font-family: "NotoSansCJKkr-Regular";
+  line-height: 14px;
+`;
+const Ptitle = styled.div`
+  font-family: "NotoSansCJKkr-Bold";
+  font-size: 18px;
+  line-height: 18px;
+  margin-bottom: 12px;
+`;
+
+const ItemDesc = styled.div`
+  min-width: 276px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ItemImg = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
+
+  & > img {
+    min-width: 276px;
+    width: 100%;
+    height: auto;
+  }
+`;
+
+const Item = styled.li`
+  display: flex;
+  flex-direction: column;
+  max-width: 276px;
+  width: 100%;
+  height: auto;
+  margin-right: 5%;
+`;
+
+const ListSt = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+
+  flex-wrap: wrap;
+`;
+const Count = styled.span`
+  opacity: 0.3;
+  margin-left: 30px;
+`;
+
+const Title = styled.div`
+  font-family: "NotoSansCJKkr-Bold";
+  font-size: 24px;
+  line-height: 48px;
+  text-transform: uppercase;
+`;
+
+const HeadSection = styled.div`
+  display: flex;
+  margin-bottom: 40px;
+`;
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`;
