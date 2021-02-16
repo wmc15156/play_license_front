@@ -1,4 +1,4 @@
-import styles from "../../styles/SignupSecond.module.css";
+import styles from "../../styles/SnsSignUp.module.css";
 import styled from "styled-components";
 import SignUpInput from "../../src/component/Input/SignUpInput";
 import { FaCheck } from "react-icons/fa";
@@ -7,10 +7,11 @@ import useInput from "../../utils/useInput";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../reducers";
 import { useRouter } from "next/router";
 import { signUp } from "../../reducers/user";
 import { userReducerUtils } from "../../utils/asyncUtils";
+import { RootState } from "../../reducers";
+import { emailDuplicateCheck } from "../../core/api/user";
 
 const ValidationCheck = styled.div`
   color: #51cf66;
@@ -19,19 +20,21 @@ const ValidationCheck = styled.div`
 `;
 
 export type ReqData = {
-  provider: "local" | "google" | "kakao" | "naver";
+  provider?: "local" | "google" | "kakao" | "naver";
   fullName: string;
   email: string;
-  password: string;
+  password?: string;
   phone: string;
   role: "user" | "provider" | "admin";
   admin: boolean;
 };
 
-function SignUpSecond() {
+function Sns() {
   const [phone, onChangePhone] = useInput("");
   const [code, onChangeCode] = useInput("");
   const [name, onChangeName] = useInput("");
+  const [email, onChangeEmail] = useInput("");
+  const [emailError, setEmailError] = useState("");
   const [term, setTerm] = useState(false);
   const [countDown, setCountDown] = useState(false);
   const [initialTime, setInitialTime] = useState(180);
@@ -39,10 +42,15 @@ function SignUpSecond() {
 
   const router = useRouter();
   const dispatch = useDispatch();
-  const { data } = useSelector(
-    (state: RootState) => state.users?.signUpData || userReducerUtils.initial()
-  );
-  const { email, password } = data || {};
+
+  const { error } = useSelector((staet: RootState) => staet.users?.signUpData);
+
+  useEffect(() => {
+    console.log(error);
+    if (error) {
+      alert("입력값을 다시 확인 해주세요!");
+    }
+  }, [error]);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
@@ -54,35 +62,41 @@ function SignUpSecond() {
 
     if (!completedValidation) {
       alert("휴대전화 인증을 해주세요.");
+      return;
     }
 
     try {
       const reqData: ReqData = {
-        provider: "local",
         fullName: name,
         email,
-        password,
         phone,
         role: "user",
         admin: false,
       };
-      if (
-        phone &&
-        code &&
-        name &&
-        term &&
-        completedValidation &&
-        email &&
-        password
-      ) {
+      if (phone && code && name && email) {
         dispatch(signUp(reqData));
         alert("회원가입에 성공했습니다.");
-        router.replace("/login");
+        // router.replace("/login");
       } else {
         alert("모든 입력값을 다 적어주세요.");
       }
     } catch (err) {
       console.error(err.response.data);
+    }
+  };
+
+  const onBlurHandler = async () => {
+    if (email) {
+      const statusCode = await emailDuplicateCheck(email);
+      if (statusCode === 200) {
+        setEmailError("");
+      } else if (statusCode === 400) {
+        setEmailError("이메일형식으로 작성해주세요.");
+      } else if (statusCode === 409) {
+        setEmailError("중복된 이메일입니다.");
+      }
+    } else {
+      setEmailError("");
     }
   };
 
@@ -132,19 +146,15 @@ function SignUpSecond() {
     }
   };
 
-  useEffect(() => {
-    if (!data) {
-      router.replace("/signup/first");
-      alert("새로고침 하셨으므로 이전 데이터를 다시 입력해주세요!");
-    }
-  }, []);
-
   return (
     <div className={styles.Parent}>
       <div className={styles.Title}>
-        <strong>BUYER </strong>간편가입
+        <strong>BUYER SNS</strong> 간편가입
       </div>
       <hr className={styles.YellowLine} />
+      <div className={styles.SnsComment}>
+        <div>최초 sns로그인시에만 필요해요!</div>
+      </div>
       <div className={styles.FormBox}>
         <form>
           <div className={styles.NameComment}>
@@ -154,11 +164,29 @@ function SignUpSecond() {
           <div>
             <input
               className={styles.NameInput}
-              placeholder={"이름을 입력해주세요"}
+              placeholder={"띄어쓰기 없이 두글자 이상 입력해주세요"}
               value={name}
               onChange={onChangeName}
             />
           </div>
+
+          <div className={styles.NameComment}>
+            <strong className={`${styles.RedColor}`}>이메일(아이디)</strong>을
+            입력해주세요.
+          </div>
+          <div>
+            <input
+              className={styles.NameInput}
+              placeholder={"아이디(이메일)를 입력해주세요"}
+              value={email}
+              onChange={onChangeEmail}
+              type={email}
+              onBlur={onBlurHandler}
+            />
+          </div>
+          {emailError && (
+            <div className={styles.EmailErrorComment}>{emailError}</div>
+          )}
           <div className={styles.NameComment}>
             본인인증을 위한{" "}
             <strong className={`${styles.RedColor}`}>휴대폰 번호</strong>를
@@ -201,4 +229,4 @@ function SignUpSecond() {
   );
 }
 
-export default SignUpSecond;
+export default Sns;

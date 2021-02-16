@@ -4,6 +4,7 @@ import {
   UserAction,
   UserState,
 } from "../reducers/user";
+import axios from "axios";
 
 type createPromiseThunkInput = {
   type: string;
@@ -18,7 +19,7 @@ export const userReducerUtils = {
   }),
   loading: (prevState: any = null) => ({
     data: prevState,
-    loading: false,
+    loading: true,
     error: null,
   }),
   success: (data) => ({
@@ -39,7 +40,8 @@ export const createPromiseThunk = ({
 }: createPromiseThunkInput) => {
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
   return (param: any) => async (dispatch) => {
-    dispatch({ type });
+    dispatch({ type }); // loading
+    // dispatch
     try {
       const payload = await promiseCreator(param);
       dispatch({

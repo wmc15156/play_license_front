@@ -6,10 +6,25 @@ import Footer from "../src/component/Footer";
 import Menu from "../src/component/Menu";
 import axios from "axios";
 import wrapper from "../store/configureStore";
+import { useRouter } from "next/router";
 
 axios.defaults.baseURL = "http://localhost:8000/api";
+axios.defaults.withCredentials = true;
 
 const MyApp = ({ Component, pageProps }) => {
+  const [menu, setMenu] = useState(false);
+  const router = useRouter();
+  const path = [
+    "/login",
+    "/signup",
+    "/signup/first",
+    "/signup/second",
+    "/user/help",
+    "/signup/sns",
+    "/login/select",
+  ];
+
+  const removeFooter = path.includes(router.pathname);
   return (
     <>
       <Head>
@@ -19,7 +34,7 @@ const MyApp = ({ Component, pageProps }) => {
       <Layout>
         <Header />
         <Component {...pageProps} />
-        <Footer />
+        {!removeFooter && <Footer />}
       </Layout>
     </>
   );
