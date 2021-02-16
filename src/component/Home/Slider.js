@@ -73,7 +73,7 @@ const Slider = () => (
     <Slides>
       <div name="slide-1" id="slide-1">
         {/* 요청으로 받은 이미지주소를 여기에 */}
-        <Img src="/assets/image/carousel.png" alt="" />
+        <Img src="/assets/image/carousel1.png" alt="" />
       </div>
       <div name="slide-2" id="slide-2">
         2

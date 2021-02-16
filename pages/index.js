@@ -83,7 +83,7 @@ const Home = () => {
         <Slider />
       </CarouselSection>
       <BannerSection>
-        <img src="/assets/image/Banner_startBuyer.png" />
+        <img src="/assets/image/Banner_Buyer.png" />
       </BannerSection>
       <HotSection>
         <Hot />
@@ -94,6 +94,9 @@ const Home = () => {
       <UpcomingSection>
         <ComingSoon />
       </UpcomingSection>
+      <BannerSection>
+        <img src="/assets/image/Banner_Provider.png" />
+      </BannerSection>
     </Container>
   );
 };
