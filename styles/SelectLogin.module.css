@@ -1,0 +1,52 @@
+.Parent {
+  margin: 200px auto auto auto;
+  width: 1024px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-family: Helvetica, sans-serif;
+  font-size: 21px;
+}
+
+.Parent img {
+  display: inline-block;
+  width: 480px;
+  justify-content: space-evenly;
+  cursor: pointer;
+}
+
+.BuyerImage {
+  margin-right: 47px;
+  display: flex;
+  justify-content: center;
+}
+
+.BoxContainer {
+  width: 100%;
+  font-size: 16px;
+}
+
+.BoxContainer div {
+  display: flex;
+  justify-content: center;
+  font-family: "Noto Sans CJK KR Medium";
+}
+
+.BoxContainer span {
+  font-family: "Freight - Sans Black SC";
+  font-size: 24px;
+}
+
+.CompanyName {
+  font-weight: bold;
+}
+
+
+.Title {
+  margin-top: 20px;
+  margin-bottom: 90px;
+}
+
+.ImageBox {
+  margin-bottom: 30px;
+}

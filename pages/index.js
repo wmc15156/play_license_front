@@ -4,6 +4,12 @@ import Slider from "../src/component/Home/Slider";
 import Hot from "../src/component/Home/Hot";
 import New from "../src/component/Home/New";
 import ComingSoon from "../src/component/Home/ComingSoon";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { loadMyInfoThunk } from "../reducers/user";
+import { useSelector } from "react-redux";
+import { RootState } from "../reducers";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   max-width: 1024px;
@@ -43,6 +49,23 @@ const BannerSection = styled.div`
 `;
 
 const Home = () => {
+  const { loading, data, error } = useSelector((state) => state.users?.me);
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(loadMyInfoThunk());
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (error) {
+      alert("재 로그인 해주세요!");
+      router.push("/login");
+    }
+  }, [error]);
+
   return (
     <Container>
       <Head>

@@ -27,7 +27,7 @@ function SignUpInput({
   time = null,
 }: InputProps) {
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex", width: "620px" }}>
       <InputNumber
         className={styles.Input}
         placeholder={placeHolder}
