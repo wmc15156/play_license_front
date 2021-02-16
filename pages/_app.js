@@ -1,5 +1,4 @@
 // 공통 레이아웃 적용
-import { useState } from "react";
 import Head from "next/head";
 import Layout from "../src/component/Layout";
 import Header from "../src/component/Header";
@@ -13,7 +12,6 @@ axios.defaults.baseURL = "http://localhost:8000/api";
 axios.defaults.withCredentials = true;
 
 const MyApp = ({ Component, pageProps }) => {
-  const [menu, setMenu] = useState(false);
   const router = useRouter();
   const path = [
     "/login",
@@ -26,14 +24,6 @@ const MyApp = ({ Component, pageProps }) => {
   ];
 
   const removeFooter = path.includes(router.pathname);
-
-  const open = () => {
-    setMenu(true);
-  };
-
-  const close = () => {
-    setMenu(false);
-  };
   return (
     <>
       <Head>
@@ -41,14 +31,7 @@ const MyApp = ({ Component, pageProps }) => {
         <title>상상마루 - playlicense</title>
       </Head>
       <Layout>
-        <Header open={open} close={close} status={menu} />
-        {menu === true ? (
-          <>
-            <Menu close={close} status={menu} />
-          </>
-        ) : (
-          <></>
-        )}
+        <Header />
         <Component {...pageProps} />
         {!removeFooter && <Footer />}
       </Layout>

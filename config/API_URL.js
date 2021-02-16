@@ -10,5 +10,6 @@ export const API_URL = {
   market: {
     allItems:
       "http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline",
+    item: "http://makeup-api.herokuapp.com/api/v1/products",
   },
 };

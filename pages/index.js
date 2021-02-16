@@ -10,6 +10,7 @@ import { loadMyInfoThunk } from "../reducers/user";
 import { useSelector } from "react-redux";
 import { RootState } from "../reducers";
 import { useRouter } from "next/router";
+import styles from "../styles/colors";
 
 const Container = styled.div`
   max-width: 1024px;
@@ -83,7 +84,7 @@ const Home = () => {
         <Slider />
       </CarouselSection>
       <BannerSection>
-        <img src="/assets/image/Banner_startBuyer.png" />
+        <img src="/assets/image/Banner_Buyer.png" />
       </BannerSection>
       <HotSection>
         <Hot />
@@ -94,6 +95,9 @@ const Home = () => {
       <UpcomingSection>
         <ComingSoon />
       </UpcomingSection>
+      <BannerSection>
+        <img src="/assets/image/Banner_Provider.png" />
+      </BannerSection>
     </Container>
   );
 };

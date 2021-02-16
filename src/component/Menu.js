@@ -1,10 +1,73 @@
+import Link from "next/link";
 import styled from "styled-components";
+import { useRouter } from "next/router";
+
+const Menu = ({ onCloseHandler }) => {
+  const go = () => {
+    window.open(
+      "https://docs.google.com/forms/d/e/1FAIpQLSdzYdGv-9NTKf2EllUgNy4ATbKi7z7LzSy-QJ7grj4oZkprLA/viewform",
+      "_blank"
+    );
+  };
+
+  return (
+    <Container>
+      <ListKo>
+        <li>
+          <Link href="/">
+            <a onClick={onCloseHandler}>홈</a>
+          </Link>
+        </li>
+        <li>
+          <a href="/market" onClick={onCloseHandler}>
+            공연마켓
+          </a>
+        </li>
+        <li>
+          <a href="/about" onClick={onCloseHandler}>
+            서비스 소개
+          </a>
+        </li>
+        <li>
+          <a href="/faq">자주 묻는 질문</a>
+        </li>
+        <li>
+          <a href="/notice">공지사항</a>
+        </li>
+        <li>
+          <div onClick={go}>작품등록 문의</div>
+        </li>
+      </ListKo>
+      <ListEn>
+        <li>
+          <Link href="/">Home</Link>
+        </li>
+        <li>
+          <Link href="/market">Market</Link>
+        </li>
+        <li>
+          <Link href="/about">Service Introduction</Link>
+        </li>
+        <li>
+          <Link href="/faq">FAQ</Link>
+        </li>
+        <li>
+          <Link href="/notice">Notice</Link>
+        </li>
+        <li>
+          <div onClick={go}>Register your work</div>
+        </li>
+      </ListEn>
+      <CloseBtn onClick={onCloseHandler}>X icon</CloseBtn>
+    </Container>
+  );
+};
 
 const Container = styled.div`
   max-width: 1024px;
   width: 100%;
   display: flex;
-  background-color: white;
+  background-color: #ffffff;
   margin: 0 auto;
   margin-top: 90px;
 `;
@@ -43,52 +106,5 @@ const CloseBtn = styled.div`
   height: 34px;
   border: 4px solid #000000;
 `;
-const Menu = (props) => {
-  return (
-    <Container>
-      <ListKo>
-        <li>
-          <div>홈</div>
-        </li>
-        <li>
-          <div>공연마켓</div>
-        </li>
-        <li>
-          <div>서비스 소개</div>
-        </li>
-        <li>
-          <div>자주 묻는 질문</div>
-        </li>
-        <li>
-          <div>공지사항</div>
-        </li>
-        <li>
-          <div>작품등록 문의</div>
-        </li>
-      </ListKo>
-      <ListEn>
-        <li>
-          <div>Home</div>
-        </li>
-        <li>
-          <div>Market</div>
-        </li>
-        <li>
-          <div>Service Introduction</div>
-        </li>
-        <li>
-          <div>FAQ</div>
-        </li>
-        <li>
-          <div>Notice</div>
-        </li>
-        <li>
-          <div>Register your work</div>
-        </li>
-      </ListEn>
-      <CloseBtn onClick={props.close}>X icon</CloseBtn>
-    </Container>
-  );
-};
 
 export default Menu;

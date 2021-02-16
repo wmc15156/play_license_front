@@ -23,8 +23,6 @@ const Etc = styled.div`
 `;
 
 const KeyWord = ({ words }) => {
-  console.log(words);
-
   return <Container></Container>;
 };
 
