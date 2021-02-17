@@ -9,7 +9,7 @@ import wrapper from "../store/configureStore";
 import { useRouter } from "next/router";
 
 axios.defaults.baseURL = "http://localhost:8000/api";
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = false;
 
 const MyApp = ({ Component, pageProps }) => {
   const router = useRouter();

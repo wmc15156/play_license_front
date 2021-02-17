@@ -1,9 +1,9 @@
 import Link from "next/link";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 
 const Menu = ({ onCloseHandler }) => {
   const go = () => {
+    onCloseHandler();
     window.open(
       "https://docs.google.com/forms/d/e/1FAIpQLSdzYdGv-9NTKf2EllUgNy4ATbKi7z7LzSy-QJ7grj4oZkprLA/viewform",
       "_blank"
@@ -14,9 +14,9 @@ const Menu = ({ onCloseHandler }) => {
     <Container>
       <ListKo>
         <li>
-          <Link href="/">
-            <a onClick={onCloseHandler}>홈</a>
-          </Link>
+          <a href="/" onClick={onCloseHandler}>
+            홈
+          </a>
         </li>
         <li>
           <a href="/market" onClick={onCloseHandler}>
@@ -29,10 +29,14 @@ const Menu = ({ onCloseHandler }) => {
           </a>
         </li>
         <li>
-          <a href="/faq">자주 묻는 질문</a>
+          <a href="/faq" onClick={onCloseHandler}>
+            자주 묻는 질문
+          </a>
         </li>
         <li>
-          <a href="/notice">공지사항</a>
+          <a href="/notice" onClick={onCloseHandler}>
+            공지사항
+          </a>
         </li>
         <li>
           <div onClick={go}>작품등록 문의</div>
@@ -40,19 +44,29 @@ const Menu = ({ onCloseHandler }) => {
       </ListKo>
       <ListEn>
         <li>
-          <Link href="/">Home</Link>
+          <a href="/" onClick={onCloseHandler}>
+            Home
+          </a>
         </li>
         <li>
-          <Link href="/market">Market</Link>
+          <a href="/market" onClick={onCloseHandler}>
+            Market
+          </a>
         </li>
         <li>
-          <Link href="/about">Service Introduction</Link>
+          <a href="/about" onClick={onCloseHandler}>
+            Service Introduction
+          </a>
         </li>
         <li>
-          <Link href="/faq">FAQ</Link>
+          <a href="/faq" onClick={onCloseHandler}>
+            FAQ
+          </a>
         </li>
         <li>
-          <Link href="/notice">Notice</Link>
+          <a href="/notice" onClick={onCloseHandler}>
+            Notice
+          </a>
         </li>
         <li>
           <div onClick={go}>Register your work</div>

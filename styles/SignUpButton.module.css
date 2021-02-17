@@ -1,14 +1,14 @@
 .Button {
-    width: 580px;
-    height: 60px;
-    border-radius: 8px;
-    border: none;
-    background-color: #FF6F69;
-    color: white;
-    font-family: Helvetica, sans-serif;
-    font-size: 21px;
-    margin-top: 35px
+  width: 100%;
+  height: 60px;
+  border-radius: 8px;
+  border: none;
+  background-color: #ff6f69;
+  color: white;
+  font-family: "NotoSansCJKkr-Bold";
+  font-size: 21px;
+  margin-top: 35px;
 }
 .Button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }

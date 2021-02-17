@@ -11,7 +11,6 @@ import CalcBtn from "../Button/CalcBtn";
 const Section1 = ({ item }) => {
   const router = useRouter();
   const keywordArr = ["a", "공연", "c"];
-  console.log("디테일페이지", item);
 
   // 찜 버튼 상태
   const [isSaving, setIsSaving] = useState(false);
@@ -19,7 +18,7 @@ const Section1 = ({ item }) => {
   // 찜여부 t/f를 useState()에 넣기
 
   const go = () => {
-    router.push("/buy1");
+    router.push(`/performances/${router.query.id}/buy`);
   };
 
   const heartHandler = () => {
