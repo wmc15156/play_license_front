@@ -1,10 +1,10 @@
 import styles from "../styles/Login.module.css";
-import useInput from "../utils/useInput";
+import useInput from "@utils/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import { loginThunk } from "../reducers/user";
 import { login } from "../core/api/user";
 import { RootState } from "../reducers";
-import { useEffect, useState } from "react";
+import { useEffect, useState, FormEvent } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -19,7 +19,7 @@ function Login() {
   const loginError = useSelector((state: RootState) => state.users?.me?.error);
   const me = useSelector((state: RootState) => state.users?.me?.data);
 
-  const onSubmitHandler = async (e) => {
+  const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!email) {
