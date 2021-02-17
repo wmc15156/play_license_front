@@ -7,6 +7,7 @@ import { RootState } from "../reducers";
 import { useEffect, useState, FormEvent } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { url } from "@utils/url";
 
 function Login() {
   const [email, onChangeEmail] = useInput("");
@@ -139,19 +140,19 @@ function Login() {
       >
         <div className={styles.Sns}>SNS 계정으로 로그인하기</div>
         <div className={styles.Logo}>
-          <a href="http://localhost:8000/api/auth/google">
+          <a href={`${url}/api/auth/google`}>
             <img
               className={styles.Logo}
               src="https://user-images.githubusercontent.com/60249156/107981737-03280080-7006-11eb-9536-1c26c58f5c04.png"
             />
           </a>
-          <a href="http://localhost:8000/api/auth/naver">
+          <a href={`${url}/api/auth/naver`}>
             <img
               className={styles.Logo}
               src="https://user-images.githubusercontent.com/60249156/107981747-058a5a80-7006-11eb-80c1-c8bfa6fed440.png"
             />
           </a>
-          <a href="http://localhost:8000/api/auth/kakao">
+          <a href={`${url}/api/auth/kakao`}>
             <img
               className={styles.Logo}
               src="https://user-images.githubusercontent.com/60249156/107981743-04f1c400-7006-11eb-9332-dae6db0b9411.png"
