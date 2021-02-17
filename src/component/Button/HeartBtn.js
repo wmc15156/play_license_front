@@ -21,16 +21,25 @@ const HeartBtn = ({ text = "찜하기", status, currStatus, onClickHandler }) =>
 
   return (
     <Container onClick={onClickHandler} style={fontColor}>
-      {!currStatus && <span>{text}</span>}
-      {currStatus && <span>{text} 중</span>}
+      {!currStatus && (
+        <>
+          <img src="/assets/image/heart.png" />
+          <span>{text}</span>
+        </>
+      )}
+      {currStatus && (
+        <>
+          <img src="/assets/image/heart.png" />
+          <span>{text} 중</span>
+        </>
+      )}
     </Container>
   );
 };
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
-  min-width: 60px;
+  min-width: 70px;
   width: 100%;
   height: 60px;
   background-color: #f5f5f5;
@@ -42,6 +51,13 @@ const Container = styled.div`
   font-size: 21px;
   color: "#000000";
   opacity: 0.4;
+  align-items: center;
+
+  & > img {
+    width: 24px;
+    height: 22px;
+    margin-right: 12px;
+  }
 `;
 
 export default HeartBtn;
