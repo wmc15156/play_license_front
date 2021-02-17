@@ -14,7 +14,7 @@ const url = process.env.NODE_ENV
 
 axios.defaults.baseURL = url;
 axios.defaults.withCredentials = false;
-
+console.log(process.env_NODE_ENV, "test");
 const MyApp = ({ Component, pageProps }) => {
   const router = useRouter();
   const path = [
