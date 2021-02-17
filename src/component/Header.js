@@ -1,19 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
-
 import Menu from "../component/Menu";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
-  const open = () => {
-    setIsOpen(true);
-  };
-
   const onCloseHandler = () => {
-    setIsOpen(false);
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -38,15 +33,25 @@ const Header = () => {
           </Logo>
           <List>
             <ListItem>
-              <img src="/assets/image/icon_mypage.png" />
-              <Text>MYPAGE</Text>
+              <Link href="/mypage">
+                <a>
+                  <img src="/assets/image/icon_mypage.png" />
+
+                  <Text>MYPAGE</Text>
+                </a>
+              </Link>
             </ListItem>
 
             <ListItem>
-              <img src="/assets/image/icon_search.png" />
-              <Text>SEARCH</Text>
+              <Link href="/search">
+                <a>
+                  <img src="/assets/image/icon_search.png" />
+
+                  <Text>SEARCH</Text>
+                </a>
+              </Link>
             </ListItem>
-            <ListItem onClick={open}>
+            <ListItem onClick={onCloseHandler}>
               <img src="/assets/image/icon_hamburger.png" />
               <Text>MENU</Text>
             </ListItem>
@@ -74,18 +79,27 @@ const Header = () => {
             </Logo>
             <List>
               <ListItem>
-                <img src="/assets/image/icon_mypage.png" />
-                <Text>MYPAGE</Text>
+                <Link href="/mypage">
+                  <a>
+                    <img src="/assets/image/icon_mypage.png" />
+                    <Text>MYPAGE</Text>
+                  </a>
+                </Link>
               </ListItem>
 
               <ListItem>
-                <img src="/assets/image/icon_search.png" />
-                <Text>SEARCH</Text>
+                <Link href="/search">
+                  <a>
+                    <img src="/assets/image/icon_search.png" />
+
+                    <Text>SEARCH</Text>
+                  </a>
+                </Link>
               </ListItem>
-              <ListItem onClick={open}>
+              <ClickedMenu onClick={onCloseHandler}>
                 <img src="/assets/image/icon_hamburger.png" />
                 <Text>MENU</Text>
-              </ListItem>
+              </ClickedMenu>
             </List>
           </Container2>
           <Menu onCloseHandler={onCloseHandler} />
@@ -94,6 +108,11 @@ const Header = () => {
     </>
   );
 };
+const A = styled.a`
+  width: 100%;
+  height: 100%;
+  display: block;
+`;
 
 const OpenContainer = styled.div`
   max-width: 1024px;
@@ -121,6 +140,8 @@ const Container = styled.div`
 const Logo = styled.div`
   display: flex;
   align-items: center;
+  max-width: 100%;
+  height: auto;
 `;
 const Img = styled.img`
   width: 91px;
@@ -141,18 +162,22 @@ const List = styled.ul`
   list-style: none;
   display: flex;
   margin-left: auto;
+  width: 530px;
 `;
 
 const ListItem = styled.li`
-  border: 0.5px solid #f5f5f5;
   border-radius: 4px;
   display: flex;
   align-items: center;
-  width: 117px;
+  width: 100%;
   height: 45px;
-  padding-left: 26px;
   position: relative;
+  margin-right: 2%;
+  cursor: pointer;
 
+  &:last-child {
+    margin-right: 0;
+  }
   &:hover {
     font-family: "Gotham Medium";
     font-size: 14px;
@@ -160,11 +185,55 @@ const ListItem = styled.li`
     color: #ffffff;
     transition: all 0.3s ease-in-out;
   }
+  & > a {
+    display: flex;
+    align-items: center;
+  }
 
-  & > img {
+  & > a > img {
+    position: absolute;
+    left: 26px;
     width: 24px;
     height: 24px;
-    margin-right: 16px;
+  }
+  & > img {
+    position: absolute;
+    left: 26px;
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+const ClickedMenu = styled.li`
+  cursor: pointer;
+  font-family: "Gotham Medium";
+  font-size: 14px;
+  color: #ffffff;
+  transition: all 0.3s ease-in-out;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 45px;
+  position: relative;
+  margin-right: 2%;
+  background-color: #ff6f69;
+  &:last-child {
+    margin-right: 0;
+  }
+  &:hover {
+    font-family: "Gotham Medium";
+    font-size: 14px;
+    background-color: #fff;
+    color: #000;
+    transition: all 0.3s ease-in-out;
+  }
+
+  & > img {
+    position: absolute;
+    left: 26px;
+    width: 24px;
+    height: 24px;
   }
 `;
 
@@ -173,7 +242,8 @@ const Text = styled.div`
   font-size: 14px;
   position: absolute;
   bottom: 0;
-  left: 70px;
+  left: 40%;
+  line-height: 17px;
 `;
 
 const ClickedText = styled.div`

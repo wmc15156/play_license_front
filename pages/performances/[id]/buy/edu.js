@@ -11,9 +11,9 @@ const Edu = ({ image }) => {
   const [usage, setUsage] = useState("");
   const router = useRouter();
 
-  const back = () => router.back();
-  const next = () => router.push(`/performances/${router.query.id}/${usage}`);
-
+  const next = () => {
+    router.push(`/performances/${router.query.id}/buy/complete`);
+  };
   const notice = {
     title: "안내사항",
     body1: "1. 최종 제공 자료는 협의 후 달라질 수 있습니다.",
@@ -45,7 +45,7 @@ const Edu = ({ image }) => {
       </BoxSection>
       <Notice title={notice.title} body1={notice.body1} body2={notice.body2} />
       <Check>안내사항을 확인했습니다</Check>
-      <Btn text={"구매문의 완료하기"} />
+      <Btn text={"구매문의 완료하기"} onClickHandler={next} />
     </Container>
   );
 };

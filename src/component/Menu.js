@@ -72,7 +72,9 @@ const Menu = ({ onCloseHandler }) => {
           <div onClick={go}>Register your work</div>
         </li>
       </ListEn>
-      <CloseBtn onClick={onCloseHandler}>X icon</CloseBtn>
+      <CloseBtn onClick={onCloseHandler}>
+        <img src="/assets/image/icon_x.png" />
+      </CloseBtn>
     </Container>
   );
 };
@@ -116,9 +118,10 @@ const ListEn = styled.div`
 
 const CloseBtn = styled.div`
   margin-left: auto;
-  width: 34px;
-  height: 34px;
-  border: 4px solid #000000;
+  & > img {
+    width: 34px;
+    height: 34px;
+  }
 `;
 
 export default Menu;
