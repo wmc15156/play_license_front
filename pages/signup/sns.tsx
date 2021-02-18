@@ -60,10 +60,10 @@ function Sns() {
       return;
     }
 
-    if (!completedValidation) {
-      alert("휴대전화 인증을 해주세요.");
-      return;
-    }
+    // if (!completedValidation) {
+    //   alert("휴대전화 인증을 해주세요.");
+    //   return;
+    // }
 
     try {
       const reqData: ReqData = {
@@ -72,11 +72,11 @@ function Sns() {
         phone,
         role: "user",
         admin: false,
-      };
-      if (phone && code && name && email) {
+      }; //phone && code && name &&
+      if (email) {
         dispatch(signUp(reqData));
         alert("회원가입에 성공했습니다.");
-        // router.replace("/login");
+        router.replace("/login");
       } else {
         alert("모든 입력값을 다 적어주세요.");
       }

@@ -6,11 +6,9 @@ import New from "../src/component/Home/New";
 import ComingSoon from "../src/component/Home/ComingSoon";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { loadMyInfoThunk } from "../reducers/user";
+import { isLoginCheckRequest, loadMyInfoThunk } from "../reducers/user";
 import { useSelector } from "react-redux";
-import { RootState } from "../reducers";
 import { useRouter } from "next/router";
-import styles from "../styles/colors";
 
 const Container = styled.div`
   max-width: 1024px;
@@ -51,21 +49,29 @@ const BannerSection = styled.div`
 
 const Home = () => {
   const { loading, data, error } = useSelector((state) => state.users?.me);
+  const isLogin = useSelector((state) => state.users.isLogin);
   const router = useRouter();
+  console.log(data, "data", isLogin);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (data) {
-      dispatch(loadMyInfoThunk());
-    }
-  }, [data]);
+    isLoginCheckRequest(dispatch);
+  }, [isLogin]);
 
   useEffect(() => {
-    if (error) {
+    if (!data && isLogin) {
+      console.log("here", "dataloadrequest");
+      dispatch(loadMyInfoThunk());
+    }
+  }, [data, isLogin]);
+
+  useEffect(() => {
+    if (error && isLogin) {
+      console.log(error);
       alert("재 로그인 해주세요!");
       router.push("/login");
     }
-  }, [error]);
+  }, [error, isLogin]);
 
   return (
     <Container>
