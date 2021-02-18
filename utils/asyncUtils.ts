@@ -39,7 +39,7 @@ export const createPromiseThunk = ({
   promiseCreator,
 }: createPromiseThunkInput) => {
   const [SUCCESS, ERROR] = [`${type}_SUCCESS`, `${type}_ERROR`];
-  return (param: any) => async (dispatch) => {
+  return (param: any = null) => async (dispatch) => {
     dispatch({ type }); // loading
     // dispatch
     try {

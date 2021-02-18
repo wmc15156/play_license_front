@@ -8,12 +8,13 @@ import axios from "axios";
 import wrapper from "../store/configureStore";
 import { useRouter } from "next/router";
 
-const url = process.env.NODE_ENV
-  ? "https://api.shortlysoftware.com/api"
-  : "http://localhost:8000/api";
-
+const url =
+  process.env.NODE_ENV === "production"
+    ? "https://api.shortlysoftware.com/api"
+    : "http://localhost:8000/api";
+console.log(url);
 axios.defaults.baseURL = url;
-axios.defaults.withCredentials = false;
+axios.defaults.withCredentials = true;
 console.log(process.env_NODE_ENV, "test");
 const MyApp = ({ Component, pageProps }) => {
   const router = useRouter();
