@@ -1,7 +1,7 @@
 import styles from "../styles/Login.module.css";
 import useInput from "../utils/useInput";
 import { useDispatch, useSelector } from "react-redux";
-import { loginThunk } from "../reducers/user";
+import { isLoginCheckRequest, loginThunk } from "../reducers/user";
 import { login } from "../core/api/user";
 import { RootState } from "../reducers";
 import { useEffect, useState, FormEvent } from "react";
@@ -21,6 +21,17 @@ function Login() {
   const me = useSelector((state: RootState) => state.users?.me?.data);
   const isLogin = useSelector((state: RootState) => state.users?.isLogin);
 
+  useEffect(() => {
+    isLoginCheckRequest(dispatch);
+  }, [isLogin]);
+
+  useEffect(() => {
+    if (isLogin) {
+      alert("로그인이 되어 있습니다. 로그아웃 후 시도 해주세여");
+      router.replace("/");
+    }
+  }, [isLogin]);
+
   const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -38,13 +49,6 @@ function Login() {
       dispatch(loginThunk(data));
     }
   };
-
-  useEffect(() => {
-    if (isLogin) {
-      alert("로그인이 되어 있습니다. 로그아웃 후 시도 해주세여");
-      router.replace("/");
-    }
-  }, [isLogin]);
 
   return (
     <div className={styles.Parent}>
