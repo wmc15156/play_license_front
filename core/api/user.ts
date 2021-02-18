@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { IS_LOGIN_ERROR, IS_LOGIN_SUCCESS } from "@reducers/user";
 
 type LoginData = {
   email: string;
@@ -13,7 +15,6 @@ export const login = async ({ email, password }: LoginData) => {
 
 export const loadMyInfo = async () => {
   const result = await axios.get("/auth/me");
-  console.log(result);
   return result.data;
 };
 
@@ -27,4 +28,20 @@ export const emailDuplicateCheck = (email: string) => {
       return err.response.status;
     });
   return data;
+};
+
+export const isLogin = async (dispatch) => {
+  try {
+    console.log("here");
+    await axios.get("/auth/check/login");
+    dispatch({
+      type: IS_LOGIN_SUCCESS,
+      payload: true,
+    });
+  } catch (err) {
+    dispatch({
+      type: IS_LOGIN_ERROR,
+      payload: false,
+    });
+  }
 };

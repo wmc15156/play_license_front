@@ -6,7 +6,6 @@ import {
 import axios, { AxiosError } from "axios";
 import * as userAPI from "../core/api/user";
 import { ReqData } from "../pages/signup/second";
-import { isNullOrUndefined } from "util";
 
 export const SIGN_UP = "user/SIGN_UP" as const;
 export const SIGN_UP_SUCCESS = "user/SIGN_UP_SUCCESS" as const;
@@ -28,6 +27,10 @@ export const LOAD_MY_INFO = "user/LOAD_MY_INFO";
 export const LOAD_MY_INFO_SUCCESS = "user/LOAD_MY_INFO_SUCCESS";
 export const LOAD_MY_INFO_ERROR = "user/LOAD_MY_INFO_ERROR";
 
+export const IS_LOGIN = "user/IS_LOGIN";
+export const IS_LOGIN_SUCCESS = "user/IS_LOGIN_SUCCESS";
+export const IS_LOGIN_ERROR = "user/IS_LOGIN_ERROR";
+
 export const storeFirstSignUp = () => ({ type: STORE_FIRST_SIGNUP });
 
 export const storeFirstSignUpData = (payload) => ({
@@ -39,6 +42,10 @@ export const loginMethod = (payload: "buyer" | "provider") => ({
   type: LOGIN_METHOD,
   payload,
 });
+
+export const isLoginRequest = () => ({ type: IS_LOGIN });
+export const isLoginSuccess = () => ({ type: IS_LOGIN_SUCCESS });
+export const isLoginError = () => ({ type: IS_LOGIN_ERROR });
 
 export const signUpRequest = () => ({ type: SIGN_UP });
 export const signUpSuccess = () => ({ type: SIGN_UP_SUCCESS });
@@ -69,12 +76,6 @@ type LoginData = {
   error: AxiosError;
 };
 
-type ReducerUtils = {
-  loading: boolean;
-  data: ReqData;
-  error: any;
-};
-
 export type meData = {
   loading: boolean;
   data: any;
@@ -85,12 +86,14 @@ export type UserState = {
   signUpData: SignUpData;
   loginData: LoginData;
   me: meData;
+  isLogin: boolean;
 };
 
 export const initialState: UserState = {
   signUpData: userReducerUtils.initial(),
   loginData: userReducerUtils.initial(),
   me: userReducerUtils.initial(),
+  isLogin: false,
 };
 
 export const signUp = createPromiseThunk({
@@ -108,6 +111,8 @@ export const loadMyInfoThunk = createPromiseThunk({
   promiseCreator: userAPI.loadMyInfo,
 });
 
+export const isLoginCheckRequest = userAPI.isLogin;
+
 const signUpReducer = handleAsyncActions(SIGN_UP, "signUpData");
 const loginReducer = handleAsyncActions(LOG_IN, "me");
 const loadMyInfoReducer = handleAsyncActions(LOAD_MY_INFO, "me");
@@ -123,7 +128,10 @@ export type UserAction =
   | ReturnType<typeof loginError>
   | ReturnType<typeof loadMyInfoRequest>
   | ReturnType<typeof loadMyInfoSuccess>
-  | ReturnType<typeof loadMyInfoError>;
+  | ReturnType<typeof loadMyInfoError>
+  | ReturnType<typeof isLoginRequest>
+  | ReturnType<typeof isLoginSuccess>
+  | ReturnType<typeof isLoginError>;
 
 export default function users(
   state: UserState = initialState,
@@ -166,6 +174,17 @@ export default function users(
         },
       };
 
+    case IS_LOGIN_SUCCESS:
+      return {
+        ...state,
+        isLogin: action.payload,
+      };
+
+    case IS_LOGIN_ERROR:
+      return {
+        ...state,
+        isLogin: action.payload,
+      };
     default:
       return state;
   }
