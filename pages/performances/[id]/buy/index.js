@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useState, useRef } from "react";
-import { API_URL } from "../../../config/API_URL";
+import { API_URL } from "../../../../config/API_URL";
 import axios from "axios";
-import OrangeShortBtn from "../../../src/component/Button/OrangeShortBtn";
-import GrayShortBtn from "../../../src/component/Button/GrayShortBtn";
+import OrangeShortBtn from "../../../../src/component/Button/OrangeShortBtn";
+import GrayShortBtn from "../../../../src/component/Button/GrayShortBtn";
 
 export async function getServerSideProps(context) {
   const performanceId = context.params.id;
@@ -83,10 +83,10 @@ const Buying = ({ image }) => {
       </Section>
       <BtnSection>
         <Gray>
-          <GrayShortBtn text={"이전"} goPrevPage={back} />
+          <GrayShortBtn text={"이전"} onClickHandler={back} />
         </Gray>
         <Orange>
-          <OrangeShortBtn text={"다음"} goNextPage={next} />
+          <OrangeShortBtn text={"다음"} onClickHandler={next} />
         </Orange>
       </BtnSection>
     </Container>

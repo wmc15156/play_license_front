@@ -2,6 +2,7 @@ import styled from "styled-components";
 import axios from "axios";
 import GrayBtn from "../../../../src/component/Button/GrayShortBtn";
 import OrangeBtn from "../../../../src/component/Button/OrangeShortBtn";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
   const performanceId = context.params.id;
@@ -14,6 +15,13 @@ export async function getServerSideProps(context) {
 }
 
 const Complete = ({ image }) => {
+  const router = useRouter();
+  const goMyPage = () => {
+    router.push("/mypage");
+  };
+  const goMarket = () => {
+    router.push("/market");
+  };
   // const url = `${API_URL.market.item}/${performanceId}.json`;
   // console.log(image, url);
   return (
@@ -34,10 +42,13 @@ const Complete = ({ image }) => {
       </Section>
       <BtnSection>
         <Gray>
-          <GrayBtn text={"쇼핑 이어하기"} />
+          <GrayBtn text={"쇼핑 이어하기"} onClickHandler={goMarket} />
         </Gray>
         <Orange>
-          <OrangeBtn text={"마이페이지에서 확인하기"} />
+          <OrangeBtn
+            text={"마이페이지에서 확인하기"}
+            onClickHandler={goMyPage}
+          />
         </Orange>
       </BtnSection>
     </Container>

@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import PerformanceDetail from "../../src/component/Detail/PerformanceDetail";
-import { API_URL } from "../../config/API_URL";
-import Loader from "../../src/component/Loader";
+import PerformanceDetail from "../../../src/component/Detail/PerformanceDetail";
+import { API_URL } from "../../../config/API_URL";
+import Loader from "../../../src/component/Loader";
 
 const LoaderContainer = styled.div`
   /* align-items: center; */

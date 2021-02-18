@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import KeyWord from "./KeyWord";
+import KeyWord from "../src/component/KeyWord";
 import axios from "axios";
-import { API_URL } from "../../config/API_URL";
+// import { API_URL } from "../../config/API_URL";
 
 const Search = () => {
   const [list, setList] = useState([]);
@@ -82,6 +82,8 @@ const Search = () => {
 };
 
 const Container = styled.div`
+  max-width: 1024px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -90,6 +92,7 @@ const Container = styled.div`
 const Section1 = styled.div`
   display: flex;
   margin-bottom: 65px;
+  padding: 0 1rem;
 `;
 const InputBox = styled.input`
   width: 100%;
@@ -102,6 +105,7 @@ const InputBox = styled.input`
   padding-left: 34px;
 `;
 const Section2 = styled.div`
+  padding: 0 1rem;
   display: flex;
   flex-direction: column;
   margin-bottom: 100px;
