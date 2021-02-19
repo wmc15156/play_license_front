@@ -130,7 +130,7 @@ const Container2 = styled.div`
 `;
 
 const Container = styled.div`
-  max-width: 1024px;
+  max-width: 924px;
   display: flex;
   margin: 48px auto;
   padding: 0 1rem;
