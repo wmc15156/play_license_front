@@ -115,7 +115,7 @@ const A = styled.a`
 `;
 
 const OpenContainer = styled.div`
-  max-width: 1024px;
+  max-width: 924px;
   display: flex;
   flex-direction: column;
   margin: 48px auto;
