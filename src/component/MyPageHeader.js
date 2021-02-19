@@ -1,21 +1,20 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
-const MyPageHeader = () => {
+const MyPageHeader = ({ currTabNum, onClickHandler }) => {
   const [selected, setSelected] = useState(true);
 
-  const changeMenuHandler = () => {};
   return (
     <Container>
       <Mypage>마이페이지</Mypage>
       <List>
-        <Item>작품구매문의</Item>
+        <Item onClick={onClickHandler}>작품구매문의</Item>
 
-        <Item>찜한공연</Item>
+        <Item onClick={onClickHandler}>찜한공연</Item>
 
-        <Item>1:1 문의</Item>
+        <Item onClick={onClickHandler}>1:1 문의</Item>
 
-        <Item>계정정보</Item>
+        <Item onClick={onClickHandler}>계정정보</Item>
       </List>
     </Container>
   );
@@ -44,5 +43,9 @@ const List = styled.ul`
 `;
 const Item = styled.li`
   margin-right: 70px;
+  color: ${(currTabNum) => (currTabNum === 0 ? "#ff6f69" : "#000")};
+  &:hover {
+    color: #ff6f69;
+  }
 `;
 export default MyPageHeader;
