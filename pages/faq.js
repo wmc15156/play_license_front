@@ -19,7 +19,7 @@ const FAQ = () => {
 };
 
 const Container = styled.div`
-  max-width: 1024px;
+  max-width: 924px;
   margin: 48px auto;
   padding: 0 1rem;
   display: flex;

@@ -82,7 +82,7 @@ const Search = () => {
 };
 
 const Container = styled.div`
-  max-width: 1024px;
+  max-width: 924px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

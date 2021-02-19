@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 const Container = styled.div`
-  max-width: 1024px;
+  max-width: 924px;
   display: flex;
   min-height: 100%;
   padding: 0 1rem;
@@ -86,6 +86,7 @@ const Home = () => {
         <meta property="og:image" content="" />
         <title>상상마루 - playlicense</title>
       </Head>
+
       <CarouselSection>
         <Slider />
       </CarouselSection>
