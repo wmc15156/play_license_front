@@ -21,7 +21,7 @@ const MyPageHeader = () => {
   );
 };
 const Container = styled.div`
-  max-width: 1024px;
+  max-width: 924px;
   width: 100%;
   margin: 0 auto;
   font-family: "NotoSansCJKkr-Bold";

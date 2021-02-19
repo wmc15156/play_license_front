@@ -35,7 +35,7 @@ const Divider = styled.div`
 
 const Container = styled.div`
   max-width: 924px;
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   flex-direction: column;
   margin: 0 auto;
