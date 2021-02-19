@@ -11,7 +11,7 @@ const LoaderContainer = styled.div`
   /* align-items: center; */
 `;
 const Container = styled.div`
-  max-width: 1024px;
+  max-width: 924px;
   padding: 0 1rem;
   margin: 0 auto;
 `;

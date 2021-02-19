@@ -1,9 +1,16 @@
 import styled from "styled-components";
+import useModal from "../../utils/useModal";
+import FilterModal from "./FilterModal";
 
 const Filter = () => {
+  const { openModal, ModalPortal } = useModal();
   return (
     <Container>
-      <Filtering>필터링 찾기</Filtering>
+      <Filtering onClick={openModal}>필터링 찾기</Filtering>
+      <ModalPortal>
+        <FilterModal />
+      </ModalPortal>
+
       <Sorting>
         <Select id="sort" name="sort">
           <option value="">선택하세요</option>
@@ -14,8 +21,6 @@ const Filter = () => {
     </Container>
   );
 };
-
-export default Filter;
 
 const Container = styled.div`
   display: flex;
@@ -69,3 +74,5 @@ const Select = styled.select`
     opacity: 0.5;
   }
 `;
+
+export default Filter;

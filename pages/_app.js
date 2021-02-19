@@ -3,7 +3,6 @@ import Head from "next/head";
 import Layout from "../src/component/Layout";
 import Header from "../src/component/Header";
 import Footer from "../src/component/Footer";
-import Menu from "../src/component/Menu";
 import axios from "axios";
 import wrapper from "../store/configureStore";
 import { useRouter } from "next/router";
@@ -16,6 +15,7 @@ console.log(url);
 axios.defaults.baseURL = url;
 axios.defaults.withCredentials = true;
 console.log(process.env_NODE_ENV, "test");
+
 const MyApp = ({ Component, pageProps }) => {
   const router = useRouter();
   const path = [
@@ -39,6 +39,7 @@ const MyApp = ({ Component, pageProps }) => {
         <Header />
         <Component {...pageProps} />
         {!removeFooter && <Footer />}
+        <div id="modal" />
       </Layout>
     </>
   );

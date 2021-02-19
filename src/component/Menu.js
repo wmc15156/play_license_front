@@ -80,7 +80,8 @@ const Menu = ({ onCloseHandler }) => {
 };
 
 const Container = styled.div`
-  max-width: 1024px;
+  max-width: 924px;
+  /* padding: 0 1rem; */
   width: 100%;
   display: flex;
   background-color: #ffffff;

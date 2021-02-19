@@ -8,18 +8,26 @@ import PurchaseRequest from "../../src/component/MyPage/PurchaseRequest";
 import Favorites from "../../src/component/MyPage/Favorites";
 
 const MyPage = () => {
+  const tabs = {
+    작품구매문의: <PurchaseRequest />,
+    찜한공연: <Favorites />,
+    "1:1 문의": <QAList />,
+    계정정보: <MyInfo />,
+  };
+  const [active, setActive] = useState(0);
+
+  const switchTabNumber = (e) => {
+    // console.log(e.target.innerText, "target??");
+    setActive(e.target.innerText);
+  };
+
   return (
     <Background>
       <HeadSection>
-        <MyPageHeader />
+        <MyPageHeader currTabNum={active} onClickHandler={switchTabNumber} />
       </HeadSection>
       <Divider />
-      <Container>
-        <PurchaseRequest />
-        <Favorites />
-        <QAList />
-        <MyInfo />
-      </Container>
+      <Container>{tabs[active]}</Container>
     </Background>
   );
 };
@@ -34,8 +42,8 @@ const Divider = styled.div`
 `;
 
 const Container = styled.div`
-  max-width: 1024px;
-  width: 100%;
+  max-width: 924px;
+  /* width: 100%; */
   display: flex;
   flex-direction: column;
   margin: 0 auto;

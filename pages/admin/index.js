@@ -1,7 +1,7 @@
 import React from "react";
 
-function buyer() {
+function admin() {
   return <div>buyerpage</div>;
 }
 
-export default buyer;
+export default admin;
