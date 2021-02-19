@@ -1,12 +1,14 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import KeyWord from "../src/component/KeyWord";
 import axios from "axios";
-// import { API_URL } from "../../config/API_URL";
+import { debounce } from "lodash";
 
 const Search = () => {
   const [list, setList] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+
   {
     /* 결과가 있으면 
     ''검색결과
@@ -16,23 +18,55 @@ const Search = () => {
     ''검색결과
      */
   }
-  const getData = () => {
+  const debounceSearchFunc = debounce(() => {
+    console.log("called debounceSomethingFunc");
+  }, 1000);
+
+  const onBlurHandler = () => {
     axios
-      .get(
-        "http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline"
-      )
-      .then((res) => setList(res.data));
+      .get("/product/search", {
+        params: {
+          q: searchInput,
+          page: 1,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  const onChangeSearchInput = useCallback(
+    (e) => {
+      setSearchInput(e.target.value);
+      // debounceSearchFunc();
+    },
+    [searchInput]
+  );
+
+  // const getData = () => {
+  //   axios
+  //     .get(
+  //       "http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline"
+  //     )
+  //     .then((res) => setList(res.data));
+  // };
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   // console.log(list);
   return (
     <Container>
       <Section1>
-        <InputBox />
+        <InputBox
+          onChange={onChangeSearchInput}
+          onBlur={onBlurHandler}
+          value={searchInput}
+        />
       </Section1>
       <Section2>
         <Title>
@@ -94,7 +128,9 @@ const Section1 = styled.div`
   margin-bottom: 65px;
   padding: 0 1rem;
 `;
-const InputBox = styled.input`
+const InputBox = styled.input.attrs({
+  placeholder: "검색할 작품을 입력해주세요",
+})`
   width: 100%;
   height: 104px;
   border-radius: 14px;
@@ -104,6 +140,7 @@ const InputBox = styled.input`
   font-family: "NotoSansCJKkr-Medium";
   padding-left: 34px;
 `;
+
 const Section2 = styled.div`
   padding: 0 1rem;
   display: flex;
