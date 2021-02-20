@@ -1,7 +1,11 @@
-import { useState } from "react";
-import styled from "styled-components";
+import { useEffect, useState } from "react";
+import styled, { css } from "styled-components";
+import styles from "../../styles/colors";
 import Link from "next/link";
 import Menu from "../component/Menu";
+import { useRouter } from "next/router";
+import { GoSearch } from "react-icons/go";
+import { IoPersonCircleSharp } from "react-icons/io5";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +14,14 @@ const Header = () => {
   const onCloseHandler = () => {
     setIsOpen(!isOpen);
   };
+
+  const Test = () => {
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  };
+
+  const router = useRouter();
 
   return (
     <>
@@ -32,22 +44,51 @@ const Header = () => {
             </Link>
           </Logo>
           <List>
-            <ListItem>
+            <ListItem
+              color={router.pathname === "/mypage" ? styles.blue : null}
+            >
               <Link href="/mypage">
                 <a>
-                  <img src="/assets/image/icon_mypage.png" />
-
-                  <Text>MYPAGE</Text>
+                  <PersonIconWrapper>
+                    <IoPersonCircleSharp
+                      size="36px"
+                      color={
+                        router.pathname === "/mypage"
+                          ? styles.white
+                          : styles.blue
+                      }
+                    />
+                  </PersonIconWrapper>
+                  <Text
+                    color={router.pathname === "/mypage" ? styles.white : null}
+                  >
+                    MYPAGE
+                  </Text>
                 </a>
               </Link>
             </ListItem>
 
-            <ListItem>
+            <ListItem
+              color={router.pathname === "/search" ? styles.yellow : null}
+              onClick={Test}
+            >
               <Link href="/search">
                 <a>
-                  <img src="/assets/image/icon_search.png" />
-
-                  <Text>SEARCH</Text>
+                  <SearchWrapper>
+                    <GoSearch
+                      size="24px"
+                      color={
+                        router.pathname === "/search"
+                          ? styles.white
+                          : styles.yellow
+                      }
+                    />
+                  </SearchWrapper>
+                  <Text
+                    color={router.pathname === "/search" ? styles.white : null}
+                  >
+                    SEARCH
+                  </Text>
                 </a>
               </Link>
             </ListItem>
@@ -174,6 +215,11 @@ const ListItem = styled.li`
   position: relative;
   margin-right: 2%;
   cursor: pointer;
+  ${(props) =>
+    props.color &&
+    css`
+      background-color: ${props.color};
+    `}
 
   &:last-child {
     margin-right: 0;
@@ -244,6 +290,11 @@ const Text = styled.div`
   bottom: 0;
   left: 40%;
   line-height: 17px;
+  ${(props) =>
+    props.color &&
+    css`
+      color: ${props.color};
+    `}
 `;
 
 const ClickedText = styled.div`
@@ -252,6 +303,17 @@ const ClickedText = styled.div`
   bottom: 0;
   right: 26px;
   color: #ffffff;
+`;
+
+const SearchWrapper = styled.span`
+  display: inline-block;
+  margin-left: 14px;
+  margin-top: 10px;
+`;
+
+const PersonIconWrapper = styled.span`
+  margin-left: 16px;
+  margin-top: 8px;
 `;
 
 export default Header;

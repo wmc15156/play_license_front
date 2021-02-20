@@ -4,108 +4,131 @@ import Link from "next/link";
 import KeyWord from "../src/component/KeyWord";
 import axios from "axios";
 import { debounce } from "lodash";
+import Tag from "../src/component/Tag/Tag.";
+import { useRouter } from "next/router";
+import useSWR from "swr";
+import fetcher from "../utils/fetcher";
 
 const Search = () => {
   const [list, setList] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [count, setCount] = useState(0);
+  const [typingDone, setTypingDone] = useState(false);
+  const [search, setSearch] = useState("");
+  // const { data, error, revalidate } = useSWR(
+  //   ["/product/search", searchInput],
+  //   fetcher
+  // );
+  const router = useRouter();
 
-  {
-    /* 결과가 있으면 
-    ''검색결과
-
-    결과가 없으면
-    
-    ''검색결과
-     */
-  }
   const debounceSearchFunc = debounce(() => {
     console.log("called debounceSomethingFunc");
   }, 1000);
 
-  const onBlurHandler = () => {
-    axios
-      .get("/product/search", {
-        params: {
-          q: searchInput,
-          page: 1,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const onClickHandler = (id) => () => {
+    console.log("123", id);
+    router.push(`/performance/${id}`);
+  };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log("searchInput", searchInput);
+    if (!searchInput) {
+      console.log("if");
+      setList([]);
+      setCount(0);
+      setTypingDone(false);
+      return;
+    }
+
+    if (searchInput.length > 0) {
+      // revalidate();
+      // console.log(data, "data");
+      console.log("here");
+      axios
+        .get("/product/search", {
+          params: {
+            q: searchInput,
+            page: 1,
+          },
+        })
+        .then((res) => {
+          console.log(res.data, "뭐야");
+          setList(res.data);
+          setCount(res.data.length);
+          setTypingDone(true);
+          setSearch(searchInput);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   const onChangeSearchInput = useCallback(
     (e) => {
       setSearchInput(e.target.value);
-      // debounceSearchFunc();
     },
     [searchInput]
   );
-
-  // const getData = () => {
-  //   axios
-  //     .get(
-  //       "http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline"
-  //     )
-  //     .then((res) => setList(res.data));
-  // };
-
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-
-  // console.log(list);
+  console.log(list, typingDone, "-----");
   return (
     <Container>
       <Section1>
-        <InputBox
-          onChange={onChangeSearchInput}
-          onBlur={onBlurHandler}
-          value={searchInput}
-        />
+        <FormWrapper onSubmit={onSubmitHandler}>
+          <InputBox onChange={onChangeSearchInput} value={searchInput} />
+        </FormWrapper>
       </Section1>
       <Section2>
-        <Title>
-          {} 검색결과 <span>{}건</span>
-        </Title>
+        {typingDone && list.length >= 0 && (
+          <Title>
+            "{search}" 검색결과 <CounterSpan>{count}건</CounterSpan>
+          </Title>
+        )}
         {list && (
           <ListSt>
             {list
               .map((item) => (
-                <Link href={`/performances/${item.id}`}>
-                  <Item key={item.id}>
-                    <a>
-                      <ItemImg>
-                        <img src={item.image_link} alt={item.name} />
-                      </ItemImg>
-                    </a>
-                    <a>
-                      <ItemDesc>
-                        <Category>
-                          <KeyWord />
-                        </Category>
-                        <Ptitle>title:</Ptitle>
-                        <PInfo>
-                          <div>데{}</div>
-                          <Divider>|</Divider>
-                          <div>이{}</div>
-                          <Divider>|</Divider>
-                          <div>터{}</div>
-                        </PInfo>
-                      </ItemDesc>
-                    </a>
-                  </Item>
-                </Link>
+                <Item
+                  key={item.productId}
+                  onClick={onClickHandler(item.productId)}
+                >
+                  <a>
+                    <ItemImg>
+                      <img src={item.poster} alt={item.name} />
+                    </ItemImg>
+                  </a>
+                  <a>
+                    <ItemDesc>
+                      <Category>
+                        <KeyWord />
+                      </Category>
+                      <div>
+                        {item.brokerageConsignments.map((cate, i) => {
+                          return (
+                            <Tag title={cate} id={item.id}>
+                              {cate}
+                            </Tag>
+                          );
+                        })}
+                      </div>
+                      <Ptitle>{item.title}</Ptitle>
+                      <PInfo>
+                        <div>{item.category}</div>
+                        <Divider>|</Divider>
+                        <div>{item.year}</div>
+                        <Divider>|</Divider>
+                        <div>{item.company}</div>
+                      </PInfo>
+                    </ItemDesc>
+                  </a>
+                </Item>
               ))
               .slice(0, 3)}
-            {!list && (
+            {list.length === 0 && typingDone && (
               <None>
-                <img src="/assets/image/logo.png" />
-                <div>검색 결과가 없습니다</div>
+                <img src="/assets/image/search_icon.png" />
+                <NoSearch>검색 결과가 없습니다</NoSearch>
               </None>
             )}
           </ListSt>
@@ -167,6 +190,7 @@ const PInfo = styled.div`
   display: flex;
   font-family: "NotoSansCJKkr-Regular";
   line-height: 14px;
+  opacity: 0.4;
 `;
 const Ptitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
@@ -201,6 +225,7 @@ const Item = styled.li`
   width: 100%;
   height: auto;
   margin-right: 5%;
+  cursor: pointer;
 `;
 
 const ListSt = styled.ul`
@@ -210,5 +235,45 @@ const ListSt = styled.ul`
   display: flex;
 
   flex-wrap: wrap;
+`;
+
+const CounterSpan = styled.span`
+  margin-left: 30px;
+  opacity: 0.3;
+  font-family: NotoSansCJKkr;
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2;
+  letter-spacing: normal;
+  color: #000000;
+`;
+const FormWrapper = styled.form`
+  width: 100%;
+`;
+
+const None = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 400px;
+  justify-content: center;
+`;
+
+const SearchIcon = styled.img`
+  margin-right: 37px;
+`;
+
+const NoSearch = styled.span`
+  font-family: NotoSansCJKkr;
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2;
+  letter-spacing: normal;
+  color: #000000;
+  margin-left: 37px;
 `;
 export default Search;

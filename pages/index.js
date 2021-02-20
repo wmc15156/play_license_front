@@ -51,7 +51,7 @@ const Home = () => {
   const { loading, data, error } = useSelector((state) => state.users?.me);
   const isLogin = useSelector((state) => state.users.isLogin);
   const router = useRouter();
-  console.log(data, "data", isLogin);
+
   const dispatch = useDispatch();
 
   useEffect(() => {

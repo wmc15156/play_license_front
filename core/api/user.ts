@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import { IS_LOGIN_ERROR, IS_LOGIN_SUCCESS } from "@reducers/user";
 
 type LoginData = {
