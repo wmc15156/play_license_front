@@ -6,6 +6,7 @@ import Footer from "../src/component/Footer";
 import axios from "axios";
 import wrapper from "../store/configureStore";
 import { useRouter } from "next/router";
+import { Html } from "next/document";
 
 const url =
   process.env.NODE_ENV === "production"

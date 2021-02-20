@@ -15,12 +15,13 @@ function Login() {
   const [password, onChangePassword] = useInput("");
   const [emailInputError, setEmailInutError] = useState(false);
   const [passwordInputError, setPasswordInputError] = useState(false);
+  const [loginCheck, stLoginCheck] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   const loginError = useSelector((state: RootState) => state.users?.me?.error);
   const me = useSelector((state: RootState) => state.users?.me?.data);
   const isLogin = useSelector((state: RootState) => state.users?.isLogin);
-
+  console.log(me, "me");
   useEffect(() => {
     isLoginCheckRequest(dispatch);
   }, [isLogin]);
@@ -29,6 +30,7 @@ function Login() {
     if (isLogin) {
       alert("로그인이 되어 있습니다. 로그아웃 후 시도 해주세여");
       router.replace("/");
+      return;
     }
   }, [isLogin]);
 
@@ -47,12 +49,13 @@ function Login() {
     if (email && password) {
       const data = { email, password };
       dispatch(loginThunk(data));
+      router.push("/");
     }
   };
 
   return (
     <div className={styles.Parent}>
-      {!me ? (
+      {me ? null : (
         <>
           <div style={{ marginBottom: "22px" }}>
             <strong>BUYER </strong>
@@ -110,7 +113,6 @@ function Login() {
                 style={{
                   display: "inline-block",
                   marginRight: "19.5px",
-                  width: "117px",
                   cursor: "pointer",
                 }}
               >
@@ -132,7 +134,6 @@ function Login() {
                 style={{
                   display: "inline-block",
                   marginLeft: "19.5px",
-                  width: "81px",
                 }}
               >
                 <Link href="/user/help">
@@ -146,7 +147,6 @@ function Login() {
               display: "flex",
               justifyContent: "center",
               flexWrap: "wrap",
-              width: "210px",
             }}
           >
             <div className={styles.Sns}>SNS 계정으로 로그인하기</div>
@@ -172,7 +172,7 @@ function Login() {
             </div>
           </div>
         </>
-      ) : null}
+      )}
     </div>
   );
 }
