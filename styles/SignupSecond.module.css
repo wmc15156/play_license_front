@@ -28,23 +28,22 @@
   width: 580px;
   height: 3px;
   border: none;
-  background-color: #FFCC5C;
+  background-color: #ffcc5c;
   margin-top: 27px;
 }
 
 .NameInput {
   width: 580px;
   height: 60px;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   border: none;
   border-radius: 8px;
   text-indent: 22px;
   margin-top: 20px;
 }
 
-
 .RedColor {
-  color: #FF6F69;
+  color: #ff6f69;
   font-weight: bold;
 }
 
@@ -52,7 +51,7 @@
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   margin-top: 35px;
   display: inline-flex;
   justify-content: center;
@@ -90,6 +89,10 @@
 
 .Agreement:hover {
   cursor: pointer;
+}
+
+.SignupButton {
+  margin-top: 35px;
 }
 
 .FormBox {
