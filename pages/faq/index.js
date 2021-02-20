@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import FaqSection1 from "../src/component/FAQ/FaqSection1";
-import FaqSection2 from "../src/component/FAQ/FaqSection2";
+import FaqSection1 from "../../src/component/FAQ/FaqSection1";
+import FaqSection2 from "../../src/component/FAQ/FaqSection2";
 
 const FAQ = () => {
   return (
