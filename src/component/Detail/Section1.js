@@ -7,46 +7,78 @@ import SangSangMaru from "../SangSangMaru";
 import PurchaseBtn from "../Button/PurchaseBtn";
 import HeartBtn from "../Button/HeartBtn";
 import CalcBtn from "../Button/CalcBtn";
+import useModal from "../../../utils/useModal";
+import AlertModal from "../Modal/AlertModal";
+import CalcModal from "../Modal/CalcModal";
 
-const Section1 = ({ item }) => {
+const Section1 = ({ item, savedStatus }) => {
   const router = useRouter();
-  const keywordArr = ["a", "공연", "c"];
-
-  // 찜 버튼 상태
-  const [isSaving, setIsSaving] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
-  // 찜여부 t/f를 useState()에 넣기
+  const { openModal, closeModal, ModalPortal } = useModal();
+  const param = router.query.id;
+  const ADD_URL = `/product/${router.query.id}/add-item`;
+  const [isSaving, setIsSaving] = useState(false); // 찜하기 중
+  // console.log("넘어온savedStatus", savedStatus, typeof savedStatus);
+  const [isSaved, setIsSaved] = useState(true);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [calcModalOpen, setCalcModalOpen] = useState(false);
 
   const go = () => {
     router.push(`/performances/${router.query.id}/buy`);
   };
 
-  const heartHandler = () => {
-    setIsSaved(!isSaved);
+  const redirectHandler = () => {
+    router.push("/login");
+  };
+
+  const loginModalHandler = () => {
+    if (loginModalOpen) {
+      openModal();
+    }
   };
 
   const addToHeart = (e) => {
-    // 누를때마다 찜여부(isSaved)를 서버로 post.
     e.preventDefault();
     setIsSaving(true);
-    heartHandler();
+    postHandler();
+    setIsSaving(false);
+  };
 
-    setTimeout(() => {
-      setIsSaving(false);
-      heartHandler(true);
-    }, 2000);
+  const openCalcModal = () => {
+    setCalcModalOpen(true);
+    if (calcModalOpen) {
+      openModal();
+    }
+  };
 
-    // axios.post("/").then((res) => {
-    //   if (res.code === 200) {
-    //     setIsSaving(false);
-    //     setIsSaved(true);
-    //   }
-    // });
+  const postHandler = () => {
+    if (!isSaved) {
+      axios
+        .post(ADD_URL, param)
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res, "찜하기 추가성공????");
+            setIsSaved(true);
+            return;
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            console.log("로그인하고오기");
+            setLoginModalOpen(true);
+            loginModalHandler();
+          }
+        });
+    } else if (isSaved) {
+      console.log("찜하기 해제");
+      setIsSaved(false);
+      // 찜하기에서 삭제
+      // axios.post()
+      return;
+    }
   };
 
   return (
     <Item>
-      {/* {이미지, 정보}, {상상마루제작}, 버튼모음 */}
       <ItemImg>
         <img src={item.image_link} alt={item.name} />
       </ItemImg>
@@ -54,7 +86,7 @@ const Section1 = ({ item }) => {
       <SecondColumn>
         <ItemDesc>
           <Category>
-            <KeyWord words={keywordArr} />
+            <KeyWord />
           </Category>
           <Ptitle>title:{}</Ptitle>
           <PInfo>
@@ -81,9 +113,15 @@ const Section1 = ({ item }) => {
               onClickHandler={addToHeart}
             />
           </HeartContainer>
-          <CalcBtn />
+          <CalcBtn onClickHandler={openCalcModal} />
         </Btns>
       </BtnContainer>
+      <ModalPortal>
+        {loginModalOpen && (
+          <AlertModal text={"로그인해주세요"} onClickBtn={redirectHandler} />
+        )}
+        {calcModalOpen && <CalcModal text={"가견적 계산하기"} />}
+      </ModalPortal>
     </Item>
   );
 };

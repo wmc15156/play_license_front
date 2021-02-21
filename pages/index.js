@@ -10,43 +10,6 @@ import { isLoginCheckRequest, loadMyInfoThunk } from "../reducers/user";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
-const Container = styled.div`
-  max-width: 924px;
-  display: flex;
-  min-height: 100%;
-  padding: 0 1rem;
-  flex-direction: column;
-  margin: 0 auto;
-`;
-
-const CarouselSection = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const HotSection = styled.div`
-  width: 100%;
-  height: 500px;
-`;
-
-const NewSection = styled.div`
-  width: 100%;
-  height: 710px;
-`;
-
-const UpcomingSection = styled.div`
-  width: 100%;
-  height: 710px;
-`;
-const BannerSection = styled.div`
-  width: 100%;
-  height: auto;
-  margin-bottom: 115px;
-  & > img {
-    width: 100%;
-  }
-`;
-
 const Home = () => {
   const { loading, data, error } = useSelector((state) => state.users?.me);
   const isLogin = useSelector((state) => state.users.isLogin);
@@ -108,5 +71,42 @@ const Home = () => {
     </Container>
   );
 };
+
+const Container = styled.div`
+  max-width: 924px;
+  display: flex;
+  min-height: 100%;
+  padding: 0 1rem;
+  flex-direction: column;
+  margin: 0 auto;
+`;
+
+const CarouselSection = styled.div`
+  width: 100%;
+  height: 100%;
+`;
+
+const HotSection = styled.div`
+  width: 100%;
+  height: 500px;
+`;
+
+const NewSection = styled.div`
+  width: 100%;
+  height: 710px;
+`;
+
+const UpcomingSection = styled.div`
+  width: 100%;
+  height: 710px;
+`;
+const BannerSection = styled.div`
+  width: 100%;
+  height: auto;
+  margin-bottom: 115px;
+  & > img {
+    width: 100%;
+  }
+`;
 
 export default Home;

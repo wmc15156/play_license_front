@@ -1,26 +1,12 @@
 import styled from "styled-components";
 import { useEffect } from "react";
 
-const fontColor = {};
-
 const HeartBtn = ({ text = "찜하기", status, currStatus, onClickHandler }) => {
-  console.log("찜?", status, "찜하는중?", currStatus);
   useEffect(() => {
-    if (status) {
-      fontColor.color = "#ff6f69";
-      fontColor.opacity = 1;
-    }
-    if (!status) {
-      fontColor.color = "#000000";
-      fontColor.opacity = 0.4;
-    }
-
-    // 찜 => 찜하기 글자색 o
-    // 찜 x => 찜하기 회색
+    console.log("status???", status);
   }, [status]);
-
   return (
-    <Container onClick={onClickHandler} style={fontColor}>
+    <Container status={status} onClick={onClickHandler}>
       {!currStatus && (
         <>
           <img src="/assets/image/heart.png" />
@@ -52,6 +38,22 @@ const Container = styled.div`
   color: "#000000";
   opacity: 0.4;
   align-items: center;
+
+  color: ${(props) => {
+    if (props.status) {
+      return "#ff6f69";
+    } else if (!props.status) {
+      return "#000000";
+    }
+  }};
+
+  opacity: ${(props) => {
+    if (props.status) {
+      return 1;
+    } else if (!props.status) {
+      return 0.4;
+    }
+  }};
 
   & > img {
     width: 24px;
