@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isLoginCheckRequest, loadMyInfoThunk } from "../../../reducers/user";
 
 import axios from "axios";
-import HighlightVideo from "../Detail/HighlightVideo";
+import HighlightVideo from "../PerformanceDetail/HighlightVideo";
 import About from "./About";
 import Section1 from "./Section1";
 

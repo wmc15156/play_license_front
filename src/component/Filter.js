@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import useModal from "../../utils/useModal";
-import FilterModal from "./FilterModal";
+import FilterModal from "./Modal/FilterModal";
 
 const Filter = () => {
   const { openModal, ModalPortal } = useModal();

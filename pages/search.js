@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import KeyWord from "../src/component/KeyWord";
 import axios from "axios";
 import { debounce } from "lodash";
 import Tag from "../src/component/Tag/Tag.";
@@ -27,7 +26,7 @@ const Search = () => {
 
   const onClickHandler = (id) => () => {
     console.log("123", id);
-    router.push(`/performance/${id}`);
+    router.push(`/performances/${id}`);
   };
 
   const onSubmitHandler = (e) => {
@@ -100,9 +99,6 @@ const Search = () => {
                   </a>
                   <a>
                     <ItemDesc>
-                      <Category>
-                        <KeyWord />
-                      </Category>
                       <div>
                         {item.brokerageConsignments.map((cate, i) => {
                           return (
