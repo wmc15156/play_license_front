@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
-import KeyWord from "../KeyWord";
+import Tag from "../Tag/Tag.";
 import HeartBtn from "../Button/Heart";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -8,35 +8,52 @@ import axios from "axios";
 
 const Favorites = () => {
   const router = useRouter();
-  const url = "/product/cart";
+  const GET_URL = "/product/cart";
+  // const POST_URL = `/product/${router.query.id}/add-item`;
+  // const DELETE_URL = `/product/${router.query.id}/cart`;
+
   const [isFav, setIsFav] = useState(true);
   const [list, setList] = useState([]);
 
   const getData = () => {
-    axios.get(url).then((res) => {
+    axios.get(GET_URL).then((res) => {
       setList(res.data);
     });
   };
 
-  const postHandler = () => {
-    if (!isFav) {
+  const heartBtnHandler = (id) => {
+    const param = id;
+
+    if (isFav) {
       // remove from cart
+      axios
+        .delete(`/product/${id}/cart`)
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res, "delete resp");
+            setIsFav(false);
+            return;
+          }
+        })
+        .catch((err) => console.error(err));
+
       return;
-    } else if (isFav) {
-      // cart에 다시 post
-      let url = `/product/${router.query.id}/add-item`;
+    } else if (!isFav) {
+      axios
+        .post(`/product/${id}/add-item`, param)
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res, "post resp");
+            setIsFav(true);
+            return;
+          }
+        })
+        .catch((err) => console.error(err));
       return;
     }
-  };
 
-  const heartBtnHandler = () => {
-    axios
-      .post("")
-      .then((res) => setIsFav(!isFav))
-      .catch((err) => console.error(err));
-    setIsFav(!isFav); //바꾸고 서버로
-    console.log(isFav, "isFav????");
-    postHandler();
+    // setIsFav(!isFav); //바꾸고 서버로
+    // console.log(isFav, "isFav????");
   };
 
   useEffect(() => {
@@ -60,21 +77,30 @@ const Favorites = () => {
             <ItemDesc>
               <Link href={`/performances/${item.productId}`}>
                 <a>
-                  <Category>
-                    <KeyWord />
-                  </Category>
+                  <div>
+                    {/* {item.brokerageConsignments.map((cate, i) => {
+                      return (
+                        <Tag title={cate} id={item.id}>
+                          {cate}
+                        </Tag>
+                      );
+                    })} */}
+                  </div>
                   <Ptitle>{item.title}</Ptitle>
                   <PInfo>
                     <div>{item.category}</div>
                     <Divider>|</Divider>
                     <div>{item.year}</div>
                     <Divider>|</Divider>
-                    <div>{item.genre}</div>
+                    <div>{item.company}</div>
                   </PInfo>
                 </a>
               </Link>
               <Btn>
-                <HeartBtn state={isFav} onClickHandler={heartBtnHandler} />
+                <HeartBtn
+                  state={isFav}
+                  onClickHandler={() => heartBtnHandler(item.productId)}
+                />
               </Btn>
             </ItemDesc>
           </Item>

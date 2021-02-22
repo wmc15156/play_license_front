@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { API_URL } from "../../config/API_URL";
 import List from "../../src/component/List";
-import Category from "../../src/component/Category";
+import Curation from "../../src/component/Curation/CurationBlocks";
 import Loader from "../../src/component/Loader";
 
 const Market = (props) => {
@@ -24,7 +24,7 @@ const Market = (props) => {
   return (
     <Container>
       {/* category */}
-      <Category />
+      <Curation />
       {isLoading && (
         <LoaderContainer>
           <Loader />

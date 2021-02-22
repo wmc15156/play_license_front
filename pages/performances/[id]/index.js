@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import axios from "axios";
-import PerformanceDetail from "../../../src/component/Detail/PerformanceDetail";
+import PerformanceDetail from "../../../src/component/PerformanceDetail/PerformanceDetail";
 import { API_URL } from "../../../config/API_URL";
 
 const Container = styled.div`
