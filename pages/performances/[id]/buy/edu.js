@@ -6,6 +6,7 @@ import PerformanceInfo from "../../../../src/component/Form/PerformanceInfo";
 import UserInfo from "../../../../src/component/Form/UserInfo";
 import Notice from "../../../../src/component/GrayNotice";
 import Btn from "../../../../src/component/Button/SignUpButton";
+import CheckBox from "../../../../src/component/CheckBox";
 import useModal from "../../../../utils/useModal";
 import AlertModal from "../../../../src/component/Modal/AlertModal";
 
