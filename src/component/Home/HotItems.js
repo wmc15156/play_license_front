@@ -1,13 +1,43 @@
 import styled from "styled-components";
-import KeyWord from "../KeyWord";
+import Tag from "../Tag/Tag.";
 
-const Category = styled.div`
-  width: 100%;
-  height: 28px;
-  display: flex;
-  position: absolute;
-  bottom: 88px;
-`;
+const HotItems = ({ list }) => {
+  const keywordArr = ["a", "공연", "c"];
+  return (
+    <Container>
+      <Title>HOT</Title>
+      <List>
+        {list.map((item, idx) => (
+          <Item key={idx}>
+            <ItemImg>
+              <img src={item.image_link} alt={item.name} />
+            </ItemImg>
+            <ItemDesc>
+              <div>description: {item.name}</div>
+              <div>
+                {/* {item.brokerageConsignments.map((cate, i) => {
+                  return (
+                    <Tag title={cate} id={item.id}>
+                      {cate}
+                    </Tag>
+                  );
+                })} */}
+              </div>
+              <Ptitle>title:</Ptitle>
+              <PInfo>
+                <div>데{}</div>
+                <Divider>|</Divider>
+                <div>이{}</div>
+                <Divider>|</Divider>
+                <div>터{}</div>
+              </PInfo>
+            </ItemDesc>
+          </Item>
+        ))}
+      </List>
+    </Container>
+  );
+};
 
 const Divider = styled.div`
   margin: 0 6px;
@@ -41,8 +71,7 @@ const ItemImg = styled.div`
   height: 100%;
   & > img {
     border-right: 1px solid gray;
-    min-width: 276px;
-    width: 100%;
+    width: 276px;
     height: auto;
   }
 `;
@@ -75,38 +104,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  margin-top: 116px;
 `;
-
-const HotItems = ({ list }) => {
-  const keywordArr = ["a", "공연", "c"];
-  return (
-    <Container>
-      <Title>HOT</Title>
-      <List>
-        {list.map((item, idx) => (
-          <Item key={idx}>
-            <ItemImg>
-              <img src={item.image_link} alt={item.name} />
-            </ItemImg>
-            <ItemDesc>
-              <div>description: {item.name}</div>
-              <Category>
-                <KeyWord words={keywordArr} />
-              </Category>
-              <Ptitle>title:</Ptitle>
-              <PInfo>
-                <div>데{}</div>
-                <Divider>|</Divider>
-                <div>이{}</div>
-                <Divider>|</Divider>
-                <div>터{}</div>
-              </PInfo>
-            </ItemDesc>
-          </Item>
-        ))}
-      </List>
-    </Container>
-  );
-};
 
 export default HotItems;

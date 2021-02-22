@@ -1,5 +1,41 @@
 import styled from "styled-components";
-import KeyWord from "../KeyWord";
+import Tag from "../Tag/Tag.";
+
+const NewItems = ({ list }) => {
+  return (
+    <Container>
+      <Title>New</Title>
+      <List>
+        {list.map((item, idx) => (
+          <Item key={idx}>
+            <ItemImg>
+              <img src={item.image_link} alt={item.name} />
+            </ItemImg>
+            <ItemDesc>
+              <Category>
+                {/* {item.brokerageConsignments.map((cate, i) => {
+                  return (
+                    <Tag title={cate} id={item.id}>
+                      {cate}
+                    </Tag>
+                  );
+                })} */}
+              </Category>
+              <Ptitle>title:</Ptitle>
+              <PInfo>
+                <div>데{}</div>
+                <Divider>|</Divider>
+                <div>이{}</div>
+                <Divider>|</Divider>
+                <div>터{}</div>
+              </PInfo>
+            </ItemDesc>
+          </Item>
+        ))}
+      </List>
+    </Container>
+  );
+};
 
 const Category = styled.div`
   width: 100%;
@@ -36,8 +72,8 @@ const ItemImg = styled.div`
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
 
   & > img {
-    min-width: 276px;
-    width: 100%;
+    width: 276px;
+    /* width: 100%; */
     height: auto;
   }
 `;
@@ -71,36 +107,5 @@ const Container = styled.div`
   height: 100%;
   overflow: hidden;
 `;
-
-const NewItems = ({ list }) => {
-  const keywordArr = ["a", "공연", "c"];
-  return (
-    <Container>
-      <Title>New</Title>
-      <List>
-        {list.map((item, idx) => (
-          <Item key={idx}>
-            <ItemImg>
-              <img src={item.image_link} alt={item.name} />
-            </ItemImg>
-            <ItemDesc>
-              <Category>
-                <KeyWord words={keywordArr} />
-              </Category>
-              <Ptitle>title:</Ptitle>
-              <PInfo>
-                <div>데{}</div>
-                <Divider>|</Divider>
-                <div>이{}</div>
-                <Divider>|</Divider>
-                <div>터{}</div>
-              </PInfo>
-            </ItemDesc>
-          </Item>
-        ))}
-      </List>
-    </Container>
-  );
-};
 
 export default NewItems;
