@@ -1,0 +1,14 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  /* height: 462px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container img {
+  width: 95%;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}

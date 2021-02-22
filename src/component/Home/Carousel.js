@@ -1,66 +1,109 @@
-import CarouselImg from "./CarouselImg";
 import styled from "styled-components";
-import img1 from "../../public/assets/image/logo.png";
-import img2 from "../../public/assets/image/icon_mypage.png";
-import img3 from "../../public/assets/image/icon_search.png";
+import stylesCarousel from "../../../styles/Carousel.module.css";
+import { useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import image2 from "../../../public/assets/image/carousel1.png";
+import image3 from "../../../public/assets/image/carousel2.png";
 
-import { useState, useRef, useEffect } from "react";
-
-const Container = styled.div`
-  width: 100%;
-  overflow: hidden;
-`;
-const Button = styled.button`
-  all: unset;
-  border: 1px solid coral;
-  padding: 0.5em 2em;
-  color: coral;
-  border-radius: 10px;
-  &:hover {
-    transition: all 0.3s ease-in-out;
-    background-color: coral;
-    color: #fff;
-  }
-`;
-const SliderContainer = styled.div`
-  width: 100%;
-  display: flex;
-`;
-
-const TOTAL_SLIDES = 3;
+const images = [image2, image3, image2, image3];
+const defaultStyles = {
+  borderRadius: "50%",
+  background: "#000000",
+  opacity: 0.4,
+  width: "0.5rem",
+  height: "0.5rem",
+};
+const focusStyles = {
+  // focus
+  borderRadius: "50%",
+  width: "0.5rem",
+  height: "0.5rem",
+  background: "#ff6f69",
+};
+const activeImgStyles = {
+  transition: "opacity 3s ease",
+  opacity: 1,
+};
+const defaultImgStyles = {
+  transition: "opacity 3s ease",
+  opacity: 0.2,
+};
 
 const Carousel = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const slideRef = useRef(null);
-  const nextSlide = () => {
-    if (currentSlide >= TOTAL_SLIDES) {
-      setCurrentSlide(0);
-    } else {
-      setCurrentSlide(currentSlide + 1);
-    }
+  const [imageIdx, setImageIdx] = useState(0);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 2000,
+    centerMode: true,
+    slidesToShow: 1,
+    arrows: false,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    beforeChange: (current, next) => setImageIdx(next),
+    appendDots: (dots) => {
+      return (
+        <div>
+          <ul
+            style={{
+              listStyle: "none",
+              margin: 0,
+              padding: 0,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {dots.map((item, idx) => {
+              return (
+                <li
+                  style={{
+                    margin: "0 6px",
+                    display: "flex",
+                  }}
+                  key={idx}
+                >
+                  {item.props.children}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      );
+    },
+    customPaging: (i) => {
+      return <div style={i === imageIdx ? focusStyles : defaultStyles}></div>;
+    },
   };
-  const prevSlide = () => {
-    if (currentSlide === 0) {
-      setCurrentSlide(TOTAL_SLIDES);
-    } else {
-      setCurrentSlide(currentSlide - 1);
-    }
-  };
-  useEffect(() => {
-    slideRef.current.style.transition = "all 0.5s ease-in-out";
-    slideRef.current.style.transform = `translateX(-${currentSlide}00%)`; // 백틱을 사용하여 슬라이드로 이동하는 애니메이션을 만듭니다.
-  }, [currentSlide]);
   return (
-    <Container>
-      {currentSlide}
-      <SliderContainer ref={slideRef}>
-        <CarouselImg img={img1} />
-        <CarouselImg img={img2} />
-        <CarouselImg img={img3} />
-      </SliderContainer>
-      <Button onClick={prevSlide}>Previous Slide</Button>
-      <Button onClick={nextSlide}>Next Slide</Button>
-    </Container>
+    <div className={stylesCarousel.container}>
+      <Slider {...settings}>
+        {images.map((img, idx) => (
+          <div>
+            <img
+              src={img}
+              alt={img}
+              style={idx === imageIdx ? activeImgStyles : defaultImgStyles}
+            />
+          </div>
+        ))}
+      </Slider>
+    </div>
   );
 };
+
+const Container = styled.div`
+  /* width: 100%; */
+`;
+
+const SliderContainer = styled.div`
+  width: 100%;
+  & > img {
+    width: 80%;
+  }
+`;
+
 export default Carousel;
