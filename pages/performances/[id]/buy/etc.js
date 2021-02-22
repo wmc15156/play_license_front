@@ -6,20 +6,40 @@ import PerformanceInfo from "../../../../src/component/Form/PerformanceInfo";
 import UserInfo from "../../../../src/component/Form/UserInfo";
 import Notice from "../../../../src/component/GrayNotice";
 import Btn from "../../../../src/component/Button/SignUpButton";
+import CheckBox from "../../../../src/component/CheckBox";
+import useModal from "../../../../utils/useModal";
+import AlertModal from "../../../../src/component/Modal/AlertModal";
+
+const notice = {
+  title: "안내사항",
+  body1: "1. 최종 제공 자료는 협의 후 달라질 수 있습니다.",
+  body2:
+    "2. 협의되지 않은 자료의 복사, 활용은 저작권 침해로 법적 책임을 질 수 있습니다.",
+};
 
 const Etc = ({ image }) => {
   const router = useRouter();
+  const { openModal, ModalPortal, closeModal } = useModal();
+  const [checked, setChecked] = useState(false);
 
   const next = () => {
     router.push(`/performances/${router.query.id}/buy/complete`);
   };
-
-  const notice = {
-    title: "안내사항",
-    body1: "1. 최종 제공 자료는 협의 후 달라질 수 있습니다.",
-    body2:
-      "2. 협의되지 않은 자료의 복사, 활용은 저작권 침해로 법적 책임을 질 수 있습니다.",
+  const handleChange = (e) => {
+    e.persist();
+    setChecked((prevState) => !prevState);
   };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    if (!checked) {
+      // alert("개인정보 수집 및 이용에 동의해주세요.");
+      openModal();
+      return;
+    }
+    next();
+  };
+
   return (
     <Container>
       <HeadSection>
@@ -44,8 +64,16 @@ const Etc = ({ image }) => {
         </Wrap>
       </BoxSection>
       <Notice title={notice.title} body1={notice.body1} body2={notice.body2} />
-      <Check>안내사항을 확인했습니다</Check>
-      <Btn text={"구매문의 완료하기"} onClickHandler={next} />
+      <CheckSection>
+        <CheckBox checked={checked} handleChange={handleChange} />
+        <Check>안내사항을 확인했습니다</Check>
+      </CheckSection>
+      <BtnSection>
+        <Btn text={"구매문의 완료하기"} onClickHandler={onSubmitHandler} />
+      </BtnSection>
+      <ModalPortal>
+        <AlertModal text={"내용을 모두 입력해주세요"} onClickBtn={closeModal} />
+      </ModalPortal>
     </Container>
   );
 };
@@ -55,6 +83,7 @@ const Container = styled.div`
   padding: 0 1rem;
   margin: 0 auto;
   font-family: "NotoSansCJKkr-Medium";
+  margin-bottom: 143px;
 `;
 
 const HeadSection = styled.div`
@@ -100,5 +129,13 @@ const BoxSection = styled.div`
 const Wrap = styled.div`
   margin-bottom: 40px;
 `;
+const CheckSection = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 33px;
+`;
 const Check = styled.div``;
+const BtnSection = styled.div`
+  margin-top: 44px;
+`;
 export default Etc;

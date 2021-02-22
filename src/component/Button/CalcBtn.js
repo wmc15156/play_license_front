@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 // performance/:id 구매하기버튼
-const CalcBtn = () => {
+const CalcBtn = ({ onClickHandler }) => {
   return (
-    <Container>
+    <Container onClick={onClickHandler}>
       <span>가견적 계산하기</span>
     </Container>
   );

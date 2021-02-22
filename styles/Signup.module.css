@@ -21,7 +21,7 @@
 
 .GrayLine {
   width: 580px;
-  background-color: #9E9E9E;
+  background-color: #9e9e9e;
   height: 3px;
   border: none;
   margin-top: 27px;
@@ -29,7 +29,7 @@
 
 .YellowLine {
   width: 290px;
-  background-color: #FFCC5C;
+  background-color: #ffcc5c;
   z-index: 5;
   height: 3px;
   border: none;
@@ -46,13 +46,13 @@
 }
 
 .RedColor {
-  color: #FF6F69
+  color: #ff6f69;
 }
 
 .LoginInput {
   width: 580px;
   height: 60px;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   border: none;
   border-radius: 8px;
   text-indent: 22px;
@@ -69,9 +69,9 @@
   margin-top: 74px;
 }
 
-
 .PasswordCheck {
   margin-top: 30px;
+  margin-bottom: 35px;
 }
 
 .NextButton {
@@ -79,11 +79,11 @@
   height: 60px;
   border-radius: 8px;
   border: none;
-  background-color: #FF6F69;
+  background-color: #ff6f69;
   color: white;
   font-family: Helvetica, sans-serif;
   font-size: 21px;
-  margin-top: 68px
+  margin-top: 68px;
 }
 
 .NextButton:hover {

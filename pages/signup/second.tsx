@@ -193,7 +193,9 @@ function SignUpSecond() {
             </span>
             <span style={{ fontSize: "18px" }}>개인정보 수집 및 동의</span>
             <span className={styles.Agreement}>자세히 보기</span>
+            <div className={styles.SignupButton}>
             <SignUpButton text={"가입하기"} onClickHandler={onSubmitHandler} />
+            </div>
           </div>
         </form>
       </div>

@@ -3,20 +3,40 @@ import Link from "next/link";
 import KeyWord from "../KeyWord";
 import HeartBtn from "../Button/Heart";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import axios from "axios";
 
-const Favorites = ({ list }) => {
-  const keywordArr = ["a", "b", "c"];
+const Favorites = () => {
+  const router = useRouter();
+  const url = "/product/cart";
   const [isFav, setIsFav] = useState(true);
+  const [list, setList] = useState([]);
 
   const getData = () => {
-    // axios.get('').then((res)=> setIsFav(res.data))
+    axios.get(url).then((res) => {
+      setList(res.data);
+    });
+  };
+
+  const postHandler = () => {
+    if (!isFav) {
+      // remove from cart
+      return;
+    } else if (isFav) {
+      // cart에 다시 post
+      let url = `/product/${router.query.id}/add-item`;
+      return;
+    }
   };
 
   const heartBtnHandler = () => {
-    // axios.post('').then((res)=> setIsFav(!isFav)).catch(err=>console.err(err))
-    setIsFav(!isFav);
-    console.log(isFav, "???");
+    axios
+      .post("")
+      .then((res) => setIsFav(!isFav))
+      .catch((err) => console.error(err));
+    setIsFav(!isFav); //바꾸고 서버로
+    console.log(isFav, "isFav????");
+    postHandler();
   };
 
   useEffect(() => {
@@ -26,37 +46,39 @@ const Favorites = ({ list }) => {
   return (
     <Container>
       <ListSt>
-        {/* {list.map((item) => ( */}
-        {/* <Link href={`/performances/${item.id}`}> */}
-        {/* <Item key={item.id}> */}
-        <Item>
-          <a>
-            <ItemImg>
-              {/* <img src={item.image_link} alt={item.name} /> */}
-              ㅇㅇ
-            </ItemImg>
-          </a>
-          <a>
+        {list.map((item) => (
+          <Item key={item.productId}>
+            {/* <Item> */}
+            <Link href={`/performances/${item.productId}`}>
+              <a>
+                <ItemImg>
+                  <img src={item.poster} alt={item.title} />
+                </ItemImg>
+              </a>
+            </Link>
+
             <ItemDesc>
-              <Category>
-                <KeyWord words={keywordArr} />
-              </Category>
-              <Ptitle>title:</Ptitle>
-              <PInfo>
-                <div>데{}</div>
-                <Divider>|</Divider>
-                <div>이{}</div>
-                <Divider>|</Divider>
-                <div>터{}</div>
-              </PInfo>
+              <Link href={`/performances/${item.productId}`}>
+                <a>
+                  <Category>
+                    <KeyWord />
+                  </Category>
+                  <Ptitle>{item.title}</Ptitle>
+                  <PInfo>
+                    <div>{item.category}</div>
+                    <Divider>|</Divider>
+                    <div>{item.year}</div>
+                    <Divider>|</Divider>
+                    <div>{item.genre}</div>
+                  </PInfo>
+                </a>
+              </Link>
               <Btn>
                 <HeartBtn state={isFav} onClickHandler={heartBtnHandler} />
               </Btn>
             </ItemDesc>
-          </a>
-        </Item>
-        {/* </Link> */}
-        {/* ))} */}
+          </Item>
+        ))}
       </ListSt>
     </Container>
   );
@@ -102,7 +124,6 @@ const ItemImg = styled.div`
   height: 386px;
   border-radius: 8px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
-  border: 1px solid gray;
   & > img {
     min-width: 276px;
     width: 100%;
@@ -134,5 +155,6 @@ const Btn = styled.div`
   position: absolute;
   right: 34px;
   top: 37px;
+  cursor: pointer;
 `;
 export default Favorites;
