@@ -15,7 +15,9 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
 
-  const Test = () => {
+  const changePage = (page = "") => () => {
+    console.log("click");
+    router.push(`/${page}`);
     if (isOpen) {
       setIsOpen(false);
     }
@@ -27,7 +29,7 @@ const Header = () => {
     <>
       {!isOpen && (
         <Container>
-          <Logo>
+          <Logo onClick={changePage()}>
             <Link href="/">
               <a>
                 <Img src="/assets/image/logo.png" alt="" />
@@ -45,52 +47,37 @@ const Header = () => {
           </Logo>
           <List>
             <ListItem
+              onClick={changePage("mypage")}
               color={router.pathname === "/mypage" ? styles.blue : null}
             >
-              <Link href="/mypage">
-                <a>
-                  <PersonIconWrapper>
-                    <IoPersonCircleSharp
-                      size="36px"
-                      color={
-                        router.pathname === "/mypage"
-                          ? styles.white
-                          : styles.blue
-                      }
-                    />
-                  </PersonIconWrapper>
-                  <Text
-                    color={router.pathname === "/mypage" ? styles.white : null}
-                  >
-                    MYPAGE
-                  </Text>
-                </a>
-              </Link>
+              <PersonIconWrapper>
+                <IoPersonCircleSharp
+                  size="36px"
+                  color={
+                    router.pathname === "/mypage" ? styles.white : styles.blue
+                  }
+                />
+              </PersonIconWrapper>
+              <Text color={router.pathname === "/mypage" ? styles.white : null}>
+                MYPAGE
+              </Text>
             </ListItem>
 
             <ListItem
+              onClick={changePage("search")}
               color={router.pathname === "/search" ? styles.yellow : null}
-              onClick={Test}
             >
-              <Link href="/search">
-                <a>
-                  <SearchWrapper>
-                    <GoSearch
-                      size="24px"
-                      color={
-                        router.pathname === "/search"
-                          ? styles.white
-                          : styles.yellow
-                      }
-                    />
-                  </SearchWrapper>
-                  <Text
-                    color={router.pathname === "/search" ? styles.white : null}
-                  >
-                    SEARCH
-                  </Text>
-                </a>
-              </Link>
+              <SearchWrapper>
+                <GoSearch
+                  size="24px"
+                  color={
+                    router.pathname === "/search" ? styles.white : styles.yellow
+                  }
+                />
+              </SearchWrapper>
+              <Text color={router.pathname === "/search" ? styles.white : null}>
+                SEARCH
+              </Text>
             </ListItem>
             <ListItem onClick={onCloseHandler}>
               <img src="/assets/image/icon_hamburger.png" />
@@ -162,12 +149,14 @@ const OpenContainer = styled.div`
   margin: 48px auto;
   padding: 0 1rem;
   background-color: #ffffff;
+  z-index: 1;
 `;
 
 const Container2 = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  z-index: auto;
 `;
 
 const Container = styled.div`
@@ -204,6 +193,7 @@ const List = styled.div`
   display: flex;
   margin-left: auto;
   width: 530px;
+  z-index: 10;
 `;
 
 const ListItem = styled.div`
@@ -215,6 +205,7 @@ const ListItem = styled.div`
   position: relative;
   margin-right: 2%;
   cursor: pointer;
+  z-index: 5;
   ${(props) =>
     props.color &&
     css`
