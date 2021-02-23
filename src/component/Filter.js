@@ -27,7 +27,7 @@ const Container = styled.div`
   width: 380px;
   margin-left: auto;
 `;
-const Filtering = styled.div`
+export const Filtering = styled.div`
   display: flex;
   width: 100%;
   height: 48px;

@@ -1,11 +1,15 @@
 import styles from "../../styles/UserHelp.module.css";
 import styled, { css } from "styled-components";
+import axios from "axios";
 
 import { useState } from "react";
 import SignUpButton from "../../src/component/Button/SignUpButton";
 import useInput from "../../utils/useInput";
-import axios from "axios";
+import useModal from "@utils/useModal";
 import { useRouter } from "next/router";
+import { Filtering } from "@src/component/Filter";
+import FilterModal from "@src/component/FilterModal";
+import FindEMail from "@src/component/Modal/FindEmail";
 
 const EmailOrPAsswordBox = styled.div`
   display: flex;
@@ -40,6 +44,7 @@ const AuthenticationButton = styled.button`
   font-size: 21px;
   margin-top: 35px;
   opacity: ${(props) => (props.color === "#979797" ? 0.2 : 1)};
+  outline: 0;
   &:hover {
     cursor: pointer;
   }
@@ -62,6 +67,7 @@ function UserHelp() {
   const [emailInputDone, setEmailInputDone] = useState(false);
   const [email, onChangeEmail] = useInput("");
   const [emailValidationError, setEmailValidationError] = useState(false);
+  const { openModal, ModalPortal } = useModal();
   const router = useRouter();
 
   const onClickEmail = () => {
@@ -75,9 +81,11 @@ function UserHelp() {
   };
 
   const onClickHandler = () => {
-    console.log("here");
+    if (clcikEmail) {
+      openModal();
+    }
+
     if (clickPassword) {
-      console.log("request");
       axios
         .get("/user/forgot-password/by-email", { params: { email } })
         .then((res) => {
@@ -94,7 +102,6 @@ function UserHelp() {
   };
 
   const onBlurHandler = () => {
-    console.log("check");
     const regExp = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
     if (email && email.match(regExp)) {
       setEmailInputDone(true);
@@ -142,12 +149,17 @@ function UserHelp() {
       </div>
 
       <AuthenticationButton
-        disabled={!emailInputDone}
+        disabled={!emailInputDone && !clcikEmail}
         onClick={onClickHandler}
-        color={emailInputDone ? "#FF6F69" : "#979797"}
+        color={emailInputDone || clcikEmail ? "#FF6F69" : "#979797"}
       >
         본인인증하기
       </AuthenticationButton>
+      <div>
+        <ModalPortal>
+          <FindEMail />
+        </ModalPortal>
+      </div>
     </div>
   );
 }
