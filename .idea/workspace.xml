@@ -7,6 +7,9 @@
       <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/mypage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/mypage/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/fetcher.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/fetcher.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/user/help.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/user/help.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Filter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Filter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Header.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +83,9 @@
       <workItem from="1613742499362" duration="14572000" />
       <workItem from="1613807326159" duration="10590000" />
       <workItem from="1613829371744" duration="1056000" />
+      <workItem from="1613883000953" duration="11965000" />
+      <workItem from="1613920368032" duration="402000" />
+      <workItem from="1613930497681" duration="561000" />
     </task>
     <servers />
   </component>
