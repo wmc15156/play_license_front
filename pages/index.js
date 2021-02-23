@@ -25,7 +25,6 @@ const Home = () => {
 
   useEffect(() => {
     if (!data && isLogin) {
-      console.log("here", "dataloadrequest");
       dispatch(loadMyInfoThunk());
     }
   }, [data, isLogin]);

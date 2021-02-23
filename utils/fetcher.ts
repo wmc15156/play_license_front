@@ -1,13 +1,6 @@
 import axios from "axios";
 
-const fetcher = (url, searchInput) =>
-  axios
-    .get(url, {
-      params: {
-        q: searchInput,
-        page: 1,
-      },
-    })
-    .then((res) => res.data);
+const fetcher = (url: string) =>
+  axios.get(url, { withCredentials: true }).then((response) => response.data);
 
 export default fetcher;

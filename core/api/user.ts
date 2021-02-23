@@ -31,7 +31,6 @@ export const emailDuplicateCheck = (email: string) => {
 
 export const isLogin = async (dispatch) => {
   try {
-    console.log("here");
     await axios.get("/auth/check/login");
     dispatch({
       type: IS_LOGIN_SUCCESS,

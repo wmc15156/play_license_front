@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e74a422f-dac1-4d0f-8b05-46a530e784ef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/public/assets/image/search_icon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/api/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/core/api/user.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/search.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/public/icon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/Login.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/Login.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/mypage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/mypage/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/fetcher.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/fetcher.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
