@@ -7,7 +7,7 @@ const Slider = () => {
   const imgRef = useRef(null);
 
   const nextImg = () => {
-    if (show >= TOTAL_IMG - 1) {
+    if (show > TOTAL_IMG) {
       setShow(0);
     } else {
       setShow(show + 1);
@@ -23,15 +23,13 @@ const Slider = () => {
   const switchImg = (e) => {
     setShow(e.target.attributes[0].value);
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      console.log("실행");
-      nextImg();
-      // imgRef.current.style.transform = `translateX(-${show}00%)`;
-      imgRef.current.style.transition = "all 1s ease-in-out";
-    }, 3000);
-  }, [show]);
+  // setInterval(() => {
+  //   console.log("실행");
+  //   nextImg();
+  //   // imgRef.current.style.transform = `translateX(-${show}00%)`;
+  //   imgRef.current.style.transition = "all 1s ease-in-out";
+  // }, 3000);
+  useEffect(() => {}, [show]);
 
   return (
     <SliderContainer>

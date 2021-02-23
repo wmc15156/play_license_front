@@ -197,7 +197,7 @@ const LogoText = styled.div`
   letter-spacing: 0.86px;
 `;
 
-const List = styled.ul`
+const List = styled.div`
   margin: 0;
   padding: 0;
   list-style: none;
@@ -206,7 +206,7 @@ const List = styled.ul`
   width: 530px;
 `;
 
-const ListItem = styled.li`
+const ListItem = styled.div`
   border-radius: 4px;
   display: flex;
   align-items: center;

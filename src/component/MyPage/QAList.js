@@ -1,6 +1,35 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import useModal from "../../../utils/useModal";
+import LoginAlert from "../Modal/AlertModal";
+import { useRouter } from "next/router";
 
 const QAList = () => {
+  const router = useRouter();
+  const { openModal, closeModal, ModalPortal } = useModal();
+  const [needLogin, setNeedLogin] = useState(true);
+  const GET_URL = "/api/product/buyer/cart";
+
+  const redirectHandler = () => {
+    router.push("/login");
+  };
+
+  const getData = () => {
+    axios
+      .get(GET_URL)
+      .then((res) => console.log(res, "문의내역 리스트get"))
+      .catch((err) => {
+        if (err.response.status === 401) {
+          // 모달 로그인하고오기 창
+          setNeedLogin(true);
+        }
+      });
+  };
+  useEffect(() => {
+    getData();
+  });
+
   return (
     <Container>
       <Table>
@@ -61,6 +90,11 @@ const QAList = () => {
           <Text>자세히보기</Text>
         </List>
       </Table>
+      {needLogin && (
+        <ModalPortal>
+          <LoginAlert text={"로그인해주세요"} onClickBtn={redirectHandler} />
+        </ModalPortal>
+      )}
     </Container>
   );
 };

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
-import KeyWord from "./KeyWord";
+import Tag from "./Tag/Tag.";
 import Filter from "../../src/component/Filter";
 
 const List = ({ list }) => {
@@ -24,9 +24,15 @@ const List = ({ list }) => {
               </a>
               <a>
                 <ItemDesc>
-                  <Category>
-                    <KeyWord words={keywordArr} />
-                  </Category>
+                  <div>
+                    {item.brokerageConsignments.map((cate, i) => {
+                      return (
+                        <Tag title={cate} id={item.id}>
+                          {cate}
+                        </Tag>
+                      );
+                    })}
+                  </div>
                   <Ptitle>title:</Ptitle>
                   <PInfo>
                     <div>데{}</div>

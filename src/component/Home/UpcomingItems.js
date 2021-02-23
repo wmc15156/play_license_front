@@ -1,5 +1,48 @@
 import styled from "styled-components";
-import KeyWord from "../KeyWord";
+import Tag from "../Tag/Tag.";
+
+const UpcomingItems = ({ list }) => {
+  return (
+    <Container>
+      <Title>Coming Soon</Title>
+      <List>
+        {list.map((item, idx) => (
+          <Item key={idx}>
+            <ItemImg>
+              <Overlay />
+              <UpcomingDate>
+                <Text1>공개예정</Text1>
+                <Text2>
+                  {}년 {}월 중
+                </Text2>
+              </UpcomingDate>
+              <img src={item.image_link} alt={item.name} />
+            </ItemImg>
+            <ItemDesc>
+              <div>
+                {/* {item.brokerageConsignments.map((cate, i) => {
+                          return (
+                            <Tag title={cate} id={item.id}>
+                              {cate}
+                            </Tag>
+                          );
+                        })} */}
+              </div>
+              <Ptitle>title:</Ptitle>
+              <PInfo>
+                <div>데{}</div>
+                <Divider>|</Divider>
+                <div>이{}</div>
+                <Divider>|</Divider>
+                <div>터{}</div>
+              </PInfo>
+            </ItemDesc>
+          </Item>
+        ))}
+      </List>
+    </Container>
+  );
+};
 
 const Category = styled.div`
   width: 100%;
@@ -37,8 +80,7 @@ const ItemImg = styled.div`
   position: relative;
 
   & > img {
-    min-width: 276px;
-    width: 100%;
+    width: 276px;
     height: auto;
   }
 `;
@@ -64,6 +106,20 @@ const UpcomingDate = styled.div`
   color: #ffffff;
   z-index: 11;
 `;
+
+const Text1 = styled.p`
+  font-family: "NotoSansCJKkr-Bold";
+  font-size: 24px;
+  letter-spacing: -0.5px;
+  line-height: 24px;
+`;
+const Text2 = styled.p`
+  font-family: "NotoSansCJKkr-Regular";
+  font-size: 16px;
+  letter-spacing: -0.5px;
+  line-height: 16px;
+`;
+
 const Item = styled.li`
   display: flex;
   flex-direction: column;
@@ -93,43 +149,5 @@ const Container = styled.div`
   height: 100%;
   overflow: hidden;
 `;
-
-const UpcomingItems = ({ list }) => {
-  const keywordArr = ["a", "공연", "c"];
-  return (
-    <Container>
-      <Title>Coming Soon</Title>
-      <List>
-        {list.map((item, idx) => (
-          <Item key={idx}>
-            <ItemImg>
-              <Overlay />
-              <UpcomingDate>
-                <p>공개예정</p>
-                <p>
-                  {}년 {}월 중
-                </p>
-              </UpcomingDate>
-              <img src={item.image_link} alt={item.name} />
-            </ItemImg>
-            <ItemDesc>
-              <Category>
-                <KeyWord words={keywordArr} />
-              </Category>
-              <Ptitle>title:</Ptitle>
-              <PInfo>
-                <div>데{}</div>
-                <Divider>|</Divider>
-                <div>이{}</div>
-                <Divider>|</Divider>
-                <div>터{}</div>
-              </PInfo>
-            </ItemDesc>
-          </Item>
-        ))}
-      </List>
-    </Container>
-  );
-};
 
 export default UpcomingItems;

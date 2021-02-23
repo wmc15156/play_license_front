@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import styled from "styled-components";
-import KeyWord from "../KeyWord";
+import Tag from "../Tag/Tag.";
 import SangSangMaru from "../SangSangMaru";
 import PurchaseBtn from "../Button/PurchaseBtn";
 import HeartBtn from "../Button/HeartBtn";
@@ -15,10 +15,11 @@ const Section1 = ({ item, savedStatus }) => {
   const router = useRouter();
   const { openModal, closeModal, ModalPortal } = useModal();
   const param = router.query.id;
-  const ADD_URL = `/product/${router.query.id}/add-item`;
+  const POST_URL = `/product/${router.query.id}/add-item`;
+  const DELETE_URL = `/product/${router.query.id}/cart`;
   const [isSaving, setIsSaving] = useState(false); // 찜하기 중
   // console.log("넘어온savedStatus", savedStatus, typeof savedStatus);
-  const [isSaved, setIsSaved] = useState(true);
+  const [isSaved, setIsSaved] = useState(savedStatus);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [calcModalOpen, setCalcModalOpen] = useState(false);
 
@@ -53,7 +54,7 @@ const Section1 = ({ item, savedStatus }) => {
   const postHandler = () => {
     if (!isSaved) {
       axios
-        .post(ADD_URL, param)
+        .post(POST_URL, param)
         .then((res) => {
           if (res.status === 200) {
             console.log(res, "찜하기 추가성공????");
@@ -63,16 +64,23 @@ const Section1 = ({ item, savedStatus }) => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            console.log("로그인하고오기");
+            console.log("로그인하고p오기");
             setLoginModalOpen(true);
             loginModalHandler();
+            return;
           }
         });
     } else if (isSaved) {
-      console.log("찜하기 해제");
-      setIsSaved(false);
-      // 찜하기에서 삭제
-      // axios.post()
+      axios
+        .delete(DELETE_URL)
+        .then((res) => {
+          if (res.status === 200) {
+            console.log("찜하기 해제 성공!");
+            setIsSaved(false);
+            return;
+          }
+        })
+        .catch((err) => console.error(err));
       return;
     }
   };
@@ -85,9 +93,15 @@ const Section1 = ({ item, savedStatus }) => {
 
       <SecondColumn>
         <ItemDesc>
-          <Category>
-            <KeyWord />
-          </Category>
+          <div>
+            {/* {item.brokerageConsignments.map((cate, i) => {
+              return (
+                <Tag title={cate} id={item.id}>
+                  {cate}
+                </Tag>
+              );
+            })} */}
+          </div>
           <Ptitle>title:{}</Ptitle>
           <PInfo>
             <div>데{}</div>
