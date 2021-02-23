@@ -18,7 +18,7 @@ import fetcher from "../../utils/fetcher";
 
 const MyPage = () => {
   const { data: userData, error: err, mutate, revalidate } = useSWR(
-    "http://localhost:8000/api/auth/me",
+    "/auth/me",
     fetcher
   );
   const router = useRouter();
