@@ -81,13 +81,13 @@ const Favorites = () => {
                 <Link href={`/performances/${item.productId}`}>
                   <a>
                     <TagContainer>
-                      {/* {item.brokerageConsignments.map((cate, i) => {
-                      return (
-                        <Tag title={cate} id={item.id}>
-                          {cate}
-                        </Tag>
-                      );
-                    })} */}
+                      {item.brokerageConsignments.map((cate, i) => {
+                        return (
+                          <Tag title={cate} id={item.id}>
+                            {cate}
+                          </Tag>
+                        );
+                      })}
                     </TagContainer>
                     <Ptitle>{item.title}</Ptitle>
                     <PInfo>

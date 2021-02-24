@@ -1,10 +1,13 @@
 import styled from "styled-components";
+import Link from "next/link";
 
 const FaqSection2 = () => {
   return (
-    <Container>
-      <img src="/assets/image/1:1 banner.png" />
-    </Container>
+    <Link href="/qna">
+      <Container>
+        <img src="/assets/image/1:1 banner.png" />
+      </Container>
+    </Link>
   );
 };
 
@@ -12,6 +15,7 @@ const Container = styled.div`
   width: 100%;
   height: auto;
   border-radius: 14px;
+  cursor: pointer;
 
   & > img {
     /* max-width: 380px; */

@@ -56,10 +56,9 @@ const RegistQ = () => {
 
   const send = () => {
     axios
-      .post("https://api.shortlysoftware.com/api/question", params)
+      .post("/question", params)
       .then((res) => {
         if (res.status === 201) {
-          console.log(res, "??");
           next();
         }
       })
