@@ -3,12 +3,9 @@ import styled, { css } from "styled-components";
 import axios from "axios";
 
 import { useState } from "react";
-import SignUpButton from "../../src/component/Button/SignUpButton";
 import useInput from "../../utils/useInput";
 import useModal from "@utils/useModal";
 import { useRouter } from "next/router";
-import { Filtering } from "@src/component/Filter";
-import FilterModal from "@src/component/FilterModal";
 import FindEMail from "@src/component/Modal/FindEmail";
 
 const EmailOrPAsswordBox = styled.div`
