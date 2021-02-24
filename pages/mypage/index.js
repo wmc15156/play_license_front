@@ -13,14 +13,17 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import useModal from "../../utils/useModal";
 import AlertModal from "../../src/component/Modal/AlertModal";
+import useSWR from "swr";
+import fetcher from "../../utils/fetcher";
 
 const MyPage = () => {
+  const { data: userData, error: err, mutate, revalidate } = useSWR(
+    "/auth/me",
+    fetcher
+  );
   const router = useRouter();
   const { openModal, closeModal, ModalPortal } = useModal();
-  const { loading, data, error } = useSelector((state) => state.users?.me);
-  const isLogin = useSelector((state) => state.users.isLogin);
-  const dispatch = useDispatch();
-  console.log("mypage", data, "data", isLogin, "error>>", error);
+
   const tabs = {
     작품구매문의: <PurchaseRequest />,
     찜한공연: <Favorites />,
@@ -30,25 +33,10 @@ const MyPage = () => {
   const [active, setActive] = useState("작품구매문의");
 
   useEffect(() => {
-    isLoginCheckRequest(dispatch);
-  }, [isLogin]);
-
-  useEffect(() => {
-    if (!data && isLogin) {
-      console.log("dataloadrequest");
-      dispatch(loadMyInfoThunk());
+    if (!userData) {
+      openModal();
     }
-  }, [data, isLogin]);
-
-  useEffect(() => {
-    console.log(isLogin, "islogin??");
-    if (!error && !isLogin) {
-      console.log(error);
-
-      // mypage데이터 get할 때 401뜨면 openModal하는걸로
-      // openModal();
-    }
-  }, [error, isLogin]);
+  }, []);
 
   const switchTabName = (e) => {
     // console.log(e.target.innerText, "target??");
