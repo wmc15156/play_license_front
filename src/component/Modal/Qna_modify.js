@@ -10,25 +10,27 @@ import fetcher from "../../../utils/fetcher";
 
 const Qna_modify = ({ details, onClickHandler }) => {
   const router = useRouter();
-  console.log(router.pathname);
-  const GET_URL = `question/${details.questionId}`;
+  // console.log(router.pathname);
+  const GET_URL = `/question/${details.questionId}`;
   // console.log(router.query, ">??");
-  const { data: userData, error, mutate, revalidate } = useSWR(
-    `question/${router.query.id}`,
-    fetcher
-  );
+  // const { data: userData, error, mutate, revalidate } = useSWR(
+  //   `/question/${details.questionId}`,
+  // `/question/${router.query.id}`,
+  // fetcher
+  // );
+  // console.log("userData", userData);
 
-  const getDetail = () => {
-    console.log(GET_URL);
-    axios.get(GET_URL).then((res) => {
-      console.log(res);
-      // setDetail(res.data);
-    });
-  };
+  // const getDetail = () => {
+  //   console.log(GET_URL);
+  //   axios.get(GET_URL).then((res) => {
+  //     console.log(res);
+  //     // setDetail(res.data);
+  //   });
+  // };
 
-  useEffect(() => {
-    getDetail();
-  }, []);
+  // useEffect(() => {
+  //   getDetail();
+  // }, []);
 
   // console.log(userData, ">?");
   // const [data, setData] = useState({
@@ -38,15 +40,15 @@ const Qna_modify = ({ details, onClickHandler }) => {
   //   title: details.title,
   //   comment: details.comment,
   // });
-  const [titleInput, setTitleInput] = useState(userData.title);
-  const [commentInput, setCommentInput] = useState(userData.comment);
+  // const [titleInput, setTitleInput] = useState(details.title);
+  // const [commentInput, setCommentInput] = useState(details.comment);
 
-  const inputTitleHandler = (e) => {
-    setTitleInput(e.target.value);
-  };
-  const inputCommentHandler = (e) => {
-    setCommentInput(e.target.value);
-  };
+  // const inputTitleHandler = (e) => {
+  //   setTitleInput(e.target.value);
+  // };
+  // const inputCommentHandler = (e) => {
+  //   setCommentInput(e.target.value);
+  // };
 
   const modifyHandler = () => {
     const PATCH_URL = `/question/${router.query.id}`;
@@ -65,7 +67,7 @@ const Qna_modify = ({ details, onClickHandler }) => {
       <HeadSection>
         <T>1:1 문의</T>
         <StatusBox>
-          <AnswerStatus status={userData.isChecked} />
+          {/* <AnswerStatus status={details.isChecked} /> */}
         </StatusBox>
       </HeadSection>
       <Divider>
@@ -76,32 +78,32 @@ const Qna_modify = ({ details, onClickHandler }) => {
           <InputSection>
             <Input>
               <SubTitle>이름</SubTitle>
-              <InputBox name="name" value={userData.name}></InputBox>
+              {/* <InputBox name="name" value={details.name}></InputBox> */}
             </Input>
             <Input>
               <SubTitle>이메일</SubTitle>
-              <InputBox name="email" value={userData.email}></InputBox>
+              {/* <InputBox name="email" value={details.email}></InputBox> */}
             </Input>
             <Input>
               <SubTitle>연락처</SubTitle>
-              <InputBox name="phone" value={userData.phone}></InputBox>
+              {/* <InputBox name="phone" value={details.phone}></InputBox> */}
             </Input>
             <Input>
               <SubTitle>제목</SubTitle>
               <InputBox
                 name="title"
-                value={titleInput}
+                // value={titleInput}
                 // value={details.title}
-                onChange={inputTitleHandler}
+                // onChange={inputTitleHandler}
               ></InputBox>
             </Input>
             <Input>
               <SubTitle>문의내용</SubTitle>
               <TextBox
                 name="comment"
-                onChange={inputCommentHandler}
-                value={commentInput}
+                // value={commentInput}
                 // value={details.comment}
+                // onChange={inputCommentHandler}
               ></TextBox>
             </Input>
           </InputSection>
