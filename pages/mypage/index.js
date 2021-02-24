@@ -66,7 +66,7 @@ const Background = styled.div`
 
 const Divider = styled.div`
   margin-top: 16px;
-  margin-bottom: 64px;
+  margin-bottom: 60px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 `;
 

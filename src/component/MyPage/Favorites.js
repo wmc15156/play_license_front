@@ -17,6 +17,8 @@ const Favorites = () => {
 
   const getData = () => {
     axios.get(GET_URL).then((res) => {
+      console.log("res?", res);
+
       setList(res.data);
     });
   };
@@ -62,50 +64,60 @@ const Favorites = () => {
 
   return (
     <Container>
-      <ListSt>
-        {list.map((item) => (
-          <Item key={item.productId}>
-            {/* <Item> */}
-            <Link href={`/performances/${item.productId}`}>
-              <a>
-                <ItemImg>
-                  <img src={item.poster} alt={item.title} />
-                </ItemImg>
-              </a>
-            </Link>
-
-            <ItemDesc>
+      {list.length > 0 && (
+        <ListSt>
+          {list.map((item) => (
+            <Item key={item.productId}>
+              {/* <Item> */}
               <Link href={`/performances/${item.productId}`}>
                 <a>
-                  <div>
-                    {/* {item.brokerageConsignments.map((cate, i) => {
-                      return (
-                        <Tag title={cate} id={item.id}>
-                          {cate}
-                        </Tag>
-                      );
-                    })} */}
-                  </div>
-                  <Ptitle>{item.title}</Ptitle>
-                  <PInfo>
-                    <div>{item.category}</div>
-                    <Divider>|</Divider>
-                    <div>{item.year}</div>
-                    <Divider>|</Divider>
-                    <div>{item.company}</div>
-                  </PInfo>
+                  <ItemImg>
+                    <img src={item.poster} alt={item.title} />
+                  </ItemImg>
                 </a>
               </Link>
-              <Btn>
-                <HeartBtn
-                  state={isFav}
-                  onClickHandler={() => heartBtnHandler(item.productId)}
-                />
-              </Btn>
-            </ItemDesc>
-          </Item>
-        ))}
-      </ListSt>
+
+              <ItemDesc>
+                <Link href={`/performances/${item.productId}`}>
+                  <a>
+                    <TagContainer>
+                      {item.brokerageConsignments.map((cate, i) => {
+                        return (
+                          <Tag title={cate} id={item.id}>
+                            {cate}
+                          </Tag>
+                        );
+                      })}
+                    </TagContainer>
+                    <Ptitle>{item.title}</Ptitle>
+                    <PInfo>
+                      <div>{item.category}</div>
+                      <Divider>|</Divider>
+                      <div>{item.year}</div>
+                      <Divider>|</Divider>
+                      <div>{item.company}</div>
+                    </PInfo>
+                  </a>
+                </Link>
+                <Btn>
+                  <HeartBtn
+                    state={isFav}
+                    onClickHandler={() => heartBtnHandler(item.productId)}
+                  />
+                </Btn>
+              </ItemDesc>
+            </Item>
+          ))}
+        </ListSt>
+      )}
+      {list.length === 0 && (
+        <NoList>
+          <Icon>
+            <img src="/assets/image/heart.png" />
+          </Icon>
+          <Text>찜한공연이 없습니다</Text>
+        </NoList>
+      )}
     </Container>
   );
 };
@@ -115,10 +127,31 @@ const Container = styled.div`
   height: 100%;
   margin-bottom: 115px;
 `;
-const Category = styled.div`
+
+const NoList = styled.div`
+  min-height: calc(100vh - 410px);
   width: 100%;
-  height: 28px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Icon = styled.div`
+  & > img {
+    max-width: 77px;
+    height: 100%;
+  }
+`;
+const Text = styled.div`
+  font-family: "NotoSansCJKkr-Bold";
+  size: 24px;
+  line-height: 48px;
+  margin-left: 5%;
+`;
+
+const TagContainer = styled.div`
+  width: 100%;
+  margin-top: 30px;
 `;
 
 const Divider = styled.div`
@@ -180,7 +213,8 @@ const Btn = styled.div`
   height: 38px;
   position: absolute;
   right: 34px;
-  top: 37px;
+  top: 67.4px;
   cursor: pointer;
 `;
+
 export default Favorites;

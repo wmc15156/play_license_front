@@ -34,6 +34,9 @@ const TagWrapper = styled.span`
       : css`
           border: 3px ${styles.green} solid;
         `}
+  &:first-child{
+    margin-left:0;
+  }
 `;
 
 export type titleProps = {

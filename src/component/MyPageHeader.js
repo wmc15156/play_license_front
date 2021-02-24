@@ -8,13 +8,21 @@ const MyPageHeader = ({ currTabNum, onClickHandler }) => {
     <Container>
       <Mypage>마이페이지</Mypage>
       <List>
-        <Item onClick={onClickHandler}>작품구매문의</Item>
+        <Item name="pr" onClick={onClickHandler}>
+          작품구매문의
+        </Item>
 
-        <Item onClick={onClickHandler}>찜한공연</Item>
+        <Item name="lp" onClick={onClickHandler}>
+          찜한공연
+        </Item>
 
-        <Item onClick={onClickHandler}>1:1 문의</Item>
+        <Item name="qa" onClick={onClickHandler}>
+          1:1 문의
+        </Item>
 
-        <Item onClick={onClickHandler}>계정정보</Item>
+        <Item name="info" onClick={onClickHandler}>
+          계정정보
+        </Item>
       </List>
     </Container>
   );
