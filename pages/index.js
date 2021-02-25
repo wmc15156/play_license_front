@@ -7,35 +7,25 @@ import Hot from "../src/component/Home/Hot";
 import New from "../src/component/Home/New";
 import Curation from "../src/component/Home/Curation";
 import ComingSoon from "../src/component/Home/ComingSoon";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { isLoginCheckRequest, loadMyInfoThunk } from "../reducers/user";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import useSWR from "swr";
+import fetcher from "../utils/fetcher";
+import { useCookies } from "react-cookie";
 
 const Home = () => {
-  const { loading, data, error } = useSelector((state) => state.users?.me);
-  const isLogin = useSelector((state) => state.users.isLogin);
+  const { data: loginData, error: loginError, mutate } = useSWR(
+    "/auth/me",
+    fetcher
+  );
+
   const router = useRouter();
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    isLoginCheckRequest(dispatch);
-  }, [isLogin]);
-
-  useEffect(() => {
-    if (!data && isLogin) {
-      dispatch(loadMyInfoThunk());
-    }
-  }, [data, isLogin]);
-
-  useEffect(() => {
-    if (error && isLogin) {
-      console.log(error);
-      alert("재 로그인 해주세요!");
+  setTimeout(() => {
+    if (loginData && loginError) {
+      mutate(false, false);
       router.push("/login");
     }
-  }, [error, isLogin]);
+  }, 2000);
 
   return (
     <Container>

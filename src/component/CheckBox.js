@@ -15,6 +15,8 @@ const CheckBox = (props) => {
   );
 };
 
+
+
 const Container = styled.div`
   display: inline-block;
   vertical-align: middle;

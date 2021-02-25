@@ -1,15 +1,10 @@
 import styled from "styled-components";
 import MyPageHeader from "../../src/component/MyPageHeader";
-import axios from "axios";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import MyInfo from "../../src/component/MyPage/MyInfo";
 import QAList from "../../src/component/MyPage/QAList";
 import PurchaseRequest from "../../src/component/MyPage/PurchaseRequest";
 import Favorites from "../../src/component/MyPage/Favorites";
-import { useDispatch } from "react-redux";
-import { isLoginCheckRequest, loadMyInfoThunk } from "../../reducers/user";
-import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import useModal from "../../utils/useModal";
 import AlertModal from "../../src/component/Modal/AlertModal";
@@ -17,29 +12,32 @@ import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 
 const MyPage = () => {
-  const { data: userData, error: err, mutate, revalidate } = useSWR(
-    "/auth/me",
-    fetcher
-  );
+  const { data: userData, error: err } = useSWR("/auth/me", fetcher);
+  const [currentId, setCurrentId] = useState(null);
   const router = useRouter();
   const { openModal, closeModal, ModalPortal } = useModal();
+
+  const onChangeId = (id) => {
+    setCurrentId(id);
+  };
 
   const tabs = {
     작품구매문의: <PurchaseRequest />,
     찜한공연: <Favorites />,
-    "1:1 문의": <QAList />,
+    "1:1 문의": <QAList currentId={currentId} onChangeId={onChangeId} />,
     계정정보: <MyInfo />,
   };
   const [active, setActive] = useState("작품구매문의");
 
   useEffect(() => {
-    if (!userData) {
+    console.log(err, userData);
+    if (!userData && err) {
       openModal();
+      router.push("/login");
     }
-  }, []);
+  }, [err, userData]);
 
   const switchTabName = (e) => {
-    // console.log(e.target.innerText, "target??");
     setActive(e.target.innerText);
   };
 

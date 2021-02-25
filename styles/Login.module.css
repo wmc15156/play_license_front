@@ -5,7 +5,7 @@
   justify-content: center;
   flex-wrap: wrap;
   font-size: 36px;
-  font-size: "NotoSansCJKkr-Medium";
+  font-family: "NotoSansCJKkr-Medium";
 }
 
 .Parent strong {
@@ -80,7 +80,7 @@
   margin-bottom: 25px;
   text-indent: 22px;
   font-size: 16px;
-  font-family: "Noto Sans CJK KR";
+  font-family: "NotoSansCJKkr-Medium";
 }
 
 .EmailError {

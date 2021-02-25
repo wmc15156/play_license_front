@@ -13,15 +13,15 @@ const Container = styled.div`
 const Hot = () => {
   const [item, setItem] = useState([]);
 
-  const getList = () => {
-    axios.get(API_URL.home.hotItems).then((res) => {
-      setItem(res.data);
-    });
-  };
+  // const getList = () => {
+  //   axios.get(API_URL.home.hotItems).then((res) => {
+  //     setItem(res.data);
+  //   });
+  // };
 
-  useEffect(() => {
-    getList();
-  }, []);
+  // useEffect(() => {
+  //   getList();
+  // }, []);
 
   return (
     <Container>
