@@ -8,6 +8,7 @@ import { GoSearch } from "react-icons/go";
 import { IoPersonCircleSharp } from "react-icons/io5";
 
 const Header = () => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
@@ -22,8 +23,6 @@ const Header = () => {
       setIsOpen(false);
     }
   };
-
-  const router = useRouter();
 
   return (
     <>
@@ -162,7 +161,7 @@ const Container2 = styled.div`
 const Container = styled.div`
   max-width: 924px;
   display: flex;
-  margin: 48px auto;
+  margin: 44px auto;
   padding: 0 1rem;
   align-items: center;
 `;
@@ -175,7 +174,7 @@ const Logo = styled.div`
 `;
 const Img = styled.img`
   width: 91px;
-  height: 58px;
+  height: 57px;
   display: block;
   margin-right: 20px;
 `;

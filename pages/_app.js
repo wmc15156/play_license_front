@@ -1,11 +1,12 @@
 // 공통 레이아웃 적용
 import Head from "next/head";
 import Layout from "../src/component/Layout";
-import Header from "../src/component/Header";
+import Header from "../src/component/Header2";
 import Footer from "../src/component/Footer";
 import axios from "axios";
 import wrapper from "../store/configureStore";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { Html } from "next/document";
 
 const url =
@@ -19,6 +20,12 @@ console.log(process.env_NODE_ENV, "test");
 
 const MyApp = ({ Component, pageProps }) => {
   const router = useRouter();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const onCloseHandler = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   const path = [
     "/login",
     "/signup",
@@ -37,9 +44,9 @@ const MyApp = ({ Component, pageProps }) => {
         <title>상상마루 - playlicense</title>
       </Head>
       <Layout>
-        <Header />
-        <Component {...pageProps} />
-        {!removeFooter && <Footer />}
+        <Header menuStatus={isMenuOpen} onCloseHandler={onCloseHandler} />
+        {!isMenuOpen && <Component {...pageProps} />}
+        {!isMenuOpen && !removeFooter && <Footer />}
         <div id="modal" />
       </Layout>
     </>
