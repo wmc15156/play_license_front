@@ -9,30 +9,26 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { url } from "../utils/url";
 import { Root } from "postcss";
+import useSWR from "swr";
+import fetcher from "@utils/fetcher";
+import axios from "axios";
+
 
 function Login() {
+  const { data, error, revalidate } = useSWR("/auth/me", fetcher);
+
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [emailInputError, setEmailInutError] = useState(false);
   const [passwordInputError, setPasswordInputError] = useState(false);
-  const [loginCheck, stLoginCheck] = useState(false);
-  const dispatch = useDispatch();
+  const [loginError, setLoginError] = useState(false);
   const router = useRouter();
-  const loginError = useSelector((state: RootState) => state.users?.me?.error);
-  const me = useSelector((state: RootState) => state.users?.me?.data);
   const isLogin = useSelector((state: RootState) => state.users?.isLogin);
-  console.log(me, "me");
-  useEffect(() => {
-    isLoginCheckRequest(dispatch);
-  }, [isLogin]);
 
-  useEffect(() => {
-    if (isLogin) {
-      alert("로그인이 되어 있습니다. 로그아웃 후 시도 해주세여");
-      router.replace("/");
-      return;
-    }
-  }, [isLogin]);
+  if (data && !error) {
+    router.push("/");
+    // alert("로그인이 되어 있습니다.");
+  }
 
   const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,14 +44,23 @@ function Login() {
     }
     if (email && password) {
       const data = { email, password };
-      dispatch(loginThunk(data));
-      router.push("/");
+      // dispatch(loginThunk(data));
+      axios
+        .post("/auth/login", data)
+        .then((res) => {
+          revalidate();
+          router.push("/");
+        })
+        .catch((err) => {
+          console.dir(err);
+          setLoginError(true);
+        });
     }
   };
 
   return (
     <div className={styles.Parent}>
-      {me ? null : (
+      {isLogin && !error ? null : (
         <>
           <div style={{ marginBottom: "22px" }}>
             <strong>BUYER </strong>

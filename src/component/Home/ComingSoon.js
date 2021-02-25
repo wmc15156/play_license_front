@@ -14,15 +14,15 @@ const Container = styled.div`
 const ComingSoon = () => {
   const [item, setItem] = useState([]);
 
-  const getList = () => {
-    axios.get(API_URL.home.newItems).then((res) => {
-      setItem(res.data);
-    });
-  };
-
-  useEffect(() => {
-    getList();
-  }, []);
+  // const getList = () => {
+  //   axios.get(API_URL.home.newItems).then((res) => {
+  //     setItem(res.data);
+  //   });
+  // };
+  //
+  // useEffect(() => {
+  //   getList();
+  // }, []);
 
   return (
     <Container>

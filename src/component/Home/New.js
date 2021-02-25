@@ -7,15 +7,15 @@ import { API_URL } from "../../../config/API_URL";
 const Hot = () => {
   const [item, setItem] = useState([]);
 
-  const getList = () => {
-    axios.get(API_URL.home.newItems).then((res) => {
-      setItem(res.data);
-    });
-  };
-
-  useEffect(() => {
-    getList();
-  }, []);
+  // const getList = () => {
+  //   axios.get(API_URL.home.newItems).then((res) => {
+  //     setItem(res.data);
+  //   });
+  // };
+  //
+  // useEffect(() => {
+  //   getList();
+  // }, []);
 
   return (
     <Container>

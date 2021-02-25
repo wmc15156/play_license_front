@@ -1,6 +1,24 @@
 import styled from "styled-components";
+import useSWR from "swr";
+import fetcher from "../../../utils/fetcher";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 const MyInfo = () => {
+  const { data, error, mutate } = useSWR("/auth/me", fetcher);
+  const router = useRouter();
+
+  const onLogOut = () => {
+    axios.post("/auth/logout").then((res) => {
+      mutate(undefined, false);
+      router.push("/");
+    });
+  };
+
+  if (!data) {
+    return router.push("/login");
+  }
+
   return (
     <Container>
       <Box>
@@ -42,7 +60,7 @@ const MyInfo = () => {
             </SocialLogin>
           </Item>
         </Content>
-        <Btn>로그아웃</Btn>
+        <Btn onClick={onLogOut}>로그아웃</Btn>
       </Box>
       <Unsubscribe>회원탈퇴하기</Unsubscribe>
     </Container>
@@ -129,6 +147,7 @@ const Btn = styled.div`
   line-height: 12px;
   top: 55px;
   right: 63px;
+  cursor: pointer;
 `;
 
 const ChangeBtn = styled.div`

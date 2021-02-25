@@ -6,12 +6,14 @@ import axios from "axios";
 import useModal from "../../../utils/useModal";
 import LoginAlert from "../Modal/AlertModal";
 import StatusBox from "../Tag/AnswerStatus";
-import QnaDetail from "../Modal/Qna";
-import QnaDetailModify from "../Modal/Qna_modify";
+import QnaDetail from "../Q&A/Qna";
+import QnaDetailModify from "../Q&A/Qna_modify";
+import useSWR from "swr";
+import fetcher from "../../../utils/fetcher";
 
-const QAList = () => {
+const QAList = ({ onChangeId }) => {
   const router = useRouter();
-
+  const { data } = useSWR(`/question/${router.query.id}`, fetcher);
   const { openModal, closeModal, ModalPortal } = useModal();
 
   const [needLogin, setNeedLogin] = useState(false);
@@ -20,8 +22,6 @@ const QAList = () => {
   const GET_URL = "/question";
 
   const detailClickHandler = (id) => {
-    // setOpenDetail(true);
-    // openModal();
     router.push(`/qna/${id}`);
   };
 
@@ -31,6 +31,10 @@ const QAList = () => {
 
   const redirectHandler = () => {
     router.push("/login");
+  };
+
+  const onChangeTest = (id) => () => {
+    onChangeId(id);
   };
 
   const getData = () => {
@@ -79,7 +83,7 @@ const QAList = () => {
             createdAt,
           } = q;
           return (
-            <List key={questionId}>
+            <List key={questionId} onClick={onChangeTest(questionId)}>
               <Text>{title}</Text>
               {/* <Link href=``> */}
               <DetailText onClick={() => detailClickHandler(questionId)}>
