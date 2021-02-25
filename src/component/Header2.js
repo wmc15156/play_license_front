@@ -6,7 +6,6 @@ import Menu from "../component/Menu";
 import { useRouter } from "next/router";
 import { GoSearch } from "react-icons/go";
 import { IoPersonCircleSharp, IoMenu } from "react-icons/io5";
-import useMenu from "../../utils/useMenu";
 
 const Header = ({ menuStatus, onCloseHandler }) => {
   const router = useRouter();
