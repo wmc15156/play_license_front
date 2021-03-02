@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styled, { css } from "styled-components";
-import styles from "styles/colors";
+import styles from "@styles/colors";
 import React from "react";
 
 const TagWrapper = styled.span`
