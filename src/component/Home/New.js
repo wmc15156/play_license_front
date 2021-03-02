@@ -19,7 +19,7 @@ const Hot = () => {
 
   return (
     <Container>
-      <NewItems list={state.new.slice(0, 6)} />{" "}
+      <NewItems list={state.new} />
     </Container>
   );
 };

@@ -19,7 +19,7 @@ const Hot = () => {
 
   return (
     <Container>
-      <HotItems list={state.hot.slice(0, 5)} />
+      <HotItems list={state.hot} />
     </Container>
   );
 };

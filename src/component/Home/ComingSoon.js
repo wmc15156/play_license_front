@@ -28,7 +28,7 @@ const ComingSoon = () => {
   return (
     <Container>
       {/* <UpcomingItems list={state.coming.slice(0, 6)} /> */}
-      <UpcomingItems list={state.new.slice(0, 6)} />
+      <UpcomingItems list={state.coming} />
     </Container>
   );
 };
