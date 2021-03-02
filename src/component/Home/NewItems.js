@@ -27,7 +27,7 @@ const NewItems = ({ list }) => {
               <Category>
                 {item.productBrokerageConsignment.map((cate, i) => {
                   return (
-                    <Tag title={cate} key={item.productId}>
+                    <Tag title={cate.slice(0, 2)} id={item.productId} key={i}>
                       {cate.slice(0, 2)}
                     </Tag>
                   );

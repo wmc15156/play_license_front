@@ -53,6 +53,13 @@ const Curation = () => {
     // }
   };
 
+  const Arrow_Next = ({ currentSlide, slideCount, ...props }) => (
+    <ArrowNext {...props} />
+  );
+  const Arrow_Prev = ({ currentSlide, slideCount, ...props }) => (
+    <ArrowPrev {...props} />
+  );
+
   const settings = {
     infinite: true, // cycle
     lazyload: true,
@@ -61,8 +68,8 @@ const Curation = () => {
     slidesToScroll: 1,
     centerMode: true,
     centerPadding: "15%",
-    nextArrow: <ArrowNext />,
-    prevArrow: <ArrowPrev />,
+    nextArrow: <Arrow_Next />,
+    prevArrow: <Arrow_Prev />,
     beforeChange: (current, next) => setImageIdx(next),
   };
 
