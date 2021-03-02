@@ -1,5 +1,4 @@
-import { createGlobalStyle, ThemeProvider } from "styled-components";
-import theme from "../../styles/theme";
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   html,body {
@@ -60,10 +59,8 @@ const GlobalStyle = createGlobalStyle`
 const Layout = (props) => {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        {props.children}
-        <GlobalStyle />
-      </ThemeProvider>
+      {props.children}
+      <GlobalStyle />
     </>
   );
 };
