@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: "Gotham Bold";
     font-weight:700;
-    src: url(/assets/font/Gotham-Bold.ttf);
+    src: url("/assets/font/Gotham-Bold.ttf");
   }
 
   @font-face {

@@ -30,12 +30,11 @@ const MyPage = () => {
   const [active, setActive] = useState("작품구매문의");
 
   useEffect(() => {
-    console.log(err, userData);
-    if (!userData && err) {
+    if (err) {
       openModal();
-      router.push("/login");
+      // router.push("/login");
     }
-  }, [err, userData]);
+  }, [err]);
 
   const switchTabName = (e) => {
     setActive(e.target.innerText);
@@ -45,17 +44,33 @@ const MyPage = () => {
     router.push("/login");
   };
 
+  if (err) {
+    router.push("/login");
+  }
+
   return (
-    <Background>
-      <HeadSection>
-        <MyPageHeader currTabNum={active} onClickHandler={switchTabName} />
-      </HeadSection>
-      <Divider />
-      <Container>{tabs[active]}</Container>
-      <ModalPortal>
-        <AlertModal text={"로그인해주세요"} onClickBtn={redirectHandler} />
-      </ModalPortal>
-    </Background>
+    <>
+      {!err && (
+        <>
+          <Background>
+            <HeadSection>
+              <MyPageHeader
+                currTabNum={active}
+                onClickHandler={switchTabName}
+              />
+            </HeadSection>
+            <Divider />
+            <Container>{tabs[active]}</Container>
+            <ModalPortal>
+              <AlertModal
+                text={"로그인해주세요"}
+                onClickBtn={redirectHandler}
+              />
+            </ModalPortal>
+          </Background>
+        </>
+      )}
+    </>
   );
 };
 const Background = styled.div`
