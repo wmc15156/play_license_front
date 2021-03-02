@@ -44,10 +44,8 @@ const Curation = () => {
   }, []);
 
   const getKeys = () => {
-    console.log(ccc, "??");
     // const keyArr = Object.keys(state.curation);
     setKeyArray(Object.keys(ccc));
-    console.log(keyArray);
     // setKeyArray(keyArr)
 
     // for (let i = 0; i < keyArr.length; i++) {
@@ -78,12 +76,6 @@ const Curation = () => {
         <StyledSlider {...settings}>
           {/* {keyArray.map((keyName, idx) => (
             <div key={idx}>
-              {console.log(
-                "key",
-                ccc[keyName][0].productTitle,
-                keyName,
-                ccc[keyName].length
-              )}
               <ImageContainer>
                 <Overlay />
                 <TextContainer>
