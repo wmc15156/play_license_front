@@ -1,25 +1,25 @@
 import axios from "axios";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
 import NewItems from "./NewItems";
-import { API_URL } from "../../../config/API_URL";
+import { HomeContext } from "../../../store/homeStore";
 
 const Hot = () => {
-  const [item, setItem] = useState([]);
+  const [state, dispatch] = useContext(HomeContext);
 
-  // const getList = () => {
-  //   axios.get(API_URL.home.newItems).then((res) => {
-  //     setItem(res.data);
-  //   });
-  // };
-  //
-  // useEffect(() => {
-  //   getList();
-  // }, []);
+  const getList = () => {
+    axios.get("/curation/product").then((res) => {
+      dispatch({ type: "fetchNewPerformances", ...state, new: res.data.new });
+    });
+  };
+
+  useEffect(() => {
+    getList();
+  }, []);
 
   return (
     <Container>
-      <NewItems list={item.slice(0, 6)} />
+      <NewItems list={state.new.slice(0, 6)} />{" "}
     </Container>
   );
 };
@@ -28,8 +28,8 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  margin-top: 120px;
-  margin-bottom: 158px;
+  margin-top: 105px;
+  margin-bottom: 170px;
 `;
 
 export default Hot;

@@ -1,0 +1,31 @@
+{
+  "요즘뜨는 작품": [
+      {
+          "curationImage": null,
+          "productTitle": "마당씨의 식탁",
+          "productImage": "http://post.url.com"
+      },
+      {
+          "curationImage": null,
+          "productTitle": "김종욱 찾기",
+          "productImage": "https://user-images.githubusercontent.com/60249156/108516820-04a93f80-730a-11eb-91a9-e9a56eee86e6.png"
+      }
+  ],
+  "예술교육을 위한 작품": [
+      {
+          "curationImage": "https://user-images.githubusercontent.com/60249156/109393422-df00e380-7964-11eb-80a5-fbb7d3ee6103.png",
+          "productTitle": "버드나무",
+          "productImage": "https://user-images.githubusercontent.com/60249156/108516825-05da6c80-730a-11eb-9500-31e303896088.png"
+      },
+      {
+        "curationImage": null,
+        "productTitle": "마당씨의 식탁",
+        "productImage": "http://post.url.com"
+    },
+    {
+        "curationImage": null,
+        "productTitle": "김종욱 찾기",
+        "productImage": "https://user-images.githubusercontent.com/60249156/108516820-04a93f80-730a-11eb-91a9-e9a56eee86e6.png"
+    }
+  ]
+}

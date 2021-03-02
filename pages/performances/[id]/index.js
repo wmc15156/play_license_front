@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import axios from "axios";
 import PerformanceDetail from "../../../src/component/PerformanceDetail/PerformanceDetail";
-import { API_URL } from "../../../config/API_URL";
 
 const Container = styled.div`
   max-width: 924px;
@@ -11,7 +10,7 @@ const Container = styled.div`
 
 export async function getServerSideProps(context) {
   const performanceId = context.params.id;
-  const url = `${API_URL.market.item}/${performanceId}.json`;
+  const url = `http://makeup-api.herokuapp.com/api/v1/products/${performanceId}.json`;
   const res = await axios.get(url);
   const data = res.data;
   return {

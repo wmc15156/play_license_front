@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import stylesCarousel from "../../../styles/Carousel.module.css";
 import { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -37,9 +36,10 @@ const Carousel = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 2000,
+    speed: 1500,
     centerMode: true,
     slidesToShow: 1,
+    centerPadding: 0,
     arrows: false,
     slidesToScroll: 1,
     autoplay: true,
@@ -79,30 +79,46 @@ const Carousel = () => {
     },
   };
   return (
-    <div className={stylesCarousel.container}>
-      <Slider {...settings}>
+    <Container>
+      <StyledSlider {...settings}>
         {images.map((img, idx) => (
-          <div>
-            <img
-              src={img}
-              alt={img}
-              style={idx === imageIdx ? activeImgStyles : defaultImgStyles}
-            />
+          <div key={idx}>
+            <ImageContainer>
+              <img
+                src={img}
+                alt={img}
+                style={idx === imageIdx ? activeImgStyles : defaultImgStyles}
+              />
+            </ImageContainer>
           </div>
         ))}
-      </Slider>
-    </div>
+      </StyledSlider>
+    </Container>
   );
 };
 
 const Container = styled.div`
-  /* width: 100%; */
+  margin: 0 auto;
+  max-width: 924px;
+  padding: 0 1rem;
+  height: auto;
 `;
 
-const SliderContainer = styled.div`
-  width: 100%;
+const ImageContainer = styled.div`
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 30px;
   & > img {
-    width: 80%;
+    width: 100%;
+    height: auto;
+    border-radius: 14px;
+  }
+`;
+
+const StyledSlider = styled(Slider)`
+  .slick-slide div {
+    outline: none;
   }
 `;
 

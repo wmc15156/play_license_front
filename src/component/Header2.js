@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 import { GoSearch } from "react-icons/go";
 import { IoPersonCircleSharp, IoMenu } from "react-icons/io5";
 
+// https://styled-components.com/docs/advanced#referring-to-other-components
+
 const Header = ({ menuStatus, onCloseHandler }) => {
   const router = useRouter();
   // const [isMenuOpen, setIsMenuOpen] = useState(false);
