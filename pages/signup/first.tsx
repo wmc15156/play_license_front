@@ -14,6 +14,8 @@ import { FaCheck } from "react-icons/fa";
 import CheckBoxWrapper from "@src/component/CheckBoxWrapper/CheckBoxWrapper";
 import styled from "styled-components";
 import OriginalButton from "@src/component/Button/OriginalButton";
+import useSWR from "swr";
+import fetcher from "@utils/fetcher";
 
 const CheckBoxContainer = styled.div`
   width: 580px;
@@ -34,6 +36,11 @@ const ButtonContainer = styled.div`
 const SignUpFirst: VFC = () => {
   const router = useRouter();
   const [term, setTerm] = useState(false);
+  const { data, error } = useSWR("/auth/me", fetcher);
+
+  if (data) {
+    router.push("/");
+  }
 
   const onChangeTerm = () => {
     setTerm((prev) => !prev);
