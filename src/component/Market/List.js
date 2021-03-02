@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import Link from "next/link";
-import Tag from "./Tag/Tag.";
-import Filter from "../../src/component/Filter";
+import Tag from "../Tag/Tag.";
+import Filter from "./Filter";
 
 const List = ({ list }) => {
-  const keywordArr = ["a", "공연", "c"];
   return (
     <Container>
       <HeadSection>

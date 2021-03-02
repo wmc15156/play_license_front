@@ -108,6 +108,7 @@ const List = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
+  padding: 0 1rem;
 `;
 
 const Title = styled.div`
@@ -122,6 +123,7 @@ const HeadSection = styled.div`
   justify-content: space-between;
   margin-bottom: 34px;
   align-items: center;
+  padding: 0 1rem;
 `;
 
 const Container = styled.div`
