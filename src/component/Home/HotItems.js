@@ -1,35 +1,47 @@
 import styled from "styled-components";
 import Tag from "../Tag/Tag.";
+import { useRouter } from "next/router";
+import ShowAll from "../Button/ShowAll";
 
 const HotItems = ({ list }) => {
-  const keywordArr = ["a", "공연", "c"];
+  const router = useRouter();
+  const routeHandler = (id) => {
+    router.push(`/performances/${id}`);
+  };
+
   return (
     <Container>
-      <Title>HOT</Title>
+      <HeadSection>
+        <Title>HOT</Title>
+        <ShowAll text={"모두보기"} path={"hot"} />
+      </HeadSection>
       <List>
-        {list.map((item, idx) => (
-          <Item key={idx}>
+        {list.map((item) => (
+          <Item
+            key={item.productId}
+            onClick={() => routeHandler(item.productId)}
+          >
             <ItemImg>
-              <img src={item.image_link} alt={item.name} />
+              <img src={item.productImage} alt={item.productTitle} />
             </ItemImg>
             <ItemDesc>
-              <div>description: {item.name}</div>
-              <div>
-                {/* {item.brokerageConsignments.map((cate, i) => {
+              <div>{item.productTitle}</div>
+              <TagWrapper>
+                {item.productBrokerageConsignment.map((cate, i) => {
                   return (
-                    <Tag title={cate} id={item.id}>
-                      {cate}
+                    <Tag title={cate} key={item.productId}>
+                      {cate.slice(0, 2)}
                     </Tag>
                   );
-                })} */}
-              </div>
-              <Ptitle>title:</Ptitle>
+                })}
+              </TagWrapper>
+              <Ptitle>{item.productTitle}</Ptitle>
               <PInfo>
-                <div>데{}</div>
+                <div>{item.productCate}</div>
                 <Divider>|</Divider>
-                <div>이{}</div>
+                <div>{item.productYear}</div>
                 <Divider>|</Divider>
-                <div>터{}</div>
+                <div>{item.productCompany}</div>
               </PInfo>
             </ItemDesc>
           </Item>
@@ -48,14 +60,20 @@ const PInfo = styled.div`
   font-family: "NotoSansCJKkr-Regular";
   line-height: 14px;
   position: absolute;
-  bottom: 33px;
+  bottom: 38px;
 `;
 const Ptitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   font-size: 28px;
   line-height: 18px;
   position: absolute;
-  bottom: 54px;
+  bottom: 73px;
+`;
+
+const TagWrapper = styled.div`
+  display: flex;
+  position: absolute;
+  bottom: 100px;
 `;
 
 const ItemDesc = styled.div`
@@ -70,7 +88,6 @@ const ItemImg = styled.div`
   width: 100%;
   height: 100%;
   & > img {
-    border-right: 1px solid gray;
     width: 276px;
     height: auto;
   }
@@ -96,15 +113,20 @@ const List = styled.ul`
 const Title = styled.div`
   font-family: "Gotham Bold";
   font-size: 24px;
-  line-height: 48px;
-  margin-bottom: 23px;
+  line-height: 24px;
+  text-transform: uppercase;
+`;
+
+const HeadSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 34px;
+  align-items: center;
 `;
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  margin-top: 116px;
 `;
 
 export default HotItems;

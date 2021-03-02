@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import styles from "../../styles/colors";
+import styles from "../../styles/theme";
 import Link from "next/link";
 import Menu from "../component/Menu";
 import { useRouter } from "next/router";
 import { GoSearch } from "react-icons/go";
 import { IoPersonCircleSharp, IoMenu } from "react-icons/io5";
+
+// https://styled-components.com/docs/advanced#referring-to-other-components
 
 const Header = ({ menuStatus, onCloseHandler }) => {
   const router = useRouter();
@@ -45,19 +47,23 @@ const Header = ({ menuStatus, onCloseHandler }) => {
           <List>
             <ListItem_M
               onClick={changePage("mypage")}
-              color={router.pathname === "/mypage" ? styles.blue : null}
+              color={router.pathname === "/mypage" ? styles.color.blue : null}
             >
               <Wrap>
                 <PersonIconWrapper>
                   <IoPersonCircleSharp
                     size="32px"
                     color={
-                      router.pathname === "/mypage" ? styles.white : styles.blue
+                      router.pathname === "/mypage"
+                        ? styles.color.white
+                        : styles.color.blue
                     }
                   />
                 </PersonIconWrapper>
                 <Text
-                  color={router.pathname === "/mypage" ? styles.white : null}
+                  color={
+                    router.pathname === "/mypage" ? styles.color.white : null
+                  }
                 >
                   MYPAGE
                 </Text>
@@ -66,7 +72,7 @@ const Header = ({ menuStatus, onCloseHandler }) => {
 
             <ListItem_S
               onClick={changePage("search")}
-              color={router.pathname === "/search" ? styles.yellow : null}
+              color={router.pathname === "/search" ? styles.color.yellow : null}
             >
               <Wrap>
                 <SearchWrapper>
@@ -74,13 +80,15 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                     size="28px"
                     color={
                       router.pathname === "/search"
-                        ? styles.white
-                        : styles.yellow
+                        ? styles.color.white
+                        : styles.color.yellow
                     }
                   />
                 </SearchWrapper>
                 <Text
-                  color={router.pathname === "/search" ? styles.white : null}
+                  color={
+                    router.pathname === "/search" ? styles.color.white : null
+                  }
                 >
                   SEARCH
                 </Text>
@@ -117,7 +125,7 @@ const Header = ({ menuStatus, onCloseHandler }) => {
             <List>
               <ListItem_M
                 onClick={changePage("mypage")}
-                color={router.pathname === "/mypage" ? styles.blue : null}
+                color={router.pathname === "/mypage" ? styles.color.blue : null}
               >
                 <Wrap>
                   <PersonIconWrapper>
@@ -125,13 +133,15 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                       size="32px"
                       color={
                         router.pathname === "/mypage"
-                          ? styles.white
-                          : styles.blue
+                          ? styles.color.white
+                          : styles.color.blue
                       }
                     />
                   </PersonIconWrapper>
                   <Text
-                    color={router.pathname === "/mypage" ? styles.white : null}
+                    color={
+                      router.pathname === "/mypage" ? styles.color.white : null
+                    }
                   >
                     MYPAGE
                   </Text>
@@ -140,7 +150,9 @@ const Header = ({ menuStatus, onCloseHandler }) => {
 
               <ListItem_S
                 onClick={changePage("search")}
-                color={router.pathname === "/search" ? styles.yellow : null}
+                color={
+                  router.pathname === "/search" ? styles.color.yellow : null
+                }
               >
                 <Wrap>
                   <SearchWrapper>
@@ -148,13 +160,15 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                       size="28px"
                       color={
                         router.pathname === "/search"
-                          ? styles.white
-                          : styles.yellow
+                          ? styles.color.white
+                          : styles.color.yellow
                       }
                     />
                   </SearchWrapper>
                   <Text
-                    color={router.pathname === "/search" ? styles.white : null}
+                    color={
+                      router.pathname === "/search" ? styles.color.white : null
+                    }
                   >
                     SEARCH
                   </Text>

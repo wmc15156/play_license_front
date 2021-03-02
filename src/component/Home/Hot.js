@@ -1,33 +1,35 @@
 import axios from "axios";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useContext } from "react";
+import { HomeContext } from "../../../store/homeStore";
 import HotItems from "./HotItems";
-import { API_URL } from "../../../config/API_URL";
+
+const Hot = () => {
+  const [state, dispatch] = useContext(HomeContext);
+
+  const getList = () => {
+    axios.get("/curation/product").then((res) => {
+      dispatch({ type: "fetchHotPerformances", hot: res.data.hot });
+    });
+  };
+
+  useEffect(() => {
+    getList();
+  }, []);
+
+  return (
+    <Container>
+      <HotItems list={state.hot.slice(0, 5)} />
+    </Container>
+  );
+};
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  margin-top: 98px;
+  margin-bottom: 102px;
 `;
-
-const Hot = () => {
-  const [item, setItem] = useState([]);
-
-  // const getList = () => {
-  //   axios.get(API_URL.home.hotItems).then((res) => {
-  //     setItem(res.data);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   getList();
-  // }, []);
-
-  return (
-    <Container>
-      <HotItems list={item.slice(0, 5)} />
-    </Container>
-  );
-};
 
 export default Hot;

@@ -1,13 +1,26 @@
 import styled from "styled-components";
 import Tag from "../Tag/Tag.";
+import { useRouter } from "next/router";
+import ShowAll from "../Button/ShowAll";
 
 const UpcomingItems = ({ list }) => {
+  const router = useRouter();
+  const routeHandler = (id) => {
+    router.push(`/performances/${id}`);
+  };
+
   return (
     <Container>
-      <Title>Coming Soon</Title>
+      <HeadSection>
+        <Title>Coming Soon</Title>
+        <ShowAll text={"모두보기"} path={"hot"} />
+      </HeadSection>
       <List>
         {list.map((item, idx) => (
-          <Item key={idx}>
+          <Item
+            key={item.productId}
+            onClick={() => routeHandler(item.productId)}
+          >
             <ItemImg>
               <Overlay />
               <UpcomingDate>
@@ -16,25 +29,25 @@ const UpcomingItems = ({ list }) => {
                   {}년 {}월 중
                 </Text2>
               </UpcomingDate>
-              <img src={item.image_link} alt={item.name} />
+              <img src={item.productImage} alt={item.productTitle} />
             </ItemImg>
             <ItemDesc>
-              <div>
-                {/* {item.brokerageConsignments.map((cate, i) => {
-                          return (
-                            <Tag title={cate} id={item.id}>
-                              {cate}
-                            </Tag>
-                          );
-                        })} */}
-              </div>
-              <Ptitle>title:</Ptitle>
+              <TagWrapper>
+                {item.productBrokerageConsignment.map((cate, i) => {
+                  return (
+                    <Tag title={cate} key={item.productId}>
+                      {cate.slice(0, 2)}
+                    </Tag>
+                  );
+                })}
+              </TagWrapper>
+              <Ptitle>{item.productTitle}</Ptitle>
               <PInfo>
-                <div>데{}</div>
+                <div>{item.productCate}</div>
                 <Divider>|</Divider>
-                <div>이{}</div>
+                <div>{item.productYear}</div>
                 <Divider>|</Divider>
-                <div>터{}</div>
+                <div>{item.productCompany}</div>
               </PInfo>
             </ItemDesc>
           </Item>
@@ -43,12 +56,6 @@ const UpcomingItems = ({ list }) => {
     </Container>
   );
 };
-
-const Category = styled.div`
-  width: 100%;
-  height: 28px;
-  display: flex;
-`;
 
 const Divider = styled.div`
   margin: 0 6px;
@@ -63,13 +70,19 @@ const Ptitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   font-size: 18px;
   line-height: 18px;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
 `;
 
 const ItemDesc = styled.div`
   min-width: 276px;
   display: flex;
   flex-direction: column;
+`;
+
+const TagWrapper = styled.div`
+  margin-top: 27px;
+  display: flex;
+  bottom: 100px;
 `;
 
 const ItemImg = styled.div`
@@ -140,10 +153,15 @@ const Title = styled.div`
   font-family: "Gotham Bold";
   font-size: 24px;
   line-height: 48px;
-  margin-bottom: 23px;
   text-transform: uppercase;
 `;
 
+const HeadSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 35px;
+  align-items: center;
+`;
 const Container = styled.div`
   width: 100%;
   height: 100%;

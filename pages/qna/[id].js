@@ -6,10 +6,9 @@ import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import { useState } from "react";
 
-
 const DetailQnA = () => {
   const router = useRouter();
-  const { data } = useSWR(`/question/8`, fetcher);
+  const { data } = useSWR(`/question/${router.query.id}`, fetcher);
   const [detail, setDetail] = useState({});
 
   const next = () => {
