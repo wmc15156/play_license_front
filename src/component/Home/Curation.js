@@ -129,6 +129,7 @@ const Container = styled.div`
 const HeadSection = styled.div`
   max-width: 924px;
   margin: 0 auto;
+  padding: 0 1rem;
   margin-bottom: 72px;
   margin-top: 80px;
   display: flex;

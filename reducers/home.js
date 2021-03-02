@@ -13,24 +13,21 @@ export const homeReducer = (state, action) => {
         hot: action.hot,
       };
     }
-  }
-  switch (action.type) {
+
     case "fetchNewPerformances": {
       return {
         ...state,
         new: action.new,
       };
     }
-  }
-  switch (action.type) {
+
     case "fetchCurations": {
       return {
         ...state,
         curation: action.curation,
       };
     }
-  }
-  switch (action.type) {
+
     case "fetchComingSoon": {
       return {
         ...state,

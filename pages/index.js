@@ -106,7 +106,6 @@ const HotSection = styled.div`
   width: 100%;
   max-width: 924px;
   margin: 0 auto;
-  padding: 0 1rem;
 `;
 
 const Divider = styled.div`
@@ -120,7 +119,6 @@ const NewSection = styled.div`
   width: 100%;
   max-width: 924px;
   margin: 0 auto;
-  padding: 0 1rem;
 `;
 const CurationSection = styled.div`
   width: 100%;
@@ -129,7 +127,6 @@ const CurationSection = styled.div`
 const UpcomingSection = styled.div`
   width: 100%;
   max-width: 924px;
-  padding: 0 1rem;
   margin: 0 auto;
 `;
 const BannerSection = styled.div`

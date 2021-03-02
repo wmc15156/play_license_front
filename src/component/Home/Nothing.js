@@ -15,6 +15,7 @@ const Text = styled.div`
   margin: 0;
   padding: 0;
   display: flex;
+  padding: 0 1rem;
 `;
 
 const Title = styled.div`
@@ -29,6 +30,7 @@ const HeadSection = styled.div`
   justify-content: space-between;
   margin-bottom: 35px;
   align-items: center;
+  padding: 0 1rem;
 `;
 const Container = styled.div`
   width: 100%;
