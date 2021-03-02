@@ -12,6 +12,7 @@ import HomeStore from "../store/homeStore";
 import useSWR from "swr";
 import fetcher from "../utils/fetcher";
 import { useCookies } from "react-cookie";
+import { useEffect } from "react";
 
 const Home = () => {
   const { data: loginData, error: loginError, mutate } = useSWR(
@@ -19,14 +20,17 @@ const Home = () => {
     fetcher
   );
 
+  const { data, error } = useSWR("/auth/check/login", fetcher);
+
   const router = useRouter();
 
-  setTimeout(() => {
-    if (loginData && loginError) {
-      mutate(false, false);
-      router.push("/login");
-    }
-  }, 2000);
+  // useEffect(() => {
+  //   console.log(loginData, loginError, "loginError", "loginData", data, error);
+  //   if (loginData && loginError) {
+  //     mutate(false, false);
+  //     router.push("/login");
+  //   }
+  // }, [loginData, loginError]);
 
   return (
     <HomeStore>

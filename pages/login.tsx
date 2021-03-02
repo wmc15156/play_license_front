@@ -1,18 +1,17 @@
 import styles from "../styles/Login.module.css";
 import useInput from "../utils/useInput";
-import { useDispatch, useSelector } from "react-redux";
-import { isLoginCheckRequest, loginThunk } from "../reducers/user";
-import { login } from "../core/api/user";
+import { useSelector } from "react-redux";
+
 import { RootState } from "../reducers";
-import { useEffect, useState, FormEvent } from "react";
+import { useEffect, useState, FormEvent, useCallback } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { url } from "../utils/url";
-import { Root } from "postcss";
 import useSWR from "swr";
 import fetcher from "@utils/fetcher";
 import axios from "axios";
-
+import CheckBoxWrapper from "@src/component/CheckBoxWrapper/CheckBoxWrapper";
+import { FaCheck } from "react-icons/fa";
 
 function Login() {
   const { data, error, revalidate } = useSWR("/auth/me", fetcher);
@@ -22,13 +21,9 @@ function Login() {
   const [emailInputError, setEmailInutError] = useState(false);
   const [passwordInputError, setPasswordInputError] = useState(false);
   const [loginError, setLoginError] = useState(false);
+  const [loginSave, setLoginSave] = useState(false);
   const router = useRouter();
   const isLogin = useSelector((state: RootState) => state.users?.isLogin);
-
-  if (data && !error) {
-    router.push("/");
-    // alert("로그인이 되어 있습니다.");
-  }
 
   const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,19 +47,28 @@ function Login() {
           router.push("/");
         })
         .catch((err) => {
-          console.dir(err);
+          // console.dir(err);
           setLoginError(true);
         });
     }
   };
 
+  const onSaveEmail = useCallback(() => {
+    setLoginSave((prev) => !prev);
+  }, [loginSave]);
+
+  if (data && !error) {
+    router.push("/");
+    // alert("로그인이 되어 있습니다.");
+  }
+
   return (
     <div className={styles.Parent}>
       {isLogin && !error ? null : (
         <>
-          <div style={{ marginBottom: "22px" }}>
-            <strong>BUYER </strong>
-            로그인
+          <div style={{ marginBottom: "44px" }}>
+            <strong>PLAY LICENSE </strong>
+            <span style={{ fontSize: "24px" }}>로그인</span>
           </div>
           <hr className={styles.Line} />
           <form onSubmit={onSubmitHandler}>
@@ -88,6 +92,25 @@ function Login() {
                 type="password"
               />
             </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                fontSize: "16px",
+                fontFamily: "NotoSansCJKkr-Regular",
+                fontWeight: 400,
+              }}
+            >
+              <CheckBoxWrapper
+                width={"24px"}
+                height={"24px"}
+                onChange={onSaveEmail}
+                value={loginSave}
+              >
+                <FaCheck size={"15px"} color={loginSave ? "white" : "gray"} />
+              </CheckBoxWrapper>
+              <span>아이디 저장</span>
+            </div>
             {loginError && (
               <div className={styles.LoginError}>
                 가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.
@@ -98,55 +121,7 @@ function Login() {
             )}
             <button className={styles.LoginButton}> 로그인하기 </button>
           </form>
-          <div
-            className={styles.Email}
-            style={{ width: "100%", fontSize: "14px" }}
-          >
-            <div className={styles.Para}>
-              <Link href="/signup/first">
-                <a>이메일로 간편가입하기</a>
-              </Link>
-            </div>
-            <div
-              style={{
-                display: "inline-block",
-                position: "relative",
-                left: "212px",
-              }}
-            >
-              <div
-                style={{
-                  display: "inline-block",
-                  marginRight: "19.5px",
-                  cursor: "pointer",
-                }}
-              >
-                <Link href="/user/help">
-                  <a>아아디(이메일) 찾기</a>
-                </Link>
-              </div>
-              <div
-                style={{
-                  display: "inline-block",
-                  borderLeft: "1px solid #9E9E9E",
-                  height: "22.5px",
-                  opacity: "0,3",
-                  position: "relative",
-                  top: "9px",
-                }}
-              ></div>
-              <div
-                style={{
-                  display: "inline-block",
-                  marginLeft: "19.5px",
-                }}
-              >
-                <Link href="/user/help">
-                  <a>비밀번호 찾기</a>
-                </Link>
-              </div>
-            </div>
-          </div>
+
           <div
             style={{
               display: "flex",
@@ -162,7 +137,7 @@ function Login() {
                   src="https://user-images.githubusercontent.com/60249156/107981737-03280080-7006-11eb-9536-1c26c58f5c04.png"
                 />
               </a>
-              <a href={`${url}/api/auth/naver/callback`}>
+              <a href={`http://localhost:8000/api/auth/naver/callback`}>
                 <img
                   className={styles.Logo}
                   src="https://user-images.githubusercontent.com/60249156/107981747-058a5a80-7006-11eb-80c1-c8bfa6fed440.png"
@@ -176,6 +151,19 @@ function Login() {
               </a>
             </div>
           </div>
+          <div className={styles.FindAccount}>
+            <Link href="/signup/first">
+              <a>회원가입하기</a>
+            </Link>
+            <span>|</span>
+            <Link href="/signup/first">
+              <a>아이디(이메일) 찾기</a>
+            </Link>
+            <span>|</span>
+            <Link href="/signup/first">
+              <a>비밀번호 찾기</a>
+            </Link>
+          </div>
         </>
       )}
     </div>
@@ -183,3 +171,50 @@ function Login() {
 }
 
 export default Login;
+// <div
+//   className={styles.Email}
+//   style={{ width: "100%", fontSize: "14px" }}
+// >
+//   <div className={styles.Para}>
+//
+//   </div>
+//   <div
+//     style={{
+//       display: "inline-block",
+//       position: "relative",
+//       left: "212px",
+//     }}
+//   >
+//     <div
+//       style={{
+//         display: "inline-block",
+//         marginRight: "19.5px",
+//         cursor: "pointer",
+//       }}
+//     >
+//       <Link href="/user/help">
+//         <a>아아디(이메일) 찾기</a>
+//       </Link>
+//     </div>
+//     <div
+//       style={{
+//         display: "inline-block",
+//         borderLeft: "1px solid #9E9E9E",
+//         height: "22.5px",
+//         opacity: "0,3",
+//         position: "relative",
+//         top: "9px",
+//       }}
+//     ></div>
+//     <div
+//       style={{
+//         display: "inline-block",
+//         marginLeft: "19.5px",
+//       }}
+//     >
+//       <Link href="/user/help">
+//         <a>비밀번호 찾기</a>
+//       </Link>
+//     </div>
+//   </div>
+// </div>

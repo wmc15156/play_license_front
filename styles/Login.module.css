@@ -1,5 +1,5 @@
 .Parent {
-  margin: 158px auto auto auto;
+  margin: 52px auto auto auto;
   width: 580px;
   display: flex;
   justify-content: center;
@@ -18,7 +18,7 @@
   border: none;
   background-color: #ffcc5c;
   height: 3px;
-  margin-bottom: 27px;
+  margin-bottom: 22px;
 }
 
 .Email {
@@ -43,13 +43,16 @@
 }
 
 .Sns {
-  font-size: 21px;
-  font-family: "Apple SD Gothic Neo", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #939393;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 22px;
 }
 
 .Logo {
   display: flex;
-  margin-top: 30px;
   position: relative;
   left: 16px;
 }
@@ -77,7 +80,7 @@
   background-color: #f5f5f5;
   border: none;
   border-radius: 8px;
-  margin-bottom: 25px;
+  margin-bottom: 12px;
   text-indent: 22px;
   font-size: 16px;
   font-family: "NotoSansCJKkr-Medium";
@@ -96,12 +99,27 @@
   border: none;
   background-color: #ff6f69;
   color: white;
-  font-family: Noto Sans CJK KR;
+  font-family: "NotoSansCJKkr-Medium";
   font-size: 21px;
-  margin-bottom: 17px;
+  margin-bottom: 50px;
   margin-top: 20px;
 }
 
 .LoginButton:hover {
   cursor: pointer;
+}
+
+.FindAccount {
+  width: 100%;
+  font-size: 14px;
+  color: #939393;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+.FindAccount span {
+  margin-left: 20px;
+}
+.FindAccount a {
+  margin-left: 20px;
 }

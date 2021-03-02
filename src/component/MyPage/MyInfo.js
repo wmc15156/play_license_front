@@ -7,10 +7,10 @@ import axios from "axios";
 const MyInfo = () => {
   const { data, error, mutate } = useSWR("/auth/me", fetcher);
   const router = useRouter();
-
+  console.log("data", data, "daadata");
   const onLogOut = () => {
     axios.post("/auth/logout").then((res) => {
-      mutate(undefined, false);
+      // mutate(false, false);
       router.push("/");
     });
   };
