@@ -1,16 +1,21 @@
 import axios from "axios";
 import styled from "styled-components";
 import { useEffect, useContext } from "react";
-import { HomeContext } from "../../../store/homeStore";
+import {
+  HomeContext,
+  useGlobalDispatch,
+  useHomeState,
+} from "../../../store/homeStore";
 import HotItems from "./HotItems";
 
 const Hot = () => {
-  const [state, dispatch] = useContext(HomeContext);
+  const state = useHomeState();
+  const dispatch = useGlobalDispatch();
 
   const getList = () => {
     axios.get("/curation/product").then((res) => {
       dispatch({ type: "fetchHotPerformances", hot: res.data.hot });
-    });
+    })
   };
 
   useEffect(() => {

@@ -6,6 +6,7 @@ import OriginalButton from "@src/component/Button/OriginalButton";
 import { useRouter } from "next/router";
 import styles from "@styles/colors";
 import { useCallback } from "react";
+import { useHomeState } from "../../store/homeStore";
 
 const PWrapper = styled.p`
   width: 100%;
@@ -28,6 +29,9 @@ const DivWrapper = styled.div`
 
 function Done() {
   const router = useRouter();
+  //
+  const state = useHomeState();
+  console.log(state, "state");
   const onChangeMainPage = useCallback(() => {
     router.push("/");
   }, []);

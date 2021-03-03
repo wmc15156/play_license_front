@@ -3,6 +3,7 @@ export const homeInitialState = {
   hot: [],
   curation: [],
   coming: [],
+  userName: "",
 };
 
 export const homeReducer = (state, action) => {
@@ -14,29 +15,34 @@ export const homeReducer = (state, action) => {
         hot: action.hot,
       };
     }
-  }
-  switch (action.type) {
     case "fetchNewPerformances": {
       return {
         ...state,
         new: action.new,
       };
     }
-  }
-  switch (action.type) {
+
     case "fetchCurations": {
       return {
         ...state,
         curation: action.curation,
       };
     }
-  }
-  switch (action.type) {
+
     case "fetchComingSoon": {
       return {
         ...state,
         coming: action.coming,
       };
     }
+
+    case "SAVE_USER_NAME":
+      return {
+        ...state,
+        userName: action.payload,
+      };
+
+    default:
+      throw new Error("Unhandled action type", action.type);
   }
 };
