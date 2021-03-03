@@ -8,6 +8,7 @@ import wrapper from "../store/configureStore";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Html } from "next/document";
+import HomeStore from "../store/homeStore";
 
 const url =
   process.env.NODE_ENV === "production"
@@ -41,7 +42,7 @@ const MyApp = ({ Component, pageProps }) => {
 
   const removeFooter = path.includes(router.pathname);
   return (
-    <>
+    <HomeStore>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>상상마루 - playlicense</title>
@@ -52,7 +53,7 @@ const MyApp = ({ Component, pageProps }) => {
         {!isMenuOpen && !removeFooter && <Footer />}
         <div id="modal" />
       </Layout>
-    </>
+    </HomeStore>
   );
 };
 

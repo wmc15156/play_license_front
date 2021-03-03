@@ -24,13 +24,6 @@ const Home = () => {
 
   const router = useRouter();
 
-  // useEffect(() => {
-  //   console.log(loginData, loginError, "loginError", "loginData", data, error);
-  //   if (loginData && loginError) {
-  //     mutate(false, false);
-  //     router.push("/login");
-  //   }
-  // }, [loginData, loginError]);
 
   return (
     <HomeStore>

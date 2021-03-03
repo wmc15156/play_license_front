@@ -1,12 +1,17 @@
 import axios from "axios";
 import styled from "styled-components";
+import {
+  HomeContext,
+  useGlobalDispatch,
+  useHomeState,
+} from "../../../store/homeStore";
 import { useEffect, useContext, useState } from "react";
-import { HomeContext } from "../../../store/homeStore";
 import HotItems from "./HotItems";
 import Nothing from "./Nothing";
 
 const Hot = () => {
-  const [state, dispatch] = useContext(HomeContext);
+  const state = useHomeState();
+  const dispatch = useGlobalDispatch();
   const [isExist, setIsExist] = useState(false);
 
   const getList = () => {

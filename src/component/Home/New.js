@@ -2,11 +2,16 @@ import axios from "axios";
 import styled from "styled-components";
 import { useEffect, useContext, useState } from "react";
 import NewItems from "./NewItems";
+import {
+  HomeContext,
+  useGlobalDispatch,
+  useHomeState,
+} from "../../../store/homeStore";
 import Nothing from "./Nothing";
-import { HomeContext } from "../../../store/homeStore";
 
-const Hot = () => {
-  const [state, dispatch] = useContext(HomeContext);
+const New = () => {
+  const state = useHomeState();
+  const dispatch = useGlobalDispatch();
   const [isExist, setIsExist] = useState(false);
 
   const getList = () => {
@@ -57,4 +62,4 @@ const Container = styled.div`
   margin-bottom: 170px;
 `;
 
-export default Hot;
+export default New;
