@@ -29,7 +29,7 @@ const HotItems = ({ list }) => {
               <TagWrapper>
                 {item.productBrokerageConsignment.map((cate, i) => {
                   return (
-                    <Tag title={cate} key={item.productId}>
+                    <Tag title={cate.slice(0, 2)} id={item.productId} key={i}>
                       {cate.slice(0, 2)}
                     </Tag>
                   );
@@ -108,6 +108,7 @@ const List = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
+  padding: 0 1rem;
 `;
 
 const Title = styled.div`
@@ -122,6 +123,7 @@ const HeadSection = styled.div`
   justify-content: space-between;
   margin-bottom: 34px;
   align-items: center;
+  padding: 0 1rem;
 `;
 
 const Container = styled.div`

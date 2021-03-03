@@ -1,29 +1,42 @@
 import axios from "axios";
 import styled from "styled-components";
-import { useEffect, useContext } from "react";
 import {
   HomeContext,
   useGlobalDispatch,
   useHomeState,
 } from "../../../store/homeStore";
-import UpcomingItems from "./UpcomingItems";
+import { useEffect, useContext, useState } from "react";
 
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  margin-top: 140px;
-  margin-bottom: 117px;
-`;
+import UpcomingItems from "./UpcomingItems";
+import Nothing from "./Nothing";
 
 const ComingSoon = () => {
   const state = useHomeState();
   const dispatch = useGlobalDispatch();
+  const [isExist, setIsExist] = useState(false);
 
   const getList = () => {
-    axios.get("/curation/product").then((res) => {
-      dispatch({ type: "fetchComingSoon", coming: res.data.coming });
-    });
+    axios
+      .get("/curation/product")
+      .then((res) => {
+        if (Array.isArray(res.data.coming)) {
+          if (res.data.coming.length > 0) {
+            setIsExist(true);
+            dispatch({ type: "fetchComingSoon", coming: res.data.coming });
+            return;
+          } else {
+            setIsExist(false);
+            return;
+          }
+        } else {
+          setIsExist(false);
+          return;
+        }
+      })
+      .catch((err) => {
+        setIsExist(false);
+        console.error(err);
+      });
   };
 
   useEffect(() => {
@@ -32,10 +45,18 @@ const ComingSoon = () => {
 
   return (
     <Container>
-      {/* <UpcomingItems list={state.coming.slice(0, 6)} /> */}
-      <UpcomingItems list={state.new.slice(0, 6)} />
+      {isExist && <UpcomingItems list={state.coming} />}
+      {!isExist && <Nothing title={"coming soon"} />}
     </Container>
   );
 };
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  margin-top: 140px;
+  margin-bottom: 117px;
+`;
 
 export default ComingSoon;

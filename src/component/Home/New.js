@@ -1,21 +1,45 @@
 import axios from "axios";
 import styled from "styled-components";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import NewItems from "./NewItems";
 import {
   HomeContext,
   useGlobalDispatch,
   useHomeState,
 } from "../../../store/homeStore";
+import Nothing from "./Nothing";
 
-const Hot = () => {
+const New = () => {
   const state = useHomeState();
   const dispatch = useGlobalDispatch();
+  const [isExist, setIsExist] = useState(false);
 
   const getList = () => {
-    axios.get("/curation/product").then((res) => {
-      dispatch({ type: "fetchNewPerformances", ...state, new: res.data.new });
-    });
+    axios
+      .get("/curation/product")
+      .then((res) => {
+        if (Array.isArray(res.data.new)) {
+          if (res.data.new.length > 0) {
+            setIsExist(true);
+            dispatch({
+              type: "fetchNewPerformances",
+              ...state,
+              new: res.data.new,
+            });
+            return;
+          } else {
+            setIsExist(false);
+            return;
+          }
+        } else {
+          setIsExist(false);
+          return;
+        }
+      })
+      .catch((err) => {
+        setIsExist(false);
+        console.error(err);
+      });
   };
 
   useEffect(() => {
@@ -24,7 +48,8 @@ const Hot = () => {
 
   return (
     <Container>
-      <NewItems list={state.new.slice(0, 6)} />{" "}
+      {isExist && <NewItems list={state.new} />}
+      {!isExist && <Nothing title={"new"} />}
     </Container>
   );
 };
@@ -37,4 +62,4 @@ const Container = styled.div`
   margin-bottom: 170px;
 `;
 
-export default Hot;
+export default New;

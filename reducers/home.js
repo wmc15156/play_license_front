@@ -9,7 +9,6 @@ export const homeInitialState = {
 export const homeReducer = (state, action) => {
   switch (action.type) {
     case "fetchHotPerformances": {
-      console.log(action, "actions?");
       return {
         ...state,
         hot: action.hot,

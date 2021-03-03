@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import List from "../../src/component/List";
+import List from "../../src/component/Market/List";
 import Curation from "../../src/component/Curation/CurationBlocks";
 import Loader from "../../src/component/Loader";
 
 const Market = (props) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [list, setList] = useState([]);
 
   const getList = () => {

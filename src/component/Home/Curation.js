@@ -44,16 +44,21 @@ const Curation = () => {
   }, []);
 
   const getKeys = () => {
-    console.log(ccc, "??");
     // const keyArr = Object.keys(state.curation);
     setKeyArray(Object.keys(ccc));
-    console.log(keyArray);
     // setKeyArray(keyArr)
 
     // for (let i = 0; i < keyArr.length; i++) {
     //   console.log(ccc[keyArr[i]], "1");
     // }
   };
+
+  const Arrow_Next = ({ currentSlide, slideCount, ...props }) => (
+    <ArrowNext {...props} />
+  );
+  const Arrow_Prev = ({ currentSlide, slideCount, ...props }) => (
+    <ArrowPrev {...props} />
+  );
 
   const settings = {
     infinite: true, // cycle
@@ -63,8 +68,8 @@ const Curation = () => {
     slidesToScroll: 1,
     centerMode: true,
     centerPadding: "15%",
-    nextArrow: <ArrowNext />,
-    prevArrow: <ArrowPrev />,
+    nextArrow: <Arrow_Next />,
+    prevArrow: <Arrow_Prev />,
     beforeChange: (current, next) => setImageIdx(next),
   };
 
@@ -78,12 +83,6 @@ const Curation = () => {
         <StyledSlider {...settings}>
           {/* {keyArray.map((keyName, idx) => (
             <div key={idx}>
-              {console.log(
-                "key",
-                ccc[keyName][0].productTitle,
-                keyName,
-                ccc[keyName].length
-              )}
               <ImageContainer>
                 <Overlay />
                 <TextContainer>
@@ -130,6 +129,7 @@ const Container = styled.div`
 const HeadSection = styled.div`
   max-width: 924px;
   margin: 0 auto;
+  padding: 0 1rem;
   margin-bottom: 72px;
   margin-top: 80px;
   display: flex;
