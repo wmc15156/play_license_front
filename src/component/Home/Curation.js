@@ -5,11 +5,14 @@ import "slick-carousel/slick/slick-theme.css";
 import { useState } from "react";
 import Slider from "react-slick";
 import { useEffect, useContext } from "react";
-import { HomeContext } from "../../../store/homeStore";
+import {
+  HomeContext,
+  useGlobalDispatch,
+  useHomeState,
+} from "../../../store/homeStore";
 import image1 from "../../../public/assets/image/curation01.png";
 import image2 from "../../../public/assets/image/carousel1.png";
 import image3 from "../../../public/assets/image/carousel2.png";
-import ccc from "./curation.json";
 import ShowAll from "../Button/ShowAll";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
@@ -28,25 +31,27 @@ const activeStyles = {
 
 const Curation = () => {
   // const [state, dispatch] = useContext(HomeContext);
+  const state = useHomeState();
+  const dispatch = useGlobalDispatch();
   const [imageIdx, setImageIdx] = useState(0);
   const [keyArray, setKeyArray] = useState([]);
-
-  // const getCurationItems = () => {
-  //   axios.get("/curation/product").then((res) => {
-  //     console.log("res curation", res.data.special);
-  //     dispatch({ type: "fetchCurations", curation: res.data.special });
-  //   });
-  // };
+  const { curation } = state;
+  console.log(curation, " -- - - - -- - ");
+  const getCurationItems = () => {
+    axios.get("/curation/product").then((res) => {
+      console.log("res curation", res.data.special);
+      dispatch({ type: "fetchCurations", curation: res.data.special });
+    });
+  };
 
   useEffect(() => {
-    // getCurationItems();
+    getCurationItems();
     getKeys();
   }, []);
 
   const getKeys = () => {
-    // const keyArr = Object.keys(state.curation);
-    setKeyArray(Object.keys(ccc));
-    // setKeyArray(keyArr)
+    const keyArr = Object.keys(state.curation);
+    setKeyArray(keyArr);
 
     // for (let i = 0; i < keyArr.length; i++) {
     //   console.log(ccc[keyArr[i]], "1");
@@ -81,40 +86,43 @@ const Curation = () => {
       </HeadSection>
       <SliderContainer>
         <StyledSlider {...settings}>
-          {/* {keyArray.map((keyName, idx) => (
-            <div key={idx}>
-              <ImageContainer>
-                <Overlay />
-                <TextContainer>
-                  <Text1>[{ccc[keyName][0].productTitle}] 등</Text1>
-                  <Text2>{keyName}에 추천해요!</Text2>
-                  <Text3>{ccc[keyName].length}개의 작품 보기</Text3>
-                </TextContainer>
-                <img
-                  src={ccc[keyName][0].productImage}
-                  alt={ccc[keyName][0].productTitle}
-                  style={idx === imageIdx ? activeStyles : defaultStyles}
-                />
-              </ImageContainer>
-            </div>
-          ))} */}
-          {images.map((img, idx) => (
-            <div key={idx}>
-              <ImageContainer>
-                {/* <Overlay /> */}
-                <TextContainer>
-                  <Text1>[{}] 등</Text1>
-                  <Text2>{}에 추천해요!</Text2>
-                  <Text3>{}개의 작품 보기</Text3>
-                </TextContainer>
-                <img
-                  src={img}
-                  alt={img}
-                  style={idx === imageIdx ? activeStyles : defaultStyles}
-                />
-              </ImageContainer>
-            </div>
-          ))}
+          {keyArray.map((keyName, idx) => {
+            console.log(curation[keyName][0].curationImage, "curationImage");
+            return (
+              <div key={idx}>
+                <ImageContainer>
+                  <Overlay />
+                  <TextContainer>
+                    <Text1>[{curation[keyName][0].productTitle}] 등</Text1>
+                    <Text2>{keyName}에 추천해요!</Text2>
+                    <Text3>{curation[keyName].length}개의 작품 보기</Text3>
+                  </TextContainer>
+                  <img
+                    src={curation[keyName][0].curationImage}
+                    alt={curation[keyName][0].productTitle}
+                    style={idx === imageIdx ? activeStyles : defaultStyles}
+                  />
+                </ImageContainer>
+              </div>
+            );
+          })}
+          {/*{images.map((img, idx) => (*/}
+          {/*  <div key={idx}>*/}
+          {/*    <ImageContainer>*/}
+          {/*      /!* <Overlay /> *!/*/}
+          {/*      <TextContainer>*/}
+          {/*        <Text1>[{}] 등</Text1>*/}
+          {/*        <Text2>{}에 추천해요!</Text2>*/}
+          {/*        <Text3>{}개의 작품 보기</Text3>*/}
+          {/*      </TextContainer>*/}
+          {/*      <img*/}
+          {/*        src={img}*/}
+          {/*        alt={img}*/}
+          {/*        style={idx === imageIdx ? activeStyles : defaultStyles}*/}
+          {/*      />*/}
+          {/*    </ImageContainer>*/}
+          {/*  </div>*/}
+          {/*))}*/}
         </StyledSlider>
       </SliderContainer>
     </Container>
