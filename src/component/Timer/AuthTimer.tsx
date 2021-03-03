@@ -23,14 +23,15 @@ const AuthTimer = ({ initialTime, setInitialTime }: AuthTimerProps) => {
   return (
     <span
       style={{
-        display: "inline-block",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
         width: "0",
         fontSize: "14px",
         color: "#ff5252",
         letterSpacing: "-0.4px",
         position: "relative",
-        top: "52px",
-        right: "84px",
+        left: "70%",
         margin: "0",
       }}
     >

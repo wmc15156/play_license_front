@@ -34,6 +34,9 @@ const MyApp = ({ Component, pageProps }) => {
     "/user/help",
     "/signup/sns",
     "/login/select",
+    "/signup/third",
+    "/signup/done",
+    "/exist/account",
   ];
 
   const removeFooter = path.includes(router.pathname);
