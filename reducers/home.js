@@ -1,8 +1,13 @@
+import { SAVE_PASSWORD_CHECK, SAVE_USER_EMAIL } from "@reducers/types/types";
+
 export const homeInitialState = {
   new: [],
   hot: [],
   curation: [],
   coming: [],
+  userName: "",
+  userEmail: "",
+  passwordCheck: false,
 };
 
 export const homeReducer = (state, action) => {
@@ -13,7 +18,6 @@ export const homeReducer = (state, action) => {
         hot: action.hot,
       };
     }
-
     case "fetchNewPerformances": {
       return {
         ...state,
@@ -34,5 +38,24 @@ export const homeReducer = (state, action) => {
         coming: action.coming,
       };
     }
+
+    case "SAVE_USER_NAME":
+      return {
+        ...state,
+        userName: action.payload,
+      };
+
+    case SAVE_USER_EMAIL:
+      return {
+        ...state,
+        userEmail: action.payload,
+      };
+    case SAVE_PASSWORD_CHECK:
+      return {
+        ...state,
+        passwordCheck: action.payload,
+      }
+    default:
+      throw new Error("Unhandled action type", action.type);
   }
 };

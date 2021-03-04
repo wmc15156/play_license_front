@@ -14,7 +14,7 @@ import CheckBoxWrapper from "@src/component/CheckBoxWrapper/CheckBoxWrapper";
 import { FaCheck } from "react-icons/fa";
 
 function Login() {
-  const { data, error, revalidate } = useSWR("/auth/me", fetcher);
+  const { data, error, revalidate, mutate } = useSWR("/user/me", fetcher);
 
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
@@ -43,7 +43,7 @@ function Login() {
       axios
         .post("/auth/login", data)
         .then((res) => {
-          revalidate();
+          mutate(true, false);
           router.push("/");
         })
         .catch((err) => {
@@ -57,7 +57,7 @@ function Login() {
     setLoginSave((prev) => !prev);
   }, [loginSave]);
 
-  if (data && !error) {
+  if (data) {
     router.push("/");
     // alert("로그인이 되어 있습니다.");
   }
@@ -156,11 +156,11 @@ function Login() {
               <a>회원가입하기</a>
             </Link>
             <span>|</span>
-            <Link href="/signup/first">
+            <Link href="/find/email">
               <a>아이디(이메일) 찾기</a>
             </Link>
             <span>|</span>
-            <Link href="/signup/first">
+            <Link href="/find/password">
               <a>비밀번호 찾기</a>
             </Link>
           </div>
@@ -171,50 +171,3 @@ function Login() {
 }
 
 export default Login;
-// <div
-//   className={styles.Email}
-//   style={{ width: "100%", fontSize: "14px" }}
-// >
-//   <div className={styles.Para}>
-//
-//   </div>
-//   <div
-//     style={{
-//       display: "inline-block",
-//       position: "relative",
-//       left: "212px",
-//     }}
-//   >
-//     <div
-//       style={{
-//         display: "inline-block",
-//         marginRight: "19.5px",
-//         cursor: "pointer",
-//       }}
-//     >
-//       <Link href="/user/help">
-//         <a>아아디(이메일) 찾기</a>
-//       </Link>
-//     </div>
-//     <div
-//       style={{
-//         display: "inline-block",
-//         borderLeft: "1px solid #9E9E9E",
-//         height: "22.5px",
-//         opacity: "0,3",
-//         position: "relative",
-//         top: "9px",
-//       }}
-//     ></div>
-//     <div
-//       style={{
-//         display: "inline-block",
-//         marginLeft: "19.5px",
-//       }}
-//     >
-//       <Link href="/user/help">
-//         <a>비밀번호 찾기</a>
-//       </Link>
-//     </div>
-//   </div>
-// </div>

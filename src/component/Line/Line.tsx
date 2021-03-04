@@ -8,8 +8,8 @@ const Wrapper = styled.div`
   height: 70px;
 `;
 
-const LineWrapper = styled.hr<{ background: boolean }>`
-  width: 100px;
+const LineWrapper = styled.hr<{ background: boolean; width: string }>`
+  width: ${(p) => p.width};
   border-radius: 100px;
   height: 3px;
   background: ${(p) => (p.background ? `${styles.yellow}` : `${styles.gray1}`)};
@@ -19,13 +19,13 @@ const LineWrapper = styled.hr<{ background: boolean }>`
 
 type Props = {
   background: boolean;
+  width: string;
 };
 
-const Line: VFC<Props> = ({ background }) => {
-  console.log(background, "LINE");
+const Line: VFC<Props> = ({ background, width }) => {
   return (
     <Wrapper>
-      <LineWrapper background={background} />
+      <LineWrapper background={background} width={width} />
     </Wrapper>
   );
 };

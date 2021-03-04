@@ -9,7 +9,7 @@ const TagWrapper = styled.span`
   width: 22px;
   height: 12px;
   opacity: 0.6;
-  font-family: NotoSansCJKkr;
+  font-family: "NotoSansCJKkr-Regular";
   font-size: 12px;
   font-weight: bold;
   font-stretch: normal;
@@ -34,8 +34,8 @@ const TagWrapper = styled.span`
       : css`
           border: 3px ${styles.blue_2} solid;
         `}
-  &:first-child{
-    margin-left:0;
+  &:first-child {
+    margin-left: 0;
   }
 `;
 

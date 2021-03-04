@@ -64,11 +64,9 @@ const InputBoxWrapper: FC<InputBoxWrapper> = ({
   const [sendCode, setSendCode] = useState(false);
   const onClickHandler = (text) => () => {
     if (text === "인증") {
-      console.log("인증");
       setSendCode(true);
     }
     if (text === "확인") {
-      console.log("확인");
       setCount(true);
     }
   };

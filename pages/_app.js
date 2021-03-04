@@ -8,6 +8,7 @@ import wrapper from "../store/configureStore";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Html } from "next/document";
+import HomeStore, { useHomeState } from "../store/homeStore";
 
 const url =
   process.env.NODE_ENV === "production"
@@ -17,6 +18,15 @@ console.log(url);
 axios.defaults.baseURL = url;
 axios.defaults.withCredentials = true;
 console.log(process.env_NODE_ENV, "test");
+
+// tslint:disable-next-line: no-empty
+const noop = () => {};
+
+if (process.env.NODE_ENV === "production") {
+  console.log = noop;
+  console.warn = noop;
+  console.error = noop;
+}
 
 const MyApp = ({ Component, pageProps }) => {
   const router = useRouter();
@@ -34,11 +44,17 @@ const MyApp = ({ Component, pageProps }) => {
     "/user/help",
     "/signup/sns",
     "/login/select",
+    "/signup/third",
+    "/signup/done",
+    "/exist/account",
+    "/find/email",
+    "/find/password",
+    "/find/getEmail",
   ];
 
   const removeFooter = path.includes(router.pathname);
   return (
-    <>
+    <HomeStore>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>상상마루 - playlicense</title>
@@ -49,7 +65,7 @@ const MyApp = ({ Component, pageProps }) => {
         {!isMenuOpen && !removeFooter && <Footer />}
         <div id="modal" />
       </Layout>
-    </>
+    </HomeStore>
   );
 };
 

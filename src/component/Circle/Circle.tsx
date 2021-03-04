@@ -22,7 +22,6 @@ type Props = {
 };
 
 const Circle: FC<Props> = ({ children, background }) => {
-  console.log(background);
   return <CircleWrapper background={background}>{children}</CircleWrapper>;
 };
 

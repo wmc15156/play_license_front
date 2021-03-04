@@ -5,7 +5,7 @@ import styles from "@styles/colors";
 const Wrapper = styled.p<{ size: string; margin: string }>`
   display: flex;
   justify-content: center;
-  font-family: NotoSansCJKkr-Bold;
+  font-family: "NotoSansCJKkr-Regular";
   width: 100%;
   line-height: 24px;
   max-width: 580px;
@@ -13,6 +13,7 @@ const Wrapper = styled.p<{ size: string; margin: string }>`
   font-size: ${(p) => p.size};
   & span {
     color: ${styles.pink};
+    font-family: "NotoSansCJKkr-Bold";
   }
 `;
 

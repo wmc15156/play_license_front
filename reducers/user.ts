@@ -5,7 +5,16 @@ import {
 } from "../utils/asyncUtils";
 import axios, { AxiosError } from "axios";
 import * as userAPI from "../core/api/user";
-import { ReqData } from "../pages/signup/second";
+
+export type ReqData = {
+  provider: "local" | "google" | "kakao" | "naver";
+  fullName: string;
+  email: string;
+  password: string;
+  phone: string;
+  role: "user" | "provider" | "admin";
+  admin: boolean;
+};
 
 export const SIGN_UP = "user/SIGN_UP" as const;
 export const SIGN_UP_SUCCESS = "user/SIGN_UP_SUCCESS" as const;

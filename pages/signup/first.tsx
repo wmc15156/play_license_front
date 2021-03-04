@@ -14,6 +14,8 @@ import { FaCheck } from "react-icons/fa";
 import CheckBoxWrapper from "@src/component/CheckBoxWrapper/CheckBoxWrapper";
 import styled from "styled-components";
 import OriginalButton from "@src/component/Button/OriginalButton";
+import useSWR from "swr";
+import fetcher from "@utils/fetcher";
 
 const CheckBoxContainer = styled.div`
   width: 580px;
@@ -34,6 +36,11 @@ const ButtonContainer = styled.div`
 const SignUpFirst: VFC = () => {
   const router = useRouter();
   const [term, setTerm] = useState(false);
+  const { data, error } = useSWR("/user/me", fetcher);
+
+  if (data) {
+    router.push("/");
+  }
 
   const onChangeTerm = () => {
     setTerm((prev) => !prev);
@@ -45,7 +52,7 @@ const SignUpFirst: VFC = () => {
 
   return (
     <ContainerWrapper width={"580px"}>
-      <ProcessCircle process={1} />
+      <ProcessCircle process={1} lineWidth={'100px'} />
       <Comment font={"24px"} margin={"64px"}>
         <span>개인정보 수집 및 활용</span>에 동의해주세요
       </Comment>

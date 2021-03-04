@@ -8,6 +8,7 @@ const Wrapper = styled.div<{
   background: boolean;
   height: string;
   size: string;
+  position: boolean;
 }>`
   width: ${(p) => p.width};
   height: ${(p) => p.height};
@@ -23,6 +24,7 @@ const Wrapper = styled.div<{
   outline: 0;
   margin-top: ${(p) => p.margin};
   font-size: ${(p) => p.size};
+  position: ${(p) => (p.position ? "absolute" : null)};
   cursor: pointer;
 `;
 
@@ -33,6 +35,8 @@ type Props = {
   background: boolean;
   height: string;
   size: string;
+  position?: boolean;
+  onClick?: () => void;
 };
 
 const OriginalButton: FC<Props> = ({
@@ -42,6 +46,8 @@ const OriginalButton: FC<Props> = ({
   background,
   height,
   size,
+  position,
+  onClick,
 }) => {
   return (
     <Wrapper
@@ -50,6 +56,8 @@ const OriginalButton: FC<Props> = ({
       margin={margin}
       height={height}
       size={size}
+      position={position}
+      onClick={onClick}
     >
       {children}
     </Wrapper>

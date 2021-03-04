@@ -1,35 +1,28 @@
-import useInput from "../../utils/useInput";
-import { memo, useCallback, useState } from "react";
-import { useRouter } from "next/router";
-import useSWR from "swr";
-import fetcher from "@utils/fetcher";
 import ContainerWrapper from "@src/component/ContainerWrapper/ContainerWrapper";
-import ProcessCircle from "@src/component/molecules/ProcessCircle/ProcessCircle";
 import Comment from "@src/component/Comment/Comment";
+import Line from "@src/component/Line/Line";
+import TextAndInput from "@src/component/molecules/TextAndInput/TextAndInput";
+import styles from "@styles/colors";
+import useInput from "@utils/useInput";
+import TextAndInputAndBtn from "@src/component/molecules/TextAndInputAndBtn/TextAndInputAndBtn";
+import { useCallback, useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 import InputAndBtn from "@src/component/molecules/InputAndBtn/InputAndBtn";
 import OriginalButton from "@src/component/Button/OriginalButton";
-import axios from "axios";
-import styled from "styled-components";
+import { useGlobalDispatch } from "@store/homeStore";
+import { SAVE_USER_EMAIL } from "@reducers/types/types";
+import { ValidationCheck } from "../signup/second";
 
-export const ValidationCheck = styled.div`
-  width: 100%;
-  color: #51cf66;
-  font-size: 15px;
-  margin-top: 20px;
-`;
-
-function SignUpSecond() {
-  const { data, error } = useSWR("/user/me", fetcher, {
-    refreshInterval: 1000000,
-  });
+const FindEmail = () => {
   const router = useRouter();
-
+  const [name, setName] = useInput("");
   const [phone, setPhone] = useInput("");
   const [code, setCode] = useInput("");
   const [timer, setTimer] = useState(false);
   const [completedValidation, setCompletedValidation] = useState(false);
+  const dispatch = useGlobalDispatch();
 
-  // 휴대폰 인증번호 전송
   const requestPhoneValidation = useCallback(() => {
     if (phone) {
       axios
@@ -47,7 +40,6 @@ function SignUpSecond() {
     }
   }, [phone]);
 
-  // 비교로직
   const validateCode = () => {
     if (code) {
       axios
@@ -69,46 +61,76 @@ function SignUpSecond() {
   };
 
   const onChangePage = () => {
+
+
     if (completedValidation) {
-    router.push("/signup/third");
+      axios
+        .get(`/user/find/${phone}`)
+        .then((res) => {
+          dispatch({ type: SAVE_USER_EMAIL, payload: res.data });
+          router.push("/find/getEmail");
+          return;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      router.push("/find/getEmail");
     }
   };
 
-  if (data) {
-    router.push("/");
-  }
-
   return (
     <ContainerWrapper width={"580px"}>
-      <ProcessCircle process={2} lineWidth={'100px'} />
-      <Comment font={"24px"} margin={"64px"}>
-        본인인증을 위한 <span>휴대폰 번호</span>를 입력해주세요
+      <Comment font={"24px"} margin={"72px"}>
+        아이디(이메일) 찾기
       </Comment>
-      <InputAndBtn
-        inputWidth={"580px"}
-        inputPlaceholder={"휴대폰번호를 입력해주세요"}
-        btnFontSize={"14px"}
-        marginTop={"44px"}
-        btnBackground={phone.length > 0}
+      <Line background={true} width={"580px"} />
+      <TextAndInput
+        textFontSize={"21px"}
+        textWidth={"78px"}
+        textColor={styles.orange}
+        textMargin={"25px"}
+        inputWidth={"472px"}
+        placeholder={"실명을 입력해주세요"}
+        onChange={setName}
+        value={name}
+        wrapperMargin={"22px"}
+        number={false}
+      >
+        이름
+      </TextAndInput>
+      <TextAndInputAndBtn
+        text={"연락처"}
+        textFontSize={"21px"}
+        textWidth={"78px"}
+        textColor={styles.orange}
+        textMargin={"25px"}
+        inputWidth={"472px"}
+        placeholder={"-없이 숫자만 입력해주세요"}
         onChange={setPhone}
         value={phone}
+        wrapperMargin={"12px"}
+        btnFontSize={"14px"}
         onClick={requestPhoneValidation}
       >
         인증번호 전송
-      </InputAndBtn>
-      <InputAndBtn
-        inputWidth={"580px"}
-        inputPlaceholder={"인증번호를 입력해주세요"}
-        btnFontSize={"14px"}
-        marginTop={"12px"}
-        btnBackground={code.length > 0}
+      </TextAndInputAndBtn>
+      <TextAndInputAndBtn
+        text={"인증번호"}
+        textFontSize={"21px"}
+        textWidth={"100%"}
+        textColor={styles.orange}
+        textMargin={"25px"}
+        inputWidth={"472px"}
+        placeholder={"인증번호를 입력해주세요."}
         onChange={setCode}
         value={code}
-        timer={timer}
+        wrapperMargin={"12px"}
+        btnFontSize={"14px"}
         onClick={validateCode}
+        bigBtn={timer}
       >
         인증번호 확인
-      </InputAndBtn>
+      </TextAndInputAndBtn>
       {completedValidation && (
         <ValidationCheck>인증에 성공했습니다.</ValidationCheck>
       )}
@@ -117,14 +139,14 @@ function SignUpSecond() {
         position={false}
         height={"60px"}
         size={"21px"}
-        margin={"84px"}
+        margin={"64px"}
         background={completedValidation}
         onClick={onChangePage}
       >
-        다음 단계로
+        아이디(이메일)찾기
       </OriginalButton>
     </ContainerWrapper>
   );
-}
+};
 
-export default memo(SignUpSecond);
+export default FindEmail;
