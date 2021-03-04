@@ -3,7 +3,7 @@ import React, { Dispatch, memo, SetStateAction, useEffect, useState } from "reac
 type AuthTimerProps = {
   initialTime: number;
   setInitialTime: Dispatch<SetStateAction<number>>;
-  bigBtn: boolean;
+  bigBtn?: boolean;
 };
 
 const AuthTimer = ({ initialTime, setInitialTime, bigBtn }: AuthTimerProps) => {
