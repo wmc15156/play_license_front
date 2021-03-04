@@ -12,7 +12,7 @@ const Wrapper = styled.div<{
   width: ${(p) => p.width};
   height: ${(p) => p.height};
   background-color: ${(p) =>
-    p.background ? `${styles.pink}` : `${styles.black3}`};
+    p.background ? `${styles.orange}` : `${styles.black3}`};
   display: flex;
   justify-content: center;
   align-items: center;

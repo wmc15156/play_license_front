@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 
 const OrangeShortBtn = ({ text, onClickHandler }) => {
   return <Container onClick={onClickHandler}>{text}</Container>;
@@ -8,11 +9,11 @@ const Container = styled.div`
 
   height: 60px;
   border-radius: 8px;
-  background-color: #ff6f69;
+  background-color: ${color.orange};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: ${color.white};
   font-family: "NotoSansCJKkr-Bold";
   font-size: 21px;
   line-height: 18px;

@@ -1,39 +1,47 @@
 import styled from "styled-components";
-import Btn from "../Button/SignUpButton";
+import color from "../../../styles/colors";
+import Btn from "../Button/OriginalButton";
 
 const AlertModal = ({ text, onClickBtn }) => {
   return (
     <Container>
       <Title>{text}</Title>
-      <BtnSection>
-        <Btn text={"확인"} onClickHandler={onClickBtn} />
+      <BtnSection onClick={onClickBtn}>
+        <Btn
+          width={"100%"}
+          background={true}
+          margin={"44px"}
+          height={"40px"}
+          size={"14px"}
+        >
+          확인
+        </Btn>
       </BtnSection>
     </Container>
   );
 };
 
 const Container = styled.div`
-  width: 520px;
+  /* width: 520px; */
   border-radius: 14px;
-  background-color: #fff;
+  background-color: ${color.white};
   z-index: 11;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 44px 10%;
 `;
 
 const Title = styled.div`
   font-family: "NotoSansCJKkr-Bold";
-  font-size: 24px;
-  color: #0d0d0c;
-  margin: 60px 22% 73px 22%;
+  font-size: 16px;
+  color: ${color.black1};
+  /* margin: 44px 12% 36px 12%; */
 `;
 
 const BtnSection = styled.div`
-  width: 240px;
-  height: 56px;
-  margin: 0 22% 55px 22%;
+  width: 100%;
 `;
 
 export default AlertModal;

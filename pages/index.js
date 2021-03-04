@@ -56,6 +56,9 @@ const Home = () => {
               <img src="/assets/image/Banner_Buyer.png" />
             </Banner1>
           </Link>
+          <Banner1_1>
+            <img src="/assets/image/HO_PL provider.png" />
+          </Banner1_1>
         </BannerSection>
         <HotSection>
           <Hot />
@@ -83,20 +86,39 @@ const Home = () => {
 const Container = styled.div`
   display: flex;
   min-height: 100%;
-  /* padding: 0 1rem; */
   flex-direction: column;
 `;
 
 const CarouselSection = styled.div`
   width: 100%;
-  /* max-width: 924px; */
-  /* margin: 0 auto; */
+  height: 100%;
+`;
+
+const BannerSection = styled.div`
+  width: 100%;
+  max-height: 180px;
+  height: auto;
+  margin-bottom: 115px;
+  max-width: 924px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
 `;
 
 const Banner1 = styled.div`
+  width: 75%;
   cursor: pointer;
   margin-top: 99px;
-  padding: 0 1rem;
+  & > img {
+    width: 100%;
+  }
+`;
+
+const Banner1_1 = styled.div`
+  width: 23%;
+  cursor: pointer;
+  margin-top: 99px;
+  margin-left: 2%;
   & > img {
     width: 100%;
   }
@@ -129,15 +151,9 @@ const UpcomingSection = styled.div`
   max-width: 924px;
   margin: 0 auto;
 `;
-const BannerSection = styled.div`
-  width: 100%;
-  height: auto;
-  margin-bottom: 115px;
-  max-width: 924px;
-  margin: 0 auto;
-`;
 
 const Banner2 = styled.div`
+  max-height: 180px;
   cursor: pointer;
   margin-bottom: 163px;
   padding: 0 1rem;

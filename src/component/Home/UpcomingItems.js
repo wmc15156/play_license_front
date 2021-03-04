@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Tag from "../Tag/Tag.";
 import { useRouter } from "next/router";
 import ShowAll from "../Button/ShowAll";
+import color from "../../../styles/colors";
 
 const UpcomingItems = ({ list }) => {
   const router = useRouter();
@@ -62,6 +63,7 @@ const Divider = styled.div`
 `;
 
 const PInfo = styled.div`
+  color: ${color.black3};
   display: flex;
   font-family: "NotoSansCJKkr-Regular";
   line-height: 14px;
@@ -103,7 +105,7 @@ const Overlay = styled.div`
   height: 100%;
   border-radius: 8px;
   z-index: 10;
-  background-color: black;
+  background-color: ${color.black1};
   opacity: 0.6;
   position: absolute;
 `;
@@ -116,7 +118,7 @@ const UpcomingDate = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  color: #ffffff;
+  color: ${color.white};
   z-index: 11;
 `;
 

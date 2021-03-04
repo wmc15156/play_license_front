@@ -16,9 +16,9 @@ const Container = styled.div`
   height: auto;
   border-radius: 14px;
   cursor: pointer;
+  margin-top: 23px;
 
   & > img {
-    /* max-width: 380px; */
     width: 100%;
     height: auto;
   }

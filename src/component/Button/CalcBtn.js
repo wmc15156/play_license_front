@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 
 // performance/:id 구매하기버튼
 const CalcBtn = ({ onClickHandler }) => {
@@ -21,7 +22,7 @@ const Container = styled.div`
   font-family: "NotoSansCJKkr-Medium";
   line-height: 18px;
   font-size: 21px;
-  color: #000000;
+  color: ${color.black1};
   opacity: 0.4;
 `;
 
