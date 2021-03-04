@@ -29,10 +29,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const MyApp = ({ Component, pageProps }) => {
-  const supportedBrowsers = require("../suppportedBrowsers");
-  if (process.browser && !supportedBrowsers.test(navigator.userAgent)) {
-    alert("Your browser is not supported.");
-  }
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

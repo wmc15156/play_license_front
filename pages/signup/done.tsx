@@ -31,7 +31,6 @@ function Done() {
   const router = useRouter();
   //
   const state = useHomeState();
-  console.log(state);
   const { userName } = state;
   const onChangeMainPage = useCallback(() => {
     router.push("/");
@@ -41,10 +40,10 @@ function Done() {
     router.push("/login");
   }, []);
 
-  if (!userName) {
-    router.push("/signup/third");
-    return;
-  }
+  // if (!userName) {
+  //   router.push("/signup/third");
+  //   return;
+  // }
 
   return (
     <ContainerWrapper width={"580px"}>
