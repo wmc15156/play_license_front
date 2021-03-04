@@ -11,6 +11,9 @@ const InputAndBtnWrapper = styled.div<{ marginTop: string }>`
   box-sizing: border-box;
   flex-direction: row-reverse;
   margin-top: ${(p) => p.marginTop};
+  & > span {
+    display: inline-flex;
+  }
 `;
 
 type Props = {
@@ -26,6 +29,7 @@ type Props = {
   onClick?: () => void;
   onBlur?: () => void;
   number?: boolean;
+  bigBtn?: boolean;
 };
 
 const InputAndBtn: FC<Props> = ({
@@ -41,6 +45,7 @@ const InputAndBtn: FC<Props> = ({
   onClick,
   number,
   onBlur,
+  bigBtn,
 }) => {
   const [initialTime, setInitialTime] = useState(180);
   return (
@@ -62,7 +67,7 @@ const InputAndBtn: FC<Props> = ({
         />
       )}
       {timer && (
-        <AuthTimer initialTime={initialTime} setInitialTime={setInitialTime} />
+        <AuthTimer initialTime={initialTime} setInitialTime={setInitialTime} bigBtn={bigBtn}/>
       )}
       <OriginalButton
         width={"146px"}

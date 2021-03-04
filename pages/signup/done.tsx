@@ -31,7 +31,7 @@ function Done() {
   const router = useRouter();
   //
   const state = useHomeState();
-  console.log(state, "state");
+  const { userName } = state;
   const onChangeMainPage = useCallback(() => {
     router.push("/");
   }, []);
@@ -40,14 +40,20 @@ function Done() {
     router.push("/login");
   }, []);
 
+  // if (!userName) {
+  //   router.push("/signup/third");
+  //   return;
+  // }
+
   return (
     <ContainerWrapper width={"580px"}>
-      <ProcessCircle process={4} />
+      <ProcessCircle process={4} lineWidth={"100px"} />
       <Comment font={"36px"} margin={"64px"}>
         <span>회원가입이 완료</span>되었습니다.
       </Comment>
       <PWrapper>
-        이예빈 님<br /> <span>PLAY LICENSE</span>에 오신걸 환영해요!
+        {userName}님
+        <br /> <span>PLAY LICENSE</span>에 오신걸 환영해요!
       </PWrapper>
       <OriginalButton
         margin={"64px"}

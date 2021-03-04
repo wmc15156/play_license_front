@@ -12,9 +12,10 @@ const Wrapper = styled.div`
 type Props = {
   children?: React.ReactNode;
   process: number;
+  lineWidth?: string;
 };
 
-const ProcessCircle: FC<Props> = ({ children, process }) => {
+const ProcessCircle: FC<Props> = ({ children, process, lineWidth }) => {
   // 1 background: false
   const checkBackground = (num) => {
     return process >= num;
@@ -23,11 +24,11 @@ const ProcessCircle: FC<Props> = ({ children, process }) => {
   return (
     <Wrapper>
       <Circle background={checkBackground(1)}>1</Circle>
-      <Line background={checkBackground(2)} />
+      <Line background={checkBackground(2)} width={lineWidth} />
       <Circle background={checkBackground(2)}>2</Circle>
-      <Line background={checkBackground(3)} />
+      <Line background={checkBackground(3)} width={lineWidth} />
       <Circle background={checkBackground(3)}>3</Circle>
-      <Line background={checkBackground(4)} />
+      <Line background={checkBackground(4)} width={lineWidth} />
       <Circle background={checkBackground(4)}>4</Circle>
     </Wrapper>
   );

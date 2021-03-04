@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import styles from "../../styles/colors";
 import Link from "next/link";
@@ -6,16 +5,13 @@ import Menu from "../component/Menu";
 import { useRouter } from "next/router";
 import { GoSearch } from "react-icons/go";
 import { IoPersonCircleSharp, IoMenu } from "react-icons/io5";
-
-// https://styled-components.com/docs/advanced#referring-to-other-components
+import fetcher from "../../utils/fetcher";
+import useSWR from "swr";
 
 const Header = ({ menuStatus, onCloseHandler }) => {
   const router = useRouter();
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // const onCloseHandler = () => {
-  //   setIsMenuOpen(!isMenuOpen);
-  // };
+  const { data, error } = useSWR("/user/me", fetcher);
+  console.log(data, "header");
 
   const changePage = (page = "") => () => {
     console.log("click");
@@ -46,22 +42,34 @@ const Header = ({ menuStatus, onCloseHandler }) => {
           </LogoBox>
           <List>
             <ListItem_M
-              onClick={changePage("mypage")}
-              color={router.pathname === "/mypage" ? styles.blue : null}
+              onClick={changePage(data ? "mypage" : "login")}
+              color={
+                router.pathname === "/mypage" || router.pathname === "/login"
+                  ? styles.blue
+                  : null
+              }
             >
               <Wrap>
                 <PersonIconWrapper>
                   <IoPersonCircleSharp
                     size="32px"
                     color={
-                      router.pathname === "/mypage" ? styles.white : styles.blue
+                      router.pathname === "/mypage" ||
+                      router.pathname === "/login"
+                        ? styles.white
+                        : styles.blue
                     }
                   />
                 </PersonIconWrapper>
                 <Text
-                  color={router.pathname === "/mypage" ? styles.white : null}
+                  color={
+                    router.pathname === "/mypage" ||
+                    router.pathname === "/login"
+                      ? styles.white
+                      : null
+                  }
                 >
-                  MYPAGE
+                  {data ? "MYPAGE" : "LOGIN"}
                 </Text>
               </Wrap>
             </ListItem_M>
@@ -74,6 +82,7 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                 <SearchWrapper>
                   <GoSearch
                     size="28px"
+                    s
                     color={
                       router.pathname === "/search"
                         ? styles.white
@@ -118,8 +127,12 @@ const Header = ({ menuStatus, onCloseHandler }) => {
             </LogoBox>
             <List>
               <ListItem_M
-                onClick={changePage("mypage")}
-                color={router.pathname === "/mypage" ? styles.blue : null}
+                onClick={changePage(data ? "mypage" : "login")}
+                color={
+                  router.pathname === "/mypage" || router.pathname === "/login"
+                    ? styles.blue
+                    : null
+                }
               >
                 <Wrap>
                   <PersonIconWrapper>
@@ -133,9 +146,14 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                     />
                   </PersonIconWrapper>
                   <Text
-                    color={router.pathname === "/mypage" ? styles.white : null}
+                    color={
+                      router.pathname === "/mypage" ||
+                      router.pathname === "/login"
+                        ? styles.white
+                        : null
+                    }
                   >
-                    MYPAGE
+                    {data ? "MYPAGE" : "LOGIN"}
                   </Text>
                 </Wrap>
               </ListItem_M>
@@ -255,7 +273,7 @@ const ListItem_M = styled.div`
   &:hover {
     font-family: "Gotham Medium";
     font-size: 14px;
-    background-color: #0e9aa7;
+    background-color: ${styles.blue};
     color: #fff;
     transition: all 0.3s ease-in-out;
   }
@@ -263,7 +281,7 @@ const ListItem_M = styled.div`
 const ListItem_S = styled.div`
   border-radius: 4px;
   display: flex;
-  align-items: cente;
+  align-items: center;
   justify-content: center;
   width: 100%;
   height: 45px;
@@ -322,6 +340,7 @@ const Text = styled.div`
   font-family: "Gotham Medium";
   font-size: 14px;
   line-height: 17px;
+  margin-top: 13px;
   ${(props) =>
     props.color &&
     css`

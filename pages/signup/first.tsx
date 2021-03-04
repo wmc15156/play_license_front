@@ -36,7 +36,7 @@ const ButtonContainer = styled.div`
 const SignUpFirst: VFC = () => {
   const router = useRouter();
   const [term, setTerm] = useState(false);
-  const { data, error } = useSWR("/auth/me", fetcher);
+  const { data, error } = useSWR("/user/me", fetcher);
 
   if (data) {
     router.push("/");
@@ -52,7 +52,7 @@ const SignUpFirst: VFC = () => {
 
   return (
     <ContainerWrapper width={"580px"}>
-      <ProcessCircle process={1} />
+      <ProcessCircle process={1} lineWidth={'100px'} />
       <Comment font={"24px"} margin={"64px"}>
         <span>개인정보 수집 및 활용</span>에 동의해주세요
       </Comment>

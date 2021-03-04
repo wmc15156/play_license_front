@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import InputAndBtn from "@src/component/molecules/InputAndBtn/InputAndBtn";
 
 const Wrapper = styled.div<{ margin: string }>`
@@ -14,7 +14,7 @@ const SpanWrapper = styled.span<{
   color: string;
   textMargin: string;
 }>`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   font-size: ${(p) => p.size};
   font-family: "NotoSansCJKkr-Bold";
@@ -39,6 +39,7 @@ type Props = {
   onClick: () => void;
   onBlur?: () => void;
   number?: boolean;
+  bigBtn?: boolean;
 };
 
 const TextAndInputAndBtn: FC<Props> = ({
@@ -57,7 +58,9 @@ const TextAndInputAndBtn: FC<Props> = ({
   onClick,
   number,
   onBlur,
+  bigBtn = false,
 }) => {
+  console.log(bigBtn, "2323");
   return (
     <Wrapper margin={wrapperMargin}>
       <SpanWrapper
@@ -79,6 +82,8 @@ const TextAndInputAndBtn: FC<Props> = ({
         onClick={onClick}
         onBlur={onBlur}
         number={number}
+        timer={bigBtn}
+        bigBtn={bigBtn}
       >
         {children}
       </InputAndBtn>
@@ -86,4 +91,4 @@ const TextAndInputAndBtn: FC<Props> = ({
   );
 };
 
-export default TextAndInputAndBtn;
+export default memo(TextAndInputAndBtn);

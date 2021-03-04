@@ -34,9 +34,6 @@ function SignUpInput({
         value={value}
         onChange={onChangeHandler}
       />
-      {time && countDown && (
-        <AuthTimer initialTime={initialTime} setInitialTime={setInitialTime} />
-      )}
       <span className={styles.CheckButton} onClick={onClickHandler}>
         {text}
       </span>

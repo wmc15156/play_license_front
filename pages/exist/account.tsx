@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "@utils/fetcher";
 import { useCallback } from "react";
+import axios from "axios";
 
 function ExistAccount() {
   const router = useRouter();
