@@ -7,7 +7,6 @@ import axios from "axios";
 const MyInfo = () => {
   const { data, error, mutate } = useSWR("/user/me", fetcher);
   const router = useRouter();
-  console.log("data", data, "daadata");
   const onLogOut = () => {
     axios.post("/auth/logout").then((res) => {
       mutate(false, false);
