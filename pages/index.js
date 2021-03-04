@@ -15,15 +15,13 @@ import { useCookies } from "react-cookie";
 import { useEffect } from "react";
 
 const Home = () => {
-  const { data: loginData, error: loginError, mutate } = useSWR(
-    "/auth/me",
+  const { data, error, mutate } = useSWR(
+    "/user/me",
     fetcher
   );
 
-  const { data, error } = useSWR("/auth/check/login", fetcher);
 
   const router = useRouter();
-
 
   return (
     <HomeStore>

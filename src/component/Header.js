@@ -26,112 +26,112 @@ const Header = () => {
 
   return (
     <>
-      {!isOpen && (
-        <Container>
-          <Logo onClick={changePage()}>
-            <Link href="/">
-              <a>
-                <Img src="/assets/image/logo.png" alt="" />
-              </a>
-            </Link>
-            <Link href="/">
-              <a>
-                <LogoText>
-                  PLAY
-                  <br />
-                  LICENSE
-                </LogoText>
-              </a>
-            </Link>
-          </Logo>
-          <List>
-            <ListItem
-              onClick={changePage("mypage")}
-              color={router.pathname === "/mypage" ? styles.blue : null}
-            >
-              <PersonIconWrapper>
-                <IoPersonCircleSharp
-                  size="36px"
-                  color={
-                    router.pathname === "/mypage" ? styles.white : styles.blue
-                  }
-                />
-              </PersonIconWrapper>
-              <Text color={router.pathname === "/mypage" ? styles.white : null}>
-                MYPAGE
-              </Text>
-            </ListItem>
+      {/*{!isOpen && (*/}
+      {/*  <Container>*/}
+      {/*    <Logo onClick={changePage()}>*/}
+      {/*      <Link href="/">*/}
+      {/*        <a>*/}
+      {/*          <Img src="/assets/image/logo.png" alt="" />*/}
+      {/*        </a>*/}
+      {/*      </Link>*/}
+      {/*      <Link href="/">*/}
+      {/*        <a>*/}
+      {/*          <LogoText>*/}
+      {/*            PLAY*/}
+      {/*            <br />*/}
+      {/*            LICENSE*/}
+      {/*          </LogoText>*/}
+      {/*        </a>*/}
+      {/*      </Link>*/}
+      {/*    </Logo>*/}
+      {/*    <List>*/}
+      {/*      <ListItem*/}
+      {/*        onClick={changePage("mypage")}*/}
+      {/*        color={router.pathname === "/mypage" ? styles.blue : null}*/}
+      {/*      >*/}
+      {/*        <PersonIconWrapper>*/}
+      {/*          <IoPersonCircleSharp*/}
+      {/*            size="36px"*/}
+      {/*            color={*/}
+      {/*              router.pathname === "/mypage" ? styles.white : styles.blue*/}
+      {/*            }*/}
+      {/*          />*/}
+      {/*        </PersonIconWrapper>*/}
+      {/*        <Text color={router.pathname === "/mypage" ? styles.white : null}>*/}
+      {/*          MYPAGE*/}
+      {/*        </Text>*/}
+      {/*      </ListItem>*/}
 
-            <ListItem
-              onClick={changePage("search")}
-              color={router.pathname === "/search" ? styles.yellow : null}
-            >
-              <SearchWrapper>
-                <GoSearch
-                  size="24px"
-                  color={
-                    router.pathname === "/search" ? styles.white : styles.yellow
-                  }
-                />
-              </SearchWrapper>
-              <Text color={router.pathname === "/search" ? styles.white : null}>
-                SEARCH
-              </Text>
-            </ListItem>
-            <ListItem onClick={onCloseHandler}>
-              <img src="/assets/image/icon_hamburger.png" />
-              <Text>MENU</Text>
-            </ListItem>
-          </List>
-        </Container>
-      )}
-      {isOpen && (
-        <OpenContainer>
-          <Container2>
-            <Logo>
-              <Link href="/">
-                <a>
-                  <Img src="/assets/image/logo.png" alt="" />
-                </a>
-              </Link>
-              <Link href="/">
-                <a>
-                  <LogoText>
-                    PLAY
-                    <br />
-                    LICENSE
-                  </LogoText>
-                </a>
-              </Link>
-            </Logo>
-            <List>
-              <ListItem>
-                <Link href="/mypage">
-                  <a>
-                    <img src="/assets/image/icon_mypage.png" />
-                    <Text>MYPAGE</Text>
-                  </a>
-                </Link>
-              </ListItem>
+      {/*      <ListItem*/}
+      {/*        onClick={changePage("search")}*/}
+      {/*        color={router.pathname === "/search" ? styles.yellow : null}*/}
+      {/*      >*/}
+      {/*        <SearchWrapper>*/}
+      {/*          <GoSearch*/}
+      {/*            size="24px"*/}
+      {/*            color={*/}
+      {/*              router.pathname === "/search" ? styles.white : styles.yellow*/}
+      {/*            }*/}
+      {/*          />*/}
+      {/*        </SearchWrapper>*/}
+      {/*        <Text color={router.pathname === "/search" ? styles.white : null}>*/}
+      {/*          SEARCH*/}
+      {/*        </Text>*/}
+      {/*      </ListItem>*/}
+      {/*      <ListItem onClick={onCloseHandler}>*/}
+      {/*        <img src="/assets/image/icon_hamburger.png" />*/}
+      {/*        <Text>MENU</Text>*/}
+      {/*      </ListItem>*/}
+      {/*    </List>*/}
+      {/*  </Container>*/}
+      {/*)}*/}
+      {/*{isOpen && (*/}
+      {/*  <OpenContainer>*/}
+      {/*    <Container2>*/}
+      {/*      <Logo>*/}
+      {/*        <Link href="/">*/}
+      {/*          <a>*/}
+      {/*            <Img src="/assets/image/logo.png" alt="" />*/}
+      {/*          </a>*/}
+      {/*        </Link>*/}
+      {/*        <Link href="/">*/}
+      {/*          <a>*/}
+      {/*            <LogoText>*/}
+      {/*              PLAY*/}
+      {/*              <br />*/}
+      {/*              LICENSE*/}
+      {/*            </LogoText>*/}
+      {/*          </a>*/}
+      {/*        </Link>*/}
+      {/*      </Logo>*/}
+      {/*      <List>*/}
+      {/*        <ListItem>*/}
+      {/*          <Link href="/mypage">*/}
+      {/*            <a>*/}
+      {/*              <img src="/assets/image/icon_mypage.png" />*/}
+      {/*              <Text>MYPAGE</Text>*/}
+      {/*            </a>*/}
+      {/*          </Link>*/}
+      {/*        </ListItem>*/}
 
-              <ListItem>
-                <Link href="/search">
-                  <a>
-                    <img src="/assets/image/icon_search.png" />
+      {/*        <ListItem>*/}
+      {/*          <Link href="/search">*/}
+      {/*            <a>*/}
+      {/*              <img src="/assets/image/icon_search.png" />*/}
 
-                    <Text>SEARCH</Text>
-                  </a>
-                </Link>
-              </ListItem>
-              <ClickedMenu onClick={onCloseHandler}>
-                <img src="/assets/image/icon_hamburger.png" />
-                <Text>MENU</Text>
-              </ClickedMenu>
-            </List>
-          </Container2>
-          <Menu onCloseHandler={onCloseHandler} />
-        </OpenContainer>
-      )}
+      {/*              <Text>SEARCH</Text>*/}
+      {/*            </a>*/}
+      {/*          </Link>*/}
+      {/*        </ListItem>*/}
+      {/*        <ClickedMenu onClick={onCloseHandler}>*/}
+      {/*          <img src="/assets/image/icon_hamburger.png" />*/}
+      {/*          <Text>MENU</Text>*/}
+      {/*        </ClickedMenu>*/}
+      {/*      </List>*/}
+      {/*    </Container2>*/}
+      {/*    <Menu onCloseHandler={onCloseHandler} />*/}
+      {/*  </OpenContainer>*/}
+      {/*)}*/}
     </>
   );
 };

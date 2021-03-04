@@ -11,8 +11,10 @@ import OriginalButton from "@src/component/Button/OriginalButton";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "@utils/fetcher";
+import { useGlobalDispatch, useHomeState } from "@store/homeStore";
+import { passwordValidation } from "@utils/signupHelper";
 
-const EmailError = styled.div`
+export const EmailError = styled.div`
   width: 100%;
   display: flex;
   color: ${styles.pink};
@@ -22,13 +24,17 @@ const EmailError = styled.div`
 `;
 
 function SignupThird() {
-  const { data, error } = useSWR("/auth/me", fetcher, {
+  const { data, error } = useSWR("/user/me", fetcher, {
     refreshInterval: 1000000,
   });
+
+  const dispatch = useGlobalDispatch();
+
   const router = useRouter();
   const [name, setName] = useInput("");
   const [email, setEmail] = useInput("");
   const [password, setPassword] = useInput("");
+  const [pwValidationError, setPwValidationError] = useState(false);
   const [phone, setPhone] = useInput("");
   const [validation, setValidation] = useState("");
   const [checkEmail, setCheckEmail] = useState("");
@@ -62,6 +68,16 @@ function SignupThird() {
     }
   }, [email, validation, checkEmail]);
 
+  const checkPassword = () => {
+    console.log(password);
+    if (!password) {
+      setPwValidationError(false);
+      return;
+    }
+    const isValid = passwordValidation(password);
+    setPwValidationError(isValid);
+  };
+
   const finalCheck = name && email && checkEmail && password && phone;
 
   const onSubmit = () => {
@@ -78,6 +94,7 @@ function SignupThird() {
       axios
         .post("/auth/signup", data)
         .then((res) => {
+          dispatch({ type: "SAVE_USER_NAME", payload: name });
           router.push("/signup/done");
         })
         .catch((err) => {
@@ -90,7 +107,7 @@ function SignupThird() {
   }
   return (
     <ContainerWrapper width={"580px"}>
-      <ProcessCircle process={3} />
+      <ProcessCircle process={3} lineWidth={"100px"} />
       <TextAndInput
         textFontSize={"21px"}
         textWidth={"78px"}
@@ -139,10 +156,15 @@ function SignupThird() {
         value={password}
         wrapperMargin={"12px"}
         number={false}
+        onBlur={checkPassword}
       >
         비밀번호
       </TextAndInput>
-
+      {pwValidationError ? (
+        <EmailError>
+          영어, 숫자, 특수문자 혼합하여 10 ~ 18이하로 입력해주세요.
+        </EmailError>
+      ) : null}
       <TextAndInput
         textFontSize={"21px"}
         textWidth={"78px"}

@@ -36,6 +36,7 @@ type Props = {
   value: string;
   wrapperMargin: string;
   number: boolean;
+  onBlur?: () => void;
 };
 
 const TextAndInput: FC<Props> = ({
@@ -50,6 +51,7 @@ const TextAndInput: FC<Props> = ({
   value,
   wrapperMargin,
   number,
+                                   onBlur,
 }) => {
   const checkPw = children === "비밀번호";
   return (
@@ -76,6 +78,7 @@ const TextAndInput: FC<Props> = ({
           onChange={onChange}
           value={value}
           checkPw={checkPw}
+          onBlur={onBlur}
         />
       )}
     </Wrapper>

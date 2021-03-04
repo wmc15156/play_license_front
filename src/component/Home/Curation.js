@@ -15,6 +15,8 @@ import image2 from "../../../public/assets/image/carousel1.png";
 import image3 from "../../../public/assets/image/carousel2.png";
 import ShowAll from "../Button/ShowAll";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import useSWR from "swr";
+import fetcher from "../../../utils/fetcher";
 
 const images = [image1, image2, image3, image2];
 
@@ -30,18 +32,23 @@ const activeStyles = {
 };
 
 const Curation = () => {
-  // const [state, dispatch] = useContext(HomeContext);
   const state = useHomeState();
   const dispatch = useGlobalDispatch();
+
   const [imageIdx, setImageIdx] = useState(0);
   const [keyArray, setKeyArray] = useState([]);
   const { curation } = state;
-  console.log(curation, " -- - - - -- - ");
+  console.log(curation);
+
   const getCurationItems = () => {
-    axios.get("/curation/product").then((res) => {
-      console.log("res curation", res.data.special);
-      dispatch({ type: "fetchCurations", curation: res.data.special });
-    });
+    axios
+      .get("/curation/product")
+      .then((res) => {
+        dispatch({ type: "fetchCurations", curation: res.data.special });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   useEffect(() => {
@@ -52,10 +59,6 @@ const Curation = () => {
   const getKeys = () => {
     const keyArr = Object.keys(state.curation);
     setKeyArray(keyArr);
-
-    // for (let i = 0; i < keyArr.length; i++) {
-    //   console.log(ccc[keyArr[i]], "1");
-    // }
   };
 
   const Arrow_Next = ({ currentSlide, slideCount, ...props }) => (
@@ -67,7 +70,6 @@ const Curation = () => {
 
   const settings = {
     infinite: true, // cycle
-    lazyload: true,
     speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -77,7 +79,6 @@ const Curation = () => {
     prevArrow: <Arrow_Prev />,
     beforeChange: (current, next) => setImageIdx(next),
   };
-
   return (
     <Container>
       <HeadSection>

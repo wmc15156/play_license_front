@@ -1,11 +1,12 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, memo, SetStateAction, useEffect, useState } from "react";
 
 type AuthTimerProps = {
   initialTime: number;
   setInitialTime: Dispatch<SetStateAction<number>>;
+  bigBtn: boolean;
 };
 
-const AuthTimer = ({ initialTime, setInitialTime }: AuthTimerProps) => {
+const AuthTimer = ({ initialTime, setInitialTime, bigBtn }: AuthTimerProps) => {
   useEffect(() => {
     if (initialTime > 0) {
       const Counter = setInterval(() => {
@@ -31,7 +32,7 @@ const AuthTimer = ({ initialTime, setInitialTime }: AuthTimerProps) => {
         color: "#ff5252",
         letterSpacing: "-0.4px",
         position: "relative",
-        left: "70%",
+        left: bigBtn ? "63%" : "70%",
         margin: "0",
       }}
     >
@@ -40,4 +41,4 @@ const AuthTimer = ({ initialTime, setInitialTime }: AuthTimerProps) => {
   );
 };
 
-export default AuthTimer;
+export default memo(AuthTimer);
