@@ -32,34 +32,15 @@ const activeStyles = {
 };
 
 const Curation = () => {
-  const state = useHomeState();
-  const dispatch = useGlobalDispatch();
+  const { data, error } = useSWR("/curation/product", fetcher, {
+    dedupingInterval: 100000,
+  });
+
+  let curation = null;
+  let keyArr = null;
 
   const [imageIdx, setImageIdx] = useState(0);
   const [keyArray, setKeyArray] = useState([]);
-  const { curation } = state;
-  console.log(curation);
-
-  const getCurationItems = () => {
-    axios
-      .get("/curation/product")
-      .then((res) => {
-        dispatch({ type: "fetchCurations", curation: res.data.special });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
-
-  useEffect(() => {
-    getCurationItems();
-    getKeys();
-  }, []);
-
-  const getKeys = () => {
-    const keyArr = Object.keys(state.curation);
-    setKeyArray(keyArr);
-  };
 
   const Arrow_Next = ({ currentSlide, slideCount, ...props }) => (
     <ArrowNext {...props} />
@@ -67,6 +48,16 @@ const Curation = () => {
   const Arrow_Prev = ({ currentSlide, slideCount, ...props }) => (
     <ArrowPrev {...props} />
   );
+
+  if (!data) {
+    return null;
+  }
+
+  if (data) {
+    const { special } = data;
+    curation = special;
+    keyArr = Object.keys(special);
+  }
 
   const settings = {
     infinite: true, // cycle
@@ -79,6 +70,7 @@ const Curation = () => {
     prevArrow: <Arrow_Prev />,
     beforeChange: (current, next) => setImageIdx(next),
   };
+  console.log(keyArray, ";test");
   return (
     <Container>
       <HeadSection>
@@ -87,8 +79,7 @@ const Curation = () => {
       </HeadSection>
       <SliderContainer>
         <StyledSlider {...settings}>
-          {keyArray.map((keyName, idx) => {
-            console.log(curation[keyName][0].curationImage, "curationImage");
+          {keyArr.map((keyName, idx) => {
             return (
               <div key={idx}>
                 <ImageContainer>
@@ -107,23 +98,23 @@ const Curation = () => {
               </div>
             );
           })}
-          {/*{images.map((img, idx) => (*/}
-          {/*  <div key={idx}>*/}
-          {/*    <ImageContainer>*/}
-          {/*      /!* <Overlay /> *!/*/}
-          {/*      <TextContainer>*/}
-          {/*        <Text1>[{}] 등</Text1>*/}
-          {/*        <Text2>{}에 추천해요!</Text2>*/}
-          {/*        <Text3>{}개의 작품 보기</Text3>*/}
-          {/*      </TextContainer>*/}
-          {/*      <img*/}
-          {/*        src={img}*/}
-          {/*        alt={img}*/}
-          {/*        style={idx === imageIdx ? activeStyles : defaultStyles}*/}
-          {/*      />*/}
-          {/*    </ImageContainer>*/}
-          {/*  </div>*/}
-          {/*))}*/}
+          {images.map((img, idx) => (
+            <div key={idx}>
+              <ImageContainer>
+                {/* <Overlay /> */}
+                <TextContainer>
+                  <Text1>[{}] 등</Text1>
+                  <Text2>{}에 추천해요!</Text2>
+                  <Text3>{}개의 작품 보기</Text3>
+                </TextContainer>
+                <img
+                  src={img}
+                  alt={img}
+                  style={idx === imageIdx ? activeStyles : defaultStyles}
+                />
+              </ImageContainer>
+            </div>
+          ))}
         </StyledSlider>
       </SliderContainer>
     </Container>
