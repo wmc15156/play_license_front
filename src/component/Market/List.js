@@ -8,7 +8,7 @@ const List = ({ list }) => {
     <Container>
       <HeadSection>
         <Title>
-          새로 등록된 작품<Count>{list.length}개</Count>
+          새로 등록된 작품<span>{list.length}개</span>
         </Title>
         <Filter />
       </HeadSection>
@@ -110,16 +110,17 @@ const ListSt = styled.ul`
 
   flex-wrap: wrap;
 `;
-const Count = styled.span`
-  opacity: 0.3;
-  margin-left: 30px;
-`;
 
 const Title = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   font-size: 24px;
   line-height: 48px;
   text-transform: uppercase;
+
+  & > span {
+    opacity: 0.3;
+    margin-left: 30px;
+  }
 `;
 
 const HeadSection = styled.div`

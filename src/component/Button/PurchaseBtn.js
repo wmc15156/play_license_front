@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 
 import { useRouter } from "next/router";
 // performance/:id 구매하기버튼
@@ -17,14 +18,14 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: 60px;
-  background-color: #ff6f69;
+  background-color: ${color.orange};
   border-radius: 8px;
   text-align: center;
   justify-content: center;
   font-family: "NotoSansCJKkr-Bold";
   line-height: 18px;
   font-size: 21px;
-  color: #ffffff;
+  color: ${color.white};
 `;
 
 export default PurchaseBtn;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 import Tag from "../Tag/Tag.";
 import { useRouter } from "next/router";
 import ShowAll from "../Button/ShowAll";
@@ -61,6 +62,7 @@ const PInfo = styled.div`
   line-height: 14px;
   position: absolute;
   bottom: 38px;
+  color: ${color.black3};
 `;
 const Ptitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";

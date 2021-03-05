@@ -2,153 +2,243 @@ import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import styles from "../../styles/colors";
 import Link from "next/link";
-import Menu from "../component/Menu";
+import Menu from "./Menu";
 import { useRouter } from "next/router";
 import { GoSearch } from "react-icons/go";
-import { IoPersonCircleSharp } from "react-icons/io5";
+import { IoPersonCircleSharp, IoMenu } from "react-icons/io5";
+import useSWR from "swr";
+import fetcher from "../../utils/fetcher";
 
-const Header = () => {
+// https://styled-components.com/docs/advanced#referring-to-other-components
+
+const Header = ({ menuStatus, onCloseHandler }) => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isActive, setIsActive] = useState(false);
+  const { data, error } = useSWR("/auth/check/login", fetcher);
 
-  const onCloseHandler = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const changePage = (page = "") => () => {
+  const changePage = (page = "") => (e) => {
+    e.preventDefault();
     console.log("click");
     router.push(`/${page}`);
-    if (isOpen) {
-      setIsOpen(false);
+    if (menuStatus) {
+      onCloseHandler();
     }
   };
 
   return (
     <>
-      {/*{!isOpen && (*/}
-      {/*  <Container>*/}
-      {/*    <Logo onClick={changePage()}>*/}
-      {/*      <Link href="/">*/}
-      {/*        <a>*/}
-      {/*          <Img src="/assets/image/logo.png" alt="" />*/}
-      {/*        </a>*/}
-      {/*      </Link>*/}
-      {/*      <Link href="/">*/}
-      {/*        <a>*/}
-      {/*          <LogoText>*/}
-      {/*            PLAY*/}
-      {/*            <br />*/}
-      {/*            LICENSE*/}
-      {/*          </LogoText>*/}
-      {/*        </a>*/}
-      {/*      </Link>*/}
-      {/*    </Logo>*/}
-      {/*    <List>*/}
-      {/*      <ListItem*/}
-      {/*        onClick={changePage("mypage")}*/}
-      {/*        color={router.pathname === "/mypage" ? styles.blue : null}*/}
-      {/*      >*/}
-      {/*        <PersonIconWrapper>*/}
-      {/*          <IoPersonCircleSharp*/}
-      {/*            size="36px"*/}
-      {/*            color={*/}
-      {/*              router.pathname === "/mypage" ? styles.white : styles.blue*/}
-      {/*            }*/}
-      {/*          />*/}
-      {/*        </PersonIconWrapper>*/}
-      {/*        <Text color={router.pathname === "/mypage" ? styles.white : null}>*/}
-      {/*          MYPAGE*/}
-      {/*        </Text>*/}
-      {/*      </ListItem>*/}
+      {!menuStatus && (
+        <Container>
+          <LogoBox>
+            <Link href="/">
+              <a>
+                <Logo>
+                  <Img src="/assets/image/logo.png" alt="" />
+                  <LogoText>
+                    PLAY
+                    <br />
+                    LICENSE
+                  </LogoText>
+                </Logo>
+              </a>
+            </Link>
+          </LogoBox>
+          <List>
+            {!data && (
+              <ListItem_M
+                onClick={changePage("login")}
+                color={router.pathname === "/login" ? styles.blue : null}
+              >
+                <Wrap>
+                  <PersonIconWrapper>
+                    <IoPersonCircleSharp
+                      size="32px"
+                      color={
+                        router.pathname === "/login"
+                          ? styles.white
+                          : styles.blue
+                      }
+                    />
+                  </PersonIconWrapper>
+                  <Text
+                    color={router.pathname === "/login" ? styles.white : null}
+                  >
+                    LOGIN
+                  </Text>
+                </Wrap>
+              </ListItem_M>
+            )}
+            {data && (
+              <ListItem_M
+                onClick={changePage("mypage")}
+                color={router.pathname === "/mypage" ? styles.blue : null}
+              >
+                <Wrap>
+                  <PersonIconWrapper>
+                    <IoPersonCircleSharp
+                      size="32px"
+                      color={
+                        router.pathname === "/mypage"
+                          ? styles.white
+                          : styles.blue
+                      }
+                    />
+                  </PersonIconWrapper>
+                  <Text
+                    color={router.pathname === "/mypage" ? styles.white : null}
+                  >
+                    MYPAGE
+                  </Text>
+                </Wrap>
+              </ListItem_M>
+            )}
 
-      {/*      <ListItem*/}
-      {/*        onClick={changePage("search")}*/}
-      {/*        color={router.pathname === "/search" ? styles.yellow : null}*/}
-      {/*      >*/}
-      {/*        <SearchWrapper>*/}
-      {/*          <GoSearch*/}
-      {/*            size="24px"*/}
-      {/*            color={*/}
-      {/*              router.pathname === "/search" ? styles.white : styles.yellow*/}
-      {/*            }*/}
-      {/*          />*/}
-      {/*        </SearchWrapper>*/}
-      {/*        <Text color={router.pathname === "/search" ? styles.white : null}>*/}
-      {/*          SEARCH*/}
-      {/*        </Text>*/}
-      {/*      </ListItem>*/}
-      {/*      <ListItem onClick={onCloseHandler}>*/}
-      {/*        <img src="/assets/image/icon_hamburger.png" />*/}
-      {/*        <Text>MENU</Text>*/}
-      {/*      </ListItem>*/}
-      {/*    </List>*/}
-      {/*  </Container>*/}
-      {/*)}*/}
-      {/*{isOpen && (*/}
-      {/*  <OpenContainer>*/}
-      {/*    <Container2>*/}
-      {/*      <Logo>*/}
-      {/*        <Link href="/">*/}
-      {/*          <a>*/}
-      {/*            <Img src="/assets/image/logo.png" alt="" />*/}
-      {/*          </a>*/}
-      {/*        </Link>*/}
-      {/*        <Link href="/">*/}
-      {/*          <a>*/}
-      {/*            <LogoText>*/}
-      {/*              PLAY*/}
-      {/*              <br />*/}
-      {/*              LICENSE*/}
-      {/*            </LogoText>*/}
-      {/*          </a>*/}
-      {/*        </Link>*/}
-      {/*      </Logo>*/}
-      {/*      <List>*/}
-      {/*        <ListItem>*/}
-      {/*          <Link href="/mypage">*/}
-      {/*            <a>*/}
-      {/*              <img src="/assets/image/icon_mypage.png" />*/}
-      {/*              <Text>MYPAGE</Text>*/}
-      {/*            </a>*/}
-      {/*          </Link>*/}
-      {/*        </ListItem>*/}
+            <ListItem_S
+              onClick={changePage("search")}
+              color={router.pathname === "/search" ? styles.yellow : null}
+            >
+              <Wrap>
+                <SearchWrapper>
+                  <GoSearch
+                    size="28px"
+                    color={
+                      router.pathname === "/search"
+                        ? styles.white
+                        : styles.yellow
+                    }
+                  />
+                </SearchWrapper>
+                <Text
+                  color={router.pathname === "/search" ? styles.white : null}
+                >
+                  SEARCH
+                </Text>
+              </Wrap>
+            </ListItem_S>
+            <ListItem onClick={onCloseHandler}>
+              <Wrap>
+                <MenuIconWrapper>
+                  <IoMenu size="32px" />
+                </MenuIconWrapper>
+                <Text>MENU</Text>
+              </Wrap>
+            </ListItem>
+          </List>
+        </Container>
+      )}
+      {menuStatus && (
+        <MenuContainer>
+          <Container2>
+            <LogoBox>
+              <Link href="/">
+                <a>
+                  <Logo>
+                    <Img src="/assets/image/logo.png" alt="" />
+                    <LogoText>
+                      PLAY
+                      <br />
+                      LICENSE
+                    </LogoText>
+                  </Logo>
+                </a>
+              </Link>
+            </LogoBox>
+            <List>
+              {!data && (
+                <ListItem_M
+                  onClick={changePage("login")}
+                  color={router.pathname === "/login" ? styles.blue : null}
+                >
+                  <Wrap>
+                    <PersonIconWrapper>
+                      <IoPersonCircleSharp
+                        size="32px"
+                        color={
+                          router.pathname === "/login"
+                            ? styles.white
+                            : styles.blue
+                        }
+                      />
+                    </PersonIconWrapper>
+                    <Text
+                      color={router.pathname === "/login" ? styles.white : null}
+                    >
+                      LOGIN
+                    </Text>
+                  </Wrap>
+                </ListItem_M>
+              )}
+              {data && (
+                <ListItem_M
+                  onClick={changePage("mypage")}
+                  color={router.pathname === "/mypage" ? styles.blue : null}
+                >
+                  <Wrap>
+                    <PersonIconWrapper>
+                      <IoPersonCircleSharp
+                        size="32px"
+                        color={
+                          router.pathname === "/mypage"
+                            ? styles.white
+                            : styles.blue
+                        }
+                      />
+                    </PersonIconWrapper>
+                    <Text
+                      color={
+                        router.pathname === "/mypage" ? styles.white : null
+                      }
+                    >
+                      MYPAGE
+                    </Text>
+                  </Wrap>
+                </ListItem_M>
+              )}
 
-      {/*        <ListItem>*/}
-      {/*          <Link href="/search">*/}
-      {/*            <a>*/}
-      {/*              <img src="/assets/image/icon_search.png" />*/}
-
-      {/*              <Text>SEARCH</Text>*/}
-      {/*            </a>*/}
-      {/*          </Link>*/}
-      {/*        </ListItem>*/}
-      {/*        <ClickedMenu onClick={onCloseHandler}>*/}
-      {/*          <img src="/assets/image/icon_hamburger.png" />*/}
-      {/*          <Text>MENU</Text>*/}
-      {/*        </ClickedMenu>*/}
-      {/*      </List>*/}
-      {/*    </Container2>*/}
-      {/*    <Menu onCloseHandler={onCloseHandler} />*/}
-      {/*  </OpenContainer>*/}
-      {/*)}*/}
+              <ListItem_S
+                onClick={changePage("search")}
+                color={router.pathname === "/search" ? styles.yellow : null}
+              >
+                <Wrap>
+                  <SearchWrapper>
+                    <GoSearch
+                      size="28px"
+                      color={
+                        router.pathname === "/search"
+                          ? styles.white
+                          : styles.yellow
+                      }
+                    />
+                  </SearchWrapper>
+                  <Text
+                    color={router.pathname === "/search" ? styles.white : null}
+                  >
+                    SEARCH
+                  </Text>
+                </Wrap>
+              </ListItem_S>
+              <ListItem active={menuStatus} onClick={onCloseHandler}>
+                <Wrap>
+                  <MenuIconWrapper active={menuStatus}>
+                    <IoMenu size="32px" />
+                  </MenuIconWrapper>
+                  <Text>MENU</Text>
+                </Wrap>
+              </ListItem>
+            </List>
+          </Container2>
+          <Menu onCloseHandler={onCloseHandler} />
+        </MenuContainer>
+      )}
     </>
   );
 };
-const A = styled.a`
-  width: 100%;
-  height: 100%;
-  display: block;
-`;
 
-const OpenContainer = styled.div`
-  max-width: 924px;
+const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 48px auto;
+  max-width: 924px;
+  margin: 44px auto;
   padding: 0 1rem;
-  background-color: #ffffff;
-  z-index: 1;
 `;
 
 const Container2 = styled.div`
@@ -164,6 +254,10 @@ const Container = styled.div`
   margin: 44px auto;
   padding: 0 1rem;
   align-items: center;
+`;
+const LogoBox = styled.div`
+  max-width: 100%;
+  height: auto;
 `;
 
 const Logo = styled.div`
@@ -181,8 +275,11 @@ const Img = styled.img`
 
 const LogoText = styled.div`
   font-family: "FreightSansBlackSC";
-  font-size: 24px;
+  font-size: 1.75rem;
   letter-spacing: 0.86px;
+  &:hover {
+    color: none;
+  }
 `;
 
 const List = styled.div`
@@ -191,119 +288,113 @@ const List = styled.div`
   list-style: none;
   display: flex;
   margin-left: auto;
-  width: 530px;
-  z-index: 10;
+  width: 60%;
+  align-items: center;
 `;
 
-const ListItem = styled.div`
+const ListItemStyle = css`
   border-radius: 4px;
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 45px;
-  position: relative;
   margin-right: 2%;
   cursor: pointer;
-  z-index: 5;
   ${(props) =>
     props.color &&
     css`
       background-color: ${props.color};
     `}
 
-  &:last-child {
-    margin-right: 0;
-  }
   &:hover {
     font-family: "Gotham Medium";
     font-size: 14px;
-    background-color: #ff6f69;
-    color: #ffffff;
+    color: ${styles.white};
     transition: all 0.3s ease-in-out;
-  }
-  & > a {
-    display: flex;
-    align-items: center;
-  }
-
-  & > a > img {
-    position: absolute;
-    left: 26px;
-    width: 24px;
-    height: 24px;
-  }
-  & > img {
-    position: absolute;
-    left: 26px;
-    width: 24px;
-    height: 24px;
   }
 `;
 
-const ClickedMenu = styled.li`
-  cursor: pointer;
-  font-family: "Gotham Medium";
-  font-size: 14px;
-  color: #ffffff;
-  transition: all 0.3s ease-in-out;
-  border-radius: 4px;
+const ListItem_M = styled.div`
+  ${ListItemStyle};
+  &:hover {
+    background-color: ${styles.blue};
+  }
+`;
+const ListItem_S = styled.div`
+  ${ListItemStyle};
+  &:hover {
+    background-color: ${styles.yellow};
+  }
+`;
+
+// MENU
+const ListItem = styled.div`
+  ${ListItemStyle};
+  background-color: ${(props) => (props.active ? styles.orange : null)};
+  color: ${(props) => (props.active ? styles.white : styles.black1)};
+  &:hover {
+    background-color: ${styles.orange};
+  }
+`;
+
+const Wrap = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
-  height: 45px;
-  position: relative;
-  margin-right: 2%;
-  background-color: #ff6f69;
-  &:last-child {
-    margin-right: 0;
-  }
-  &:hover {
-    font-family: "Gotham Medium";
-    font-size: 14px;
-    background-color: #fff;
-    color: #000;
-    transition: all 0.3s ease-in-out;
-  }
+  justify-content: center;
+  width: 65%;
+  padding-right: 2%;
 
-  & > img {
-    position: absolute;
-    left: 26px;
-    width: 24px;
-    height: 24px;
+  & > svg:hover {
+    fill: ${styles.white};
   }
 `;
-
 const Text = styled.div`
+  display: flex;
+  align-items: center;
   font-family: "Gotham Medium";
   font-size: 14px;
-  position: absolute;
-  bottom: 0;
-  left: 40%;
   line-height: 17px;
   ${(props) =>
     props.color &&
     css`
       color: ${props.color};
     `}
-`;
-
-const ClickedText = styled.div`
-  font-size: 14px;
-  position: absolute;
-  bottom: 0;
-  right: 26px;
-  color: #ffffff;
+  &:hover {
+    color: ${styles.white};
+  }
 `;
 
 const SearchWrapper = styled.span`
-  display: inline-block;
-  margin-left: 14px;
-  margin-top: 10px;
+  margin: 0;
+  padding-right: 25%;
+  display: flex;
+  align-items: center;
 `;
 
 const PersonIconWrapper = styled.span`
-  margin-left: 16px;
-  margin-top: 8px;
+  margin: 0;
+  padding-right: 25%;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  &:hover {
+    color: ${styles.white};
+  }
+`;
+
+const MenuIconWrapper = styled.span`
+  margin: 0;
+  padding-right: 25%;
+  display: flex;
+  align-items: center;
+
+  & > svg {
+    color: ${(props) => (props.active ? styles.white : styles.orange)};
+  }
+  & > svg:hover {
+    color: ${styles.white};
+  }
 `;
 
 export default Header;

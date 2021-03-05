@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 import { useEffect } from "react";
 
 const HeartBtn = ({ text = "찜하기", status, currStatus, onClickHandler }) => {
@@ -35,7 +36,7 @@ const Container = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   line-height: 18px;
   font-size: 21px;
-  color: "#000000";
+  color: ${color.black1};
   opacity: 0.4;
   align-items: center;
 
@@ -43,7 +44,7 @@ const Container = styled.div`
     if (props.status) {
       return "#ff6f69";
     } else if (!props.status) {
-      return "#000000";
+      return `${color.black1}`;
     }
   }};
 

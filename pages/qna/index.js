@@ -1,11 +1,12 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import color from "../../styles/colors";
 import Notice from "../../src/component/GrayNotice";
-import Btn from "../../src/component/Button/SignUpButton";
+import CheckBoxWrapper from "../../src/component/CheckBoxWrapper/CheckBoxWrapper";
 import { FaCheck } from "react-icons/fa";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import CheckBox from "../../src/component/CheckBox";
+import Btn from "../../src/component/Button/OriginalButton";
 import useModal from "../../utils/useModal";
 import AlertModal from "../../src/component/Modal/AlertModal";
 
@@ -18,6 +19,7 @@ const RegistQ = () => {
   const router = useRouter();
   const { openModal, ModalPortal, closeModal } = useModal();
   const [isChecked, setChecked] = useState(false);
+  const [isSuccess, setSuccess] = useState(false);
   const [inputs, setInputs] = useState({
     name: "",
     email: "",
@@ -59,7 +61,8 @@ const RegistQ = () => {
       .post("/question", params)
       .then((res) => {
         if (res.status === 201) {
-          next();
+          setSuccess(true);
+          openModal();
         }
       })
       .catch((err) => console.error(err));
@@ -68,11 +71,11 @@ const RegistQ = () => {
   const onSubmitHandler = (e) => {
     // console.log({ ...inputs });
     e.preventDefault();
-    if (!isChecked) {
-      // alert("개인정보 수집 및 이용에 동의해주세요.");
-      openModal();
-      return;
-    } else if (
+    // if (!isChecked) {
+    //   openModal();
+    // }
+    if (
+      !isChecked ||
       !inputs.name ||
       !inputs.email ||
       !inputs.phone ||
@@ -80,16 +83,18 @@ const RegistQ = () => {
       !inputs.comment
     ) {
       openModal();
-      return;
-      // alert(`내용을 모두 입력해주세요`);
     }
-    send();
+    if (isChecked) {
+      send();
+    }
   };
 
   return (
     <Container>
       <HeadSection>
-        <T>1:1 문의 남기기</T>
+        <T>
+          <span>1:1 문의</span> 남기기
+        </T>
       </HeadSection>
       <Divider>
         <Div1 />
@@ -141,16 +146,40 @@ const RegistQ = () => {
         </Box>
         <Notice title={notice.title} body1={notice.body1} />
         <CheckSection>
-          <CheckBtn checked={isChecked} onClick={handleChange} />
-          <CheckBox checked={isChecked} handleChange={handleChange} />
+          <CheckBoxWrapper
+            width={"24px"}
+            height={"24px"}
+            onChange={handleChange}
+            value={isChecked}
+          >
+            <FaCheck size={"15px"} color={isChecked ? "white" : "gray"} />
+          </CheckBoxWrapper>
           <Check>안내사항을 확인했습니다</Check>
         </CheckSection>
-        <Btn text={"문의 등록하기"} onClickHandler={onSubmitHandler} />
+        <ButtonContainer onClick={onSubmitHandler}>
+          <Btn
+            width={"100%"}
+            margin={"44px"}
+            background={isChecked}
+            height={"60px"}
+            size={"21px"}
+          >
+            문의 등록하기
+          </Btn>
+        </ButtonContainer>
         <ModalPortal>
-          <AlertModal
-            text={"내용을 모두 입력해주세요"}
-            onClickBtn={closeModal}
-          />
+          {!isChecked && (
+            <AlertModal
+              text={"내용을 모두 입력해주세요"}
+              onClickBtn={closeModal}
+            />
+          )}
+          {isChecked && isSuccess && (
+            <AlertModal
+              text={"문의가 정상적으로 등록되었습니다"}
+              onClickBtn={next}
+            />
+          )}
         </ModalPortal>
       </Section>
     </Container>
@@ -168,39 +197,40 @@ const HeadSection = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 31px;
+  margin-bottom: 30px;
+  text-align: center;
 `;
 
 const T = styled.div`
-  font-size: 36px;
-  line-height: 55px;
+  font-size: 24px;
+  line-height: 24px;
 
   & > span {
-    color: #ff6f69;
+    color: ${color.orange};
   }
 `;
 const Divider = styled.div`
   display: flex;
   width: 100%;
-  margin-bottom: 89px;
+  margin-bottom: 30px;
 `;
 
 const Div1 = styled.div`
-  background-color: #ffcc5c;
+  background-color: ${color.yellow};
   border-radius: 100px;
   height: 3px;
   width: 100%;
 `;
 
 const Section = styled.div`
-  margin-bottom: 143px;
+  margin-bottom: 82px;
 `;
 const Box = styled.div`
   height: 100%;
   border-radius: 14px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
   padding: 33px 47px 40px 38px;
-  margin-bottom: 43px;
+  margin-bottom: 40px;
 `;
 
 const InputSection = styled.ul`
@@ -231,10 +261,10 @@ const InputBox = styled.input`
   color: #9e9e9e;
   width: 100%;
   border-radius: 8px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid ${color.black5};
   padding: 19px 20px;
   ::placeholder {
-    color: #0d0d0c;
+    color: ${color.black4};
     opacity: 0.4;
   }
 `;
@@ -247,11 +277,11 @@ const TextBox = styled.textarea`
   width: 100%;
   height: 262px;
   border-radius: 8px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid ${color.black5};
   resize: none;
   padding: 19px 20px;
   ::placeholder {
-    color: #0d0d0c;
+    color: ${color.black4};
     opacity: 0.4;
   }
   &:focus {
@@ -262,24 +292,9 @@ const TextBox = styled.textarea`
 const CheckSection = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 33px;
-  margin-bottom: 44px;
+  margin-top: 24px;
 `;
 
-const CheckBtn = styled(FaCheck)`
-  background-color: #e85377;
-  width: 18px;
-  height: 18px;
-  font-size: 15px;
-  border: 10px;
-  font-weight: bolder;
-
-  cursor: pointer;
-  color: ${(props) => {
-    /* console.log(props, "???"); */
-    props.isChecked ? "#ffffff" : "#e85377";
-  }};
-`;
-
+const ButtonContainer = styled.div``;
 const Check = styled.span``;
 export default RegistQ;

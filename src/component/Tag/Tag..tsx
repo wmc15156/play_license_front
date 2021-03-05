@@ -4,7 +4,7 @@ import styles from "@styles/colors";
 import React from "react";
 
 const TagWrapper = styled.span`
-  border: 2px ${styles.pink} solid;
+  border: 2px ${styles.orange} solid;
   border-radius: 6px;
   width: 22px;
   height: 12px;
@@ -17,7 +17,7 @@ const TagWrapper = styled.span`
   line-height: 1;
   letter-spacing: -0.5px;
   text-align: center;
-  color: #000000;
+  color: ${styles.black2};
   padding: 7px 10px 9px 10px;
   margin: 0 4px 18px;
   display: inline-flex;
@@ -25,14 +25,14 @@ const TagWrapper = styled.span`
   ${(props) =>
     props.title === "공연"
       ? css`
-          border: 3px ${styles.pink} solid;
+          border: 3px ${styles.orange} solid;
         `
       : props.title === "교육"
       ? css`
           border: 3px ${styles.yellow} solid;
         `
       : css`
-          border: 3px ${styles.green} solid;
+          border: 3px ${styles.blue_2} solid;
         `}
   &:first-child {
     margin-left: 0;

@@ -1,10 +1,9 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 import Btn from "../Button/SignUpButton";
 import AnswerStatus from "../Tag/AnswerStatus";
 
 const Qna = ({ details, onClickHandler }) => {
-  console.log(details, "props?");
-
   return (
     <Container>
       <HeadSection>
@@ -71,7 +70,7 @@ const T = styled.div`
   line-height: 55px;
 
   & > span {
-    color: #ff6f69;
+    color: ${color.orange};
   }
 `;
 
@@ -86,7 +85,7 @@ const Divider = styled.div`
 `;
 
 const Div1 = styled.div`
-  background-color: #ffcc5c;
+  background-color: ${color.yellow};
   border-radius: 100px;
   height: 3px;
   width: 100%;
@@ -131,10 +130,10 @@ const InputBox = styled.div`
   color: #9e9e9e;
   width: 100%;
   border-radius: 8px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid ${color.black5};
   padding: 19px 20px;
   ::placeholder {
-    color: #0d0d0c;
+    color: ${color.black4};
     opacity: 0.4;
   }
 `;
@@ -146,10 +145,10 @@ const InputBox_resp = styled.div`
   color: #9e9e9e;
   width: 100%;
   border-radius: 8px;
-  background-color: #f5f5f5;
+  background-color: ${color.gray1};
   padding: 19px 20px;
   ::placeholder {
-    color: #0d0d0c;
+    color: ${color.black4};
     opacity: 0.4;
   }
 `;
@@ -162,11 +161,11 @@ const TextBox = styled.textarea`
   width: 100%;
   height: 262px;
   border-radius: 8px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid ${color.black5};
   resize: none;
   padding: 19px 20px;
   ::placeholder {
-    color: #0d0d0c;
+    color: ${color.black4};
     opacity: 0.4;
   }
   &:focus {

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 import { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -9,7 +10,7 @@ import image3 from "../../../public/assets/image/carousel2.png";
 const images = [image2, image3, image2, image3];
 const defaultStyles = {
   borderRadius: "50%",
-  background: "#000000",
+  background: color.black1,
   opacity: 0.4,
   width: "0.5rem",
   height: "0.5rem",
@@ -19,7 +20,7 @@ const focusStyles = {
   borderRadius: "50%",
   width: "0.5rem",
   height: "0.5rem",
-  background: "#ff6f69",
+  background: color.orange,
 };
 const activeImgStyles = {
   transition: "opacity 3s ease",
@@ -108,7 +109,6 @@ const ImageContainer = styled.div`
   margin: 0 auto;
   max-width: 100%;
   height: auto;
-  margin-bottom: 30px;
   & > img {
     width: 100%;
     height: auto;
@@ -119,6 +119,10 @@ const ImageContainer = styled.div`
 const StyledSlider = styled(Slider)`
   .slick-slide div {
     outline: none;
+  }
+
+  .slick-dots li {
+    bottom: -20px;
   }
 `;
 
