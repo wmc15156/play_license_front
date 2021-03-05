@@ -53,15 +53,15 @@ const Footer = () => {
             </li>
             <Divider>|</Divider>
             <li>
-              <Link href="/policy">
-                <Menu>개인정보처리방침</Menu>
-              </Link>
+              {/* <Link href="/policy"> */}
+              <Menu>개인정보처리방침</Menu>
+              {/* </Link> */}
             </li>
             <Divider>|</Divider>
             <li>
-              <Link href="/terms">
-                <Menu>이용약관</Menu>
-              </Link>
+              {/* <Link href="/terms"> */}
+              <Menu>이용약관</Menu>
+              {/* </Link> */}
             </li>
           </QuickMenu>
           <BtnWapper>

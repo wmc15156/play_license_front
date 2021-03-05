@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 
 const AboutPerformance = ({ text }) => {
   return (

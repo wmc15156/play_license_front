@@ -207,21 +207,17 @@ const StyledSlider = styled(Slider)`
   position: relative;
   display: flex;
   align-items: center;
-
   .slick-slide div {
     outline: none;
   }
-
   .slick-active :not(.slick-center) div {
     /* transform: scale(0.5); */
     background-color: blue;
   }
-
   .slick-active.slick-center div {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
     /* background-color: pink; */
     max-width: 924px;
     height: auto;
@@ -251,12 +247,10 @@ const ArrowPrev = styled(IoIosArrowBack)`
   width: 20%;
   height: 20%;
   transition: color 300ms;
-
   .slick-arrow.slick-prev {
     left: 0%;
     top: 50%;
   }
-
   &:hover {
     color: ${color.orange};
   }
@@ -269,12 +263,10 @@ const ArrowNext = styled(IoIosArrowForward)`
   width: 20%;
   height: 20%;
   transition: color 300ms;
-
   .slick-arrow.slick-next {
     right: 0%;
     top: 50%;
   }
-
   &:hover {
     color: ${color.orange};
   }

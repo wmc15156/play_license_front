@@ -17,7 +17,7 @@ const url =
 console.log(url);
 axios.defaults.baseURL = url;
 axios.defaults.withCredentials = true;
-console.log(process.env_NODE_ENV, "test");
+console.log(process.env.NODE_ENV, "test");
 
 // tslint:disable-next-line: no-empty
 const noop = () => {};
