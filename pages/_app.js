@@ -1,7 +1,7 @@
 // 공통 레이아웃 적용
 import Head from "next/head";
 import Layout from "../src/component/Layout";
-import Header from "../src/component/Header2";
+import Header from "../src/component/Header";
 import Footer from "../src/component/Footer";
 import axios from "axios";
 import wrapper from "../store/configureStore";
@@ -17,7 +17,7 @@ const url =
 console.log(url);
 axios.defaults.baseURL = url;
 axios.defaults.withCredentials = true;
-console.log(process.env_NODE_ENV, "test");
+console.log(process.env.NODE_ENV, "test");
 
 // tslint:disable-next-line: no-empty
 const noop = () => {};

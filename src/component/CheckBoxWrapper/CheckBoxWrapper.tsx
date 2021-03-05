@@ -9,7 +9,7 @@ const Wrapper = styled.span<{ width: string; height: string; background }>`
   width: ${(p) => p.width};
   height: ${(p) => p.height};
   background-color: ${(p) =>
-    p.background ? `${styles.pink}` : `${styles.gray1}`};
+    p.background ? `${styles.orange}` : `${styles.gray1}`};
   justify-content: center;
   align-items: center;
   cursor: pointer;

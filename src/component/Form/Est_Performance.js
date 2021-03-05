@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 import RadioButton from "../Button/RadioBtn";
 import { useState } from "react";
 import GrayShortBtn from "../Button/GrayShortBtn";
@@ -228,7 +229,6 @@ const Item = styled.li`
 `;
 const SubTitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
-  color: #333333;
   display: flex;
   width: 10%;
 `;
@@ -237,7 +237,6 @@ const Content = styled.div`
   font-family: "NotoSansCJKkr-Regular";
   font-size: 16px;
   line-height: 1;
-  color: #0d0d0c;
   width: 90%;
   align-items: baseline;
 `;
@@ -256,7 +255,7 @@ const Est = styled.div`
   width: 100%;
   display: flex;
   border-radius: 8px;
-  background-color: #f5f5f5;
+  background-color: ${color.gray1};
   margin-bottom: 35px;
   margin-top: 78px;
 `;
@@ -264,12 +263,11 @@ const Text = styled.div`
   justify-content: center;
   align-items: center;
   font-family: "NotoSansCJKkr-Medium";
-  color: #0d0d0c;
   font-size: 16px;
   margin: 39px 0;
   & > span {
     font-family: "NotoSansCJKkr-Bold";
-    color: #ff6f69;
+    color: ${color.orange};
     font-size: 24px;
   }
 `;
@@ -279,7 +277,6 @@ const Content_2 = styled.div`
   font-family: "NotoSansCJKkr-Regular";
   font-size: 16px;
   line-height: 1;
-  color: #0d0d0c;
   width: 90%;
   flex-wrap: wrap;
   align-items: baseline;
@@ -287,13 +284,11 @@ const Content_2 = styled.div`
 const InputBox = styled.div`
   font-family: "NotoSansCJKkr-Regular";
   font-size: 16px;
-
-  color: #0d0d0c;
   display: flex;
   border-radius: 8px;
   max-width: 212px;
   height: 48px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid ${color.black5};
 `;
 const InputText = styled.input.attrs({
   type: "number",

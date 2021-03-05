@@ -1,15 +1,24 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import color from "../../../styles/colors";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const Accordion = ({ title, cate, id, answer }) => {
   const [open, setOpen] = useState(false);
-  const [isSelected, setIsSelected] = useState(false);
+
+  const [hover, setHover] = useState(false);
+
   const toggle = () => {
     setOpen(!open);
   };
 
-  const handleClick = (item) => {};
+  const hoverHandler = () => {
+    setHover(true);
+  };
+  const hoverOutHandler = () => {
+    setHover(false);
+  };
+
   return (
     <Container>
       <Wrapper
@@ -18,12 +27,16 @@ const Accordion = ({ title, cate, id, answer }) => {
         role="button"
         onKeyPress={() => toggle(!open)}
         onClick={() => toggle(!open)}
+        onMouseEnter={hoverHandler}
+        onMouseLeave={hoverOutHandler}
       >
-        <Categ>{cate}</Categ>
-        <Title>
+        <Categ hover={hover} focus={open}>
+          {cate}
+        </Categ>
+        <Title hover={hover} focus={open}>
           <div>{title}</div>
         </Title>
-        <HeaderIcon>
+        <HeaderIcon hover={hover} focus={open}>
           <p>{open ? <IoIosArrowUp /> : <IoIosArrowDown />}</p>
         </HeaderIcon>
       </Wrapper>
@@ -41,6 +54,7 @@ const Accordion = ({ title, cate, id, answer }) => {
 const Container = styled.div`
   width: 100%;
   height: 100%;
+  /* border-top: 1px solid ${color.black5}; */
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -48,10 +62,9 @@ const Wrapper = styled.div`
   font-family: "NotoSansCJKkr-Medium";
   font-size: 16px;
   line-height: 16px;
-
-  color: #333333;
+  color: ${color.black1};
   cursor: pointer;
-  padding: 23px 0 23px 0;
+  padding: 23px 0;
   width: 100%;
   text-align: left;
   border: none;
@@ -59,14 +72,30 @@ const Wrapper = styled.div`
     if (props.open) {
       return "none";
     } else {
-      return "1px solid #eee";
+      return `1px solid ${color.black5}`;
     }
   }};
   outline: none;
   transition: 0.4s;
 `;
+
 const Categ = styled.div`
-  background-color: #f2f2f2;
+  background-color: ${color.gray1};
+  color: ${color.black3};
+  ${(props) =>
+    props.hover &&
+    css`
+      background-color: ${color.orange};
+      color: ${color.white};
+    `}
+
+  ${(props) =>
+    props.focus &&
+    css`
+      background-color: ${color.orange};
+      color: ${color.white};
+    `}  
+
   border-radius: 4px;
   width: 60px;
   height: 28px;
@@ -78,23 +107,25 @@ const Categ = styled.div`
   align-items: center;
   justify-content: center;
   margin-right: 12%;
-  &:hover {
-    background-color: #ff6f69;
-    color: #ffffff;
-  }
 `;
 
 const Title = styled.div`
-  &:hover {
-    color: #ff6f69;
-  }
+  color: ${(props) => props.hover && color.orange};
+  ${(props) =>
+    props.focus &&
+    css`
+      color: ${color.orange};
+    `}
 `;
 const HeaderIcon = styled.div`
   margin-left: auto;
   margin-right: 29px;
-  &:hover {
-    color: #ff6f69;
-  }
+  color: ${(props) => props.hover && color.orange};
+  ${(props) =>
+    props.focus &&
+    css`
+      color: ${color.orange};
+    `}
 `;
 
 const Content = styled.div`
@@ -102,7 +133,7 @@ const Content = styled.div`
   width: 100%;
   border-bottom: ${(props) => {
     if (props.open) {
-      return "1px solid #eee";
+      return `1px solid ${color.black5}`;
     } else {
       return "none";
     }
@@ -128,7 +159,7 @@ const P = styled.div`
   font-family: "NotoSansCJKkr-Medium";
   font-size: 16px;
   line-height: 24px;
-  color: #333333;
+  color: ${color.black2};
   word-wrap: break-word;
 `;
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styled from "styled-components";
+import color from "../../styles/colors";
 
 const Menu = ({ onCloseHandler }) => {
   const go = () => {
@@ -12,66 +13,56 @@ const Menu = ({ onCloseHandler }) => {
 
   return (
     <Container>
-      <ListKo>
-        <li>
-          <a href="/" onClick={onCloseHandler}>
-            홈
-          </a>
+      <List>
+        <li onClick={onCloseHandler}>
+          <Link href="/">
+            <Item>
+              <Ko>홈</Ko>
+              <En>Home</En>
+            </Item>
+          </Link>
+        </li>
+        <li onClick={onCloseHandler}>
+          <Link href="/market">
+            <Item>
+              <Ko>공연마켓</Ko>
+              <En>Market</En>
+            </Item>
+          </Link>
+        </li>
+        <li onClick={onCloseHandler}>
+          <Link href="/about">
+            <Item>
+              <Ko>서비스 소개</Ko>
+              <En>Service Introduction</En>
+            </Item>
+          </Link>
+        </li>
+        <li onClick={onCloseHandler}>
+          <Link href="/faq">
+            <Item>
+              <Ko>자주 묻는 질문</Ko>
+              <En>FAQ</En>
+            </Item>
+          </Link>
+        </li>
+        <li onClick={onCloseHandler}>
+          <Link href="/notice">
+            <Item>
+              <Ko>공지사항</Ko>
+              <En>Notice</En>
+            </Item>
+          </Link>
         </li>
         <li>
-          <a href="/market" onClick={onCloseHandler}>
-            공연마켓
-          </a>
+          <div onClick={go}>
+            <Item>
+              <Ko>작품등록 문의</Ko>
+              <En>Register your work</En>
+            </Item>
+          </div>
         </li>
-        <li>
-          <a href="/about" onClick={onCloseHandler}>
-            서비스 소개
-          </a>
-        </li>
-        <li>
-          <a href="/faq" onClick={onCloseHandler}>
-            자주 묻는 질문
-          </a>
-        </li>
-        <li>
-          <a href="/notice" onClick={onCloseHandler}>
-            공지사항
-          </a>
-        </li>
-        <li>
-          <div onClick={go}>작품등록 문의</div>
-        </li>
-      </ListKo>
-      <ListEn>
-        <li>
-          <a href="/" onClick={onCloseHandler}>
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="/market" onClick={onCloseHandler}>
-            Market
-          </a>
-        </li>
-        <li>
-          <a href="/about" onClick={onCloseHandler}>
-            Service Introduction
-          </a>
-        </li>
-        <li>
-          <a href="/faq" onClick={onCloseHandler}>
-            FAQ
-          </a>
-        </li>
-        <li>
-          <a href="/notice" onClick={onCloseHandler}>
-            Notice
-          </a>
-        </li>
-        <li>
-          <div onClick={go}>Register your work</div>
-        </li>
-      </ListEn>
+      </List>
       <CloseBtn onClick={onCloseHandler}>
         <img src="/assets/image/icon_x.png" />
       </CloseBtn>
@@ -89,8 +80,9 @@ const Container = styled.div`
   margin-top: 90px;
 `;
 
-const ListKo = styled.div`
+const List = styled.div`
   list-style: none;
+  width: 100%;
   margin: 0;
   padding: 0;
 
@@ -103,18 +95,23 @@ const ListKo = styled.div`
   }
 `;
 
-const ListEn = styled.div`
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  font-family: "Gotham Medium";
-  font-size: 24px;
-  opacity: 0.3;
-  line-height: 36px;
-  & > li {
-    margin-bottom: 65px;
+const Item = styled.div`
+  display: flex;
+  width: 100%;
+  &:hover {
+    color: ${color.orange};
   }
+`;
+
+const Ko = styled.div`
+  display: flex;
+  width: 50%;
+`;
+
+const En = styled.div`
+  display: flex;
+  width: 50%;
+  margin-left: 2%;
 `;
 
 const CloseBtn = styled.div`

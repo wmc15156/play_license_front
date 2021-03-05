@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 
 const Group = () => {
   return (
@@ -36,11 +37,11 @@ const HeadSection = styled.div`
     font-family: "NotoSansCJKkr-Regular";
     font-size: 12px;
     line-height: 12px;
-    color: #4e4e4e;
+    color: ${color.black3};
   }
 `;
 const Title = styled.div`
-  color: #ff6f69;
+  color: ${color.orange};
   font-family: "NotoSansCJKkr-Bold";
   line-height: 24px;
   font-size: 24px;
@@ -65,17 +66,15 @@ const SubTitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   font-size: 16px;
   line-height: 16px;
-  color: #0d0d0c;
 `;
 const InputBox = styled.input`
   font-family: "NotoSansCJKkr-Medium";
   font-size: 16px;
   line-height: 16px;
-  color: #9e9e9e;
   width: 100%;
   height: 56px;
   border-radius: 8px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid ${color.black5};
 `;
 
 export default Group;

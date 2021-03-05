@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Tag from "../Tag/Tag.";
 import { useRouter } from "next/router";
 import ShowAll from "../Button/ShowAll";
+import color from "../../../styles/colors";
 
 const NewItems = ({ list }) => {
   const router = useRouter();
@@ -63,6 +64,7 @@ const PInfo = styled.div`
   font-family: "NotoSansCJKkr-Regular";
   line-height: 14px;
   margin-top: 18px;
+  color: ${color.black3};
 `;
 const Ptitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
@@ -85,7 +87,6 @@ const ItemImg = styled.div`
 
   & > img {
     width: 276px;
-    /* width: 100%; */
     height: auto;
   }
 `;

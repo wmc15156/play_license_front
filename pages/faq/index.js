@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../styles/colors";
 import FaqSection1 from "../../src/component/FAQ/FaqSection1";
 import FaqSection2 from "../../src/component/FAQ/FaqSection2";
 
@@ -31,6 +32,7 @@ const Title = styled.div`
   line-height: 36px;
   font-size: 36px;
   margin-bottom: 70px;
+  color: ${color.black2};
 `;
 const Section = styled.div`
   display: flex;

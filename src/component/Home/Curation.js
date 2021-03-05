@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 import axios from "axios";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -148,7 +149,7 @@ const Overlay = styled.div`
   height: 100%;
   border-radius: 8px;
   z-index: 10;
-  background-color: black;
+  background-color: ${color.black1};
   opacity: 0.6;
   position: absolute;
 `;
@@ -161,7 +162,7 @@ const TextContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  color: #ffffff;
+  color: ${color.white};
   z-index: 11;
 `;
 
@@ -190,7 +191,7 @@ const Text3 = styled.div`
   text-align: center;
   padding: 8px 21px;
   color: #000;
-  background-color: #fff;
+  background-color: ${color.white};
   border-radius: 25px;
 `;
 
@@ -206,21 +207,17 @@ const StyledSlider = styled(Slider)`
   position: relative;
   display: flex;
   align-items: center;
-
   .slick-slide div {
     outline: none;
   }
-
   .slick-active :not(.slick-center) div {
     /* transform: scale(0.5); */
     background-color: blue;
   }
-
   .slick-active.slick-center div {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
     /* background-color: pink; */
     max-width: 924px;
     height: auto;
@@ -244,38 +241,34 @@ const ImageContainer = styled.div`
 `;
 
 const ArrowPrev = styled(IoIosArrowBack)`
-  color: #fff;
+  color: ${color.white};
   cursor: pointer;
   z-index: 10;
   width: 20%;
   height: 20%;
   transition: color 300ms;
-
   .slick-arrow.slick-prev {
     left: 0%;
     top: 50%;
   }
-
   &:hover {
-    color: #ff6f69;
+    color: ${color.orange};
   }
 `;
 
 const ArrowNext = styled(IoIosArrowForward)`
-  color: #fff;
+  color: ${color.white};
   cursor: pointer;
   z-index: 10;
   width: 20%;
   height: 20%;
   transition: color 300ms;
-
   .slick-arrow.slick-next {
     right: 0%;
     top: 50%;
   }
-
   &:hover {
-    color: #ff6f69;
+    color: ${color.orange};
   }
 `;
 export default Curation;

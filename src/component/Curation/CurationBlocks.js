@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 
 // 등록되어 있는 큐레이션들이 보여지는 컴포넌트
 const Category = () => {
@@ -23,7 +24,7 @@ const Box = styled.div`
   margin-bottom: 9px;
   max-width: 300px;
   height: 48px;
-  background-color: #f5f5f5;
+  background-color: ${color.gray1};
   border-radius: 6px;
   letter-spacing: -0.5px;
   font-size: 16px;
