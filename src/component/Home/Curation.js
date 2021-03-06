@@ -22,18 +22,23 @@ import fetcher from "../../../utils/fetcher";
 const images = [image1, image2, image3, image2];
 
 const defaultStyles = {
-  transform: "scale(0.5)",
+  transform: "scale(0.9)",
   transition: "transform 2s ease",
   opacity: 0.7,
+  width: "100%",
+  height: "400px",
 };
 const activeStyles = {
   transform: "scale(1.0)",
   transition: "transform 2s ease",
   opacity: 1,
+  width: "900px",
+  height: "400px",
+  objectFit: "cover",
 };
 
 const Curation = () => {
-  const { data, error } = useSWR("/curation/product", fetcher, {
+  const { data, error, mutate } = useSWR("/curation/product", fetcher, {
     dedupingInterval: 100000,
   });
 
@@ -43,12 +48,20 @@ const Curation = () => {
   const [imageIdx, setImageIdx] = useState(0);
   const [keyArray, setKeyArray] = useState([]);
 
-  const Arrow_Next = ({ currentSlide, slideCount, ...props }) => (
-    <ArrowNext {...props} />
-  );
+  const Arrow_Next = ({ currentSlide, slideCount, ...props }) => {
+    console.log(currentSlide, slideCount, props);
+    return <ArrowNext {...props} />;
+  };
+
   const Arrow_Prev = ({ currentSlide, slideCount, ...props }) => (
     <ArrowPrev {...props} />
   );
+
+  useEffect(() => {
+    axios.get("/curation/product", fetcher).then((res) => {
+      mutate(res.data);
+    });
+  });
 
   if (!data) {
     return null;
@@ -66,12 +79,12 @@ const Curation = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     centerMode: true,
-    centerPadding: "15%",
+    centerPadding: "25%",
     nextArrow: <Arrow_Next />,
     prevArrow: <Arrow_Prev />,
     beforeChange: (current, next) => setImageIdx(next),
   };
-  console.log(keyArray, ";test");
+  console.log(data, ";test", keyArr);
   return (
     <Container>
       <HeadSection>
@@ -81,6 +94,7 @@ const Curation = () => {
       <SliderContainer>
         <StyledSlider {...settings}>
           {keyArr.map((keyName, idx) => {
+            console.log(keyName, idx);
             return (
               <div key={idx}>
                 <ImageContainer>
@@ -99,23 +113,23 @@ const Curation = () => {
               </div>
             );
           })}
-          {images.map((img, idx) => (
-            <div key={idx}>
-              <ImageContainer>
-                {/* <Overlay /> */}
-                <TextContainer>
-                  <Text1>[{}] 등</Text1>
-                  <Text2>{}에 추천해요!</Text2>
-                  <Text3>{}개의 작품 보기</Text3>
-                </TextContainer>
-                <img
-                  src={img}
-                  alt={img}
-                  style={idx === imageIdx ? activeStyles : defaultStyles}
-                />
-              </ImageContainer>
-            </div>
-          ))}
+          {/*{images.map((img, idx) => (*/}
+          {/*  <div key={idx}>*/}
+          {/*    <ImageContainer>*/}
+          {/*      /!* <Overlay /> *!/*/}
+          {/*      <TextContainer>*/}
+          {/*        <Text1>[{}] 등</Text1>*/}
+          {/*        <Text2>{}에 추천해요!</Text2>*/}
+          {/*        <Text3>{}개의 작품 보기</Text3>*/}
+          {/*      </TextContainer>*/}
+          {/*      <img*/}
+          {/*        src={img}*/}
+          {/*        alt={img}*/}
+          {/*        style={idx === imageIdx ? activeStyles : defaultStyles}*/}
+          {/*      />*/}
+          {/*    </ImageContainer>*/}
+          {/*  </div>*/}
+          {/*))}*/}
         </StyledSlider>
       </SliderContainer>
     </Container>
@@ -149,7 +163,7 @@ const Overlay = styled.div`
   height: 100%;
   border-radius: 8px;
   z-index: 10;
-  background-color: ${color.black1};
+  // background-color: ${color.black1};
   opacity: 0.6;
   position: absolute;
 `;
@@ -184,7 +198,8 @@ const Text2 = styled.p`
   margin-bottom: 40px;
 `;
 
-const Text3 = styled.div`
+const Text3 = styled.span`
+  display: inline-block;
   font-family: "NotoSansCJKkr-Regular";
   letter-spacing: -0.5px;
   line-height: 30px;
@@ -201,6 +216,25 @@ const SliderContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 80px;
+
+  .slick-cloned p {
+    display: none;
+  }
+  .slick-slide p {
+    display: none;
+  }
+  .slick-slide p {
+    display: none;
+  }
+  .slick-slide span {
+    display: none;
+  }
+  .slick-active p {
+    display: block;
+  }
+  .slick-active span {
+    display: inline-block;
+  }
 `;
 
 const StyledSlider = styled(Slider)`
@@ -218,7 +252,7 @@ const StyledSlider = styled(Slider)`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* background-color: pink; */
+    //background-color: pink;
     max-width: 924px;
     height: auto;
     margin: 0 auto;
