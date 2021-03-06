@@ -4,7 +4,7 @@ import color from "../../styles/colors";
 const Terms = () => {
   return (
     <Container>
-      {/* <Title>
+      <Title>
         PLAY LICENSE <span>이용약관</span>
       </Title>
       <Contents>
@@ -616,7 +616,7 @@ const Terms = () => {
         <Text1>
           1. 이 계약과 관련된 소송은 서울중앙지방법원이 관할권을 갖습니다.
         </Text1>
-      </Contents> */}
+      </Contents>
     </Container>
   );
 };

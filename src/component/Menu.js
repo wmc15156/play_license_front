@@ -57,8 +57,8 @@ const Menu = ({ onCloseHandler }) => {
         <li>
           <div onClick={go}>
             <Item>
-              <Ko>작품등록 문의</Ko>
-              <En>Register your work</En>
+              <Ko>PL 제작사센터</Ko>
+              <En>PL provider center</En>
             </Item>
           </div>
         </li>

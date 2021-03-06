@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { useEffect, useState } from "react";
+import color from "../../../styles/colors";
 
 const AnswerStatus = ({ status }) => {
   const [check, setCheck] = useState(false);
@@ -26,12 +27,12 @@ const Container = styled.div`
   ${(props) =>
     props.status
       ? css`
-          background-color: #ff6f69;
-          color: #ffffff;
+          background-color: ${color.orange};
+          color: ${color.white};
         `
       : css`
-          border: 1px solid #0d0d0c;
-          opacity: 0.4;
+          border: 1px solid ${color.black3};
+          color: ${color.black3};
         `};
 `;
 

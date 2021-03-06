@@ -1,25 +1,56 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import heartImg from "../../../public/assets/image/heart.png";
 
-const Heart = ({ state, onClickHandler }) => {
+const Heart = ({
+  state,
+  onClickHandler,
+  boxWidth,
+  heartWidth,
+  radius,
+  bgcolor,
+  shadow,
+}) => {
   return (
     <>
-      {state && <Container onClick={onClickHandler} />}
-      {!state && <RemoveContainer onClick={onClickHandler} />}
+      {/* shadow는 boolean */}
+      <HeartBtnBox
+        onClick={onClickHandler}
+        boxWidth={boxWidth}
+        radius={radius}
+        bgcolor={bgcolor}
+        shadow={shadow}
+      >
+        {state && <HeartBtn heartWidth={heartWidth} />}
+        {!state && <RemoveHeartBtn heartWidth={heartWidth} />}
+      </HeartBtnBox>
     </>
   );
 };
-const Container = styled.div`
-  width: 100%;
-  height: 38px;
-  background-image: url(/assets/image/heart.png);
-  background-size: 100%;
+
+const HeartBtnBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: ${(props) => props.boxWidth};
+  height: ${(props) => props.boxWidth};
+  border-radius: ${(props) => props.radius};
+  background-color: ${(props) => props.bgcolor};
+  box-shadow: ${(props) =>
+    props.shadow ? "4px 4px 10px rgba(0, 0, 0, 0.1)" : "none"};
 `;
 
-const RemoveContainer = styled.div`
-  width: 100%;
-  height: 38px;
-  background-image: url(/assets/image/heart.png);
-  background-size: 100%;
+const StyleHeartImage = css`
+  width: ${(props) => props.heartWidth};
+  height: auto;
+`;
+
+const HeartBtn = styled.img.attrs({ src: heartImg })`
+  ${StyleHeartImage};
+`;
+
+const RemoveHeartBtn = styled.img.attrs({ src: heartImg })`
+  ${StyleHeartImage};
   opacity: 0.3;
 `;
 export default Heart;

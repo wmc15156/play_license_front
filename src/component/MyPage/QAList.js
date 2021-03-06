@@ -59,11 +59,6 @@ const QAList = ({ onChangeId }) => {
 
   return (
     <Container>
-      <Link href="/qna">
-        <Btn>
-          <img src="/assets/image/1_1_CTA.png" />
-        </Btn>
-      </Link>
       <Table>
         <Title>
           <TitleText>제목</TitleText>
@@ -111,6 +106,11 @@ const QAList = ({ onChangeId }) => {
           );
         })}
       </Table>
+      <Link href="/qna">
+        <Btn>
+          <img src="/assets/image/MP_1_1banner.png" />
+        </Btn>
+      </Link>
 
       {needLogin && (
         <ModalPortal>
@@ -122,23 +122,25 @@ const QAList = ({ onChangeId }) => {
 };
 
 const Container = styled.div`
-  margin-bottom: 209px;
   display: flex;
-  flex-direction: column;
+  width: 100%;
+  margin-bottom: 162px;
 `;
 const Btn = styled.div`
   margin-left: auto;
-  margin-bottom: 49.7px;
+  position: relative;
   cursor: pointer;
+  width: 32%;
   & > img {
-    height: 56px;
-    width: auto;
+    max-width: 100%;
+    height: auto;
   }
 `;
 const Table = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
+  width: 65%;
   flex-direction: column;
   border-radius: 10px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
