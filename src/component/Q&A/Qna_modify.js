@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 import Btn1 from "../Button/GrayShortBtn";
 import Btn2 from "../Button/OrangeShortBtn";
 import AnswerStatus from "../Tag/AnswerStatus";
@@ -7,8 +8,11 @@ import { memo, useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import useSWR from "swr";
 import fetcher from "../../../utils/fetcher";
+import useModal from "../../../utils/useModal";
+import AlertModal from "../Modal/AlertModal";
 
 const Qna_modify = ({ details, onClickHandler }) => {
+  const { openModal, closeModal, ModalPortal } = useModal();
   const router = useRouter();
   const { data } = useSWR(`/question/${router.query.id}`, fetcher);
 
@@ -39,11 +43,14 @@ const Qna_modify = ({ details, onClickHandler }) => {
   const modifyHandler = () => {
     const PATCH_URL = `/question/${router.query.id}`;
     const params = { ...data, title, comment };
-    axios.patch(PATCH_URL, params).then((res) => {
-      if (res.status === 200) {
-        router.push("/mypage");
-      }
-    });
+    axios
+      .patch(PATCH_URL, params)
+      .then((res) => {
+        if (res.status === 200) {
+          router.push("/mypage/03");
+        }
+      })
+      .catch((err) => openModal());
   };
 
   return (
@@ -51,7 +58,9 @@ const Qna_modify = ({ details, onClickHandler }) => {
       {data && (
         <Container>
           <HeadSection>
-            <T>1:1 문의</T>
+            <T>
+              <span>1:1 문의</span> 자세히보기
+            </T>
             <StatusBox>
               <AnswerStatus status={data.adminCheck} />
             </StatusBox>
@@ -95,13 +104,23 @@ const Qna_modify = ({ details, onClickHandler }) => {
             </Box>
             <BtnSection>
               <Wrapper1>
-                <Btn1 text={"수정하기"} onClickHandler={modifyHandler} />
+                <Btn1
+                  text={"수정하기"}
+                  onClickHandler={modifyHandler}
+                  fontColor={color.black1}
+                />
               </Wrapper1>
               <Wrapper2>
                 <Btn2 text={"확인"} onClickHandler={onClickHandler} />
               </Wrapper2>
             </BtnSection>
           </Section>
+          <ModalPortal>
+            <AlertModal
+              text={`수정에 실패했습니다. 다시 시도해주세요.`}
+              onClickBtn={closeModal}
+            />
+          </ModalPortal>
         </Container>
       )}
     </>
@@ -110,40 +129,39 @@ const Qna_modify = ({ details, onClickHandler }) => {
 
 const Container = styled.div`
   width: 100%;
-  /* background-color: #fff; */
-  /* padding: 40px;
-  z-index: 11;
-  border-radius: 14px; */
 `;
 
 const HeadSection = styled.div`
   width: 100%;
   display: flex;
-  margin-bottom: 31px;
+  position: relative;
   align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
 `;
 
 const T = styled.div`
-  font-size: 36px;
-  line-height: 55px;
+  font-size: 24px;
+  line-height: 24px;
 
   & > span {
-    /* color: #ff6f69; */
+    color: ${color.orange};
   }
 `;
 
 const StatusBox = styled.div`
-  margin-left: auto;
+  position: absolute;
+  right: 0;
 `;
 
 const Divider = styled.div`
   display: flex;
   width: 100%;
-  margin-bottom: 89px;
+  margin-bottom: 30px;
 `;
 
 const Div1 = styled.div`
-  background-color: #ffcc5c;
+  background-color: ${color.yellow};
   border-radius: 100px;
   height: 3px;
   width: 100%;
@@ -178,20 +196,19 @@ const SubTitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   font-size: 16px;
   line-height: 16px;
-  color: #0d0d0c;
+  color: ${color.black1};
 `;
 const InputBox = styled.input`
   font-family: "NotoSansCJKkr-Medium";
   font-size: 16px;
   line-height: 16px;
-  color: #9e9e9e;
+  color: ${color.black1};
   width: 100%;
   border-radius: 8px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid ${color.black5};
   padding: 19px 20px;
   ::placeholder {
-    color: #0d0d0c;
-    opacity: 0.4;
+    color: ${color.black4};
   }
 `;
 
@@ -199,16 +216,15 @@ const TextBox = styled.textarea`
   font-family: "NotoSansCJKkr-Medium";
   font-size: 16px;
   line-height: 16px;
-  color: #9e9e9e;
+  color: ${color.black1};
   width: 100%;
   height: 262px;
   border-radius: 8px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid ${color.black5};
   resize: none;
   padding: 19px 20px;
   ::placeholder {
-    color: #0d0d0c;
-    opacity: 0.4;
+    color: ${color.black4};
   }
   &:focus {
     outline: none;

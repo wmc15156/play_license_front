@@ -12,7 +12,7 @@ const DetailQnA = () => {
   const [detail, setDetail] = useState({});
 
   const next = () => {
-    router.push("/mypage");
+    router.push("/mypage/03");
   };
 
   return (

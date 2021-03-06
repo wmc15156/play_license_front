@@ -69,22 +69,24 @@ const Header = ({ menuStatus, onCloseHandler }) => {
             )}
             {data && (
               <ListItem_M
-                onClick={changePage("mypage")}
-                color={router.pathname === "/mypage" ? styles.blue : null}
+                onClick={changePage("mypage/01")}
+                color={router.pathname.includes("/mypage") ? styles.blue : null}
               >
                 <Wrap>
                   <PersonIconWrapper>
                     <IoPersonCircleSharp
                       size="32px"
                       color={
-                        router.pathname === "/mypage"
+                        router.pathname.includes("/mypage")
                           ? styles.white
                           : styles.blue
                       }
                     />
                   </PersonIconWrapper>
                   <Text
-                    color={router.pathname === "/mypage" ? styles.white : null}
+                    color={
+                      router.pathname.includes("/mypage") ? styles.white : null
+                    }
                   >
                     MYPAGE
                   </Text>
