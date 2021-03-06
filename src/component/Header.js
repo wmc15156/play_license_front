@@ -8,16 +8,24 @@ import { GoSearch } from "react-icons/go";
 import { IoPersonCircleSharp, IoMenu } from "react-icons/io5";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
+import sty from "../../styles/Login.module.css";
 
 // https://styled-components.com/docs/advanced#referring-to-other-components
 
 const Header = ({ menuStatus, onCloseHandler }) => {
   const router = useRouter();
   const { data, error } = useSWR("/auth/check/login", fetcher);
+  const [hover, setHover] = useState(false);
+  const onHover = () => {
+    setHover(true);
+  };
+
+  const onLeave = () => {
+    setHover(false);
+  };
 
   const changePage = (page = "") => (e) => {
     e.preventDefault();
-    console.log("click");
     router.push(`/${page}`);
     if (menuStatus) {
       onCloseHandler();
@@ -47,13 +55,16 @@ const Header = ({ menuStatus, onCloseHandler }) => {
               <ListItem_M
                 onClick={changePage("login")}
                 color={router.pathname === "/login" ? styles.blue : null}
+                onMouseEnter={onHover}
+                onMouseLeave={onLeave}
               >
                 <Wrap>
                   <PersonIconWrapper>
-                    <IoPersonCircleSharp
-                      size="32px"
+                    <Test
                       color={
                         router.pathname === "/login"
+                          ? styles.white
+                          : hover // state
                           ? styles.white
                           : styles.blue
                       }
@@ -71,6 +82,8 @@ const Header = ({ menuStatus, onCloseHandler }) => {
               <ListItem_M
                 onClick={changePage("mypage/01")}
                 color={router.pathname.includes("/mypage") ? styles.blue : null}
+                onMouseEnter={onHover}
+                onMouseLeave={onLeave}
               >
                 <Wrap>
                   <PersonIconWrapper>
@@ -78,6 +91,8 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                       size="32px"
                       color={
                         router.pathname.includes("/mypage")
+                          ? styles.white
+                          : hover
                           ? styles.white
                           : styles.blue
                       }
@@ -102,6 +117,7 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                 <SearchWrapper>
                   <GoSearch
                     size="28px"
+                    ho
                     color={
                       router.pathname === "/search"
                         ? styles.white
@@ -357,6 +373,7 @@ const Text = styled.div`
   font-family: "Gotham Medium";
   font-size: 14px;
   line-height: 17px;
+  margin-top: 13px;
   ${(props) =>
     props.color &&
     css`
@@ -397,6 +414,10 @@ const MenuIconWrapper = styled.span`
   & > svg:hover {
     color: ${styles.white};
   }
+`;
+
+const Test = styled(IoPersonCircleSharp)`
+  font-size: 32px;
 `;
 
 export default Header;
