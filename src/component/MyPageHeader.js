@@ -1,10 +1,33 @@
 import styled, { css } from "styled-components";
 import color from "../../styles/colors";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import useModal from "../../utils/useModal";
+import AlertModal from "../../src/component/Modal/AlertModal";
+import useSWR from "swr";
+import fetcher from "../../utils/fetcher";
 
 const MyPageHeader = () => {
   const router = useRouter();
+  const { data: userData, error: err } = useSWR("/auth/me", fetcher);
+  const [currentId, setCurrentId] = useState(null);
+  const { openModal, closeModal, ModalPortal } = useModal();
+
+  console.log(userData, "userData??");
+  const onChangeId = (id) => {
+    setCurrentId(id);
+  };
+  useEffect(() => {
+    if (err) {
+      openModal();
+      // router.push("/login");
+    }
+  }, [err]);
+
+  const redirectHandler = () => {
+    router.push("/login");
+  };
 
   return (
     <Container>
@@ -33,6 +56,9 @@ const MyPageHeader = () => {
           </Item>
         </Link>
       </List>
+      <ModalPortal>
+        <AlertModal text={"로그인해주세요"} onClickBtn={redirectHandler} />
+      </ModalPortal>
     </Container>
   );
 };
