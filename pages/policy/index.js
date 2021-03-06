@@ -4,7 +4,7 @@ import color from "../../styles/colors";
 const Policy = () => {
   return (
     <Container>
-      {/* <Title>
+      <Title>
         PLAY LICENSE <span>개인정보처리방침</span>
       </Title>
       <Contents>
@@ -51,7 +51,7 @@ const Policy = () => {
         <Text2>대금결제 및 재화등의 공급에 관한 기록 : 3년</Text2>
         <Text2>소비자의 불만 또는 분쟁처리에 관한 기록 : 3년</Text2>
         <Text2>3년 간 미접속 및 회원 탈퇴 시 회원 정보 삭제</Text2>
-      </Contents> */}
+      </Contents>
     </Container>
   );
 };
