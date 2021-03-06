@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 
 const PurchaseRequest = () => {
   return (
@@ -18,41 +19,9 @@ const PurchaseRequest = () => {
           {/* 문의일자 */}
           <Text>2020.12.11</Text>
           {/* 진행상태 */}
-          <Text>
-            <button>관리자검토중</button>
-          </Text>
-          {/* 문의내용 */}
-          <Text>자세히보기</Text>
-          {/* 견적서 */}
-          <Text>자세히보기</Text>
-          {/* 계약서 */}
-          <Text>자세히보기</Text>
-        </List>
-        <List>
-          {/* 작품명 */}
-          <Text>네네네</Text>
-          {/* 문의일자 */}
-          <Text>2020.12.11</Text>
-          {/* 진행상태 */}
-          <Text>
-            <button>관리자검토중</button>
-          </Text>
-          {/* 문의내용 */}
-          <Text>자세히보기</Text>
-          {/* 견적서 */}
-          <Text>자세히보기</Text>
-          {/* 계약서 */}
-          <Text>자세히보기</Text>
-        </List>
-        <List>
-          {/* 작품명 */}
-          <Text>네네네</Text>
-          {/* 문의일자 */}
-          <Text>2020.12.11</Text>
-          {/* 진행상태 */}
-          <Text>
-            <button>관리자검토중</button>
-          </Text>
+          <Box_Status>
+            <Text_Status>관리자검토중</Text_Status>
+          </Box_Status>
           {/* 문의내용 */}
           <Text>자세히보기</Text>
           {/* 견적서 */}
@@ -79,7 +48,7 @@ const Table = styled.ul`
 const Title = styled.li`
   display: flex;
   width: 100%;
-  background-color: #f5f5f5;
+  background-color: ${color.gray1};
   text-align: center;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -87,7 +56,7 @@ const Title = styled.li`
 `;
 const TitleText = styled.div`
   font-family: "NotoSansCJKkr-Bold";
-  color: #333;
+  color: ${color.black1};
   display: flex;
   flex: 1;
   align-items: center;
@@ -96,7 +65,7 @@ const TitleText = styled.div`
 const List = styled.li`
   display: flex;
   width: 100%;
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 1px solid ${color.black5};
   height: 60px;
   &:last-child {
     border-bottom: none;
@@ -106,10 +75,23 @@ const List = styled.li`
 `;
 const Text = styled.div`
   font-family: "NotoSansCJKkr-Regular";
-  color: #333;
+  color: ${color.black1};
   display: flex;
   flex: 1;
   align-items: center;
   justify-content: center;
 `;
+
+const Box_Status = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+`;
+
+const Text_Status = styled.span`
+  font-family: "NotoSansCJKkr-Regular";
+  color: ${color.black3};
+`;
+
 export default PurchaseRequest;
