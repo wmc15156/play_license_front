@@ -15,10 +15,6 @@ import { useCookies } from "react-cookie";
 import { useEffect } from "react";
 
 const Home = () => {
-  const { data, error, mutate } = useSWR("/user/me", fetcher);
-
-  const router = useRouter();
-
   return (
     <HomeStore>
       <Container>
