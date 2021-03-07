@@ -32,7 +32,7 @@ const AuthTimer = ({ initialTime, setInitialTime, bigBtn }: AuthTimerProps) => {
         color: "#ff5252",
         letterSpacing: "-0.4px",
         position: "relative",
-        left: bigBtn ? "63%" : "70%",
+        left: bigBtn ? "60%" : "70%",
         margin: "0",
       }}
     >

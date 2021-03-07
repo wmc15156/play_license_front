@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import MyPageHeader from "../../src/component/MyPageHeader";
+import MyPageHeader from "../../src/component/MyPage/MyPageHeader";
 import MyInfo from "../../src/component/MyPage/MyInfo";
 
 const pr = () => {

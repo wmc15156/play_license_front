@@ -8,6 +8,8 @@ import axios from "axios";
 import EmailType from "../Tag/EmailType";
 import useModal from "../../../utils/useModal";
 import MP_ChangePhoneNum from "../Modal/MP_ChangePhoneNum";
+import MP_ChangePassword from "../Modal/MP_ChangePassword";
+import MP_Unsubscribe from "../Modal/AlertModal2Btns";
 
 const dummies = {
   name: "권보경",
@@ -18,8 +20,9 @@ const dummies = {
 
 const MyInfo = () => {
   const { ModalPortal, openModal, closeModal } = useModal();
+  const { data, error, mutate } = useSWR("/auth/me", fetcher);
   const [modal, setModal] = useState("");
-  const { data, error, mutate } = useSWR("/user/me", fetcher);
+  const [userData, setUserData] = useState(data);
   const router = useRouter();
 
   const onLogOut = () => {
@@ -27,6 +30,18 @@ const MyInfo = () => {
       mutate(false, false);
       router.push("/");
     });
+  };
+
+  const unSubscribeHandler = () => {
+    axios
+      .delete("/auth/unregister")
+      .then((res) => {
+        if (res.status === 200) {
+          closeModal();
+          router.push("/");
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
   const changeModalHandler = (name) => {
@@ -44,7 +59,7 @@ const MyInfo = () => {
     }
   };
 
-  console.log(data, "???04 data");
+  console.log(userData, "???04 data");
   // if (!data) {
   //   router.push("/login");
   // }
@@ -61,13 +76,13 @@ const MyInfo = () => {
           </SubTitles>
           <Item>
             <Content>
-              <Data>{dummies.name}</Data>
+              <Data>{userData.fullName}</Data>
               <BtnContainer>
                 <Btn onClick={onLogOut}>로그아웃</Btn>
               </BtnContainer>
             </Content>
             <Content>
-              <Data>{dummies.phone}</Data>
+              <Data>{userData.phone}</Data>
               <BtnContainer>
                 <ChangeBtn onClick={() => changeModalHandler("phone")}>
                   변경
@@ -75,9 +90,9 @@ const MyInfo = () => {
               </BtnContainer>
             </Content>
             <Content>
-              <Data>{dummies.email}</Data>
+              <Data>{userData.email}</Data>
               <BtnContainer>
-                <EmailType type={dummies.email.split("@")[1]} />
+                <EmailType type={userData.email.split("@")[1]} />
               </BtnContainer>
             </Content>
             <Content>
@@ -94,13 +109,30 @@ const MyInfo = () => {
       <Unsubscribe onClick={() => changeModalHandler("unsubscribe")}>
         회원탈퇴하기
       </Unsubscribe>
-      <ModalPortal>{modal === "phone" && <MP_ChangePhoneNum />}</ModalPortal>
+      <ModalPortal>
+        {modal === "phone" && <MP_ChangePhoneNum onClickHandler={closeModal} />}
+        {modal === "password" && (
+          <MP_ChangePassword onClickHandler={closeModal} />
+        )}
+        {modal === "unsubscribe" && (
+          <MP_Unsubscribe
+            text={"회원 탈퇴를 진행하시겠습니까?"}
+            content1={
+              "탈퇴시 계정이 삭제됨과 동시에 서비스를 이용하실 수 없습니다."
+            }
+            content2={"그래도 탈퇴를 진행할까요?"}
+            onClickBtn1={unSubscribeHandler}
+            onClickBtn2={closeModal}
+          />
+        )}
+      </ModalPortal>
     </Container>
   );
 };
 
 const Container = styled.div`
   min-height: calc(100vh - 410px);
+  width: 100%;
 `;
 const Box = styled.div`
   width: 100%;

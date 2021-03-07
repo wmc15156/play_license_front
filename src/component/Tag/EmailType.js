@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import color from "../../../styles/colors";
 import { useState } from "react";
 
 const EmailType = ({ type }) => {

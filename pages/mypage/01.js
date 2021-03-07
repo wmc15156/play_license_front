@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import MyPageHeader from "../../src/component/MyPageHeader";
+import MyPageHeader from "../../src/component/MyPage/MyPageHeader";
 import PurchaseRequest from "../../src/component/MyPage/PurchaseRequest";
 
 const pr = () => {
