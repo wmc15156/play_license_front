@@ -3,12 +3,13 @@ import Link from "next/link";
 import Tag from "../Tag/Tag.";
 import Filter from "./Filter";
 
-const List = ({ list }) => {
+const List = ({ list, count }) => {
+  console.log(list, "list");
   return (
     <Container>
       <HeadSection>
         <Title>
-          새로 등록된 작품<span>{list.length}개</span>
+          새로 등록된 작품<span>{count}개</span>
         </Title>
         <Filter />
       </HeadSection>
@@ -18,7 +19,7 @@ const List = ({ list }) => {
             <Item key={item.id}>
               <a>
                 <ItemImg>
-                  <img src={item.image_link} alt={item.name} />
+                  <img src={item.poster} alt={item.name} />
                 </ItemImg>
               </a>
               <a>
@@ -32,13 +33,13 @@ const List = ({ list }) => {
                       );
                     })}
                   </div>
-                  <Ptitle>title:</Ptitle>
+                  <Ptitle>{item.title}</Ptitle>
                   <PInfo>
-                    <div>데{}</div>
+                    <div>{item.category}</div>
                     <Divider>|</Divider>
-                    <div>이{}</div>
+                    <div>{item.year}</div>
                     <Divider>|</Divider>
-                    <div>터{}</div>
+                    <div>{item.company}</div>
                   </PInfo>
                 </ItemDesc>
               </a>
@@ -99,7 +100,8 @@ const Item = styled.li`
   max-width: 276px;
   width: 100%;
   height: auto;
-  margin-right: 5%;
+  margin-right: 2.5%;
+  margin-bottom: 132px;
 `;
 
 const ListSt = styled.ul`
@@ -107,7 +109,6 @@ const ListSt = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
-
   flex-wrap: wrap;
 `;
 
@@ -129,6 +130,6 @@ const HeadSection = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100%;
+  width: 110%;
   height: 100%;
 `;

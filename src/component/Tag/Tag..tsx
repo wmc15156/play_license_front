@@ -6,7 +6,6 @@ import React from "react";
 const TagWrapper = styled.span`
   border: 2px ${styles.orange} solid;
   border-radius: 6px;
-  width: 22px;
   height: 12px;
   opacity: 0.6;
   font-family: "NotoSansCJKkr-Regular";
@@ -19,7 +18,7 @@ const TagWrapper = styled.span`
   text-align: center;
   color: ${styles.black2};
   padding: 7px 10px 9px 10px;
-  margin: 0 4px 18px;
+  margin: 26px 4px 18px;
   display: inline-flex;
   align-items: center;
   ${(props) =>
