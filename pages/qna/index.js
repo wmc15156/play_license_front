@@ -53,7 +53,7 @@ const RegistQ = () => {
   };
 
   const next = () => {
-    router.push("/mypage");
+    router.push("/mypage/03");
   };
 
   const send = () => {

@@ -141,6 +141,7 @@ const Table = styled.ul`
   padding: 0;
   display: flex;
   width: 65%;
+  /* height: 100%; */
   flex-direction: column;
   border-radius: 10px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);

@@ -1,27 +1,26 @@
 import styled, { css } from "styled-components";
-import color from "../../styles/colors";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import useModal from "../../utils/useModal";
-import AlertModal from "../../src/component/Modal/AlertModal";
 import useSWR from "swr";
-import fetcher from "../../utils/fetcher";
+import color from "../../../styles/colors";
+import useModal from "../../../utils/useModal";
+import AlertModal from "../Modal/AlertModal";
+import fetcher from "../../../utils/fetcher";
 
 const MyPageHeader = () => {
   const router = useRouter();
   const { data: userData, error: err } = useSWR("/auth/me", fetcher);
-  const [currentId, setCurrentId] = useState(null);
+  // const [currentId, setCurrentId] = useState(null);
   const { openModal, closeModal, ModalPortal } = useModal();
 
-  console.log(userData, "userData??");
-  const onChangeId = (id) => {
-    setCurrentId(id);
-  };
+  // const onChangeId = (id) => {
+  //   setCurrentId(id);
+  // };
+
   useEffect(() => {
     if (err) {
       openModal();
-      // router.push("/login");
     }
   }, [err]);
 
@@ -56,6 +55,7 @@ const MyPageHeader = () => {
           </Item>
         </Link>
       </List>
+      <Div />
       <ModalPortal>
         <AlertModal text={"로그인해주세요"} onClickBtn={redirectHandler} />
       </ModalPortal>
@@ -91,22 +91,28 @@ const List = styled.ul`
 const Item = styled.li`
   display: flex;
   align-items: center;
-  width: 25%;
+  margin-right: 40px;
   font-family: "NotoSansCJKkr-Bold";
   font-size: 18px;
+  padding: 0 1vw;
   color: ${color.black1};
   padding-bottom: 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2)
-    ${(props) =>
-      props.color &&
-      css`
-        padding-bottom: 20px;
-        border-bottom: 3px solid ${props.color};
-        color: ${props.color};
-      `};
+  max-width: 100px;
+
   &:hover {
     color: ${color.orange};
   }
+  ${(props) =>
+    props.color &&
+    css`
+      padding-bottom: 20px;
+      border-bottom: 3px solid ${props.color};
+      color: ${props.color};
+    `};
+`;
+
+const Div = styled.div`
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
 export default MyPageHeader;

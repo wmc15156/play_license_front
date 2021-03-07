@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import MyPageHeader from "../../src/component/MyPageHeader";
+import MyPageHeader from "../../src/component/MyPage/MyPageHeader";
 import QAList from "../../src/component/MyPage/QAList";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";

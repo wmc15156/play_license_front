@@ -1,32 +1,58 @@
 import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
 import useSWR from "swr";
-import fetcher from "../../../utils/fetcher";
-import { useState } from "react";
+import { memo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import EmailType from "../Tag/EmailType";
+import fetcher from "../../../utils/fetcher";
 import useModal from "../../../utils/useModal";
+import EmailType from "../Tag/EmailType";
 import MP_ChangePhoneNum from "../Modal/MP_ChangePhoneNum";
+import MP_ChangePassword from "../Modal/MP_ChangePassword";
+import MP_Unsubscribe from "../Modal/AlertModal2Btns";
 
 const dummies = {
-  name: "권보경",
+  fullName: "권보경",
   phone: "01012345678",
   email: "abc@abc.com",
   password: "******",
 };
 
 const MyInfo = () => {
+  // const { data, error, mutate } = useSWR("/auth/me", fetcher);
   const { ModalPortal, openModal, closeModal } = useModal();
+  const [userData, setUserData] = useState({});
   const [modal, setModal] = useState("");
-  const { data, error, mutate } = useSWR("/user/me", fetcher);
   const router = useRouter();
+
+  const getUserData = () => {
+    axios
+      .get("/auth/me")
+      .then((res) => setUserData(res.data))
+      .catch((err) => console.error(err));
+  };
+  console.log(userData);
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const onLogOut = () => {
     axios.post("/auth/logout").then((res) => {
-      mutate(false, false);
+      // mutate(false, false);
       router.push("/");
     });
+  };
+
+  const unSubscribeHandler = () => {
+    axios
+      .delete("/auth/unregister")
+      .then((res) => {
+        if (res.status === 200) {
+          closeModal();
+          router.push("/");
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
   const changeModalHandler = (name) => {
@@ -44,7 +70,6 @@ const MyInfo = () => {
     }
   };
 
-  console.log(data, "???04 data");
   // if (!data) {
   //   router.push("/login");
   // }
@@ -61,7 +86,7 @@ const MyInfo = () => {
           </SubTitles>
           <Item>
             <Content>
-              <Data>{dummies.name}</Data>
+              <Data>{dummies.fullName}</Data>
               <BtnContainer>
                 <Btn onClick={onLogOut}>로그아웃</Btn>
               </BtnContainer>
@@ -94,13 +119,30 @@ const MyInfo = () => {
       <Unsubscribe onClick={() => changeModalHandler("unsubscribe")}>
         회원탈퇴하기
       </Unsubscribe>
-      <ModalPortal>{modal === "phone" && <MP_ChangePhoneNum />}</ModalPortal>
+      <ModalPortal>
+        {modal === "phone" && <MP_ChangePhoneNum onClickHandler={closeModal} />}
+        {modal === "password" && (
+          <MP_ChangePassword onClickHandler={closeModal} />
+        )}
+        {modal === "unsubscribe" && (
+          <MP_Unsubscribe
+            text={"회원 탈퇴를 진행하시겠습니까?"}
+            content1={
+              "탈퇴시 계정이 삭제됨과 동시에 서비스를 이용하실 수 없습니다."
+            }
+            content2={"그래도 탈퇴를 진행할까요?"}
+            onClickBtn1={unSubscribeHandler}
+            onClickBtn2={closeModal}
+          />
+        )}
+      </ModalPortal>
     </Container>
   );
 };
 
 const Container = styled.div`
   min-height: calc(100vh - 410px);
+  width: 100%;
 `;
 const Box = styled.div`
   width: 100%;
@@ -214,4 +256,4 @@ const Unsubscribe = styled.div`
   margin-bottom: 67px;
   cursor: pointer;
 `;
-export default MyInfo;
+export default memo(MyInfo);

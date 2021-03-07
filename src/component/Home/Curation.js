@@ -32,7 +32,7 @@ const activeStyles = {
   transform: "scale(1.0)",
   transition: "transform 2s ease",
   opacity: 1,
-  width: "900px",
+  width: "924px",
   height: "400px",
   objectFit: "cover",
 };
@@ -163,7 +163,7 @@ const Overlay = styled.div`
   height: 100%;
   border-radius: 8px;
   z-index: 10;
-  // background-color: ${color.black1};
+  /* background-color: ${color.black1}; */
   opacity: 0.6;
   position: absolute;
 `;

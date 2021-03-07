@@ -34,14 +34,16 @@ const Home = () => {
           <Carousel />
         </CarouselSection>
         <BannerSection>
-          <Link href="/signup/first">
-            <Banner1>
-              <img src="/assets/image/Banner_Buyer.png" />
-            </Banner1>
-          </Link>
-          <Banner1_1>
-            <img src="/assets/image/HO_PL provider.png" />
-          </Banner1_1>
+          <BannerWrapper>
+            <Link href="/signup/first">
+              <Banner1>
+                <img src="/assets/image/Banner_Buyer.png" />
+              </Banner1>
+            </Link>
+            <Banner1_1>
+              <img src="/assets/image/HO_PL provider.png" />
+            </Banner1_1>
+          </BannerWrapper>
         </BannerSection>
         <HotSection>
           <Hot />
@@ -84,12 +86,17 @@ const BannerSection = styled.div`
   margin-bottom: 115px;
   max-width: 924px;
   margin: 0 auto;
-  padding: 0 1rem;
   display: flex;
 `;
 
+const BannerWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  padding: 0 1rem;
+`;
+
 const Banner1 = styled.div`
-  width: 75%;
+  width: 74%;
   cursor: pointer;
   margin-top: 99px;
   & > img {
@@ -101,7 +108,7 @@ const Banner1_1 = styled.div`
   width: 23%;
   cursor: pointer;
   margin-top: 99px;
-  margin-left: 2%;
+  margin-left: 3%;
   & > img {
     width: 100%;
   }

@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import MyPageHeader from "../../src/component/MyPageHeader";
+import MyPageHeader from "../../src/component/MyPage/MyPageHeader";
 import MyInfo from "../../src/component/MyPage/MyInfo";
 
-const pr = () => {
+const MP04 = () => {
   return (
     <Background>
       <HeadSection>
@@ -14,6 +14,7 @@ const pr = () => {
     </Background>
   );
 };
+
 const Background = styled.div`
   padding: 0 1rem;
 `;
@@ -24,10 +25,9 @@ const HeadSection = styled.div`
 
 const Container = styled.div`
   max-width: 924px;
-  /* width: 100%; */
   display: flex;
   flex-direction: column;
   margin: 0 auto;
 `;
 
-export default pr;
+export default MP04;
