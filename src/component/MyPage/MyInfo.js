@@ -1,33 +1,44 @@
 import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
 import useSWR from "swr";
-import fetcher from "../../../utils/fetcher";
-import { useState } from "react";
+import { memo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import EmailType from "../Tag/EmailType";
+import fetcher from "../../../utils/fetcher";
 import useModal from "../../../utils/useModal";
+import EmailType from "../Tag/EmailType";
 import MP_ChangePhoneNum from "../Modal/MP_ChangePhoneNum";
 import MP_ChangePassword from "../Modal/MP_ChangePassword";
 import MP_Unsubscribe from "../Modal/AlertModal2Btns";
 
 const dummies = {
-  name: "권보경",
+  fullName: "권보경",
   phone: "01012345678",
   email: "abc@abc.com",
   password: "******",
 };
 
 const MyInfo = () => {
+  // const { data, error, mutate } = useSWR("/auth/me", fetcher);
   const { ModalPortal, openModal, closeModal } = useModal();
-  const { data, error, mutate } = useSWR("/auth/me", fetcher);
+  const [userData, setUserData] = useState({});
   const [modal, setModal] = useState("");
-  const [userData, setUserData] = useState(data);
   const router = useRouter();
+
+  const getUserData = () => {
+    axios
+      .get("/auth/me")
+      .then((res) => setUserData(res.data))
+      .catch((err) => console.error(err));
+  };
+  console.log(userData);
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const onLogOut = () => {
     axios.post("/auth/logout").then((res) => {
-      mutate(false, false);
+      // mutate(false, false);
       router.push("/");
     });
   };
@@ -59,7 +70,6 @@ const MyInfo = () => {
     }
   };
 
-  console.log(userData, "???04 data");
   // if (!data) {
   //   router.push("/login");
   // }
@@ -76,13 +86,13 @@ const MyInfo = () => {
           </SubTitles>
           <Item>
             <Content>
-              <Data>{userData.fullName}</Data>
+              <Data>{dummies.fullName}</Data>
               <BtnContainer>
                 <Btn onClick={onLogOut}>로그아웃</Btn>
               </BtnContainer>
             </Content>
             <Content>
-              <Data>{userData.phone}</Data>
+              <Data>{dummies.phone}</Data>
               <BtnContainer>
                 <ChangeBtn onClick={() => changeModalHandler("phone")}>
                   변경
@@ -90,9 +100,9 @@ const MyInfo = () => {
               </BtnContainer>
             </Content>
             <Content>
-              <Data>{userData.email}</Data>
+              <Data>{dummies.email}</Data>
               <BtnContainer>
-                <EmailType type={userData.email.split("@")[1]} />
+                <EmailType type={dummies.email.split("@")[1]} />
               </BtnContainer>
             </Content>
             <Content>
@@ -246,4 +256,4 @@ const Unsubscribe = styled.div`
   margin-bottom: 67px;
   cursor: pointer;
 `;
-export default MyInfo;
+export default memo(MyInfo);

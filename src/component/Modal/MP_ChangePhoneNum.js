@@ -39,6 +39,7 @@ const MP_ChangePhoneNum = ({ onClickHandler }) => {
         .get("/user/phone-validation", { params: { phone, code } })
         .then((res) => {
           setCompletedValidation(true);
+          setBtnStatus(true);
         })
         .catch((err) => {
           setCompletedValidation(false);

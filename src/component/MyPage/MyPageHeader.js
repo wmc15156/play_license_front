@@ -1,26 +1,26 @@
 import styled, { css } from "styled-components";
-import color from "../../../styles/colors";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import useSWR from "swr";
+import color from "../../../styles/colors";
 import useModal from "../../../utils/useModal";
 import AlertModal from "../Modal/AlertModal";
-import useSWR from "swr";
 import fetcher from "../../../utils/fetcher";
 
 const MyPageHeader = () => {
   const router = useRouter();
   const { data: userData, error: err } = useSWR("/auth/me", fetcher);
-  const [currentId, setCurrentId] = useState(null);
+  // const [currentId, setCurrentId] = useState(null);
   const { openModal, closeModal, ModalPortal } = useModal();
 
-  console.log(userData, "userData??");
-  const onChangeId = (id) => {
-    setCurrentId(id);
-  };
+  // const onChangeId = (id) => {
+  //   setCurrentId(id);
+  // };
+
   useEffect(() => {
     if (err) {
-      // openModal();
+      openModal();
     }
   }, [err]);
 
