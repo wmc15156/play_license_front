@@ -6,6 +6,7 @@ import Input from "../Input/InputWithCheck";
 import axios from "axios";
 import { useState, useCallback, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
+import { debounce } from "lodash";
 
 const MP_ChangePassword = ({ onClickHandler }) => {
   const [password, setPassword] = useInput("");
@@ -19,14 +20,16 @@ const MP_ChangePassword = ({ onClickHandler }) => {
 
   useEffect(() => newPWCheckHandler(), [password, newPW, checkNewPW]);
   useEffect(() => validateHandler(), [checkCurrPW, same, validate]);
-  useEffect(() => currentPWCheckHandler(), [checkCurrPW, same, validate]);
-
+  // useEffect(() => currentPWCheckHandler(), [checkCurrPW, same, validate]);
+  const passwordCheckRequest = debounce(() => currentPWCheckHandler(), 2000);
   const currentPWCheckHandler = () => {
-    // 비번가져오기 axios
-    // if(password === 가져온비번){
-    // setCheckCurrPW(true);
-    return;
-    // }
+    // 비번 보내기 axios
+    axios.get(`/user/check/password/${password}`).then((res) => {
+      if (res.status === 200) {
+        setCheckCurrPW(true);
+        return;
+      }
+    });
   };
   const validateHandler = () => {
     if (checkCurrPW && same) {
@@ -81,6 +84,7 @@ const MP_ChangePassword = ({ onClickHandler }) => {
           fontSize={"16px"}
           value={password}
           onChange={setPassword}
+          onKeyUp={passwordCheckRequest}
         />
         <Divider />
         <Input

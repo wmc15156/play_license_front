@@ -6,8 +6,7 @@ import React from "react";
 const TagWrapper = styled.span`
   border: 2px ${styles.orange} solid;
   border-radius: 6px;
-  height: 12px;
-  opacity: 0.6;
+  /* height: 12px; */
   font-family: "NotoSansCJKkr-Regular";
   font-size: 12px;
   font-weight: bold;

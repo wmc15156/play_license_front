@@ -13,14 +13,14 @@ const MyPageHeader = () => {
   const { data: userData, error: err } = useSWR("/auth/me", fetcher);
   // const [currentId, setCurrentId] = useState(null);
   const { openModal, closeModal, ModalPortal } = useModal();
-
+  console.log(userData, "mypage userData");
   // const onChangeId = (id) => {
   //   setCurrentId(id);
   // };
 
   useEffect(() => {
     if (err) {
-      openModal();
+      // openModal();
     }
   }, [err]);
 

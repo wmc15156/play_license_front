@@ -195,7 +195,6 @@ const SubTitle = styled.div`
 
 const Content = styled.div`
   display: flex;
-  line-height: 30px;
   width: 100%;
   padding: 21px 0;
   border-bottom: 1px solid ${color.black5};
@@ -206,6 +205,7 @@ const Content = styled.div`
 
 const Data = styled.div`
   display: flex;
+  line-height: 30px;
   font-family: "NotoSansCJKkr-Regular";
   color: ${color.black1};
   max-width: 384px;

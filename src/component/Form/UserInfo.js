@@ -1,7 +1,27 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
+import { useContext, useReducer } from "react";
+import { BuyingContext } from "../../../store/buyingStore";
+import { buyingInitialState, buyingReducer } from "../../../reducers/buying";
+import BasicInput from "../BasicInput/BasicInputColor";
+import {
+  SAVE_NAME,
+  SAVE_PHONE,
+  SAVE_COMMENT,
+} from "../../../reducers/types/types";
 
 const UserInfo = () => {
+  const [state, dispatch] = useReducer(buyingReducer, buyingInitialState);
+
+  const updateName = (e) => dispatch({ type: SAVE_NAME, name: e.target.value });
+
+  const updatePhone = (e) =>
+    dispatch({ type: SAVE_PHONE, phone: e.target.value });
+
+  const updateComment = (e) =>
+    dispatch({ type: SAVE_COMMENT, comment: e.target.value });
+
+  console.log(state, "state??", state.groupName, state.aboutGroup);
   return (
     <Container>
       <HeadSection>
@@ -14,15 +34,31 @@ const UserInfo = () => {
       <InputSection>
         <Input>
           <SubTitle>이름</SubTitle>
-          <InputBox />
+          <BasicInput
+            width={"100%"}
+            placeholder={"이름을 적어주세요"}
+            onChange={updateName}
+            value={state.name}
+          />
         </Input>
         <Input>
           <SubTitle>연락처</SubTitle>
-          <InputBox />
+          <BasicInput
+            width={"100%"}
+            placeholder={"연락처를 적어주세요"}
+            onChange={updatePhone}
+            value={state.phone}
+          />
         </Input>
         <Input>
           <SubTitle>남기실 말씀</SubTitle>
-          <InputBox />
+          <BasicInput
+            width={"100%"}
+            placeholder={"자유롭게 입력해주세요"}
+            onChange={updateComment}
+            background={color.gray1}
+            value={state.comment}
+          />
         </Input>
       </InputSection>
     </Container>
@@ -37,9 +73,10 @@ const Container = styled.div`
 const HeadSection = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 39px;
+  margin-bottom: 34px;
   & > p {
-    margin-top: 17px;
+    margin: 0;
+    margin-top: 14px;
     font-family: "NotoSansCJKkr-Regular";
     font-size: 12px;
     line-height: 12px;
@@ -65,7 +102,7 @@ const Input = styled.li`
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  margin-bottom: 35px;
+  margin-bottom: 28px;
 `;
 const SubTitle = styled.div`
   width: 140px;

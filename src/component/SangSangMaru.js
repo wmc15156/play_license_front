@@ -1,10 +1,10 @@
 import styled from "styled-components";
+import color from "../../styles/colors";
 
 const SangSangMaru = () => {
   return (
     <Container>
       <Title>
-        {/* 클릭 시 모든 작품로딩 */}
         <Icon />
         <Text>상상마루 제작</Text>
       </Title>
@@ -17,7 +17,6 @@ const SangSangMaru = () => {
   );
 };
 
-export default SangSangMaru;
 const Container = styled.div`
   width: 100%;
   height: auto;
@@ -33,14 +32,18 @@ const Icon = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: #e6e6e6;
+  margin-right: 10px;
+  background-color: ${color.gray1};
 `;
 const Text = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   letter-spacing: -0.5px;
   line-height: 16px;
 `;
+
 const Desc = styled.div`
   font-family: "NotoSansCJKkr-Regular";
   line-height: 24px;
 `;
+
+export default SangSangMaru;

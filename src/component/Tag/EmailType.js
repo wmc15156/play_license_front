@@ -4,7 +4,7 @@ import { useState } from "react";
 const EmailType = ({ type }) => {
   let initialStatus;
 
-  if (type.includes("google")) {
+  if (type.includes("gmail")) {
     initialStatus = "google";
   } else if (type.includes("naver")) {
     initialStatus = "naver";
