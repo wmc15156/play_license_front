@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, memo } from "react";
 
 const EmailType = ({ type }) => {
   let initialStatus;
@@ -35,4 +35,4 @@ const Box = styled.img`
   height: 28px;
 `;
 
-export default EmailType;
+export default memo(EmailType);
