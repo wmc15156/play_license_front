@@ -15,8 +15,8 @@ const List = ({ list, count }) => {
       </HeadSection>
       <ListSt>
         {list.map((item) => (
-          <Link href={`/performances/${item.id}`}>
-            <Item key={item.id}>
+          <Link href={`/performances/${item.productId}`}>
+            <Item key={item.productId}>
               <a>
                 <ItemImg>
                   <img src={item.poster} alt={item.name} />
@@ -27,7 +27,7 @@ const List = ({ list, count }) => {
                   <div>
                     {item.brokerageConsignments.map((cate, i) => {
                       return (
-                        <Tag title={cate} id={item.id}>
+                        <Tag title={cate} id={item.productId}>
                           {cate}
                         </Tag>
                       );

@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
-import { useState } from "react";
 
 const InputWithCheck = ({
   inputType,
@@ -12,8 +11,8 @@ const InputWithCheck = ({
   checkType,
   checkSame,
   checkCurrPW,
+  onKeyUp,
 }) => {
-  const [check, setCheck] = useState();
   return (
     <Container>
       <InputBox
@@ -26,6 +25,7 @@ const InputWithCheck = ({
         check={checkType}
         checkSame={checkSame}
         checkCurrPW={checkCurrPW}
+        onKeyUp={onKeyUp}
       ></InputBox>
       {checkType === "확인" && (
         <Text1 checkCurrPW={checkCurrPW}>{"확인"}</Text1>

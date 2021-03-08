@@ -21,7 +21,7 @@ const Heart = ({
         shadow={shadow}
       >
         {state && <HeartBtn heartWidth={heartWidth} />}
-        {!state && <RemoveHeartBtn heartWidth={heartWidth} />}
+        {!state && <GrayHeartBtn heartWidth={heartWidth} />}
       </HeartBtnBox>
     </>
   );
@@ -49,8 +49,8 @@ const HeartBtn = styled.img.attrs({ src: heartImg })`
   ${StyleHeartImage};
 `;
 
-const RemoveHeartBtn = styled.img.attrs({ src: heartImg })`
+const GrayHeartBtn = styled.img.attrs({ src: heartImg })`
   ${StyleHeartImage};
-  opacity: 0.3;
+  filter: grayscale(100%);
 `;
 export default Heart;

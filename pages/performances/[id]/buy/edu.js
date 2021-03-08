@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import color from "../../../../styles/colors";
+import { FaCheck } from "react-icons/fa";
+import CheckBoxWrapper from "../../../../src/component/CheckBoxWrapper/CheckBoxWrapper";
 import { useRouter } from "next/router";
 import { useState, useRef } from "react";
 import Group from "../../../../src/component/Form/Group";
@@ -65,7 +68,14 @@ const Edu = ({ image }) => {
       </BoxSection>
       <Notice title={notice.title} body1={notice.body1} body2={notice.body2} />
       <CheckSection>
-        <CheckBox checked={checked} handleChange={handleChange} />
+        <CheckBoxWrapper
+          width={"24px"}
+          height={"24px"}
+          onChange={handleChange}
+          value={checked}
+        >
+          <FaCheck size={"15px"} color={checked ? "white" : "gray"} />
+        </CheckBoxWrapper>
         <Check>안내사항을 확인했습니다</Check>
       </CheckSection>
       <BtnSection>
@@ -93,38 +103,38 @@ const HeadSection = styled.div`
 `;
 
 const T1 = styled.div`
-  opacity: 0.3;
-  font-size: 21px;
-  line-height: 36px;
+  color: ${color.black3};
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 20px;
 `;
 const T2 = styled.div`
-  font-size: 36px;
-  line-height: 55px;
+  font-size: 24px;
+  line-height: 26px;
 
   & > span {
-    color: #ff6f69;
+    color: ${color.orange};
   }
 `;
 const Num = styled.div`
   margin-left: auto;
-  /* margin-top: 31px; */
-  line-height: 48px;
+  line-height: 28px;
   font-size: 14px;
 `;
 const Divider = styled.div`
   display: flex;
   width: 100%;
-  margin-bottom: 89px;
+  margin-bottom: 30px;
 `;
 
 const Div1 = styled.div`
-  background-color: #ffcc5c;
+  background-color: ${color.yellow};
   border-radius: 100px;
   height: 3px;
   width: 100%;
 `;
 const Wrap = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 `;
 const BoxSection = styled.div`
   height: 100%;

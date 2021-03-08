@@ -1,12 +1,15 @@
 import styled from "styled-components";
+import color from "../../../../styles/colors";
+import { FaCheck } from "react-icons/fa";
+import CheckBoxWrapper from "../../../../src/component/CheckBoxWrapper/CheckBoxWrapper";
 import { useRouter } from "next/router";
-import { useState, useRef } from "react";
+import { useState, useReducer } from "react";
+import BuyingStore from "../../../../store/buyingStore";
 import Group from "../../../../src/component/Form/Group";
 import PerformanceInfo from "../../../../src/component/Form/PerformanceInfo_provider";
 import UserInfo from "../../../../src/component/Form/UserInfo";
 import Notice from "../../../../src/component/GrayNotice";
-import Btn from "../../../../src/component/Button/SignUpButton";
-import CheckBox from "../../../../src/component/CheckBox";
+import Btn from "../../../../src/component/Button/OriginalButton";
 import useModal from "../../../../utils/useModal";
 import AlertModal from "../../../../src/component/Modal/AlertModal";
 
@@ -42,41 +45,66 @@ const Performance = ({ image }) => {
   };
 
   return (
-    <Container>
-      <HeadSection>
-        <T1>작품 구매를 위해 구매문의를 작성해주세요</T1>
-        <T2>
-          <span>구매정보</span>를 작성해주세요
-        </T2>
-        <Num>2/2</Num>
-      </HeadSection>
-      <Divider>
-        <Div1 />
-      </Divider>
-      <BoxSection>
-        <Wrap>
-          <Group />
-        </Wrap>
-        <Wrap>
-          <PerformanceInfo />
-        </Wrap>
-        <Wrap>
-          <UserInfo />
-        </Wrap>
-      </BoxSection>
-      <Notice title={notice.title} body1={notice.body1} body2={notice.body2} />
+    <BuyingStore>
+      <Container>
+        <HeadSection>
+          <T1>작품 구매를 위해 구매문의를 작성해주세요</T1>
+          <T2>
+            <span>구매정보</span>를 작성해주세요
+          </T2>
+          <Num>2/2</Num>
+        </HeadSection>
+        <Divider>
+          <Div1 />
+        </Divider>
+        <BoxSection>
+          <Wrap>
+            <Group />
+          </Wrap>
+          <Wrap>
+            <PerformanceInfo />
+          </Wrap>
+          <Wrap>
+            <UserInfo />
+          </Wrap>
+        </BoxSection>
+        <Notice
+          title={notice.title}
+          body1={notice.body1}
+          body2={notice.body2}
+        />
 
-      <CheckSection>
-        <CheckBox checked={checked} handleChange={handleChange} />
-        <Check>안내사항을 확인했습니다</Check>
-      </CheckSection>
-      <BtnSection>
-        <Btn text={"구매문의 완료하기"} onClickHandler={onSubmitHandler} />
-      </BtnSection>
-      <ModalPortal>
-        <AlertModal text={"내용을 모두 입력해주세요"} onClickBtn={closeModal} />
-      </ModalPortal>
-    </Container>
+        <CheckSection>
+          <CheckBoxWrapper
+            width={"24px"}
+            height={"24px"}
+            onChange={handleChange}
+            value={checked}
+          >
+            <FaCheck size={"15px"} color={checked ? "white" : "gray"} />
+          </CheckBoxWrapper>
+          <Check>안내사항을 확인했습니다</Check>
+        </CheckSection>
+        <BtnSection>
+          <Btn
+            width
+            background={checked}
+            margin={"0px"}
+            height={"60px"}
+            size={"21px"}
+            onClick={onSubmitHandler}
+          >
+            구매문의 완료하기
+          </Btn>
+        </BtnSection>
+        <ModalPortal>
+          <AlertModal
+            text={"내용을 모두 입력해주세요"}
+            onClickBtn={closeModal}
+          />
+        </ModalPortal>
+      </Container>
+    </BuyingStore>
   );
 };
 
@@ -95,32 +123,32 @@ const HeadSection = styled.div`
 `;
 
 const T1 = styled.div`
-  opacity: 0.3;
-  font-size: 21px;
-  line-height: 36px;
+  color: ${color.black3};
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 20px;
 `;
 const T2 = styled.div`
-  font-size: 36px;
-  line-height: 55px;
+  font-size: 24px;
+  line-height: 26px;
 
   & > span {
-    color: #ff6f69;
+    color: ${color.orange};
   }
 `;
 const Num = styled.div`
   margin-left: auto;
-  /* margin-top: 31px; */
-  line-height: 48px;
+  line-height: 28px;
   font-size: 14px;
 `;
 const Divider = styled.div`
   display: flex;
   width: 100%;
-  margin-bottom: 89px;
+  margin-bottom: 30px;
 `;
 
 const Div1 = styled.div`
-  background-color: #ffcc5c;
+  background-color: ${color.yellow};
   border-radius: 100px;
   height: 3px;
   width: 100%;
@@ -137,7 +165,7 @@ const CheckSection = styled.div`
 
 const Check = styled.div``;
 const Wrap = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 `;
 const BtnSection = styled.div`
   margin-top: 44px;
