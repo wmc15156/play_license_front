@@ -16,24 +16,26 @@ const MP_ChangePassword = ({ onClickHandler }) => {
   const [same, setSame] = useState(false);
   const [validate, setValidate] = useState(false);
 
-  // 현재 비밀번호랑 입력한 비밀번호가 같은 지 체크해야함
-
   useEffect(() => newPWCheckHandler(), [password, newPW, checkNewPW]);
   useEffect(() => validateHandler(), [checkCurrPW, same, validate]);
-  // useEffect(() => currentPWCheckHandler(), [checkCurrPW, same, validate]);
+
   const passwordCheckRequest = debounce(() => currentPWCheckHandler(), 2000);
   const currentPWCheckHandler = () => {
     // 비번 보내기 axios
-    axios.get(`/user/check/password/${password}`).then((res) => {
-      if (res.status === 200) {
-        setCheckCurrPW(true);
-        return;
-      }
-    });
+    axios
+      .get(`/user/check/password/${password}`)
+      .then((res) => {
+        if (res.data) {
+          setCheckCurrPW(true);
+        } else if (!res.data) {
+          setCheckCurrPW(false);
+        }
+      })
+      .catch((err) => setCheckCurrPW(false));
   };
   const validateHandler = () => {
     if (checkCurrPW && same) {
-      // setValidate(true);
+      setValidate(true);
       return;
     }
   };

@@ -20,7 +20,7 @@ const MyPageHeader = () => {
 
   useEffect(() => {
     if (err) {
-      // openModal();
+      openModal();
     }
   }, [err]);
 

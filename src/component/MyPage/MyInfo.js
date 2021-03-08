@@ -86,13 +86,13 @@ const MyInfo = () => {
           </SubTitles>
           <Item>
             <Content>
-              <Data>{dummies.fullName}</Data>
+              <Data>{userData.fullName}</Data>
               <BtnContainer>
                 <Btn onClick={onLogOut}>로그아웃</Btn>
               </BtnContainer>
             </Content>
             <Content>
-              <Data>{dummies.phone}</Data>
+              <Data>{userData.phone}</Data>
               <BtnContainer>
                 <ChangeBtn onClick={() => changeModalHandler("phone")}>
                   변경
@@ -100,7 +100,7 @@ const MyInfo = () => {
               </BtnContainer>
             </Content>
             <Content>
-              <Data>{dummies.email}</Data>
+              <Data>{userData.email}</Data>
               <BtnContainer>
                 <EmailType type={dummies.email.split("@")[1]} />
               </BtnContainer>
