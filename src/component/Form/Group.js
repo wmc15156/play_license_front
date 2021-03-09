@@ -1,23 +1,8 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
-import { useContext, useReducer } from "react";
-import { BuyingContext } from "../../../store/buyingStore";
-import { buyingInitialState, buyingReducer } from "../../../reducers/buying";
 import BasicInput from "../BasicInput/BasicInputColor";
-import {
-  SAVE_GROUP_NAME,
-  SAVE_ABOUT_GROUP,
-} from "../../../reducers/types/types";
 
-const Group = () => {
-  const [state, dispatch] = useReducer(buyingReducer, buyingInitialState);
-  const updateGroupname = (e) =>
-    dispatch({ type: SAVE_GROUP_NAME, groupName: e.target.value });
-
-  const updateAboutGroup = (e) =>
-    dispatch({ type: SAVE_ABOUT_GROUP, aboutGroup: e.target.value });
-
-  console.log(state, "state??", state.groupName, state.aboutGroup);
+const Group = ({ groupState, groupStateHandler }) => {
   return (
     <Container>
       <HeadSection>
@@ -30,8 +15,13 @@ const Group = () => {
           <BasicInput
             width={"100%"}
             placeholder={"동호회명이나 동아리명 등의 이름을 적어주세요"}
-            onChange={updateGroupname}
-            value={state.groupName}
+            onChange={(e) =>
+              groupStateHandler({
+                ...groupState,
+                groupName: e.target.value,
+              })
+            }
+            value={groupState.groupName}
           />
         </Input>
         <Input>
@@ -39,8 +29,13 @@ const Group = () => {
           <BasicInput
             width={"100%"}
             placeholder={"소개말을 적어주세요"}
-            onChange={updateAboutGroup}
-            value={state.aboutGroup}
+            onChange={(e) =>
+              groupStateHandler({
+                ...groupState,
+                about: e.target.value,
+              })
+            }
+            value={groupState.about}
           />
         </Input>
       </InputSection>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Performance from "../Form/Est_Performance";
@@ -36,11 +37,11 @@ const CalcModal = ({ text }) => {
 };
 
 const Container = styled.div`
-  background-color: #ffffff;
+  background-color: ${color.white};
   width: 840px;
   z-index: 11;
   border-radius: 14px;
-  padding: 60px 40px 46px 40px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   /* overflow: auto; */
@@ -52,8 +53,8 @@ const HeadSection = styled.div`
 const Title = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   font-size: 24px;
-  color: #0d0d0c;
-  margin: 0 auto 52px auto;
+  color: ${color.black1};
+  margin: 0 auto 24px auto;
 `;
 
 const Menu = styled.div``;
@@ -62,10 +63,10 @@ const Subtitle = styled.div`
   width: 100%;
 `;
 const Sub = styled.div`
-  height: 60px;
+  height: 44px;
   font-family: "NotoSansCJKkr-Medium";
-  font-size: 21px;
-  line-height: 0.86;
+  font-size: 16px;
+  line-height: 16px;
   width: 50%;
   display: flex;
   align-items: center;
@@ -73,17 +74,17 @@ const Sub = styled.div`
   text-align: center;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  background: ${(props) => {
+  background-color: ${(props) => {
     if (props.name === Number(props.purposeState)) {
-      return "#ffcc5c";
+      return color.yellow;
     } else {
-      return "#ffffff";
+      return color.white;
     }
   }};
 `;
 const Divider = styled.div`
   height: 3px;
-  background: #ffcc5c;
+  background: ${color.yellow};
 `;
 const BodySection = styled.div``;
 

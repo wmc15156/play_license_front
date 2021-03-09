@@ -1,27 +1,8 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
-import { useContext, useReducer } from "react";
-import { BuyingContext } from "../../../store/buyingStore";
-import { buyingInitialState, buyingReducer } from "../../../reducers/buying";
 import BasicInput from "../BasicInput/BasicInputColor";
-import {
-  SAVE_NAME,
-  SAVE_PHONE,
-  SAVE_COMMENT,
-} from "../../../reducers/types/types";
 
-const UserInfo = () => {
-  const [state, dispatch] = useReducer(buyingReducer, buyingInitialState);
-
-  const updateName = (e) => dispatch({ type: SAVE_NAME, name: e.target.value });
-
-  const updatePhone = (e) =>
-    dispatch({ type: SAVE_PHONE, phone: e.target.value });
-
-  const updateComment = (e) =>
-    dispatch({ type: SAVE_COMMENT, comment: e.target.value });
-
-  console.log(state, "state??", state.groupName, state.aboutGroup);
+const UserInfo = ({ userInfoState, userInfoStateHandler }) => {
   return (
     <Container>
       <HeadSection>
@@ -37,8 +18,10 @@ const UserInfo = () => {
           <BasicInput
             width={"100%"}
             placeholder={"이름을 적어주세요"}
-            onChange={updateName}
-            value={state.name}
+            onChange={(e) =>
+              userInfoStateHandler({ ...userInfoState, name: e.target.value })
+            }
+            value={userInfoState.name}
           />
         </Input>
         <Input>
@@ -46,8 +29,10 @@ const UserInfo = () => {
           <BasicInput
             width={"100%"}
             placeholder={"연락처를 적어주세요"}
-            onChange={updatePhone}
-            value={state.phone}
+            onChange={(e) =>
+              userInfoStateHandler({ ...userInfoState, phone: e.target.value })
+            }
+            value={userInfoState.phone}
           />
         </Input>
         <Input>
@@ -55,9 +40,14 @@ const UserInfo = () => {
           <BasicInput
             width={"100%"}
             placeholder={"자유롭게 입력해주세요"}
-            onChange={updateComment}
+            onChange={(e) =>
+              userInfoStateHandler({
+                ...userInfoState,
+                comment: e.target.value,
+              })
+            }
             background={color.gray1}
-            value={state.comment}
+            value={userInfoState.comment}
           />
         </Input>
       </InputSection>
