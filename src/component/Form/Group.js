@@ -32,10 +32,10 @@ const Group = ({ groupState, groupStateHandler }) => {
             onChange={(e) =>
               groupStateHandler({
                 ...groupState,
-                about: e.target.value,
+                introduction: e.target.value,
               })
             }
-            value={groupState.about}
+            value={groupState.introduction}
           />
         </Input>
       </InputSection>

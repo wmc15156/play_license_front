@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { FaCheck } from "react-icons/fa";
 import CheckBoxWrapper from "../CheckBoxWrapper/CircleCheckBoxWrapper";
 import Selector from "../Input/SelectOption";
@@ -21,28 +21,25 @@ const items_selectMaterial = [
   "기타",
 ];
 
-const AboutPerformance_etc = ({ text, perfInfoState, setPerfInfoState }) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-
+const AboutPerformance_etc = ({ perfInfoState, setPerfInfoState }) => {
   const removeSelectItemHandler = useCallback(
     (itemIdx) => {
-      let array = perfInfoState.selectMaterials;
+      let array = perfInfoState.selectedMaterials;
       array.splice(itemIdx, 1);
       setPerfInfoState((prev) => {
-        return { ...prev, selectMaterials: [...array] };
+        return { ...prev, selectedMaterials: [...array] };
       });
     },
-    [perfInfoState.selectMaterials]
+    [perfInfoState.selectedMaterials]
   );
 
   const checkSelectHandler = (name) => {
-    if (perfInfoState.selectMaterials.includes(name)) {
+    if (perfInfoState.selectedMaterials.includes(name)) {
       removeSelectItemHandler();
     } else {
       setPerfInfoState({
         ...perfInfoState,
-        selectMaterials: [...perfInfoState.selectMaterials, name],
+        selectedMaterials: [...perfInfoState.selectedMaterials, name],
       });
     }
   };
@@ -77,12 +74,12 @@ const AboutPerformance_etc = ({ text, perfInfoState, setPerfInfoState }) => {
       </HeadSection>
       <InputSection>
         <Input>
-          <SubTitle>{text}</SubTitle>
+          <SubTitle>사용목적</SubTitle>
           <Content>
             <InputArea>
               <InputArea_Row1>
                 <Selector
-                  value={perfInfoState.purpose[0]}
+                  value={perfInfoState.objective[0]}
                   options={[
                     "선택해주세요",
                     "2차창작",
@@ -92,8 +89,8 @@ const AboutPerformance_etc = ({ text, perfInfoState, setPerfInfoState }) => {
                   onChange={(e) =>
                     setPerfInfoState({
                       ...perfInfoState,
-                      purpose: {
-                        ...perfInfoState.purpose,
+                      objective: {
+                        ...perfInfoState.objective,
                         0: e.target.value,
                       },
                     })
@@ -102,21 +99,21 @@ const AboutPerformance_etc = ({ text, perfInfoState, setPerfInfoState }) => {
               </InputArea_Row1>
 
               <InputArea_Row1>
-                {perfInfoState.purpose[0] === "기타" && (
+                {perfInfoState.objective[0] === "기타" && (
                   <BasicInput
                     width={"100%"}
                     placeholder={"직접입력"}
-                    background={color.gray1}
+                    background={color.white}
                     onChange={(e) =>
                       setPerfInfoState({
                         ...perfInfoState,
-                        purpose: {
-                          ...perfInfoState.purpose,
+                        objective: {
+                          ...perfInfoState.objective,
                           1: e.target.value,
                         },
                       })
                     }
-                    value={perfInfoState.purpose[1]}
+                    value={perfInfoState.objective[1]}
                   />
                 )}
               </InputArea_Row1>
@@ -131,11 +128,13 @@ const AboutPerformance_etc = ({ text, perfInfoState, setPerfInfoState }) => {
                 <Date_Name>시작</Date_Name>
                 <label>
                   <DatePicker
-                    date={perfInfoState.date[0].start}
+                    date={perfInfoState.startDate[0].start}
                     setDate={(e) =>
                       setPerfInfoState({
                         ...perfInfoState,
-                        date: [{ ...perfInfoState.date[0], start: e }],
+                        startDate: [
+                          { ...perfInfoState.startDate[0], start: e },
+                        ],
                       })
                     }
                   />
@@ -148,11 +147,11 @@ const AboutPerformance_etc = ({ text, perfInfoState, setPerfInfoState }) => {
                 <Date_Name>종료</Date_Name>
                 <label>
                   <DatePicker
-                    date={perfInfoState.date[0].end}
+                    date={perfInfoState.startDate[0].end}
                     setDate={(e) =>
                       setPerfInfoState({
                         ...perfInfoState,
-                        date: [{ ...perfInfoState.date[0], end: e }],
+                        startDate: [{ ...perfInfoState.startDate[0], end: e }],
                       })
                     }
                   />
@@ -211,13 +210,13 @@ const AboutPerformance_etc = ({ text, perfInfoState, setPerfInfoState }) => {
                 <li key={index}>
                   <CheckBoxWrapper
                     widthHeight={"20px"}
-                    checked={perfInfoState.selectMaterials.includes(label)}
+                    checked={perfInfoState.selectedMaterials.includes(label)}
                     onClick={() => checkSelectHandler(label)}
                   >
                     <FaCheck
                       size={"15px"}
                       color={
-                        perfInfoState.selectMaterials.includes(label)
+                        perfInfoState.selectedMaterials.includes(label)
                           ? color.white
                           : color.black5
                       }

@@ -23,13 +23,16 @@ const Edu = () => {
   const router = useRouter();
   const [checked, setChecked] = useState(false);
   const { openModal, ModalPortal, closeModal } = useModal();
-  const [groupState, setGroupState] = useState({ groupName: "", about: "" });
+  const [groupState, setGroupState] = useState({
+    groupName: "",
+    introduction: "",
+  });
   const [perfInfoState, setPerfInfoState] = useState({
-    purpose: {}, // 활용목적
+    objective: {}, // 활용목적
     period: "", // 이용기간 택1
-    startDate: {}, // 이용시작일 달력
+    startDate: [{ start: "", end: "" }], // 이용시작일 달력
     requiredMaterials: [], // 필수자료
-    selectMaterials: [], // 선택자료(공급자가 제공선택한 자료만 표시)
+    selectedMaterials: [], // 선택자료(공급자가 제공선택한 자료만 표시)
   });
   const [userInfoState, setUserInfoState] = useState({
     name: "",
@@ -54,20 +57,28 @@ const Edu = () => {
       ...groupState,
       ...perfInfoState,
       ...userInfoState,
+      category: "교육목적용",
     });
   };
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (!checked) {
+      //TODO:유효썽
       // alert("개인정보 수집 및 이용에 동의해주세요.");
       openModal();
     }
 
-    console.log("구매문의버튼클릭", userInputData);
-    // const url=""
-    // axios.post(url,userInputData).then(res=>console.log(res)).catch(err=>console.error(err))
-
-    // next();
+    console.log("구매문의버튼클릭 시 보낼 데이터", userInputData);
+    axios
+      .post("/product/buyer/educational", userInputData)
+      .then((res) => {
+        console.log(res, "--res?");
+        if (res.status === 201) {
+          next();
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -88,7 +99,6 @@ const Edu = () => {
         </Wrap>
         <Wrap>
           <PerformanceInfo
-            text={"활용목적"}
             perfInfoState={perfInfoState}
             setPerfInfoState={setPerfInfoState}
           />

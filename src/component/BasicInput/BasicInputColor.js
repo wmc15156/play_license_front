@@ -18,7 +18,7 @@ const InputBox = ({
         placeholder={placeholder}
         fontSize={fontSize}
         onChange={onChange}
-        value={value}
+        defaultValue={value}
       ></Input>
     </Container>
   );

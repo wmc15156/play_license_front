@@ -6,7 +6,9 @@ const SelectOption = ({ value = 0, onChange, options }) => {
     <Container>
       <Select value={value} onChange={onChange}>
         {options.map((opt, i) => (
-          <option value={opt}>{opt}</option>
+          <option key={i} value={opt}>
+            {opt}
+          </option>
         ))}
       </Select>
     </Container>

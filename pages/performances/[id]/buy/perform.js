@@ -21,18 +21,21 @@ const notice = {
 };
 
 const Performance = () => {
-  const [groupState, setGroupState] = useState({ groupName: "", about: "" });
+  const [groupState, setGroupState] = useState({
+    groupName: "",
+    introduction: "",
+  });
   const [perfInfoState, setPerfInfoState] = useState({
-    plannedContents: {}, // 기획내용
-    date: [{ start: "", end: "" }],
-    number: 0, // 공연회차
-    performPlace: {}, // 공연장소
+    planDocument: {}, // 기획내용
+    plan: [{ startDate: "", endDate: "" }],
+    round: 0, // 공연회차
+    place: {}, // 공연장소
     price: 0, // 티켓가격
-    changeScenario: "", // 각색여부,
-    rangeOfChange: [],
+    isChangedScenario: "", // 각색여부,
+    changedRange: [],
     requiredMaterials: [],
-    selectMaterials: [],
-    castMembers: { cast: {}, staff: {} }, // 공연참여인원
+    selectedMaterials: [],
+    participant: { actor: {}, staff: {} }, // 공연참여인원
   });
   const [userInfoState, setUserInfoState] = useState({
     name: "",
@@ -79,17 +82,22 @@ const Performance = () => {
       requiredMaterials,
       castMembers,
     } = perfInfoState;
-    // 유효성 추가
+    //TODO: 유효성 추가
     if (!checked) {
       // alert("개인정보 수집 및 이용에 동의해주세요.");
       openModal();
     }
 
     console.log("구매문의버튼클릭", userInputData);
-    // const url=""
-    // axios.post(url,userInputData).then(res=>console.log(res)).catch(err=>console.error(err))
-
-    // next();
+    axios
+      .post("/product/buyer", userInputData)
+      .then((res) => {
+        console.log(res, "--res?");
+        if (res.status === 201) {
+          next();
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
   return (

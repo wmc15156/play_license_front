@@ -117,7 +117,7 @@ const Text1 = styled.div`
   margin: 0 auto;
   display: inline-block;
   font-family: "NotoSansCJKkr-Regular";
-  font-size: 2.2vw;
+  font-size: 2vw;
   line-height: 2.2vw;
   margin-bottom: 26px;
 `;

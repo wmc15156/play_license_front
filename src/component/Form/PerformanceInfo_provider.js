@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import BasicInput from "../BasicInput/BasicInputColor";
 import GrayBtn from "../Button/GrayShortBtn";
 import { FaCheck } from "react-icons/fa";
@@ -24,30 +24,24 @@ const items_selectMaterial = [
 ];
 
 const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  console.log(
-    startDate.toISOString().slice(0, 10),
-    endDate.toISOString().slice(0, 10)
-  );
   const removeSelectItemHandler = useCallback(
     (itemIdx) => {
-      let array = perfInfoState.selectMaterials;
+      let array = perfInfoState.selectedMaterials;
       array.splice(itemIdx, 1);
       setPerfInfoState((prev) => {
-        return { ...prev, selectMaterials: [...array] };
+        return { ...prev, selectedMaterials: [...array] };
       });
     },
-    [perfInfoState.selectMaterials]
+    [perfInfoState.selectedMaterials]
   );
 
   const checkSelectHandler = (name) => {
-    if (perfInfoState.selectMaterials.includes(name)) {
+    if (perfInfoState.selectedMaterials.includes(name)) {
       removeSelectItemHandler();
     } else {
       setPerfInfoState({
         ...perfInfoState,
-        selectMaterials: [...perfInfoState.selectMaterials, name],
+        selectedMaterials: [...perfInfoState.selectedMaterials, name],
       });
     }
   };
@@ -76,23 +70,23 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
 
   const removeRangeItemHandler = useCallback(
     (itemIdx) => {
-      let array = perfInfoState.rangeOfChange;
+      let array = perfInfoState.changedRange;
       array.splice(itemIdx, 1);
       setPerfInfoState((prev) => {
-        return { ...prev, rangeOfChange: [...array] };
+        return { ...prev, changedRange: [...array] };
       });
     },
-    [perfInfoState.rangeOfChange]
+    [perfInfoState.changedRange]
   );
 
   const checkRangeHandler = (name) => {
-    // perfInfoState.rangeOfChange에 label있는지 체크 있으면 빼기 없으면 추가
-    if (perfInfoState.rangeOfChange.includes(name)) {
+    // perfInfoState.changedRange label있는지 체크 있으면 빼기 없으면 추가
+    if (perfInfoState.changedRange.includes(name)) {
       removeRangeItemHandler();
     } else {
       setPerfInfoState({
         ...perfInfoState,
-        rangeOfChange: [...perfInfoState.rangeOfChange, name],
+        changedRange: [...perfInfoState.changedRange, name],
       });
     }
   };
@@ -110,7 +104,7 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
             <InputArea>
               <InputArea_Row1>
                 <Selector
-                  value={perfInfoState.plannedContents[0]}
+                  value={perfInfoState.planDocument[0]}
                   options={[
                     "선택해주세요",
                     "동호회 작품 발표",
@@ -122,8 +116,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                   onChange={(e) =>
                     setPerfInfoState({
                       ...perfInfoState,
-                      plannedContents: {
-                        ...perfInfoState.plannedContents,
+                      planDocument: {
+                        ...perfInfoState.planDocument,
                         0: e.target.value,
                       },
                     })
@@ -132,21 +126,21 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
               </InputArea_Row1>
 
               <InputArea_Row1>
-                {perfInfoState.plannedContents[0] === "기타" && (
+                {perfInfoState.planDocument[0] === "기타" && (
                   <BasicInput
                     width={"100%"}
                     placeholder={"직접입력"}
-                    background={color.gray1}
+                    background={color.white}
                     onChange={(e) =>
                       setPerfInfoState({
                         ...perfInfoState,
-                        plannedContents: {
-                          ...perfInfoState.plannedContents,
+                        planDocument: {
+                          ...perfInfoState.planDocument,
                           1: e.target.value,
                         },
                       })
                     }
-                    value={perfInfoState.plannedContents[1]}
+                    value={perfInfoState.planDocument[1]}
                   />
                 )}
               </InputArea_Row1>
@@ -165,11 +159,13 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                       <Date_Name>시작</Date_Name>
                       <label>
                         <DatePicker
-                          date={perfInfoState.date[0].start}
+                          date={perfInfoState.plan[0].startDate}
                           setDate={(e) =>
                             setPerfInfoState({
                               ...perfInfoState,
-                              date: [{ ...perfInfoState.date[0], start: e }],
+                              plan: [
+                                { ...perfInfoState.plan[0], startDate: e },
+                              ],
                             })
                           }
                         />
@@ -182,11 +178,11 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                       <Date_Name>종료</Date_Name>
                       <label>
                         <DatePicker
-                          date={perfInfoState.date[0].end}
+                          date={perfInfoState.plan[0].endDate}
                           setDate={(e) =>
                             setPerfInfoState({
                               ...perfInfoState,
-                              date: [{ ...perfInfoState.date[0], end: e }],
+                              plan: [{ ...perfInfoState.plan[0], endDate: e }],
                             })
                           }
                         />
@@ -213,12 +209,12 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
 
           <Content>
             <Selector
-              value={perfInfoState.number}
+              value={perfInfoState.round}
               options={["선택해주세요", 1, 2, 3]}
               onChange={(e) =>
                 setPerfInfoState({
                   ...perfInfoState,
-                  number: e.target.value,
+                  round: e.target.value,
                 })
               }
             />
@@ -230,13 +226,13 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
             <InputArea>
               <InputArea_Row1>
                 <Selector
-                  value={perfInfoState.performPlace["place_select"]}
+                  value={perfInfoState.place["place_select"]}
                   options={["선택해주세요", 1, 2, 3]}
                   onChange={(e) =>
                     setPerfInfoState({
                       ...perfInfoState,
-                      performPlace: {
-                        ...perfInfoState.performPlace,
+                      place: {
+                        ...perfInfoState.place,
                         place_select: e.target.value,
                       },
                     })
@@ -249,13 +245,13 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                   onChange={(e) =>
                     setPerfInfoState({
                       ...perfInfoState,
-                      performPlace: {
-                        ...perfInfoState.performPlace,
+                      place: {
+                        ...perfInfoState.place,
                         place_detail: e.target.value,
                       },
                     })
                   }
-                  value={perfInfoState.performPlace["place_detail"]}
+                  value={perfInfoState.place["place_detail"]}
                 />
               </InputArea_Row1>
               <BasicInput
@@ -267,13 +263,13 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                 onChange={(e) =>
                   setPerfInfoState({
                     ...perfInfoState,
-                    performPlace: {
-                      ...perfInfoState.performPlace,
+                    place: {
+                      ...perfInfoState.place,
                       place_etc: e.target.value,
                     },
                   })
                 }
-                value={perfInfoState.performPlace["place_etc"]}
+                value={perfInfoState.place["place_etc"]}
               />
             </InputArea>
           </Content>
@@ -284,16 +280,6 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
           <Content>
             <InputArea>
               <InputArea_Row1>
-                <Selector
-                  value={perfInfoState.price}
-                  options={["선택해주세요", 1, 2, 3]}
-                  onChange={(e) =>
-                    setPerfInfoState({
-                      ...perfInfoState,
-                      price: e.target.value,
-                    })
-                  }
-                />
                 <BasicInput
                   width={"100%"}
                   placeholder={"1매당 가격을 입력해주세요."}
@@ -315,18 +301,18 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
 
           <Content>
             <Selector
-              value={perfInfoState.changeScenario}
+              value={perfInfoState.isChangedScenario}
               options={["선택해주세요", "각색있음", "각색없음"]}
               onChange={(e) =>
                 setPerfInfoState({
                   ...perfInfoState,
-                  changeScenario: e.target.value,
+                  isChangedScenario: e.target.value,
                 })
               }
             />
           </Content>
         </Input>
-        {perfInfoState.changeScenario === "각색있음" && (
+        {perfInfoState.isChangedScenario === "각색있음" && (
           <Input>
             <SubTitle>각색범위</SubTitle>
             <Content>
@@ -335,13 +321,13 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                   <li key={index}>
                     <CheckBoxWrapper
                       widthHeight={"20px"}
-                      checked={perfInfoState.rangeOfChange.includes(label)}
+                      checked={perfInfoState.changedRange.includes(label)}
                       onClick={() => checkRangeHandler(label)}
                     >
                       <FaCheck
                         size={"15px"}
                         color={
-                          perfInfoState.rangeOfChange.includes(label)
+                          perfInfoState.changedRange.includes(label)
                             ? color.white
                             : color.black5
                         }
@@ -388,13 +374,13 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                 <li key={index}>
                   <CheckBoxWrapper
                     widthHeight={"20px"}
-                    checked={perfInfoState.selectMaterials.includes(label)}
+                    checked={perfInfoState.selectedMaterials.includes(label)}
                     onClick={() => checkSelectHandler(label)}
                   >
                     <FaCheck
                       size={"15px"}
                       color={
-                        perfInfoState.selectMaterials.includes(label)
+                        perfInfoState.selectedMaterials.includes(label)
                           ? color.white
                           : color.black5
                       }
@@ -416,16 +402,16 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                   onChange={(e) =>
                     setPerfInfoState({
                       ...perfInfoState,
-                      castMembers: {
-                        ...perfInfoState.castMembers,
-                        cast: {
-                          ...perfInfoState.castMembers.cast,
+                      participant: {
+                        ...perfInfoState.participant,
+                        actor: {
+                          ...perfInfoState.participant.actor,
                           select: e.target.value,
                         },
                       },
                     })
                   }
-                  value={perfInfoState.castMembers.cast["select"]}
+                  value={perfInfoState.participant.actor["select"]}
                 />
                 <BasicInput
                   width={"100%"}
@@ -434,29 +420,29 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                   onChange={(e) =>
                     setPerfInfoState({
                       ...perfInfoState,
-                      castMembers: {
-                        ...perfInfoState.castMembers,
-                        cast: {
-                          ...perfInfoState.castMembers.cast,
+                      participant: {
+                        ...perfInfoState.participant,
+                        actor: {
+                          ...perfInfoState.participant.actor,
                           input: e.target.value,
                         },
                       },
                     })
                   }
-                  value={perfInfoState.castMembers.cast["input"]}
+                  value={perfInfoState.participant.actor["input"]}
                 />
               </InputArea_Row1>
               <InputArea_Row1>
                 <Selector
-                  value={perfInfoState.castMembers.staff["select"]}
+                  value={perfInfoState.participant.staff["select"]}
                   options={["선택해주세요", "스텝"]}
                   onChange={(e) =>
                     setPerfInfoState({
                       ...perfInfoState,
-                      castMembers: {
-                        ...perfInfoState.castMembers,
+                      participant: {
+                        ...perfInfoState.participant,
                         staff: {
-                          ...perfInfoState.castMembers.staff,
+                          ...perfInfoState.participant.staff,
                           select: e.target.value,
                         },
                       },
@@ -470,16 +456,16 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                   onChange={(e) =>
                     setPerfInfoState({
                       ...perfInfoState,
-                      castMembers: {
-                        ...perfInfoState.castMembers,
+                      participant: {
+                        ...perfInfoState.participant,
                         staff: {
-                          ...perfInfoState.castMembers.staff,
+                          ...perfInfoState.participant.staff,
                           input: e.target.value,
                         },
                       },
                     })
                   }
-                  value={perfInfoState.castMembers.staff["input"]}
+                  value={perfInfoState.participant.staff["input"]}
                 />
               </InputArea_Row1>
             </InputArea>

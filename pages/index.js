@@ -35,7 +35,7 @@ const Home = () => {
         </CarouselSection>
         <BannerSection>
           <BannerWrapper>
-            <Link href="/signup/first">
+            <Link href="/login">
               <Banner1>
                 <img src="/assets/image/Banner_Buyer.png" />
               </Banner1>

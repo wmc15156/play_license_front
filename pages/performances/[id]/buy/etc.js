@@ -23,13 +23,16 @@ const Etc = () => {
   const router = useRouter();
   const { openModal, ModalPortal, closeModal } = useModal();
   const [checked, setChecked] = useState(false);
-  const [groupState, setGroupState] = useState({ groupName: "", about: "" });
+  const [groupState, setGroupState] = useState({
+    groupName: "",
+    introduction: "",
+  });
   const [perfInfoState, setPerfInfoState] = useState({
-    purpose: {}, // 사용목적
-    period: "", // 이용기간 달력
-    startDate: {}, // 이용시작일
+    objective: {}, // 사용목적
+    startDate: [{ start: "", end: "" }], // 이용기간 달력
+    period: "", // 이용시작일
     requiredMaterials: [], // 필수자료
-    selectMaterials: [], // 선택자료(공급자가 제공선택한 자료만 표시)
+    selectedMaterials: [], // 선택자료(공급자가 제공선택한 자료만 표시)
   });
   const [userInfoState, setUserInfoState] = useState({
     name: "",
@@ -52,6 +55,7 @@ const Etc = () => {
       ...groupState,
       ...perfInfoState,
       ...userInfoState,
+      category: "기타목적용",
     });
   };
 
@@ -63,10 +67,16 @@ const Etc = () => {
     }
 
     console.log("구매문의버튼클릭", userInputData);
-    // const url=""
-    // axios.post(url,userInputData).then(res=>console.log(res)).catch(err=>console.error(err))
 
-    // next();
+    axios
+      .post("product/buyer/educational", userInputData)
+      .then((res) => {
+        console.log(res, "--res?");
+        if (res.status === 201) {
+          next();
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -87,7 +97,6 @@ const Etc = () => {
         </Wrap>
         <Wrap>
           <PerformanceInfo
-            text={"사용목적"}
             perfInfoState={perfInfoState}
             setPerfInfoState={setPerfInfoState}
           />
