@@ -102,7 +102,7 @@ const MyInfo = () => {
             <Content>
               <Data>{userData.email}</Data>
               <BtnContainer>
-                <EmailType type={dummies.email.split("@")[1]} />
+                <EmailType type={userData.provider} />
               </BtnContainer>
             </Content>
             <Content>

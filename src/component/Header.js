@@ -419,17 +419,13 @@ const Wrap = styled.div`
   justify-content: center;
   width: 65%;
   padding-right: 2%;
-
-  & > svg:hover {
-    fill: ${styles.white};
-  }
 `;
 const Text = styled.div`
   display: flex;
   align-items: center;
+  vertical-align: middle;
   font-family: "Gotham Medium";
   font-size: 14px;
-  line-height: 17px;
   ${(props) =>
     props.color &&
     css`

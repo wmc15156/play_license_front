@@ -5,21 +5,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useState } from "react";
 import Slider from "react-slick";
-import { useEffect, useContext } from "react";
-import {
-  HomeContext,
-  useGlobalDispatch,
-  useHomeState,
-} from "../../../store/homeStore";
-import image1 from "../../../public/assets/image/curation01.png";
-import image2 from "../../../public/assets/image/carousel1.png";
-import image3 from "../../../public/assets/image/carousel2.png";
+import { useEffect } from "react";
 import ShowAll from "../Button/ShowAll";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import useSWR from "swr";
 import fetcher from "../../../utils/fetcher";
-
-const images = [image1, image2, image3, image2];
 
 const defaultStyles = {
   transform: "scale(0.9)",
@@ -46,7 +36,6 @@ const Curation = () => {
   let keyArr = null;
 
   const [imageIdx, setImageIdx] = useState(0);
-  const [keyArray, setKeyArray] = useState([]);
 
   const Arrow_Next = ({ currentSlide, slideCount, ...props }) => {
     console.log(currentSlide, slideCount, props);
@@ -113,23 +102,6 @@ const Curation = () => {
               </div>
             );
           })}
-          {/*{images.map((img, idx) => (*/}
-          {/*  <div key={idx}>*/}
-          {/*    <ImageContainer>*/}
-          {/*      /!* <Overlay /> *!/*/}
-          {/*      <TextContainer>*/}
-          {/*        <Text1>[{}] 등</Text1>*/}
-          {/*        <Text2>{}에 추천해요!</Text2>*/}
-          {/*        <Text3>{}개의 작품 보기</Text3>*/}
-          {/*      </TextContainer>*/}
-          {/*      <img*/}
-          {/*        src={img}*/}
-          {/*        alt={img}*/}
-          {/*        style={idx === imageIdx ? activeStyles : defaultStyles}*/}
-          {/*      />*/}
-          {/*    </ImageContainer>*/}
-          {/*  </div>*/}
-          {/*))}*/}
         </StyledSlider>
       </SliderContainer>
     </Container>
@@ -163,8 +135,8 @@ const Overlay = styled.div`
   height: 100%;
   border-radius: 8px;
   z-index: 10;
-  /* background-color: ${color.black1}; */
-  opacity: 0.6;
+  background-color: ${color.black1};
+  opacity: 0.5;
   position: absolute;
 `;
 

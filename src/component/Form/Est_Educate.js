@@ -227,9 +227,10 @@ const Container = styled.div`
 `;
 const Title = styled.p`
   font-family: "NotoSansCJKkr-Regular";
-  opacity: 0.4;
-  margin-top: 22px;
-  margin-bottom: 70px;
+  color: ${color.black3};
+  margin: 0;
+  margin-top: 20px;
+  margin-bottom: 46px;
 `;
 
 const BodySection = styled.div``;
@@ -241,7 +242,7 @@ const List = styled.ul`
 const Item = styled.li`
   display: flex;
   width: 100%;
-  min-height: 68px;
+  min-height: 66px;
 `;
 const SubTitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
@@ -267,15 +268,15 @@ const Est = styled.div`
   display: flex;
   border-radius: 8px;
   background-color: ${color.gray1};
-  margin-bottom: 35px;
-  margin-top: 78px;
-`;
-const Text = styled.div`
+  margin-bottom: 25px;
+  margin-top: 42px;
   justify-content: center;
   align-items: center;
+`;
+const Text = styled.div`
   font-family: "NotoSansCJKkr-Medium";
   font-size: 16px;
-  margin: 39px 0;
+  padding: 22px 0;
   & > span {
     font-family: "NotoSansCJKkr-Bold";
     color: ${color.orange};
@@ -287,6 +288,7 @@ const Content_2 = styled.div`
   display: flex;
   font-family: "NotoSansCJKkr-Regular";
   font-size: 16px;
+  color: ${color.black1};
   line-height: 1;
   width: 90%;
   flex-wrap: wrap;
@@ -324,6 +326,7 @@ const BottomSection = styled.div`
 
 const Buttons = styled.div`
   display: flex;
+  height: 56px;
 `;
 const Btn1 = styled.div`
   width: 100%;
