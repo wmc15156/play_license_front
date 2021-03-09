@@ -11,6 +11,7 @@ import Notice from "../../../../src/component/GrayNotice";
 import Btn from "../../../../src/component/Button/OriginalButton";
 import useModal from "../../../../utils/useModal";
 import AlertModal from "../../../../src/component/Modal/AlertModal";
+import axios from "axios";
 
 const notice = {
   title: "안내사항",

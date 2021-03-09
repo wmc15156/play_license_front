@@ -15,14 +15,16 @@ const CircleCheckbox = ({ widthHeight, checked, onClick, children }) => {
 const Circle = styled.span`
   display: inline-flex;
   border-radius: 50%;
-  width: ${(props) => props.widthHeight};
-  height: ${(props) => props.widthHeight};
+  width: ${(props) => props.widthHeight} -3px;
+  height: ${(props) => props.widthHeight} -3px;
   border: 3px solid ${color.black5};
   ${(props) =>
     props.checked &&
     css`
       border: none;
       background-color: ${color.orange};
+      width: ${(props) => props.widthHeight};
+      height: ${(props) => props.widthHeight};
     `}
   justify-content: center;
   align-items: center;
