@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import color from "../../../styles/colors";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
@@ -11,30 +12,26 @@ import QnaDetailModify from "../Q&A/Qna_modify";
 import useSWR from "swr";
 import fetcher from "../../../utils/fetcher";
 
-const QAList = ({ onChangeId }) => {
+const QAList = () => {
   const router = useRouter();
-  const { data } = useSWR(`/question/${router.query.id}`, fetcher);
   const { openModal, closeModal, ModalPortal } = useModal();
-
   const [needLogin, setNeedLogin] = useState(false);
   const [list, setList] = useState([]);
-  const [openDetail, setOpenDetail] = useState(false);
   const GET_URL = "/question";
+
+  // 자세히보기 -페이지가 아닌 모달로 열 때 필요한거
+  // const { data } = useSWR(`/question/${router.query.id}`, fetcher);
+  // const [openDetail, setOpenDetail] = useState(false);
+  // const closeModalHandler = () => {
+  //   closeModal();
+  // };
 
   const detailClickHandler = (id) => {
     router.push(`/qna/${id}`);
   };
 
-  const closeModalHandler = () => {
-    closeModal();
-  };
-
   const redirectHandler = () => {
     router.push("/login");
-  };
-
-  const onChangeTest = (id) => () => {
-    onChangeId(id);
   };
 
   const getData = () => {
@@ -42,7 +39,7 @@ const QAList = ({ onChangeId }) => {
       .get(GET_URL)
       .then((res) => {
         if (res.status === 200) {
-          console.log(res, "문의내역 리스트get");
+          console.log(res, "????????>>>>");
           setList(res.data);
         }
       })
@@ -71,20 +68,21 @@ const QAList = ({ onChangeId }) => {
             questionId,
             title,
             adminCheck,
+            createdAt,
             email,
             comment,
             phone,
             name,
-            createdAt,
           } = q;
           return (
-            <List key={questionId} onClick={onChangeTest(questionId)}>
+            <List key={questionId}>
               <Text>{title}</Text>
-              {/* <Link href=``> */}
-              <DetailText onClick={() => detailClickHandler(questionId)}>
-                자세히보기
+              <DetailText>
+                <span onClick={() => detailClickHandler(questionId)}>
+                  자세히보기
+                </span>
               </DetailText>
-              {/* </Link> */}
+              {/* 자세히보기 -페이지가 아닌 모달로 열 때 필요한거
               {openDetail && !adminCheck && (
                 <ModalPortal>
                   <QnaDetail details={q} onClickHandler={closeModalHandler} />
@@ -97,9 +95,9 @@ const QAList = ({ onChangeId }) => {
                     onClickHandler={closeModalHandler}
                   />
                 </ModalPortal>
-              )}
+              )} */}
               <Text>
-                {<StatusBox status={adminCheck}>{adminCheck}</StatusBox>}
+                <StatusBox status={adminCheck}>{adminCheck}</StatusBox>
               </Text>
               <Text>{createdAt}</Text>
             </List>
@@ -149,7 +147,7 @@ const Table = styled.ul`
 const Title = styled.li`
   display: flex;
   width: 100%;
-  background-color: #f5f5f5;
+  background-color: ${color.gray1};
   text-align: center;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -157,7 +155,7 @@ const Title = styled.li`
 `;
 const TitleText = styled.div`
   font-family: "NotoSansCJKkr-Bold";
-  color: #333;
+  color: ${color.black1};
   display: flex;
   flex: 1;
   align-items: center;
@@ -166,7 +164,7 @@ const TitleText = styled.div`
 const List = styled.li`
   display: flex;
   width: 100%;
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 1px solid ${color.black5};
   height: 60px;
   &:last-child {
     border-bottom: none;
@@ -174,25 +172,24 @@ const List = styled.li`
     border-bottom-right-radius: 10px;
   }
 `;
+const TextStyle = css`
+  font-family: "NotoSansCJKkr-Regular";
+  color: ${color.black1};
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
 
 const DetailText = styled.div`
   text-decoration: underline;
-  cursor: pointer;
-  font-family: "NotoSansCJKkr-Regular";
-  color: #333;
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  color: #0d0d0c;
+  & > span {
+    cursor: pointer;
+  }
+  ${TextStyle}
 `;
 
 const Text = styled.div`
-  font-family: "NotoSansCJKkr-Regular";
-  color: #333;
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
+  ${TextStyle}
 `;
 export default QAList;

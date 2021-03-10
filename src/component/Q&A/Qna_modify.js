@@ -11,7 +11,7 @@ import fetcher from "../../../utils/fetcher";
 import useModal from "../../../utils/useModal";
 import AlertModal from "../Modal/AlertModal";
 
-const Qna_modify = ({ details, onClickHandler }) => {
+const Qna_modify = ({ onClickHandler }) => {
   const { openModal, closeModal, ModalPortal } = useModal();
   const router = useRouter();
   const { data } = useSWR(`/question/${router.query.id}`, fetcher);

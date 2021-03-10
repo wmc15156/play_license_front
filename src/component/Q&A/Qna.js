@@ -2,53 +2,73 @@ import styled from "styled-components";
 import color from "../../../styles/colors";
 import Btn from "../Button/SignUpButton";
 import AnswerStatus from "../Tag/AnswerStatus";
+import { useRouter } from "next/router";
+import { memo, useEffect, useState } from "react";
+import useSWR from "swr";
+import fetcher from "../../../utils/fetcher";
 
-const Qna = ({ details, onClickHandler }) => {
+const Qna = ({ onClickHandler }) => {
+  const { data } = useSWR(`/question/${router.query.id}`, fetcher);
+
+  useEffect(() => {
+    if (data) {
+      setTitle(data.title);
+      setComment(data.comment);
+    }
+  }, [(data && data.title) || (data && data.comment)]);
+
+  const [title, setTitle] = useState(data ? data.title : null);
+  const [comment, setComment] = useState(data ? data.comment : null);
+
   return (
-    <Container>
-      <HeadSection>
-        <T>
-          <span>1:1 문의</span> 자세히보기
-        </T>
-        <StatusBox>
-          <AnswerStatus status={details.adminCheck} />
-        </StatusBox>
-      </HeadSection>
-      <Divider>
-        <Div1 />
-      </Divider>
-      <Section>
-        <Box>
-          <InputSection>
-            <Input>
-              <SubTitle>이름</SubTitle>
-              <InputBox>{details.name}</InputBox>
-            </Input>
-            <Input>
-              <SubTitle>이메일</SubTitle>
-              <InputBox>{details.email}</InputBox>
-            </Input>
-            <Input>
-              <SubTitle>연락처</SubTitle>
-              <InputBox>{details.phone}</InputBox>
-            </Input>
-            <Input>
-              <SubTitle>제목</SubTitle>
-              <InputBox>{details.title}</InputBox>
-            </Input>
-            <Input>
-              <SubTitle>문의내용</SubTitle>
-              <InputBox>{details.comment}</InputBox>
-            </Input>
-            <Input>
-              <SubTitle>답변내용</SubTitle>
-              <InputBox_resp>{details.comment}</InputBox_resp>
-            </Input>
-          </InputSection>
-        </Box>
-        <Btn text={"확인"} onClickHandler={onClickHandler} />
-      </Section>
-    </Container>
+    <>
+      {data && (
+        <Container>
+          <HeadSection>
+            <T>
+              <span>1:1 문의</span> 자세히보기
+            </T>
+            <StatusBox>
+              <AnswerStatus status={data.adminCheck} />
+            </StatusBox>
+          </HeadSection>
+          <Divider>
+            <Div1 />
+          </Divider>
+          <Section>
+            <Box>
+              <InputSection>
+                <Input>
+                  <SubTitle>이름</SubTitle>
+                  <InputBox>{data.name}</InputBox>
+                </Input>
+                <Input>
+                  <SubTitle>이메일</SubTitle>
+                  <InputBox>{data.email}</InputBox>
+                </Input>
+                <Input>
+                  <SubTitle>연락처</SubTitle>
+                  <InputBox>{data.phone}</InputBox>
+                </Input>
+                <Input>
+                  <SubTitle>제목</SubTitle>
+                  <InputBox>{data.title}</InputBox>
+                </Input>
+                <Input>
+                  <SubTitle>문의내용</SubTitle>
+                  <InputBox>{data.comment}</InputBox>
+                </Input>
+                <Input>
+                  <SubTitle>답변내용</SubTitle>
+                  <InputBox_resp>{data.comment}</InputBox_resp>
+                </Input>
+              </InputSection>
+            </Box>
+            <Btn text={"확인"} onClickHandler={onClickHandler} />
+          </Section>
+        </Container>
+      )}
+    </>
   );
 };
 
@@ -172,4 +192,4 @@ const TextBox = styled.textarea`
   }
 `;
 
-export default Qna;
+export default memo(Qna);

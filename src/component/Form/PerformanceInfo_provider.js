@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import BasicInput from "../BasicInput/BasicInputColor";
 import GrayBtn from "../Button/GrayShortBtn";
 import { FaCheck } from "react-icons/fa";
@@ -24,6 +24,26 @@ const items_selectMaterial = [
 ];
 
 const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
+  const nextCalendarIdx = useRef(1);
+
+  // const onAddCalendarClick = useCallback(() => {
+  //   setPerfInfoState({
+  //     ...perfInfoState,
+  //     plan: [{ ...perfInfoState.plan[nextCalendarIdx], startDate: "" }],
+  //   });
+  //   setPerfInfoState({
+  //     ...perfInfoState,
+  //     plan: [{ ...perfInfoState.plan[nextCalendarIdx], endDate: "" }],
+  //   });
+
+  //   nextCalendarIdx.current += 1;
+  // }, [perfInfoState.plan]);
+
+  const onAddCalendarClick = () => {
+    console.log("ref", nextCalendarIdx);
+    // nextCalendarId.current.focus();
+  };
+
   const removeSelectItemHandler = useCallback(
     (itemIdx) => {
       let array = perfInfoState.selectedMaterials;
@@ -153,7 +173,7 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
           <Content>
             <InputArea>
               <InputArea_Row1>
-                <DateArea>
+                <DateArea ref={nextCalendarIdx}>
                   <Date_>
                     <Date_Start>
                       <Date_Name>시작</Date_Name>
@@ -196,7 +216,7 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                     size={"14px"}
                     height={"40px"}
                     fontColor={color.black2}
-                    // onClickHandler={addScheduleHandler}
+                    onClickHandler={onAddCalendarClick}
                     text={"일정추가"}
                   />
                 </AddBtnContainer>
