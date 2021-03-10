@@ -68,6 +68,7 @@ const Performance = () => {
       ...groupState,
       ...perfInfoState,
       ...userInfoState,
+      category: "공연목적",
     });
   };
 

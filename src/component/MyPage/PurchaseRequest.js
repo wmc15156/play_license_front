@@ -3,8 +3,10 @@ import color from "../../../styles/colors";
 import StatusBox from "../Tag/Purchase_AnswerStatus";
 import useModal from "../../../utils/useModal";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { useRouter } from "next/router";
+import EstImgDownloadModal from "../Modal/ImgDownLoadModal";
+import ContractModal from "../Modal/ContractModal";
 import useSWR from "swr";
 import fetcher from "../../../utils/fetcher";
 
@@ -14,31 +16,72 @@ const dummies = [
     contractId: "1",
     estimateId: "1",
     title: "네네네",
-    check: "보완요청",
+    check: "승인완료",
     createdAt: "2020.12.11",
   },
   {
     questionId: "2",
-    contractId: "2",
     estimateId: "2",
     title: "김종욱 찾기",
-    check: "승인완료",
+    check: "관리자검토중",
     createdAt: "2021.01.11",
+  },
+  {
+    questionId: "3",
+    title: "버드나무",
+    check: "보완요청",
+    createdAt: "2021.02.22",
   },
 ];
 
 const PurchaseRequest = () => {
   const router = useRouter();
   const { openModal, closeModal, ModalPortal } = useModal();
-  const { data } = useSWR(`/question/${router.query.id}`, fetcher);
-  const [openDetail, setOpenDetail] = useState(false);
+  // const [list, setList] = useState([]);
+  const [openDetail_Est, setOpenDetail_Est] = useState(false);
+  const [openDetail_Cont, setOpenDetail_Cont] = useState(false);
+
   const closeModalHandler = () => {
     closeModal();
+    setOpenDetail_Est(false);
+    setOpenDetail_Cont(false);
   };
 
-  const detailClickHandler = (id) => {
-    console.log(`/구매문의내용/${id}로 이동`);
-    // router.push(`//${id}`);
+  const detailHandler = (id) => {
+    router.push(`/qna/buy/${id}`);
+  };
+
+  // GET -작품구매문의
+  const getData = () => {
+    // axios
+    //   .get(GET_URL)
+    //   .then((res) => {
+    //     if (res.status === 200) {
+    //       console.log(res, "????????>>>>");
+    //       setList(res.data);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     if (err.response.status === 401) {
+    //       // 모달 로그인하고오기 창
+    //       setNeedLogin(true);
+    //     }
+    //   });
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getDetails_Estimate = (id) => {
+    console.log("작품견적문의 ", id);
+    setOpenDetail_Est(true);
+    openModal();
+  };
+
+  const getDetails_Contract = (id) => {
+    console.log("작품계약서", id);
+    setOpenDetail_Cont(true);
+    openModal();
   };
 
   return (
@@ -52,8 +95,7 @@ const PurchaseRequest = () => {
           <TitleText>견적서</TitleText>
           <TitleText>계약서</TitleText>
         </Title>
-        {dummies.map((ele, i) => {
-          console.log(ele);
+        {dummies.map((ele) => {
           const {
             questionId,
             contractId,
@@ -63,23 +105,66 @@ const PurchaseRequest = () => {
             createdAt,
           } = ele;
           return (
-            <List>
+            <List key={questionId}>
               <Text>{title}</Text>
               <Text>{createdAt}</Text>
               <Box_Status>
                 <StatusBox status={check} />
               </Box_Status>
-              <DetailText>
-                <span onClick={() => detailClickHandler(questionId)}>
-                  자세히보기
-                </span>
-              </DetailText>
-              <Text>자세히보기</Text>
-              <Text>자세히보기</Text>
+
+              {/* 문의내용 자세히 */}
+              {check === "보완요청" ? (
+                <DetailText color={color.orange}>
+                  <span onClick={() => detailHandler(questionId)}>
+                    보완하기
+                  </span>
+                </DetailText>
+              ) : (
+                <DetailText>
+                  <span onClick={() => detailHandler(questionId)}>
+                    자세히보기
+                  </span>
+                </DetailText>
+              )}
+
+              {/* 견적서 */}
+              {estimateId ? (
+                <DetailText>
+                  <span onClick={() => getDetails_Estimate(estimateId)}>
+                    자세히보기
+                  </span>
+                </DetailText>
+              ) : (
+                <DetailText></DetailText>
+              )}
+
+              {/* 계약서 */}
+              {contractId ? (
+                <DetailText>
+                  <span onClick={() => getDetails_Contract(contractId)}>
+                    자세히보기
+                  </span>
+                </DetailText>
+              ) : (
+                <DetailText></DetailText>
+              )}
             </List>
           );
         })}
       </Table>
+      {openDetail_Est && (
+        <ModalPortal>
+          <EstImgDownloadModal
+            closeBtnHandler={closeModalHandler}
+            imgSrcUrl={"/assets/image/estimateImg.png"}
+          />
+        </ModalPortal>
+      )}
+      {openDetail_Cont && (
+        <ModalPortal>
+          <ContractModal closeBtnHandler={closeModalHandler} />
+        </ModalPortal>
+      )}
     </Container>
   );
 };
@@ -124,8 +209,9 @@ const List = styled.li`
   }
 `;
 const TextStyle = css`
-  font-family: "NotoSansCJKkr-Regular";
-  color: ${color.black1};
+  font-family: ${(props) =>
+    props.color ? "NotoSansCJKkr-Bold" : "NotoSansCJKkr-Regular"};
+  color: ${(props) => (props.color ? props.color : color.black1)};
   display: flex;
   flex: 1;
   align-items: center;
@@ -156,4 +242,4 @@ const Text_Status = styled.span`
   color: ${color.black3};
 `;
 
-export default PurchaseRequest;
+export default memo(PurchaseRequest);
