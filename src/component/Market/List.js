@@ -3,20 +3,30 @@ import Link from "next/link";
 import Tag from "../Tag/Tag.";
 import Filter from "./Filter";
 
-const List = ({ list, count }) => {
+const List = ({
+  list,
+  count,
+  sortListHandler,
+  filterListHandler,
+  selectedOption,
+  setOption,
+}) => {
   console.log(list, "list");
   return (
     <Container>
       <HeadSection>
-        <Title>
-          새로 등록된 작품<span>{count}개</span>
-        </Title>
-        <Filter />
+        <Filter
+          count={count}
+          selectedOption={selectedOption}
+          setOption={setOption}
+          sortListHandler={sortListHandler}
+          filterListHandler={filterListHandler}
+        />
       </HeadSection>
       <ListSt>
         {list.map((item) => (
-          <Link href={`/performances/${item.productId}`}>
-            <Item key={item.productId}>
+          <Link href={`/performances/${item.productId}`} key={item.productId}>
+            <Item>
               <a>
                 <ItemImg>
                   <img src={item.poster} alt={item.name} />
@@ -27,7 +37,7 @@ const List = ({ list, count }) => {
                   <div>
                     {item.brokerageConsignments.map((cate, i) => {
                       return (
-                        <Tag title={cate} id={item.productId}>
+                        <Tag title={cate} id={item.productId} key={i}>
                           {cate}
                         </Tag>
                       );
@@ -52,12 +62,6 @@ const List = ({ list, count }) => {
 };
 
 export default List;
-
-const Category = styled.div`
-  width: 100%;
-  height: 28px;
-  display: flex;
-`;
 
 const Divider = styled.div`
   margin: 0 6px;
@@ -112,21 +116,9 @@ const ListSt = styled.ul`
   flex-wrap: wrap;
 `;
 
-const Title = styled.div`
-  font-family: "NotoSansCJKkr-Bold";
-  font-size: 24px;
-  line-height: 48px;
-  text-transform: uppercase;
-
-  & > span {
-    opacity: 0.3;
-    margin-left: 30px;
-  }
-`;
-
 const HeadSection = styled.div`
   display: flex;
-  margin-bottom: 40px;
+  margin-bottom: 34px;
 `;
 
 const Container = styled.div`

@@ -1,7 +1,46 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
+import StatusBox from "../Tag/Purchase_AnswerStatus";
+import useModal from "../../../utils/useModal";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import useSWR from "swr";
+import fetcher from "../../../utils/fetcher";
+
+const dummies = [
+  {
+    questionId: "1",
+    contractId: "1",
+    estimateId: "1",
+    title: "네네네",
+    check: "보완요청",
+    createdAt: "2020.12.11",
+  },
+  {
+    questionId: "2",
+    contractId: "2",
+    estimateId: "2",
+    title: "김종욱 찾기",
+    check: "승인완료",
+    createdAt: "2021.01.11",
+  },
+];
 
 const PurchaseRequest = () => {
+  const router = useRouter();
+  const { openModal, closeModal, ModalPortal } = useModal();
+  const { data } = useSWR(`/question/${router.query.id}`, fetcher);
+  const [openDetail, setOpenDetail] = useState(false);
+  const closeModalHandler = () => {
+    closeModal();
+  };
+
+  const detailClickHandler = (id) => {
+    console.log(`/구매문의내용/${id}로 이동`);
+    // router.push(`//${id}`);
+  };
+
   return (
     <Container>
       <Table>
@@ -13,22 +52,33 @@ const PurchaseRequest = () => {
           <TitleText>견적서</TitleText>
           <TitleText>계약서</TitleText>
         </Title>
-        <List>
-          {/* 작품명 */}
-          <Text>네네네</Text>
-          {/* 문의일자 */}
-          <Text>2020.12.11</Text>
-          {/* 진행상태 */}
-          <Box_Status>
-            <Text_Status>관리자검토중</Text_Status>
-          </Box_Status>
-          {/* 문의내용 */}
-          <Text>자세히보기</Text>
-          {/* 견적서 */}
-          <Text>자세히보기</Text>
-          {/* 계약서 */}
-          <Text>자세히보기</Text>
-        </List>
+        {dummies.map((ele, i) => {
+          console.log(ele);
+          const {
+            questionId,
+            contractId,
+            estimateId,
+            title,
+            check,
+            createdAt,
+          } = ele;
+          return (
+            <List>
+              <Text>{title}</Text>
+              <Text>{createdAt}</Text>
+              <Box_Status>
+                <StatusBox status={check} />
+              </Box_Status>
+              <DetailText>
+                <span onClick={() => detailClickHandler(questionId)}>
+                  자세히보기
+                </span>
+              </DetailText>
+              <Text>자세히보기</Text>
+              <Text>자세히보기</Text>
+            </List>
+          );
+        })}
       </Table>
     </Container>
   );
@@ -73,7 +123,7 @@ const List = styled.li`
     border-bottom-right-radius: 10px;
   }
 `;
-const Text = styled.div`
+const TextStyle = css`
   font-family: "NotoSansCJKkr-Regular";
   color: ${color.black1};
   display: flex;
@@ -82,11 +132,23 @@ const Text = styled.div`
   justify-content: center;
 `;
 
+const DetailText = styled.div`
+  text-decoration: underline;
+  & > span {
+    cursor: pointer;
+  }
+  ${TextStyle}
+`;
+
+const Text = styled.div`
+  ${TextStyle}
+`;
+
 const Box_Status = styled.div`
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
-  flex: 1;
 `;
 
 const Text_Status = styled.span`

@@ -75,9 +75,9 @@ const Edu = () => {
       .post("/product/buyer/educational", userInputData)
       .then((res) => {
         console.log(res, "--res?");
-        if (res.status === 201) {
-          next();
-        }
+        // if (res.data.status === 201) {
+        next();
+        // }
       })
       .catch((err) => console.error(err));
   };

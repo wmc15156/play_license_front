@@ -7,12 +7,20 @@ import Loader from "../../src/component/Loader";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 
-const Market = (props) => {
+const Market = () => {
   const { data, error, mutate } = useSWR("/curation/product", fetcher);
   const [isLoading, setIsLoading] = useState(false);
   const [list, setList] = useState([]);
-  const [curation, setCuration] = useState([]);
+  const [curation, setCuration] = useState([]); // curation blocks
   const [count, setCount] = useState(0);
+  const [selectedOption, setOption] = useState({
+    numberOfMembers: "", // 출연인원
+    category: "",
+    genre: "",
+    sizeOfPerformance: "",
+    mainAudience: "",
+  });
+  // console.log("선택된 필터옵션s>>", selectedOption);
 
   useEffect(() => {
     if (data) {
@@ -35,6 +43,27 @@ const Market = (props) => {
       });
   }, []);
 
+  const getFilteredList = () => {
+    console.log("필터된 리스트 가져오기 클릭", selectedOption);
+  };
+
+  const getSortList = (sortName) => {
+    if (!(sortName === "선택해주세요")) {
+      console.log("sort 선택된 항목이름", sortName);
+      // axios
+      //   .get("", {
+      //     params: {
+      //       page: 1,
+      //       q: sortName,
+      //     },
+      //   })
+      //   .then((res) => {
+      //     setCount(res.data.count);
+      //     setList(res.data.result);
+      //   });
+    }
+  };
+
   const getCurationInfo = (curation) => {
     axios
       .get("/curation/filter", {
@@ -50,7 +79,11 @@ const Market = (props) => {
   };
 
   if (!data) {
-    return <div>Loading</div>;
+    return (
+      <LoaderContainer>
+        <Loader />
+      </LoaderContainer>
+    );
   }
 
   return (
@@ -62,7 +95,16 @@ const Market = (props) => {
           <Loader />
         </LoaderContainer>
       )}
-      {!isLoading && <List list={list} count={count} />}
+      {!isLoading && (
+        <List
+          list={list}
+          count={count}
+          sortListHandler={getSortList}
+          filterListHandler={getFilteredList}
+          selectedOption={selectedOption}
+          setOption={setOption}
+        />
+      )}
     </Container>
   );
 };

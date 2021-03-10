@@ -28,9 +28,9 @@ const Performance = () => {
   const [perfInfoState, setPerfInfoState] = useState({
     planDocument: {}, // 기획내용
     plan: [{ startDate: "", endDate: "" }],
-    round: 0, // 공연회차
+    round: "", // 공연회차
     place: {}, // 공연장소
-    price: 0, // 티켓가격
+    price: "", // 티켓가격
     isChangedScenario: "", // 각색여부,
     changedRange: [],
     requiredMaterials: [],
