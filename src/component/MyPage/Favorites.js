@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import useModal from "../../../utils/useModal";
 import AlertModal from "../Modal/AlertModal";
-
 import axios from "axios";
 
 const Favorites = () => {
@@ -15,15 +14,18 @@ const Favorites = () => {
   const GET_URL = "/product/cart";
   const { openModal, closeModal, ModalPortal } = useModal();
   const [isFav, setIsFav] = useState(true);
+  // TODO: HEART 각자 상태를 갖도록 변경
   const [list, setList] = useState([]);
 
   const getData = () => {
     axios.get(GET_URL).then((res) => {
-      console.log("res?", res);
-
       setList(res.data);
     });
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const heartBtnHandler = (id) => {
     const param = id;
@@ -60,10 +62,6 @@ const Favorites = () => {
     // setIsFav(!isFav); //바꾸고 서버로
     // console.log(isFav, "isFav????");
   };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <Container>

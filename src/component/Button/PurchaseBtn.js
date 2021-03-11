@@ -26,6 +26,7 @@ const Container = styled.div`
   line-height: 18px;
   font-size: 21px;
   color: ${color.white};
+  cursor: pointer;
 `;
 
 export default PurchaseBtn;

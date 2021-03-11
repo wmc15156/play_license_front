@@ -12,18 +12,39 @@ import useModal from "../../../utils/useModal";
 import AlertModal from "../Modal/AlertModal";
 import CalcModal from "../Modal/CalcModal";
 import { HiHome } from "react-icons/hi";
+import useSWR from "swr";
+import fetcher from "../../../utils/fetcher";
 
-const Section1 = ({ item, savedStatus }) => {
+const Section1 = ({ item }) => {
   const router = useRouter();
+  const { data: userData, error: err } = useSWR("/product/cart", fetcher);
   const { openModal, closeModal, ModalPortal } = useModal();
   const param = router.query.id;
   const POST_URL = `/product/${router.query.id}/add-item`;
   const DELETE_URL = `/product/${router.query.id}/cart`;
-  // console.log("넘어온savedStatus", savedStatus, typeof savedStatus);
-  const [isSaved, setIsSaved] = useState(savedStatus);
+
+  const [heartClickModalOpen, setHeartClickModalOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [calcModalOpen, setCalcModalOpen] = useState(false);
+  const [savedStatus, setSavedStatus] = useState(false);
 
+  console.log(userData);
+  useEffect(() => {
+    if (userData) {
+      const data = userData.filter(
+        (item) => item.productId === Number(router.query.id)
+      );
+      if (data.length > 0) {
+        setSavedStatus(true);
+        console.log(savedStatus);
+      } else {
+        setSavedStatus(false);
+        console.log(savedStatus);
+      }
+    }
+  }, [savedStatus]);
+
+  const [isSaved, setIsSaved] = useState(savedStatus);
   const onClickHomeBtn = () => {
     router.push("/");
   };
@@ -35,17 +56,18 @@ const Section1 = ({ item, savedStatus }) => {
     router.push("/login");
   };
 
+  const heartModalHandler = () => {
+    setHeartClickModalOpen(true);
+    if (heartClickModalOpen) {
+      openModal();
+    }
+  };
   const loginModalHandler = () => {
+    setLoginModalOpen(true);
     if (loginModalOpen) {
       openModal();
     }
   };
-
-  const addToHeart = (e) => {
-    e.preventDefault();
-    postHandler();
-  };
-
   const openCalcModal = () => {
     setCalcModalOpen(true);
     if (calcModalOpen) {
@@ -53,12 +75,18 @@ const Section1 = ({ item, savedStatus }) => {
     }
   };
 
+  // const addToHeart = (e) => {
+  //   e.preventDefault();
+  //   postHandler();
+  // };
+
   const postHandler = () => {
     if (!isSaved) {
       axios
         .post(POST_URL, param)
         .then((res) => {
           if (res.status === 200) {
+            heartModalHandler();
             console.log(res, "찜하기 추가성공????");
             setIsSaved(true);
             return;
@@ -66,8 +94,6 @@ const Section1 = ({ item, savedStatus }) => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            console.log("로그인하고p오기");
-            setLoginModalOpen(true);
             loginModalHandler();
             return;
           }
@@ -126,7 +152,7 @@ const Section1 = ({ item, savedStatus }) => {
           <HeartContainer>
             <HeartBtn
               state={isSaved}
-              onClickHandler={addToHeart}
+              onClickHandler={postHandler}
               boxWidth={"62px"}
               heartWidth={"24px"}
               radius={"8px"}
@@ -135,15 +161,29 @@ const Section1 = ({ item, savedStatus }) => {
             />
           </HeartContainer>
           <CalcContainer>
-            <CalcBtn onClickHandler={openCalcModal} />
+            <CalcBtn onClickHandler={() => openCalcModal()} />
           </CalcContainer>
         </Btns>
       </BtnContainer>
       <ModalPortal>
         {loginModalOpen && (
-          <AlertModal text={"로그인해주세요"} onClickBtn={redirectHandler} />
+          <AlertModal
+            text={"로그인해주세요"}
+            onClickBtn={() => redirectHandler()}
+          />
         )}
-        {calcModalOpen && <CalcModal text={"가견적 계산하기"} />}
+        {!heartClickModalOpen && calcModalOpen && (
+          <CalcModal text={"가견적 계산하기"} />
+        )}
+        {heartClickModalOpen && (
+          <AlertModal
+            text={"찜한 공연은 마이페이지에서 확인할 수 있어요!"}
+            onClickBtn={() => {
+              closeModal();
+              setHeartClickModalOpen(false);
+            }}
+          />
+        )}
       </ModalPortal>
     </Item>
   );

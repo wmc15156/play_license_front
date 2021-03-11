@@ -2,13 +2,22 @@ import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
 import { memo } from "react";
 
-const CircleCheckbox = ({ widthHeight, checked, onClick, children }) => {
+const CircleCheckbox = ({
+  widthHeight,
+  checked,
+  onClick,
+  children,
+  cursor,
+}) => {
   return (
-    // <Container>
-    <Circle widthHeight={widthHeight} onClick={onClick} checked={checked}>
+    <Circle
+      widthHeight={widthHeight}
+      onClick={onClick}
+      checked={checked}
+      cursor={cursor}
+    >
       {children}
     </Circle>
-    // </Container>
   );
 };
 
@@ -28,6 +37,6 @@ const Circle = styled.span`
     `}
   justify-content: center;
   align-items: center;
+  cursor: ${(props) => (props.cursor ? "pointer" : "default")};
 `;
-
 export default memo(CircleCheckbox);

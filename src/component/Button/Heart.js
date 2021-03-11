@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { memo } from "react";
 import heartImg from "../../../public/assets/image/heart.png";
 
 const Heart = ({
@@ -11,19 +12,17 @@ const Heart = ({
   shadow,
 }) => {
   return (
-    <>
-      {/* shadow는 boolean */}
-      <HeartBtnBox
-        onClick={onClickHandler}
-        boxWidth={boxWidth}
-        radius={radius}
-        bgcolor={bgcolor}
-        shadow={shadow}
-      >
-        {state && <HeartBtn heartWidth={heartWidth} />}
-        {!state && <GrayHeartBtn heartWidth={heartWidth} />}
-      </HeartBtnBox>
-    </>
+    <HeartBtnBox
+      onClick={onClickHandler}
+      boxWidth={boxWidth}
+      radius={radius}
+      bgcolor={bgcolor}
+      shadow={shadow}
+    >
+      <HeartBtn state={state} heartWidth={heartWidth} />
+      {/* {state && <HeartBtn heartWidth={heartWidth} />} */}
+      {/* {!state && <GrayHeartBtn heartWidth={heartWidth} />} */}
+    </HeartBtnBox>
   );
 };
 
@@ -40,17 +39,19 @@ const HeartBtnBox = styled.div`
     props.shadow ? "4px 4px 10px rgba(0, 0, 0, 0.1)" : "none"};
 `;
 
-const StyleHeartImage = css`
-  width: ${(props) => props.heartWidth};
-  height: auto;
-`;
+const StyleHeartImage = css``;
 
 const HeartBtn = styled.img.attrs({ src: heartImg })`
-  ${StyleHeartImage};
+  width: ${(props) => props.heartWidth};
+  height: auto;
+  ${(props) =>
+    !props.state &&
+    css`
+      filter: grayscale(100%);
+    `}
 `;
 
 const GrayHeartBtn = styled.img.attrs({ src: heartImg })`
   ${StyleHeartImage};
-  filter: grayscale(100%);
 `;
-export default Heart;
+export default memo(Heart);

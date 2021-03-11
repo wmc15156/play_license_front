@@ -22,6 +22,7 @@ const Container = styled.div`
   line-height: 21px;
   font-size: 21px;
   color: ${color.black3};
+  cursor: pointer;
   & > span {
     padding: 0 0.5rem;
   }

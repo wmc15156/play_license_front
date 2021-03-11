@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import color from "../../styles/colors";
 import axios from "axios";
 import List from "../../src/component/Market/List";
 import Curation from "../../src/component/Curation/CurationBlocks";
@@ -88,22 +89,18 @@ const Market = () => {
 
   return (
     <Container>
-      {/* category */}
-      <Curation curation={curation} getCurationInfo={getCurationInfo} />
-      {isLoading && (
-        <LoaderContainer>
-          <Loader />
-        </LoaderContainer>
-      )}
-      {!isLoading && (
-        <List
-          list={list}
-          count={count}
-          sortListHandler={getSortList}
-          filterListHandler={getFilteredList}
-          selectedOption={selectedOption}
-          setOption={setOption}
-        />
+      {data && (
+        <>
+          <Curation curation={curation} getCurationInfo={getCurationInfo} />
+          <List
+            list={list}
+            count={count}
+            sortListHandler={getSortList}
+            filterListHandler={getFilteredList}
+            selectedOption={selectedOption}
+            setOption={setOption}
+          />
+        </>
       )}
     </Container>
   );
@@ -112,10 +109,9 @@ const Market = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding: 0 1rem;
   max-width: 924px;
   margin: 0 auto;
+  padding: 0 1rem;
 `;
 
 const LoaderContainer = styled.div`

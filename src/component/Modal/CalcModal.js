@@ -1,12 +1,10 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
-import { useRouter } from "next/router";
-import { useState } from "react";
 import Performance from "../Form/Est_Performance";
 import Educate from "../Form/Est_Educate";
+import { useState } from "react";
 
 const CalcModal = ({ text }) => {
-  const router = useRouter();
   const [purpose, setPurpose] = useState(0);
   const purposeObj = {
     0: <Performance />,
@@ -15,6 +13,7 @@ const CalcModal = ({ text }) => {
   const switchPurpose = (e) => {
     setPurpose(e.target.attributes[0].value);
   };
+
   return (
     <Container>
       <HeadSection>

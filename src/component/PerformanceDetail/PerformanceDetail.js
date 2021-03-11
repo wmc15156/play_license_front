@@ -12,33 +12,12 @@ const PerformanceDetail = ({ item }) => {
   const router = useRouter();
 
   const url = "/product/cart";
-  const [savedStatus, setSavedStatus] = useState(false);
-
-  useEffect(() => {
-    // 찜여부 get
-    axios
-      .get(url)
-      .then((res) => {
-        // console.log(res, "res??");
-        const data = res.data.filter(
-          (item) => item.productId === Number(router.query.id)
-        );
-        if (data.length > 0) {
-          setSavedStatus(true);
-          console.log(savedStatus);
-        } else {
-          setSavedStatus(false);
-          console.log(savedStatus);
-        }
-      })
-      .catch((error) => console.error("로그인하지 않은 사용자", error));
-  }, [savedStatus]);
   return (
     <Container>
       <Section1Container>
         <Background></Background>
         <Wrapper>
-          <Section1 item={item} savedStatus={savedStatus} />
+          <Section1 item={item} />
         </Wrapper>
       </Section1Container>
       {/* 비디오 */}

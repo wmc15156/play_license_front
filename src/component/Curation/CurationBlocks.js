@@ -17,7 +17,7 @@ const Category = ({ curation, getCurationInfo }) => {
         <Box
           key={idx}
           onClick={buttonBackgroundColor(cur)}
-          color={current === cur ? true : false}
+          styles={current === cur}
         >
           {cur}
         </Box>
@@ -29,6 +29,7 @@ const Category = ({ curation, getCurationInfo }) => {
 const Container = styled.div`
   display: flex;
   margin-bottom: 51px;
+  width: 100%;
 `;
 
 const Box = styled.div`
@@ -38,8 +39,8 @@ const Box = styled.div`
   margin-right: 12px;
   margin-bottom: 12px;
   max-width: 300px;
-  background-color: ${(p) => (p.color ? `${color.orange}` : `${color.gray1}`)};
-  color: ${(p) => (p.color ? color.white : color.black1)};
+  background-color: ${(p) => (p.styles ? `${color.orange}` : `${color.gray1}`)};
+  color: ${(p) => (p.styles ? color.white : color.black1)};
   border-radius: 6px;
   letter-spacing: -0.5px;
   font-size: 16px;
