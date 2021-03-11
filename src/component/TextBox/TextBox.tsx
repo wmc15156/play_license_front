@@ -8,10 +8,13 @@ const Wrapper = styled.div<{ margin: string }>`
   overflow-y: auto;
   background-color: ${styles.gray1};
   color: ${styles.black3};
-  padding: 21px 0 0 22px;
+  padding: 21px 22px 0 22px;
   margin-top: ${(p) => p.margin};
   font-family: "NotoSansCJKkr-Regular";
   border-radius: 8px;
+  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 `;
 
 type Props = {
