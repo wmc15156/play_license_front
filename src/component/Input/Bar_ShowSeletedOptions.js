@@ -13,7 +13,6 @@ const Bar_ShowSeletedOptions = ({ selectedOption, setOption }) => {
       return el !== "";
     };
     const values = Object.values(selectedOption);
-    // console.log(values.some(isEven));
     setIsExist(values.some(isEven));
   }, [isExist, selectedOption]);
 
@@ -23,24 +22,24 @@ const Bar_ShowSeletedOptions = ({ selectedOption, setOption }) => {
         <Bar>
           <List>
             {stateNames.map((item, i) => {
-              let itemName;
-              if (selectedOption[item] !== "") {
-                itemName = selectedOption[item];
+              let itemValue = selectedOption[item];
+              if (itemValue !== "") {
                 return (
                   <ListItem key={i}>
                     <Item>
                       <CheckBoxWrapper
                         widthHeight={"20px"}
                         checked={true}
-                        onClick={
-                          (e) => console.log("삭제", e)
-                          // 삭제
-                          //   radioButtonHandler("sizeOfPerformance", label)
-                        }
+                        cursor={true}
+                        onClick={(e) => {
+                          setOption((prev) => {
+                            return { ...prev, [item]: "" };
+                          });
+                        }}
                       >
                         <IoMdClose size={"15px"} color={color.white} />
                       </CheckBoxWrapper>
-                      <Item_Text>{itemName}</Item_Text>
+                      <Item_Text>{itemValue}</Item_Text>
                     </Item>
                   </ListItem>
                 );
@@ -77,14 +76,20 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   margin-right: 40px;
+  border-right: 1px solid ${color.black4};
+  &:last-child {
+    border: none;
+  }
 `;
 
 const Item = styled.div`
   display: flex;
+  width: 100%;
 `;
 const Item_Text = styled.span`
   display: inline-block;
   margin-left: 10px;
+  margin-right: 40px;
 `;
 
 export default Bar_ShowSeletedOptions;

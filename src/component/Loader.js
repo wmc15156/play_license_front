@@ -1,15 +1,21 @@
 import styled from "styled-components";
+import color from "../../styles/colors";
 
 const Container = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 `;
 const LoaderSt = styled.div`
-  border: 10px solid #f3f3f3;
+  position: absolute;
+  top: 30%;
+  border: 10px solid ${color.gray1};
   border-radius: 50%;
-  border-top: 10px solid #ff6f69;
+  border-top: 10px solid ${color.orange};
   width: 100px;
   height: 100px;
   -webkit-animation: spin 1s linear infinite; /* Safari */

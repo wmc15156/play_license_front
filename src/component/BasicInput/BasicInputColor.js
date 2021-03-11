@@ -3,6 +3,7 @@ import color from "../../../styles/colors";
 import { memo } from "react";
 
 const InputBox = ({
+  children,
   height,
   background,
   placeholder,
@@ -18,8 +19,10 @@ const InputBox = ({
         placeholder={placeholder}
         fontSize={fontSize}
         onChange={onChange}
-        defaultValue={value}
-      ></Input>
+        value={value}
+      >
+        {children}
+      </Input>
     </Container>
   );
 };

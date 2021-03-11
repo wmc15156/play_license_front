@@ -50,33 +50,28 @@ const FilterModal = ({
       <BodySection>
         <Section>
           <Subtitle>출연인원</Subtitle>
-          <SelectList>
-            <Item>
-              <CheckSection>
-                {items.numberOfMembers.map((label, index) => (
-                  <li key={index}>
-                    <CheckBoxWrapper
-                      widthHeight={"20px"}
-                      checked={selectedOption.numberOfMembers.includes(label)}
-                      onClick={() =>
-                        radioButtonHandler("numberOfMembers", label)
-                      }
-                    >
-                      <FaCheck
-                        size={"15px"}
-                        color={
-                          selectedOption.numberOfMembers.includes(label)
-                            ? color.white
-                            : color.black5
-                        }
-                      />
-                    </CheckBoxWrapper>
-                    <div>{label}</div>
-                  </li>
-                ))}
-              </CheckSection>
-            </Item>
-          </SelectList>
+
+          <CheckSection>
+            {items.numberOfMembers.map((label, index) => (
+              <li key={index}>
+                <CheckBoxWrapper
+                  widthHeight={"20px"}
+                  checked={selectedOption.numberOfMembers.includes(label)}
+                  onClick={() => radioButtonHandler("numberOfMembers", label)}
+                >
+                  <FaCheck
+                    size={"15px"}
+                    color={
+                      selectedOption.numberOfMembers.includes(label)
+                        ? color.white
+                        : color.black5
+                    }
+                  />
+                </CheckBoxWrapper>
+                <div>{label}</div>
+              </li>
+            ))}
+          </CheckSection>
         </Section>
 
         <Divider>
@@ -85,126 +80,112 @@ const FilterModal = ({
 
         <Section>
           <Subtitle>공연분야</Subtitle>
-          <SelectList>
-            <Item>
-              <CheckSection>
-                {items.category.map((label, index) => (
-                  <li key={index}>
-                    <CheckBoxWrapper
-                      widthHeight={"20px"}
-                      checked={selectedOption.category.includes(label)}
-                      onClick={() => radioButtonHandler("category", label)}
-                    >
-                      <FaCheck
-                        size={"15px"}
-                        color={
-                          selectedOption.category.includes(label)
-                            ? color.white
-                            : color.black5
-                        }
-                      />
-                    </CheckBoxWrapper>
-                    <div>{label}</div>
-                  </li>
-                ))}
-              </CheckSection>
-            </Item>
-          </SelectList>
+
+          <CheckSection>
+            {items.category.map((label, index) => (
+              <li key={index}>
+                <CheckBoxWrapper
+                  widthHeight={"20px"}
+                  checked={selectedOption.category.includes(label)}
+                  onClick={() => radioButtonHandler("category", label)}
+                >
+                  <FaCheck
+                    size={"15px"}
+                    color={
+                      selectedOption.category.includes(label)
+                        ? color.white
+                        : color.black5
+                    }
+                  />
+                </CheckBoxWrapper>
+                <div>{label}</div>
+              </li>
+            ))}
+          </CheckSection>
         </Section>
         <Divider>
           <Div_Gray />
         </Divider>
         <Section>
           <Subtitle>공연장르</Subtitle>
-          <SelectList>
-            <Item>
-              <CheckSection>
-                {items.genre.map((label, index) => (
-                  <li key={index}>
-                    <CheckBoxWrapper
-                      widthHeight={"20px"}
-                      checked={selectedOption.genre.includes(label)}
-                      onClick={() => radioButtonHandler("genre", label)}
-                    >
-                      <FaCheck
-                        size={"15px"}
-                        color={
-                          selectedOption.genre.includes(label)
-                            ? color.white
-                            : color.black5
-                        }
-                      />
-                    </CheckBoxWrapper>
-                    <div>{label}</div>
-                  </li>
-                ))}
-              </CheckSection>
-            </Item>
-          </SelectList>
+
+          <CheckSection>
+            {items.genre.map((label, index) => (
+              <li key={index}>
+                <CheckBoxWrapper
+                  widthHeight={"20px"}
+                  checked={selectedOption.genre.includes(label)}
+                  onClick={() => radioButtonHandler("genre", label)}
+                >
+                  <FaCheck
+                    size={"15px"}
+                    color={
+                      selectedOption.genre.includes(label)
+                        ? color.white
+                        : color.black5
+                    }
+                  />
+                </CheckBoxWrapper>
+                <div>{label}</div>
+              </li>
+            ))}
+          </CheckSection>
         </Section>
         <Divider>
           <Div_Gray />
         </Divider>
         <Section>
           <Subtitle>공연규모</Subtitle>
-          <SelectList>
-            <Item>
-              <CheckSection>
-                {items.sizeOfPerformance.map((label, index) => (
-                  <li key={index}>
-                    <CheckBoxWrapper
-                      widthHeight={"20px"}
-                      checked={selectedOption.sizeOfPerformance.includes(label)}
-                      onClick={() =>
-                        radioButtonHandler("sizeOfPerformance", label)
-                      }
-                    >
-                      <FaCheck
-                        size={"15px"}
-                        color={
-                          selectedOption.sizeOfPerformance.includes(label)
-                            ? color.white
-                            : color.black5
-                        }
-                      />
-                    </CheckBoxWrapper>
-                    <div>{label}</div>
-                  </li>
-                ))}
-              </CheckSection>
-            </Item>
-          </SelectList>
+
+          <CheckSection>
+            {items.sizeOfPerformance.map((label, index) => (
+              <li key={index}>
+                <CheckBoxWrapper
+                  widthHeight={"20px"}
+                  checked={selectedOption.sizeOfPerformance.includes(label)}
+                  onClick={() => radioButtonHandler("sizeOfPerformance", label)}
+                >
+                  <FaCheck
+                    size={"15px"}
+                    color={
+                      selectedOption.sizeOfPerformance.includes(label)
+                        ? color.white
+                        : color.black5
+                    }
+                  />
+                </CheckBoxWrapper>
+                <div>{label}</div>
+              </li>
+            ))}
+          </CheckSection>
         </Section>
         <Divider>
           <Div_Gray />
         </Divider>
         <Section>
           <Subtitle>주관람층</Subtitle>
-          <SelectList>
-            <Item>
-              <CheckSection>
-                {items.mainAudience.map((label, index) => (
-                  <li key={index}>
-                    <CheckBoxWrapper
-                      widthHeight={"20px"}
-                      checked={selectedOption.mainAudience.includes(label)}
-                      onClick={() => radioButtonHandler("mainAudience", label)}
-                    >
-                      <FaCheck
-                        size={"15px"}
-                        color={
-                          selectedOption.mainAudience.includes(label)
-                            ? color.white
-                            : color.black5
-                        }
-                      />
-                    </CheckBoxWrapper>
-                    <div>{label}</div>
-                  </li>
-                ))}
-              </CheckSection>
-            </Item>
-          </SelectList>
+
+          <CheckSection>
+            {items.mainAudience.map((label, index) => (
+              <li key={index}>
+                <CheckBoxWrapper
+                  widthHeight={"20px"}
+                  checked={selectedOption.mainAudience.includes(label)}
+                  onClick={() => radioButtonHandler("mainAudience", label)}
+                >
+                  <FaCheck
+                    size={"15px"}
+                    color={
+                      selectedOption.mainAudience.includes(label)
+                        ? color.white
+                        : color.black5
+                    }
+                  />
+                </CheckBoxWrapper>
+                <div>{label}</div>
+              </li>
+            ))}
+          </CheckSection>
         </Section>
       </BodySection>
       <BtnSection>
@@ -291,16 +272,6 @@ const Subtitle = styled.div`
   letter-spacing: -0.5px;
   font-size: 16px;
 `;
-const SelectList = styled.ul`
-  display: flex;
-  font-family: "NotoSansCJKkr-Regular";
-  letter-spacing: -0.5px;
-  font-size: 16px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-`;
-const Item = styled.li``;
 
 const CheckSection = styled.ul`
   margin: 0;
@@ -309,6 +280,9 @@ const CheckSection = styled.ul`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  font-family: "NotoSansCJKkr-Regular";
+  letter-spacing: -0.5px;
+  font-size: 16px;
 `;
 const Text = styled.div``;
 const BtnSection = styled.div`

@@ -8,23 +8,41 @@ const EstImgModal = ({ closeBtnHandler }) => {
   const [source, setSource] = useState("");
   const contentRef = useRef();
 
-  // useEffect(() => {
-  console.log(contentRef);
-  // setSource(contentRef.current);
-  // }, [contentRef, source]);
+  useEffect(() => {
+    // console.log(contentRef.current.innerHTML);
+    setSource(contentRef.current.innerHTML);
+  }, [contentRef, source]);
+
+  const download = (filename, text) => {
+    let element = document.createElement("a");
+    element.setAttribute(
+      "href",
+      "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+    );
+    element.setAttribute("download", filename);
+
+    element.style.display = "none";
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  };
+
+  const onClickDownload = (val) => {
+    let filename = "contract.txt";
+
+    download(filename, val);
+  };
 
   const addSignature = () => {
     console.log("서명추가");
   };
 
-  const downloadTxt = (txtSrc) => {
-    console.log("다운로드 클릭");
-  };
-
   return (
     <Container>
-      <Content ref={contentRef}>
-        <div>ㄱㅖ약서</div>
+      <Content>
+        <div ref={contentRef}>ㄱㅖ약서</div>
       </Content>
       <BtnSection>
         <Btn1
@@ -39,7 +57,7 @@ const EstImgModal = ({ closeBtnHandler }) => {
           size={"14px"}
           height={"40px"}
           text={"다운로드"}
-          onClickHandler={() => downloadTxt(source)}
+          onClickHandler={() => onClickDownload(source)}
           fontColor={color.black1}
         />
         <Div />
