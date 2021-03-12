@@ -59,6 +59,7 @@ const Edu = () => {
       ...perfInfoState,
       ...userInfoState,
       category: "교육목적용",
+      performanceId: router.query.id,
     });
   };
 

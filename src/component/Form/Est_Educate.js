@@ -102,7 +102,7 @@ const Est_Educate = () => {
     router.push(`/performances/${router.query.id}/buy`);
   };
   return (
-    <Container>
+    <div>
       <Title>
         *공연 또는 교육 목적이 아닌 경우, 가견적 계산이 불가하므로 ‘구매하기’로
         구매 문의를 작성해주세요.
@@ -277,7 +277,7 @@ const Est_Educate = () => {
       </Est>
       <BottomSection>
         <Buttons>
-        <Btn1>
+          <Btn1>
             <GrayShortBtn
               text={"초기화하기"}
               onClickHandler={resetHandler}
@@ -300,15 +300,10 @@ const Est_Educate = () => {
           </Btn2>
         </Buttons>
       </BottomSection>
-    </Container>
+    </div>
   );
 };
 
-const Container = styled.div`
-  /* max-width: 924px;
-  padding: 0 1rem;
-  margin: 0 auto; */
-`;
 const Title = styled.p`
   font-family: "NotoSansCJKkr-Regular";
   color: ${color.black3};

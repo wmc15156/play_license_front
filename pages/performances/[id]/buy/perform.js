@@ -69,6 +69,7 @@ const Performance = () => {
       ...perfInfoState,
       ...userInfoState,
       category: "공연목적",
+      performanceId: router.query.id,
     });
   };
 

@@ -80,7 +80,7 @@ const ImgBox = styled.div`
 
 const TextSection = styled.div`
   width: 100%;
-  max-width: 924px;
+  max-width: 1000px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,7 +135,7 @@ const Text2 = styled.div`
 
 const BtnBox = styled.div`
   display: flex;
-  max-width: 924px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 0 1rem;
 `;

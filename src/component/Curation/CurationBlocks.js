@@ -1,26 +1,44 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
-import { useState, memo } from "react";
+import { useEffect, useState, memo } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 // 등록되어 있는 큐레이션들이 보여지는 컴포넌트
 const Category = ({ curation, getCurationInfo }) => {
+  const router = useRouter();
   const [current, setCurrent] = useState("모든작품");
+
+  useEffect(() => {
+    if (router.query.curation) {
+      setCurrent(router.query.curation);
+    } else {
+      setCurrent("모든작품");
+    }
+  }, [current]);
 
   const buttonBackgroundColor = (title) => () => {
     setCurrent(title);
-    getCurationInfo(title);
+    getCurationInfo();
   };
 
   return (
     <Container>
       {curation.map((cur, idx) => (
-        <Box
-          key={idx}
-          onClick={buttonBackgroundColor(cur)}
-          styles={current === cur}
+        <Link
+          href={{
+            pathname: "/market",
+            query: { curation: cur },
+          }}
         >
-          {cur}
-        </Box>
+          <Box
+            key={idx}
+            onClick={buttonBackgroundColor(cur)}
+            styles={current === cur}
+          >
+            {cur}
+          </Box>
+        </Link>
       ))}
     </Container>
   );

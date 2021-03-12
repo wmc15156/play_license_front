@@ -51,13 +51,13 @@ const Background = styled.div`
 `;
 const Wrapper = styled.div`
   position: relative;
-  max-width: 924px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
 `;
 const Section2 = styled.div`
   display: flex;
-  max-width: 924px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
   margin-top: 41px;
@@ -67,7 +67,7 @@ const Section2 = styled.div`
 
 const Section3 = styled.div`
   display: flex;
-  max-width: 924px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
 `;

@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
 import styled from "styled-components";
+import color from "../styles/colors";
 import Carousel from "../src/component/Home/Carousel";
-import Slider from "../src/component/Home/Slider";
 import Hot from "../src/component/Home/Hot";
 import New from "../src/component/Home/New";
 import Curation from "../src/component/Home/Curation";
@@ -84,7 +84,7 @@ const BannerSection = styled.div`
   max-height: 180px;
   height: auto;
   margin-bottom: 115px;
-  max-width: 924px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
 `;
@@ -116,29 +116,29 @@ const Banner1_1 = styled.div`
 
 const HotSection = styled.div`
   width: 100%;
-  max-width: 924px;
+  max-width: 1200px;
   margin: 0 auto;
 `;
 
 const Divider = styled.div`
   height: 2px;
-  background-color: #e6e6e6;
+  background-color: ${color.black5};
   width: 100%;
-  max-width: 924px;
+  max-width: 1200px;
   margin: 0 auto;
 `;
 const NewSection = styled.div`
   width: 100%;
-  max-width: 924px;
+  max-width: 1200px;
   margin: 0 auto;
 `;
 const CurationSection = styled.div`
   width: 100%;
-  background-color: #f5f5f5;
+  background-color: ${color.gray1};
 `;
 const UpcomingSection = styled.div`
   width: 100%;
-  max-width: 924px;
+  max-width: 1200px;
   margin: 0 auto;
 `;
 

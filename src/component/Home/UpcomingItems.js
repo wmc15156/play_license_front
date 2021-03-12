@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import Tag from "../Tag/Tag.";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import ShowAll from "../Button/ShowAll";
 import color from "../../../styles/colors";
 
 const UpcomingItems = ({ list }) => {
   const router = useRouter();
+
   const routeHandler = (id) => {
     router.push(`/performances/${id}`);
   };
@@ -14,44 +16,43 @@ const UpcomingItems = ({ list }) => {
     <Container>
       <HeadSection>
         <Title>Coming Soon</Title>
-        <ShowAll text={"모두보기"} path={"hot"} />
+        <ShowAll text={"모두보기"} path={"공개임박 작품"} />
       </HeadSection>
       <List>
         {list.map((item, idx) => (
-          <Item
-            key={item.productId}
-            onClick={() => routeHandler(item.productId)}
-          >
-            <ItemImg>
-              <Overlay />
-              <UpcomingDate>
-                <Text1>공개예정</Text1>
-                <Text2>
-                  {}년 {}월 중
-                </Text2>
-              </UpcomingDate>
-              <img src={item.productImage} alt={item.productTitle} />
-            </ItemImg>
-            <ItemDesc>
-              <TagWrapper>
-                {item.productBrokerageConsignment.map((cate, i) => {
-                  return (
-                    <Tag title={cate.slice(0, 2)} id={item.productId} key={i}>
-                      {cate.slice(0, 2)}
-                    </Tag>
-                  );
-                })}
-              </TagWrapper>
-              <Ptitle>{item.productTitle}</Ptitle>
-              <PInfo>
-                <div>{item.productCate}</div>
-                <Divider>|</Divider>
-                <div>{item.productYear}</div>
-                <Divider>|</Divider>
-                <div>{item.productCompany}</div>
-              </PInfo>
-            </ItemDesc>
-          </Item>
+          <Link href={`/performances/${item.productId}`} key={item.productId}>
+            <Item onClick={() => routeHandler(item.productId)}>
+              <ItemImg>
+                <Overlay />
+                <UpcomingDate>
+                  <Text1>공개예정</Text1>
+                  <Text2>
+                    {}년 {}월 중
+                  </Text2>
+                </UpcomingDate>
+                <img src={item.productImage} alt={item.productTitle} />
+              </ItemImg>
+              <ItemDesc>
+                <TagWrapper>
+                  {item.productBrokerageConsignment.map((cate, i) => {
+                    return (
+                      <Tag title={cate.slice(0, 2)} id={item.productId} key={i}>
+                        {cate.slice(0, 2)}
+                      </Tag>
+                    );
+                  })}
+                </TagWrapper>
+                <Ptitle>{item.productTitle}</Ptitle>
+                <PInfo>
+                  <div>{item.productCate}</div>
+                  <Divider>|</Divider>
+                  <div>{item.productYear}</div>
+                  <Divider>|</Divider>
+                  <div>{item.productCompany}</div>
+                </PInfo>
+              </ItemDesc>
+            </Item>
+          </Link>
         ))}
       </List>
     </Container>
@@ -89,7 +90,7 @@ const TagWrapper = styled.div`
 
 const ItemImg = styled.div`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   border-radius: 8px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
   position: relative;
@@ -141,7 +142,7 @@ const Item = styled.li`
   max-width: 276px;
   width: 100%;
   height: auto;
-  margin-right: 5%;
+  margin-right: 2rem;
 `;
 
 const List = styled.ul`

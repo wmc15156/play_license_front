@@ -1,5 +1,5 @@
 export const data = {
-  category: "교육목적",
+  category: "공연목적",
   groupName: "dummy",
   introduction: "dummy",
   objective: { 0: "기타", 1: "12333" },

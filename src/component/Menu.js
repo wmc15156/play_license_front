@@ -150,7 +150,7 @@ const Menu = ({ onCloseHandler }) => {
 };
 
 const Container = styled.div`
-  max-width: 924px;
+  max-width: 1200px;
   width: 100%;
   min-height: calc(100vh - 57px);
   display: flex;

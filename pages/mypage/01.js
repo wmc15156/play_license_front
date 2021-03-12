@@ -5,9 +5,9 @@ import PurchaseRequest from "../../src/component/MyPage/PurchaseRequest";
 const pr = () => {
   return (
     <Background>
-      <HeadSection>
+      <div>
         <MyPageHeader />
-      </HeadSection>
+      </div>
       <Container>
         <PurchaseRequest />
       </Container>
@@ -18,11 +18,8 @@ const Background = styled.div`
   padding: 0 1rem;
 `;
 
-const HeadSection = styled.div``;
-
 const Container = styled.div`
-  max-width: 924px;
-  /* width: 100%; */
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

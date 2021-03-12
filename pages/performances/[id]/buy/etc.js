@@ -57,6 +57,7 @@ const Etc = () => {
       ...perfInfoState,
       ...userInfoState,
       category: "기타목적용",
+      performanceId: router.query.id,
     });
   };
 

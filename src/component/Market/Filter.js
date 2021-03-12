@@ -50,7 +50,11 @@ const Filter = ({
         </Wrapper>
       </Row1>
       <FilterBarSection>
-        <FilterBar selectedOption={selectedOption} setOption={setOption} />
+        <FilterBar
+          selectedOption={selectedOption}
+          setOption={setOption}
+          filterListHandler={filterListHandler}
+        />
       </FilterBarSection>
     </Container>
   );
@@ -74,7 +78,7 @@ const Title = styled.div`
   text-transform: uppercase;
 
   & > span {
-    opacity: 0.3;
+    color: ${color.black3};
     margin-left: 30px;
   }
 `;

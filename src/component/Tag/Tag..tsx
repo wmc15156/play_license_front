@@ -4,19 +4,14 @@ import styles from "@styles/colors";
 import React from "react";
 
 const TagWrapper = styled.span`
-  border: 2px ${styles.orange} solid;
   border-radius: 6px;
-  /* height: 12px; */
-  font-family: "NotoSansCJKkr-Regular";
+  font-family: "NotoSansCJKkr-Bold";
   font-size: 12px;
-  font-weight: bold;
-  font-stretch: normal;
-  font-style: normal;
   line-height: 1;
   letter-spacing: -0.5px;
   text-align: center;
   color: ${styles.black2};
-  padding: 7px 10px 9px 10px;
+  padding: 7px 10px;
   margin: 26px 4px 18px;
   display: inline-flex;
   align-items: center;
