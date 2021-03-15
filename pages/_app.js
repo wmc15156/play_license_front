@@ -33,7 +33,6 @@ const MyApp = ({ Component, pageProps }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const providerWeb = router.pathname.includes("/provider");
-  console.log(router.pathname, providerWeb, "?pathname");
 
   const onCloseHandler = () => {
     setIsMenuOpen(!isMenuOpen);

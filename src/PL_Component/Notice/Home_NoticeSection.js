@@ -40,19 +40,28 @@ const NoticeSection = () => {
           </ListItem>
         ))}
       </List>
+      <Box></Box>
     </Container>
   );
 };
 
 const Container = styled.div`
-  width: 100%;
+  width: calc(100% - 15px);
+  padding-right: 15px;
 `;
 
 const List = styled.ul`
   margin: 0;
   padding: 0;
   list-style: none;
+  min-height: 168px;
 `;
 const ListItem = styled.li``;
 
+const Box = styled.div`
+  width: 100%;
+  height: 208px;
+  border-radius: 14px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+`;
 export default NoticeSection;
