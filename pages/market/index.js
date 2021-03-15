@@ -28,14 +28,7 @@ const Market = () => {
   });
   // console.log("선택된 필터옵션s>>", selectedOption);
 
-  useEffect(() => {
-    if (data) {
-      const first = ["모든작품"].concat(Object.keys(data.special));
-      setCuration((prevState) => prevState.concat(first));
-    }
-  }, [data]);
-
-  useEffect(() => {
+  const getAllProducts = () => {
     axios
       .get("/curation/filter", {
         params: {
@@ -47,6 +40,16 @@ const Market = () => {
         setCount(res.data.count);
         setList(res.data.result);
       });
+  };
+  useEffect(() => {
+    if (data) {
+      const first = ["모든작품"].concat(Object.keys(data.special));
+      setCuration((prevState) => prevState.concat(first));
+    }
+  }, [data]);
+
+  useEffect(() => {
+    getAllProducts();
   }, []);
 
   const indexOfLast = currentPage * postsPerPage; // 16
@@ -57,9 +60,44 @@ const Market = () => {
     return currentPosts; // 한 페이지에 뿌릴 작품들
   };
 
-  useEffect(() => getFilteredList(), [selectedOption]);
+  useEffect(() => {
+    const {
+      numberOfMembers,
+      category,
+      genre,
+      sizeOfPerformance,
+      mainAudience,
+    } = selectedOption;
+    if (
+      numberOfMembers.length ||
+      category.length ||
+      genre.length ||
+      sizeOfPerformance.length ||
+      mainAudience.length
+    ) {
+      getFilteredList();
+    } else if (
+      numberOfMembers === "" &&
+      category === "" &&
+      genre === "" &&
+      sizeOfPerformance === "" &&
+      mainAudience === ""
+    ) {
+      getAllProducts();
+    }
+  }, [selectedOption]);
+
   const getFilteredList = () => {
     console.log("필터된 리스트 가져오기 클릭", selectedOption);
+    axios
+      .get("/product/filter", {
+        params: selectedOption,
+      })
+      .then((res) => {
+        console.log(res, "???");
+        setCount(res.data.length);
+        setList(res.data);
+      });
   };
 
   const getSortList = (sortName) => {
@@ -76,7 +114,7 @@ const Market = () => {
           break;
       }
 
-      console.log("sort 선택된 항목이름", sortName);
+      // console.log("sort 선택된 항목이름", sortName);
       axios.get(`/product/filter/${sortName}`).then((res) => {
         setCount(res.data.length);
         setList(res.data);
@@ -136,6 +174,7 @@ const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+  margin-bottom: 135px;
 `;
 
 const LoaderContainer = styled.div`

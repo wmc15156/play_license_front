@@ -7,12 +7,7 @@ import Hot from "../src/component/Home/Hot";
 import New from "../src/component/Home/New";
 import Curation from "../src/component/Home/Curation";
 import ComingSoon from "../src/component/Home/ComingSoon";
-import { useRouter } from "next/router";
 import HomeStore from "../store/homeStore";
-import useSWR from "swr";
-import fetcher from "../utils/fetcher";
-import { useCookies } from "react-cookie";
-import { useEffect } from "react";
 
 const Home = () => {
   return (
@@ -40,9 +35,12 @@ const Home = () => {
                 <img src="/assets/image/Banner_Buyer.png" />
               </Banner1>
             </Link>
-            <Banner1_1>
-              <img src="/assets/image/HO_PL provider.png" />
-            </Banner1_1>
+
+            <Link href="/provider">
+              <Banner1_1>
+                <img src="/assets/image/HO_PL provider.png" />
+              </Banner1_1>
+            </Link>
           </BannerWrapper>
         </BannerSection>
         <HotSection>
@@ -59,9 +57,11 @@ const Home = () => {
           <ComingSoon />
         </UpcomingSection>
         <BannerSection>
-          <Banner2>
-            <img src="/assets/image/Banner_Provider.png" />
-          </Banner2>
+          <Link href="/provider">
+            <Banner2>
+              <img src="/assets/image/Banner_Provider.png" />
+            </Banner2>
+          </Link>
         </BannerSection>
       </Container>
     </HomeStore>

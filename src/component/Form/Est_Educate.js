@@ -112,116 +112,116 @@ const Est_Educate = () => {
           <Item>
             <SubTitle>공연분야</SubTitle>
             <Content>
-              <Box>
-                <CheckSection>
-                  {items.category.map((label, index) => (
-                    <li key={index}>
-                      <CheckBoxWrapper
-                        widthHeight={"20px"}
-                        checked={selected.category.includes(label)}
-                        onClick={() => radioButtonHandler("category", label)}
-                      >
-                        <FaCheck
-                          size={"15px"}
-                          color={
-                            selected.category.includes(label)
-                              ? color.white
-                              : color.black5
-                          }
-                        />
-                      </CheckBoxWrapper>
-                      <div>{label}</div>
-                    </li>
-                  ))}
-                </CheckSection>
-              </Box>
+              {/* <Box> */}
+              {/* <CheckSection> */}
+              {items.category.map((label, index) => (
+                <CheckItem key={index}>
+                  <CheckBoxWrapper
+                    widthHeight={"20px"}
+                    checked={selected.category.includes(label)}
+                    onClick={() => radioButtonHandler("category", label)}
+                  >
+                    <FaCheck
+                      size={"15px"}
+                      color={
+                        selected.category.includes(label)
+                          ? color.white
+                          : color.black5
+                      }
+                    />
+                  </CheckBoxWrapper>
+                  <Check_label>{label}</Check_label>
+                </CheckItem>
+              ))}
+              {/* </CheckSection> */}
+              {/* </Box> */}
             </Content>
           </Item>
           <Item>
             <SubTitle>공연규모</SubTitle>
             <Content>
-              <Box>
-                <CheckSection>
-                  {items.sizeOfPerformance.map((label, index) => (
-                    <li key={index}>
-                      <CheckBoxWrapper
-                        widthHeight={"20px"}
-                        checked={selected.sizeOfPerformance.includes(label)}
-                        onClick={() =>
-                          radioButtonHandler("sizeOfPerformance", label)
-                        }
-                      >
-                        <FaCheck
-                          size={"15px"}
-                          color={
-                            selected.sizeOfPerformance.includes(label)
-                              ? color.white
-                              : color.black5
-                          }
-                        />
-                      </CheckBoxWrapper>
-                      <div>{label}</div>
-                    </li>
-                  ))}
-                </CheckSection>
-              </Box>
+              {/* <Box> */}
+              {/* <CheckSection> */}
+              {items.sizeOfPerformance.map((label, index) => (
+                <CheckItem key={index}>
+                  <CheckBoxWrapper
+                    widthHeight={"20px"}
+                    checked={selected.sizeOfPerformance.includes(label)}
+                    onClick={() =>
+                      radioButtonHandler("sizeOfPerformance", label)
+                    }
+                  >
+                    <FaCheck
+                      size={"15px"}
+                      color={
+                        selected.sizeOfPerformance.includes(label)
+                          ? color.white
+                          : color.black5
+                      }
+                    />
+                  </CheckBoxWrapper>
+                  <Check_label>{label}</Check_label>
+                </CheckItem>
+              ))}
+              {/* </CheckSection> */}
+              {/* </Box> */}
             </Content>
           </Item>
           <Item>
             <SubTitle>이용기간</SubTitle>
             <Content>
-              <Box>
-                <CheckSection>
-                  {items.period.map((label, index) => (
-                    <li key={index}>
-                      <CheckBoxWrapper
-                        widthHeight={"20px"}
-                        checked={selected.period.includes(label)}
-                        onClick={() => radioButtonHandler("period", label)}
-                      >
-                        <FaCheck
-                          size={"15px"}
-                          color={
-                            selected.period.includes(label)
-                              ? color.white
-                              : color.black5
-                          }
-                        />
-                      </CheckBoxWrapper>
-                      <div>{label}</div>
-                    </li>
-                  ))}
-                </CheckSection>
-              </Box>
+              {/* <Box> */}
+              {/* <CheckSection> */}
+              {items.period.map((label, index) => (
+                <CheckItem key={index}>
+                  <CheckBoxWrapper
+                    widthHeight={"20px"}
+                    checked={selected.period.includes(label)}
+                    onClick={() => radioButtonHandler("period", label)}
+                  >
+                    <FaCheck
+                      size={"15px"}
+                      color={
+                        selected.period.includes(label)
+                          ? color.white
+                          : color.black5
+                      }
+                    />
+                  </CheckBoxWrapper>
+                  <Check_label>{label}</Check_label>
+                </CheckItem>
+              ))}
+              {/* </CheckSection> */}
+              {/* </Box> */}
             </Content>
           </Item>
           <Item>
             <SubTitle>티켓가격</SubTitle>
             <Content>
-              <Box_2>
-                <CheckSection>
-                  {items.price.map((label, index) => (
-                    <li key={index}>
-                      <CheckBoxWrapper
-                        widthHeight={"20px"}
-                        checked={selected.price[0].includes(label)}
-                        onClick={() => radioButtonHandler("price", label)}
-                      >
-                        <FaCheck
-                          size={"15px"}
-                          color={
-                            selected.price[0].includes(label)
-                              ? color.white
-                              : color.black5
-                          }
-                        />
-                      </CheckBoxWrapper>
-                      <div>{label}</div>
-                    </li>
-                  ))}
-                </CheckSection>
-              </Box_2>
-              <Box_2>
+              {/* <Box_2> */}
+              {/* <CheckSection> */}
+              {items.price.map((label, index) => (
+                <CheckItem key={index}>
+                  <CheckBoxWrapper
+                    widthHeight={"20px"}
+                    checked={selected.price[0].includes(label)}
+                    onClick={() => radioButtonHandler("price", label)}
+                  >
+                    <FaCheck
+                      size={"15px"}
+                      color={
+                        selected.price[0].includes(label)
+                          ? color.white
+                          : color.black5
+                      }
+                    />
+                  </CheckBoxWrapper>
+                  <Check_label>{label}</Check_label>
+                </CheckItem>
+              ))}
+              {/* </CheckSection> */}
+              {/* </Box_2> */}
+              <CheckItem>
                 {selected.price[0] === "예정있음 (회당 초청료 기재)" && (
                   <BasicInput
                     width={"100%"}
@@ -239,33 +239,33 @@ const Est_Educate = () => {
                     value={selected.price[1]}
                   />
                 )}
-              </Box_2>
+              </CheckItem>
             </Content>
           </Item>
           <Item>
             <SubTitle>필요자료</SubTitle>
             <Content_2>
-              <CheckSection>
-                {items.requiredMaterials.map((label, index) => (
-                  <li key={index}>
-                    <CheckBoxWrapper
-                      widthHeight={"20px"}
-                      checked={selected.requiredMaterials.includes(label)}
-                      onClick={() => checkRequireHandler(label)}
-                    >
-                      <FaCheck
-                        size={"15px"}
-                        color={
-                          selected.requiredMaterials.includes(label)
-                            ? color.white
-                            : color.black5
-                        }
-                      />
-                    </CheckBoxWrapper>
-                    <div>{label}</div>
-                  </li>
-                ))}
-              </CheckSection>
+              {/* <CheckSection> */}
+              {items.requiredMaterials.map((label, index) => (
+                <CheckItem key={index}>
+                  <CheckBoxWrapper
+                    widthHeight={"20px"}
+                    checked={selected.requiredMaterials.includes(label)}
+                    onClick={() => checkRequireHandler(label)}
+                  >
+                    <FaCheck
+                      size={"15px"}
+                      color={
+                        selected.requiredMaterials.includes(label)
+                          ? color.white
+                          : color.black5
+                      }
+                    />
+                  </CheckBoxWrapper>
+                  <Check_label>{label}</Check_label>
+                </CheckItem>
+              ))}
+              {/* </CheckSection> */}
             </Content_2>
           </Item>
         </List>
@@ -312,7 +312,13 @@ const Title = styled.p`
   margin-bottom: 46px;
 `;
 
-const BodySection = styled.div``;
+const BodySection = styled.div`
+  height: 400px;
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+`;
 const List = styled.ul`
   margin: 0;
   padding: 0;
@@ -347,6 +353,23 @@ const CheckSection = styled.ul`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+`;
+
+const CheckItem = styled.li`
+  /* margin: 0;
+  padding: 0; */
+  display: flex;
+  align-items: center;
+  /* max-width: 210px; */
+  width: 30%;
+  margin-bottom: 30px;
+`;
+
+const Check_label = styled.div`
+  font-family: "NotoSansCJKkr-Regular";
+  margin-left: 8px;
+  letter-spacing: -0.5px;
+  min-width: 35px;
 `;
 
 const Box_2 = styled.div`

@@ -38,12 +38,12 @@ const dummies = [
 const PurchaseRequest = () => {
   const router = useRouter();
   const { openModal, closeModal, ModalPortal } = useModal();
-  // const [list, setList] = useState([]);
+  const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(5);
   const [openDetail_Est, setOpenDetail_Est] = useState(false);
   const [openDetail_Cont, setOpenDetail_Cont] = useState(false);
-  // const GET_URL = "/question";
+  const GET_URL = "/product/buyer/cart";
 
   //pagination
   const indexOfLast = currentPage * postsPerPage; // 5
@@ -66,14 +66,12 @@ const PurchaseRequest = () => {
 
   // GET -작품구매문의
   const getData = () => {
-    // axios
-    //   .get(GET_URL)
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       console.log(res, "????????>>>>");
-    //       setList(res.data);
-    //     }
-    //   })
+    axios.get(GET_URL).then((res) => {
+      if (res.status === 200) {
+        console.log(res, "????????>>>>");
+        setList(res.data);
+      }
+    });
   };
   useEffect(() => {
     getData();
@@ -103,13 +101,13 @@ const PurchaseRequest = () => {
             <TitleText>견적서</TitleText>
             <TitleText>계약서</TitleText>
           </Title>
-          {showCurrentPosts(dummies).map((ele) => {
+          {showCurrentPosts(list).map((ele) => {
             const {
               questionId,
               contractId,
               estimateId,
               title,
-              check,
+              adminCheck,
               createdAt,
             } = ele;
             return (
@@ -117,11 +115,11 @@ const PurchaseRequest = () => {
                 <Text>{title}</Text>
                 <Text>{createdAt}</Text>
                 <Box_Status>
-                  <StatusBox status={check} />
+                  <StatusBox status={adminCheck} />
                 </Box_Status>
 
                 {/* 문의내용 자세히 */}
-                {check === "보완요청" ? (
+                {adminCheck === "보완요청" ? (
                   <DetailText color={color.orange}>
                     <span onClick={() => detailHandler(questionId)}>
                       보완하기
@@ -163,7 +161,7 @@ const PurchaseRequest = () => {
         <PageWrapper>
           <Pagination
             itemsPerPage={postsPerPage}
-            totalItems={dummies.length}
+            totalItems={list.length}
             paginate={setCurrentPage}
           />
         </PageWrapper>

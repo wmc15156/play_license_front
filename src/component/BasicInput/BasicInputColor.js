@@ -41,7 +41,8 @@ const Input = styled.input.attrs({
   font-family: "NotoSansCJKkr-Regular";
   border: 1px solid ${color.black5};
   font-size: ${(props) => props.fontSize};
-  padding: 13px 0 13px 13px;
+  line-height: 14px;
+  padding: 12px 0 12px 13px;
 
   &:focus {
     outline: none;

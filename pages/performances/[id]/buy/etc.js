@@ -30,10 +30,10 @@ const Etc = () => {
   });
   const [perfInfoState, setPerfInfoState] = useState({
     objective: {}, // 사용목적
-    startDate: [{ startDate: "", endDate: "" }], // 이용기간 달력
+    startDate: [{ start: "", end: "" }], // 이용기간 달력
     period: "", // 이용시작일 : 디자인에 option값없어서 안넣음
     requiredMaterials: [], // 필수자료
-    selectedMaterials: [], // 선택자료(공급자가 제공선택한 자료만 표시)
+    selectedMaterials: { select: [], input: "" }, // 선택자료(공급자가 제공선택한 자료만 표시)
   });
   const [userInfoState, setUserInfoState] = useState({
     name: "",
@@ -57,7 +57,7 @@ const Etc = () => {
       ...perfInfoState,
       ...userInfoState,
       category: "기타목적용",
-      performanceId: router.query.id,
+      productId: Number(router.query.id),
     });
   };
 
@@ -74,9 +74,7 @@ const Etc = () => {
       .post("product/buyer/educational", userInputData)
       .then((res) => {
         console.log(res, "--res?");
-        if (res.status === 201) {
-          next();
-        }
+        next();
       })
       .catch((err) => console.error(err));
   };

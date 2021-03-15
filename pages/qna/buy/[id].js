@@ -8,7 +8,7 @@ import fetcher from "../../../utils/fetcher";
 const Detail_PurchaseRequest = () => {
   const router = useRouter();
   // api연결할 때 밑에 지우기
-  const data = { adminCheck: true };
+  const data = { adminCheck: false };
   // const { data } = useSWR(`/구매문의/${router.query.id}`, fetcher);
   // data에 공연목적 /교육목적 / 기타목적 구분할수있는게 있는지?
 

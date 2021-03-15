@@ -46,7 +46,6 @@ const FilterModal = ({ closeModal, filterListHandler, setOption }) => {
   };
 
   const okButtonHandler = (obj) => {
-    console.log(obj, "임시객체상태??");
     setOption(obj); // 상태변경
     filterListHandler(); // get요청
     closeModal();
@@ -64,7 +63,7 @@ const FilterModal = ({ closeModal, filterListHandler, setOption }) => {
 
           <CheckSection>
             {items.numberOfMembers.map((label, index) => (
-              <li key={index}>
+              <CheckItem key={index}>
                 <CheckBoxWrapper
                   widthHeight={"20px"}
                   checked={tmpObj.numberOfMembers.includes(label)}
@@ -79,8 +78,8 @@ const FilterModal = ({ closeModal, filterListHandler, setOption }) => {
                     }
                   />
                 </CheckBoxWrapper>
-                <div>{label}</div>
-              </li>
+                <Check_label>{label}</Check_label>
+              </CheckItem>
             ))}
           </CheckSection>
         </Section>
@@ -94,7 +93,7 @@ const FilterModal = ({ closeModal, filterListHandler, setOption }) => {
 
           <CheckSection>
             {items.category.map((label, index) => (
-              <li key={index}>
+              <CheckItem key={index}>
                 <CheckBoxWrapper
                   widthHeight={"20px"}
                   checked={tmpObj.category.includes(label)}
@@ -109,8 +108,8 @@ const FilterModal = ({ closeModal, filterListHandler, setOption }) => {
                     }
                   />
                 </CheckBoxWrapper>
-                <div>{label}</div>
-              </li>
+                <Check_label>{label}</Check_label>
+              </CheckItem>
             ))}
           </CheckSection>
         </Section>
@@ -122,7 +121,7 @@ const FilterModal = ({ closeModal, filterListHandler, setOption }) => {
 
           <CheckSection>
             {items.genre.map((label, index) => (
-              <li key={index}>
+              <CheckItem key={index}>
                 <CheckBoxWrapper
                   widthHeight={"20px"}
                   checked={tmpObj.genre.includes(label)}
@@ -135,8 +134,8 @@ const FilterModal = ({ closeModal, filterListHandler, setOption }) => {
                     }
                   />
                 </CheckBoxWrapper>
-                <div>{label}</div>
-              </li>
+                <Check_label>{label}</Check_label>
+              </CheckItem>
             ))}
           </CheckSection>
         </Section>
@@ -148,7 +147,7 @@ const FilterModal = ({ closeModal, filterListHandler, setOption }) => {
 
           <CheckSection>
             {items.sizeOfPerformance.map((label, index) => (
-              <li key={index}>
+              <CheckItem key={index}>
                 <CheckBoxWrapper
                   widthHeight={"20px"}
                   checked={tmpObj.sizeOfPerformance.includes(label)}
@@ -163,8 +162,8 @@ const FilterModal = ({ closeModal, filterListHandler, setOption }) => {
                     }
                   />
                 </CheckBoxWrapper>
-                <div>{label}</div>
-              </li>
+                <Check_label>{label}</Check_label>
+              </CheckItem>
             ))}
           </CheckSection>
         </Section>
@@ -176,7 +175,7 @@ const FilterModal = ({ closeModal, filterListHandler, setOption }) => {
 
           <CheckSection>
             {items.mainAudience.map((label, index) => (
-              <li key={index}>
+              <CheckItem key={index}>
                 <CheckBoxWrapper
                   widthHeight={"20px"}
                   checked={tmpObj.mainAudience.includes(label)}
@@ -191,8 +190,8 @@ const FilterModal = ({ closeModal, filterListHandler, setOption }) => {
                     }
                   />
                 </CheckBoxWrapper>
-                <div>{label}</div>
-              </li>
+                <Check_label>{label}</Check_label>
+              </CheckItem>
             ))}
           </CheckSection>
         </Section>
@@ -277,9 +276,11 @@ const Subtitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   letter-spacing: -0.5px;
   font-size: 16px;
+  margin-bottom: 26px;
 `;
 
 const CheckSection = styled.ul`
+  width: 100%;
   margin: 0;
   list-style: none;
   padding: 0;
@@ -289,6 +290,22 @@ const CheckSection = styled.ul`
   font-family: "NotoSansCJKkr-Regular";
   letter-spacing: -0.5px;
   font-size: 16px;
+`;
+
+const CheckItem = styled.li`
+  /* margin: 0;
+  padding: 0; */
+  display: flex;
+  align-items: center;
+  /* max-width: 210px; */
+  width: 30%;
+`;
+
+const Check_label = styled.div`
+  font-family: "NotoSansCJKkr-Regular";
+  margin-left: 8px;
+  letter-spacing: -0.5px;
+  min-width: 35px;
 `;
 const Text = styled.div``;
 const BtnSection = styled.div`

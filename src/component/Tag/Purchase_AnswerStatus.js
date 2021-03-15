@@ -17,7 +17,7 @@ const Box = styled.div`
   border-radius: 4px;
 
   ${(props) => {
-    if (props.status === "관리자검토중" || props.status === "제작사검토중") {
+    if (props.status.includes("관리자") || props.status.includes("제작사")) {
       return css`
         background-color: ${color.white};
         border: 1px solid ${color.black3};

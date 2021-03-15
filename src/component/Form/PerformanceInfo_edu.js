@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
 import { useCallback } from "react";
 import { FaCheck } from "react-icons/fa";
@@ -23,23 +23,33 @@ const items_selectMaterial = [
 
 const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
   const removeSelectItemHandler = useCallback(
-    (itemIdx) => {
-      let array = perfInfoState.selectedMaterials;
+    (name) => {
+      let array = perfInfoState.selectedMaterials.select;
+      let itemIdx = array.indexOf(name);
       array.splice(itemIdx, 1);
       setPerfInfoState((prev) => {
-        return { ...prev, selectedMaterials: [...array] };
+        return {
+          ...prev,
+          selectedMaterials: {
+            select: [...array],
+            input: perfInfoState.selectedMaterials.input,
+          },
+        };
       });
     },
-    [perfInfoState.selectedMaterials]
+    [perfInfoState.selectedMaterials.select]
   );
 
   const checkSelectHandler = (name) => {
-    if (perfInfoState.selectedMaterials.includes(name)) {
-      removeSelectItemHandler();
+    if (perfInfoState.selectedMaterials.select.includes(name)) {
+      removeSelectItemHandler(name);
     } else {
       setPerfInfoState({
         ...perfInfoState,
-        selectedMaterials: [...perfInfoState.selectedMaterials, name],
+        selectedMaterials: {
+          select: [...perfInfoState.selectedMaterials.select, name],
+          input: perfInfoState.selectedMaterials.input,
+        },
       });
     }
   };
@@ -81,7 +91,6 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
                 <Selector
                   value={perfInfoState.objective[0]}
                   options={[
-                    "선택해주세요",
                     "교육자료개발",
                     "교재 또는 교보재이용",
                     "교과 및 방과후 활동으로 공연",
@@ -124,16 +133,18 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
         <Input>
           <SubTitle>이용기간</SubTitle>
           <Content>
-            <Selector
-              value={perfInfoState.period}
-              options={["선택해주세요", "A형(6개월)", "B형(12개월)"]}
-              onChange={(e) =>
-                setPerfInfoState({
-                  ...perfInfoState,
-                  period: e.target.value,
-                })
-              }
-            />
+            <SelectorWrapper>
+              <Selector
+                value={perfInfoState.period}
+                options={["A형(6개월)", "B형(12개월)"]}
+                onChange={(e) =>
+                  setPerfInfoState({
+                    ...perfInfoState,
+                    period: e.target.value,
+                  })
+                }
+              />
+            </SelectorWrapper>
           </Content>
         </Input>
         <Input>
@@ -144,12 +155,12 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
                 <Date_Name>시작</Date_Name>
                 <label>
                   <DatePicker
-                    date={perfInfoState.startDate[0].startDate}
+                    date={perfInfoState.startDate[0].start}
                     setDate={(e) =>
                       setPerfInfoState({
                         ...perfInfoState,
                         startDate: [
-                          { ...perfInfoState.startDate[0], startDate: e },
+                          { ...perfInfoState.startDate[0], start: e },
                         ],
                       })
                     }
@@ -163,13 +174,11 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
                 <Date_Name>종료</Date_Name>
                 <label>
                   <DatePicker
-                    date={perfInfoState.startDate[0].endDate}
+                    date={perfInfoState.startDate[0].end}
                     setDate={(e) =>
                       setPerfInfoState({
                         ...perfInfoState,
-                        startDate: [
-                          { ...perfInfoState.startDate[0], endDate: e },
-                        ],
+                        startDate: [{ ...perfInfoState.startDate[0], end: e }],
                       })
                     }
                   />
@@ -184,7 +193,7 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
           <Content>
             <CheckSection>
               {items_requireMaterial.map((label, index) => (
-                <li key={index}>
+                <CheckItem key={index}>
                   <CheckBoxWrapper
                     widthHeight={"20px"}
                     checked={perfInfoState.requiredMaterials.includes(label)}
@@ -199,8 +208,8 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
                       }
                     />
                   </CheckBoxWrapper>
-                  <div>{label}</div>
-                </li>
+                  <Check_label>{label}</Check_label>
+                </CheckItem>
               ))}
             </CheckSection>
           </Content>
@@ -210,23 +219,56 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
           <Content>
             <CheckSection>
               {items_selectMaterial.map((label, index) => (
-                <li key={index}>
-                  <CheckBoxWrapper
-                    widthHeight={"20px"}
-                    checked={perfInfoState.selectedMaterials.includes(label)}
-                    onClick={() => checkSelectHandler(label)}
-                  >
-                    <FaCheck
-                      size={"15px"}
-                      color={
-                        perfInfoState.selectedMaterials.includes(label)
-                          ? color.white
-                          : color.black5
-                      }
-                    />
-                  </CheckBoxWrapper>
-                  <div>{label}</div>
-                </li>
+                <>
+                  <CheckItem key={index} labelName={label}>
+                    <CheckBox>
+                      <CheckBoxWrapper
+                        widthHeight={"20px"}
+                        checked={perfInfoState.selectedMaterials.select.includes(
+                          label
+                        )}
+                        onClick={() => checkSelectHandler(label)}
+                      >
+                        <FaCheck
+                          size={"15px"}
+                          color={
+                            perfInfoState.selectedMaterials.select.includes(
+                              label
+                            )
+                              ? color.white
+                              : color.black5
+                          }
+                        />
+                      </CheckBoxWrapper>
+                    </CheckBox>
+                    <Check_label>{label}</Check_label>
+                    {label === "기타" &&
+                      perfInfoState.selectedMaterials.select.includes(
+                        "기타"
+                      ) && (
+                        <>
+                          <BasicInput
+                            width={"100%"}
+                            placeholder={"직접입력"}
+                            background={color.gray1}
+                            onChange={(e) =>
+                              setPerfInfoState({
+                                ...perfInfoState,
+                                selectedMaterials: {
+                                  select: [
+                                    ...perfInfoState.selectedMaterials.select,
+                                  ],
+                                  input: e.target.value,
+                                },
+                              })
+                            }
+                            value={perfInfoState.selectedMaterials.input}
+                          />
+                          <Span>*최종 제공 자료는 협의 후 결정</Span>
+                        </>
+                      )}
+                  </CheckItem>
+                </>
               ))}
             </CheckSection>
           </Content>
@@ -245,9 +287,10 @@ const Container = styled.div`
 const HeadSection = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 39px;
+  margin-bottom: 34px;
   & > p {
-    margin-top: 17px;
+    margin: 0;
+    margin-top: 14px;
     font-family: "NotoSansCJKkr-Regular";
     font-size: 12px;
     line-height: 12px;
@@ -270,9 +313,9 @@ const InputSection = styled.ul`
 `;
 const Input = styled.li`
   display: flex;
-  align-items: center;
+  align-items: baseline;
   width: 100%;
-  margin-bottom: 28px;
+  /* margin-bottom: 28px; */
 `;
 const SubTitle = styled.div`
   width: 20%;
@@ -293,16 +336,20 @@ const InputArea = styled.div`
 `;
 const InputArea_Row1 = styled.div`
   display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 22px;
 `;
 
 const CheckSection = styled.ul`
+  width: 100%;
   margin: 0;
   list-style: none;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-top: 33px;
+  /* margin-top: 33px; */
 `;
 
 const DateArea = styled.div`
@@ -316,6 +363,7 @@ const Date_ = styled.div`
   border: 1px solid ${color.black5};
   height: 40px;
   border-radius: 8px;
+  margin-bottom: 22px;
 `;
 const Date_Start = styled.div`
   width: 45%;
@@ -331,6 +379,7 @@ const Date_Start = styled.div`
 `;
 const Date_Name = styled.div`
   width: 45px;
+  padding-left: 20px;
 `;
 const Date_End = styled.div`
   width: 45%;
@@ -356,4 +405,45 @@ const Divider = styled.div`
   background-color: ${color.black5};
 `;
 
+const SelectorWrapper = styled.div`
+  width: 207px;
+  margin-bottom: 28px;
+`;
+
+const CheckItem = styled.li`
+  /* margin: 0;
+  padding: 0; */
+  display: flex;
+  align-items: center;
+  /* max-width: 210px; */
+  width: 30%;
+  margin-bottom: 32px;
+
+  ${(props) =>
+    props.labelName === "기타" &&
+    css`
+      width: 70%;
+    `}
+`;
+
+const CheckBox = styled.div`
+  width: 20px;
+`;
+
+const Check_label = styled.div`
+  font-family: "NotoSansCJKkr-Regular";
+  margin-left: 8px;
+  letter-spacing: -0.5px;
+  min-width: 35px;
+`;
+
+const Span = styled.span`
+  width: 100%;
+  color: ${color.black3};
+  letter-spacing: -0.5px;
+  line-height: 12px;
+  font-size: 12px;
+  font-family: "NotoSansCJKkr-Regular";
+  margin-left: 12px;
+`;
 export default AboutPerformance_edu;

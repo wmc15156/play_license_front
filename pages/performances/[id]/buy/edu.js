@@ -31,9 +31,9 @@ const Edu = () => {
   const [perfInfoState, setPerfInfoState] = useState({
     objective: {}, // 활용목적
     period: "", // 이용기간 택1
-    startDate: [{ startDate: "", endDate: "" }], // 이용시작일 달력
+    startDate: [{ start: "", end: "" }], // 이용시작일 달력
     requiredMaterials: [], // 필수자료
-    selectedMaterials: [], // 선택자료(공급자가 제공선택한 자료만 표시)
+    selectedMaterials: { select: [], input: "" }, // 선택자료(공급자가 제공선택한 자료만 표시)
   });
   const [userInfoState, setUserInfoState] = useState({
     name: "",
@@ -59,12 +59,11 @@ const Edu = () => {
       ...perfInfoState,
       ...userInfoState,
       category: "교육목적용",
-      performanceId: router.query.id,
+      productId: Number(router.query.id),
     });
   };
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+  const onSubmitHandler = () => {
     if (!checked) {
       //TODO:유효썽
       // alert("개인정보 수집 및 이용에 동의해주세요.");
@@ -76,9 +75,7 @@ const Edu = () => {
       .post("/product/buyer/educational", userInputData)
       .then((res) => {
         console.log(res, "--res?");
-        // if (res.data.status === 201) {
         next();
-        // }
       })
       .catch((err) => console.error(err));
   };

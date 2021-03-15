@@ -278,12 +278,11 @@ const Btns = styled.div`
 `;
 const HeartContainer = styled.div`
   width: 25%;
-  margin-right: 14px;
 `;
 
 const CalcContainer = styled.div`
   margin-left: auto;
-  width: 68%;
+  width: 85%;
 `;
 
 export default Section1;

@@ -12,7 +12,14 @@ const Date_Picker = ({ date, setDate }) => {
         selected={date}
         dateFormat="yyyy-MM-dd"
         onChange={(d) => {
-          setDate(d);
+          // console.log(
+          //   d.getFullYear() + "-" + d.getMonth() + 1 + "-" + d.getDate()
+          // );
+          setDate(d.valueOf());
+        }}
+        minDate={new Date()}
+        popperModifiers={{
+          preventOverflow: { enabled: true },
         }}
         disabledKeyboardNavigation
         locale={ko}
