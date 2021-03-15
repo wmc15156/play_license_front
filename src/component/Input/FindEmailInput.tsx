@@ -11,7 +11,7 @@ const InputBox = styled.input<{ width: string; height: string }>`
   opacity: 0.5;
 `;
 
-const NumberInput = styled(InputNumber)<{ width: string; height: string }>`
+const NumberInput = styled.input<{ width: string; height: string }>`
   width: ${(p) => p.width};
   height: ${(p) => p.height};
   text-indent: 20px;
