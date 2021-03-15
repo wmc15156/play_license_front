@@ -50,14 +50,6 @@ const Menu = ({ onCloseHandler }) => {
     setHomeHover(false);
   };
 
-  const go = () => {
-    onCloseHandler();
-    window.open(
-      "https://docs.google.com/forms/d/e/1FAIpQLSdzYdGv-9NTKf2EllUgNy4ATbKi7z7LzSy-QJ7grj4oZkprLA/viewform",
-      "_blank"
-    );
-  };
-
   return (
     <Container>
       <List>
@@ -126,20 +118,22 @@ const Menu = ({ onCloseHandler }) => {
           </Link>
         </li>
         <li>
-          <div
-            onClick={go}
-            onMouseEnter={plHoverHandler}
-            onMouseLeave={plHoverOutHandler}
-          >
-            <Item>
-              <Ko color={plHover ? color.orange : color.black1}>
-                PL 제작사센터
-              </Ko>
-              <En color={plHover ? color.orange : color.black4}>
-                PL provider center
-              </En>
-            </Item>
-          </div>
+          <Link href="/provider">
+            <a
+              target="_blank"
+              onMouseEnter={plHoverHandler}
+              onMouseLeave={plHoverOutHandler}
+            >
+              <Item>
+                <Ko color={plHover ? color.orange : color.black1}>
+                  PL 제작사센터
+                </Ko>
+                <En color={plHover ? color.orange : color.black4}>
+                  PL provider center
+                </En>
+              </Item>
+            </a>
+          </Link>
         </li>
       </List>
       <CloseBtn onClick={onCloseHandler}>
@@ -150,7 +144,7 @@ const Menu = ({ onCloseHandler }) => {
 };
 
 const Container = styled.div`
-  max-width: 924px;
+  max-width: 1200px;
   width: 100%;
   min-height: calc(100vh - 57px);
   display: flex;
@@ -179,6 +173,7 @@ const List = styled.div`
 const Item = styled.div`
   display: flex;
   width: 100%;
+  cursor: pointer;
 `;
 
 const Ko = styled.div`

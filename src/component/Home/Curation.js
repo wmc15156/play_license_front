@@ -10,6 +10,7 @@ import ShowAll from "../Button/ShowAll";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import useSWR from "swr";
 import fetcher from "../../../utils/fetcher";
+import Link from "next/link";
 
 const defaultStyles = {
   transform: "scale(0.9)",
@@ -22,7 +23,7 @@ const activeStyles = {
   transform: "scale(1.0)",
   transition: "transform 2s ease",
   opacity: 1,
-  width: "924px",
+  width: "1200px",
   height: "400px",
   objectFit: "cover",
 };
@@ -78,7 +79,7 @@ const Curation = () => {
     <Container>
       <HeadSection>
         <Title>CURATION</Title>
-        <ShowAll text={"모두보기"} path={"/"} />
+        <ShowAll text={"모두보기"} path={"모든작품"} />
       </HeadSection>
       <SliderContainer>
         <StyledSlider {...settings}>
@@ -91,7 +92,14 @@ const Curation = () => {
                   <TextContainer>
                     <Text1>[{curation[keyName][0].productTitle}] 등</Text1>
                     <Text2>{keyName}에 추천해요!</Text2>
-                    <Text3>{curation[keyName].length}개의 작품 보기</Text3>
+                    <Link
+                      href={{
+                        pathname: "/market",
+                        query: { curation: keyName },
+                      }}
+                    >
+                      <Text3>{curation[keyName].length}개의 작품 보기</Text3>
+                    </Link>
                   </TextContainer>
                   <img
                     src={curation[keyName][0].curationImage}
@@ -114,7 +122,7 @@ const Container = styled.div`
 `;
 
 const HeadSection = styled.div`
-  max-width: 924px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
   margin-bottom: 72px;

@@ -7,6 +7,7 @@ import axios from "axios";
 import useModal from "../../../utils/useModal";
 import LoginAlert from "../Modal/AlertModal";
 import StatusBox from "../Tag/AnswerStatus";
+import Pagination from "../Pagination/Pagination";
 import QnaDetail from "../Q&A/Qna";
 import QnaDetailModify from "../Q&A/Qna_modify";
 import useSWR from "swr";
@@ -17,14 +18,17 @@ const QAList = () => {
   const { openModal, closeModal, ModalPortal } = useModal();
   const [needLogin, setNeedLogin] = useState(false);
   const [list, setList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(5);
   const GET_URL = "/question";
 
-  // 자세히보기 -페이지가 아닌 모달로 열 때 필요한거
-  // const { data } = useSWR(`/question/${router.query.id}`, fetcher);
-  // const [openDetail, setOpenDetail] = useState(false);
-  // const closeModalHandler = () => {
-  //   closeModal();
-  // };
+  const indexOfLast = currentPage * postsPerPage; // 5
+  const indexOfFirst = indexOfLast - postsPerPage; // 0
+  const showCurrentPosts = (tmp) => {
+    let currentPosts = 0;
+    currentPosts = tmp.slice(indexOfFirst, indexOfLast);
+    return currentPosts; // 한 페이지에 뿌릴 작품들
+  };
 
   const detailClickHandler = (id) => {
     router.push(`/qna/${id}`);
@@ -56,54 +60,49 @@ const QAList = () => {
 
   return (
     <Container>
-      <Table>
-        <Title>
-          <TitleText>제목</TitleText>
-          <TitleText>자세히보기</TitleText>
-          <TitleText>진행상태</TitleText>
-          <TitleText>문의일자</TitleText>
-        </Title>
-        {list.map((q) => {
-          const {
-            questionId,
-            title,
-            adminCheck,
-            createdAt,
-            email,
-            comment,
-            phone,
-            name,
-          } = q;
-          return (
-            <List key={questionId}>
-              <Text>{title}</Text>
-              <DetailText>
-                <span onClick={() => detailClickHandler(questionId)}>
-                  자세히보기
-                </span>
-              </DetailText>
-              {/* 자세히보기 -페이지가 아닌 모달로 열 때 필요한거
-              {openDetail && !adminCheck && (
-                <ModalPortal>
-                  <QnaDetail details={q} onClickHandler={closeModalHandler} />
-                </ModalPortal>
-              )}
-              {!openDetail && adminCheck && (
-                <ModalPortal>
-                  <QnaDetailModify
-                    details={q}
-                    onClickHandler={closeModalHandler}
-                  />
-                </ModalPortal>
-              )} */}
-              <Text>
-                <StatusBox status={adminCheck}>{adminCheck}</StatusBox>
-              </Text>
-              <Text>{createdAt}</Text>
-            </List>
-          );
-        })}
-      </Table>
+      <TableWrapper>
+        <Table>
+          <Title>
+            <TitleText>제목</TitleText>
+            <TitleText>자세히보기</TitleText>
+            <TitleText>진행상태</TitleText>
+            <TitleText>문의일자</TitleText>
+          </Title>
+          {showCurrentPosts(list).map((q) => {
+            const {
+              questionId,
+              title,
+              adminCheck,
+              createdAt,
+              email,
+              comment,
+              phone,
+              name,
+            } = q;
+            return (
+              <List key={questionId}>
+                <Text>{title}</Text>
+                <DetailText>
+                  <span onClick={() => detailClickHandler(questionId)}>
+                    자세히보기
+                  </span>
+                </DetailText>
+                <Text>
+                  <StatusBox status={adminCheck}>{adminCheck}</StatusBox>
+                </Text>
+                <Text>{createdAt}</Text>
+              </List>
+            );
+          })}
+        </Table>
+        <PageWrapper>
+          <Pagination
+            itemsPerPage={postsPerPage}
+            totalItems={list.length}
+            paginate={setCurrentPage}
+          />
+        </PageWrapper>
+      </TableWrapper>
       <Link href="/qna">
         <Btn>
           <img src="/assets/image/MP_1_1banner.png" />
@@ -122,7 +121,8 @@ const QAList = () => {
 const Container = styled.div`
   display: flex;
   width: 100%;
-  margin-bottom: 162px;
+  height: 100%;
+  margin-bottom: 102px;
 `;
 const Btn = styled.div`
   margin-left: auto;
@@ -134,15 +134,26 @@ const Btn = styled.div`
     height: auto;
   }
 `;
+const TableWrapper = styled.div`
+  display: flex;
+  width: 65%;
+  min-height: 434px;
+  flex-direction: column;
+`;
+
+const PageWrapper = styled.div`
+  margin-top: auto;
+`;
 const Table = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
-  width: 65%;
+  width: 100%;
   /* height: 100%; */
   flex-direction: column;
   border-radius: 10px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
+  margin-bottom: 44px;
 `;
 const Title = styled.li`
   display: flex;

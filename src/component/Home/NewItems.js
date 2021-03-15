@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Tag from "../Tag/Tag.";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import ShowAll from "../Button/ShowAll";
 import color from "../../../styles/colors";
@@ -13,37 +14,36 @@ const NewItems = ({ list }) => {
     <Container>
       <HeadSection>
         <Title>New</Title>
-        <ShowAll text={"모두보기"} path={"new"} />
+        <ShowAll text={"모두보기"} path={"새로 등록된 작품"} />
       </HeadSection>
       <List>
         {list.map((item, idx) => (
-          <Item
-            key={item.productId}
-            onClick={() => routeHandler(item.productId)}
-          >
-            <ItemImg>
-              <img src={item.productImage} alt={item.productTitle} />
-            </ItemImg>
-            <ItemDesc>
-              <Category>
-                {item.productBrokerageConsignment.map((cate, i) => {
-                  return (
-                    <Tag title={cate.slice(0, 2)} id={item.productId} key={i}>
-                      {cate.slice(0, 2)}
-                    </Tag>
-                  );
-                })}
-              </Category>
-              <Ptitle>{item.productTitle}</Ptitle>
-              <PInfo>
-                <div>{item.productCate}</div>
-                <Divider>|</Divider>
-                <div>{item.productYear}</div>
-                <Divider>|</Divider>
-                <div>{item.productCompany}</div>
-              </PInfo>
-            </ItemDesc>
-          </Item>
+          <Link href={`/performances/${item.productId}`} key={item.productId}>
+            <Item onClick={() => routeHandler(item.productId)}>
+              <ItemImg>
+                <img src={item.productImage} alt={item.productTitle} />
+              </ItemImg>
+              <ItemDesc>
+                <Category>
+                  {item.productBrokerageConsignment.map((cate, i) => {
+                    return (
+                      <Tag title={cate.slice(0, 2)} id={item.productId} key={i}>
+                        {cate.slice(0, 2)}
+                      </Tag>
+                    );
+                  })}
+                </Category>
+                <Ptitle>{item.productTitle}</Ptitle>
+                <PInfo>
+                  <div>{item.productCate}</div>
+                  <Divider>|</Divider>
+                  <div>{item.productYear}</div>
+                  <Divider>|</Divider>
+                  <div>{item.productCompany}</div>
+                </PInfo>
+              </ItemDesc>
+            </Item>
+          </Link>
         ))}
       </List>
     </Container>
@@ -62,7 +62,7 @@ const Divider = styled.div`
 const PInfo = styled.div`
   display: flex;
   font-family: "NotoSansCJKkr-Regular";
-  line-height: 14px;
+  line-height: 1;
   margin-top: 18px;
   color: ${color.black3};
 `;
@@ -81,7 +81,7 @@ const ItemDesc = styled.div`
 
 const ItemImg = styled.div`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   border-radius: 8px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
 
@@ -97,7 +97,7 @@ const Item = styled.li`
   max-width: 276px;
   width: 100%;
   height: auto;
-  margin-right: 5%;
+  margin-right: 2rem;
 `;
 
 const List = styled.ul`

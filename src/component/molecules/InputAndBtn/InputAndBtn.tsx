@@ -53,7 +53,7 @@ const InputAndBtn: FC<Props> = ({
       {number ? (
         <NumberInput
           width={inputWidth}
-          placeHolder={inputPlaceholder}
+          placeholder={inputPlaceholder}
           onChange={onChange}
           value={value}
         />

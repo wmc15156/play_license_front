@@ -4,6 +4,7 @@ import Btn_Left from "../Button/GrayShortBtn";
 import Btn_Right from "../Button/OriginalButton";
 import { FaCheck } from "react-icons/fa";
 import CheckBoxWrapper from "../CheckBoxWrapper/CircleCheckBoxWrapper";
+import { useState } from "react";
 
 const items = {
   numberOfMembers: ["5명 미만", "10명 미만", "10명 이상"],
@@ -17,12 +18,15 @@ const items = {
   mainAudience: ["유아 및 아동", "청소년", "성인"],
 };
 
-const FilterModal = ({
-  closeModal,
-  filterListHandler,
-  selectedOption,
-  setOption,
-}) => {
+const FilterModal = ({ closeModal, filterListHandler, setOption }) => {
+  const [tmpObj, setTmpObj] = useState({
+    numberOfMembers: "",
+    category: "",
+    genre: "",
+    sizeOfPerformance: "",
+    mainAudience: "",
+  });
+
   const resetHandler = () => {
     closeModal();
     setOption({
@@ -35,10 +39,16 @@ const FilterModal = ({
   };
 
   const radioButtonHandler = (name, val) => {
-    setOption({
-      ...selectedOption,
+    setTmpObj({
+      ...tmpObj,
       [name]: val,
     });
+  };
+
+  const okButtonHandler = (obj) => {
+    setOption(obj); // 상태변경
+    filterListHandler(); // get요청
+    closeModal();
   };
 
   return (
@@ -53,23 +63,23 @@ const FilterModal = ({
 
           <CheckSection>
             {items.numberOfMembers.map((label, index) => (
-              <li key={index}>
+              <CheckItem key={index}>
                 <CheckBoxWrapper
                   widthHeight={"20px"}
-                  checked={selectedOption.numberOfMembers.includes(label)}
+                  checked={tmpObj.numberOfMembers.includes(label)}
                   onClick={() => radioButtonHandler("numberOfMembers", label)}
                 >
                   <FaCheck
                     size={"15px"}
                     color={
-                      selectedOption.numberOfMembers.includes(label)
+                      tmpObj.numberOfMembers.includes(label)
                         ? color.white
                         : color.black5
                     }
                   />
                 </CheckBoxWrapper>
-                <div>{label}</div>
-              </li>
+                <Check_label>{label}</Check_label>
+              </CheckItem>
             ))}
           </CheckSection>
         </Section>
@@ -83,23 +93,23 @@ const FilterModal = ({
 
           <CheckSection>
             {items.category.map((label, index) => (
-              <li key={index}>
+              <CheckItem key={index}>
                 <CheckBoxWrapper
                   widthHeight={"20px"}
-                  checked={selectedOption.category.includes(label)}
+                  checked={tmpObj.category.includes(label)}
                   onClick={() => radioButtonHandler("category", label)}
                 >
                   <FaCheck
                     size={"15px"}
                     color={
-                      selectedOption.category.includes(label)
+                      tmpObj.category.includes(label)
                         ? color.white
                         : color.black5
                     }
                   />
                 </CheckBoxWrapper>
-                <div>{label}</div>
-              </li>
+                <Check_label>{label}</Check_label>
+              </CheckItem>
             ))}
           </CheckSection>
         </Section>
@@ -111,23 +121,21 @@ const FilterModal = ({
 
           <CheckSection>
             {items.genre.map((label, index) => (
-              <li key={index}>
+              <CheckItem key={index}>
                 <CheckBoxWrapper
                   widthHeight={"20px"}
-                  checked={selectedOption.genre.includes(label)}
+                  checked={tmpObj.genre.includes(label)}
                   onClick={() => radioButtonHandler("genre", label)}
                 >
                   <FaCheck
                     size={"15px"}
                     color={
-                      selectedOption.genre.includes(label)
-                        ? color.white
-                        : color.black5
+                      tmpObj.genre.includes(label) ? color.white : color.black5
                     }
                   />
                 </CheckBoxWrapper>
-                <div>{label}</div>
-              </li>
+                <Check_label>{label}</Check_label>
+              </CheckItem>
             ))}
           </CheckSection>
         </Section>
@@ -139,23 +147,23 @@ const FilterModal = ({
 
           <CheckSection>
             {items.sizeOfPerformance.map((label, index) => (
-              <li key={index}>
+              <CheckItem key={index}>
                 <CheckBoxWrapper
                   widthHeight={"20px"}
-                  checked={selectedOption.sizeOfPerformance.includes(label)}
+                  checked={tmpObj.sizeOfPerformance.includes(label)}
                   onClick={() => radioButtonHandler("sizeOfPerformance", label)}
                 >
                   <FaCheck
                     size={"15px"}
                     color={
-                      selectedOption.sizeOfPerformance.includes(label)
+                      tmpObj.sizeOfPerformance.includes(label)
                         ? color.white
                         : color.black5
                     }
                   />
                 </CheckBoxWrapper>
-                <div>{label}</div>
-              </li>
+                <Check_label>{label}</Check_label>
+              </CheckItem>
             ))}
           </CheckSection>
         </Section>
@@ -167,23 +175,23 @@ const FilterModal = ({
 
           <CheckSection>
             {items.mainAudience.map((label, index) => (
-              <li key={index}>
+              <CheckItem key={index}>
                 <CheckBoxWrapper
                   widthHeight={"20px"}
-                  checked={selectedOption.mainAudience.includes(label)}
+                  checked={tmpObj.mainAudience.includes(label)}
                   onClick={() => radioButtonHandler("mainAudience", label)}
                 >
                   <FaCheck
                     size={"15px"}
                     color={
-                      selectedOption.mainAudience.includes(label)
+                      tmpObj.mainAudience.includes(label)
                         ? color.white
                         : color.black5
                     }
                   />
                 </CheckBoxWrapper>
-                <div>{label}</div>
-              </li>
+                <Check_label>{label}</Check_label>
+              </CheckItem>
             ))}
           </CheckSection>
         </Section>
@@ -205,10 +213,7 @@ const FilterModal = ({
             margin={0}
             height={"56px"}
             size={"18px"}
-            onClick={() => {
-              filterListHandler();
-              closeModal();
-            }}
+            onClick={() => okButtonHandler(tmpObj)}
           >
             확인
           </Btn_Right>
@@ -271,9 +276,11 @@ const Subtitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   letter-spacing: -0.5px;
   font-size: 16px;
+  margin-bottom: 26px;
 `;
 
 const CheckSection = styled.ul`
+  width: 100%;
   margin: 0;
   list-style: none;
   padding: 0;
@@ -283,6 +290,22 @@ const CheckSection = styled.ul`
   font-family: "NotoSansCJKkr-Regular";
   letter-spacing: -0.5px;
   font-size: 16px;
+`;
+
+const CheckItem = styled.li`
+  /* margin: 0;
+  padding: 0; */
+  display: flex;
+  align-items: center;
+  /* max-width: 210px; */
+  width: 30%;
+`;
+
+const Check_label = styled.div`
+  font-family: "NotoSansCJKkr-Regular";
+  margin-left: 8px;
+  letter-spacing: -0.5px;
+  min-width: 35px;
 `;
 const Text = styled.div``;
 const BtnSection = styled.div`

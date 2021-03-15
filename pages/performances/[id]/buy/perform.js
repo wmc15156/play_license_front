@@ -32,9 +32,9 @@ const Performance = () => {
     place: {}, // 공연장소
     price: "", // 티켓가격
     isChangedScenario: "", // 각색여부,
-    changedRange: [],
+    changedRange: { select: [], input: "" },
     requiredMaterials: [],
-    selectedMaterials: [],
+    selectedMaterials: { select: [], input: "" },
     participant: { actor: {}, staff: {} }, // 공연참여인원
   });
   const [userInfoState, setUserInfoState] = useState({
@@ -68,7 +68,11 @@ const Performance = () => {
       ...groupState,
       ...perfInfoState,
       ...userInfoState,
-      category: "공연목적",
+      category: "공연목적용",
+      productId: Number(router.query.id),
+      participant_total:
+        Number(perfInfoState.participant.actor.input) +
+        Number(perfInfoState.participant.staff.input),
     });
   };
 

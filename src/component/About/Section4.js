@@ -19,7 +19,7 @@ const Section4 = () => {
 };
 
 const Container = styled.div`
-  max-width: 924px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
   margin-bottom: 100px;

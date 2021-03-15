@@ -24,7 +24,7 @@ const HeadSection = styled.div`
 `;
 
 const Container = styled.div`
-  max-width: 924px;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;

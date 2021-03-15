@@ -69,7 +69,6 @@ const Favorites = () => {
         <ListSt>
           {list.map((item) => (
             <Item key={item.productId}>
-              {/* <Item> */}
               <Link href={`/performances/${item.productId}`}>
                 <a>
                   <ItemImg>
@@ -207,7 +206,7 @@ const ItemImg = styled.div`
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
   & > img {
     /* min-width: 276px; */
-    width: 100%;
+    max-width: 100%;
     height: auto;
   }
 `;
@@ -218,7 +217,7 @@ const Item = styled.li`
   max-width: 276px;
   width: 100%;
   height: auto;
-  margin-right: 5%;
+  margin-right: 2rem;
 `;
 
 const ListSt = styled.ul`

@@ -11,7 +11,6 @@ const List = ({
   selectedOption,
   setOption,
 }) => {
-  console.log(list, "list");
   return (
     <Container>
       <HeadSection>
@@ -71,6 +70,7 @@ const PInfo = styled.div`
   display: flex;
   font-family: "NotoSansCJKkr-Regular";
   line-height: 14px;
+  letter-spacing: -0.5px;
 `;
 const Ptitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
@@ -80,20 +80,19 @@ const Ptitle = styled.div`
 `;
 
 const ItemDesc = styled.div`
-  min-width: 276px;
+  max-width: 276px;
   display: flex;
   flex-direction: column;
 `;
 
 const ItemImg = styled.div`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   border-radius: 8px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
 
   & > img {
-    min-width: 276px;
-    width: 100%;
+    max-width: 100%;
     height: auto;
   }
 `;
@@ -104,15 +103,20 @@ const Item = styled.li`
   max-width: 276px;
   width: 100%;
   height: auto;
-  margin-right: 2.5%;
   margin-bottom: 132px;
+  margin-right: 2rem;
+  &:nth-child(4n) {
+    margin-right: 0;
+  }
 `;
 
 const ListSt = styled.ul`
   list-style: none;
+  width: 100%;
   margin: 0;
   padding: 0;
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
 `;
 
