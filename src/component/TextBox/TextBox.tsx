@@ -2,9 +2,13 @@ import styled from "styled-components";
 import styles from "@styles/colors";
 import React, { FC } from "react";
 
-const Wrapper = styled.div<{ margin: string }>`
+const Wrapper = styled.div<{
+  margin: string;
+  height: string;
+  fontSize?: string;
+}>`
   width: 100%;
-  height: 156px;
+  height: ${(p) => p.height};
   overflow-y: auto;
   background-color: ${styles.gray1};
   color: ${styles.black3};
@@ -15,14 +19,21 @@ const Wrapper = styled.div<{ margin: string }>`
   overflow: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  font-size: ${(p) => p.fontSize && p.fontSize};
 `;
 
 type Props = {
   children: React.ReactNode;
   margin: string;
+  height: string;
+  fontSize?: string;
 };
 
-const TextBox: FC<Props> = ({ children, margin }) => {
-  return <Wrapper margin={margin}>{children}</Wrapper>;
+const TextBox: FC<Props> = ({ children, margin, height }) => {
+  return (
+    <Wrapper margin={margin} height={height}>
+      {children}
+    </Wrapper>
+  );
 };
 export default TextBox;

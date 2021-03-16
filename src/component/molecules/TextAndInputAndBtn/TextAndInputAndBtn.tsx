@@ -40,6 +40,7 @@ type Props = {
   onBlur?: () => void;
   number?: boolean;
   bigBtn?: boolean;
+  provider?: boolean;
 };
 
 const TextAndInputAndBtn: FC<Props> = ({
@@ -59,8 +60,8 @@ const TextAndInputAndBtn: FC<Props> = ({
   number,
   onBlur,
   bigBtn = false,
+  provider,
 }) => {
-  console.log(bigBtn, "2323");
   return (
     <Wrapper margin={wrapperMargin}>
       <SpanWrapper
@@ -84,6 +85,7 @@ const TextAndInputAndBtn: FC<Props> = ({
         number={number}
         timer={bigBtn}
         bigBtn={bigBtn}
+        provider={provider}
       >
         {children}
       </InputAndBtn>

@@ -1,4 +1,5 @@
 import ContainerWrapper from "@src/component/ContainerWrapper/ContainerWrapper";
+import ProviderHeader from "@src/component/Provider/Header";
 import Comment from "@src/component/Comment/Comment";
 import Line from "@src/component/Line/Line";
 import TextAndInput from "@src/component/molecules/TextAndInput/TextAndInput";
@@ -8,18 +9,17 @@ import TextAndInputAndBtn from "@src/component/molecules/TextAndInputAndBtn/Text
 import { useCallback, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import InputAndBtn from "@src/component/molecules/InputAndBtn/InputAndBtn";
 import OriginalButton from "@src/component/Button/OriginalButton";
-import { useGlobalDispatch } from "@store/homeStore";
 import { SAVE_USER_EMAIL } from "@reducers/types/types";
-import { ValidationCheck } from "../signup/second";
+import { useGlobalDispatch } from "@store/homeStore";
 
-const FindEmail = () => {
+function ProviderFindEmail() {
   const router = useRouter();
+
   const [name, setName] = useInput("");
   const [phone, setPhone] = useInput("");
-  const [code, setCode] = useInput("");
   const [timer, setTimer] = useState(false);
+  const [code, setCode] = useInput("");
   const [completedValidation, setCompletedValidation] = useState(false);
   const dispatch = useGlobalDispatch();
 
@@ -78,14 +78,15 @@ const FindEmail = () => {
 
   return (
     <ContainerWrapper width={"580px"}>
-      <Comment font={"24px"} margin={"72px"}>
-        아이디(이메일) 찾기
+      <ProviderHeader />
+      <Comment font={"24px"} margin={"135px"}>
+        이메일 찾기
       </Comment>
-      <Line background={true} width={"580px"} />
+      <Line background={true} width={"580px"} marginTop={"24px"} />
       <TextAndInput
         textFontSize={"21px"}
         textWidth={"78px"}
-        textColor={styles.orange}
+        textColor={styles.black1}
         textMargin={"25px"}
         inputWidth={"472px"}
         placeholder={"실명을 입력해주세요"}
@@ -100,7 +101,7 @@ const FindEmail = () => {
         text={"연락처"}
         textFontSize={"21px"}
         textWidth={"78px"}
-        textColor={styles.orange}
+        textColor={styles.black1}
         textMargin={"25px"}
         inputWidth={"472px"}
         placeholder={"-없이 숫자만 입력해주세요"}
@@ -109,6 +110,7 @@ const FindEmail = () => {
         wrapperMargin={"12px"}
         btnFontSize={"14px"}
         onClick={requestPhoneValidation}
+        provider={true}
       >
         인증번호 전송
       </TextAndInputAndBtn>
@@ -116,7 +118,7 @@ const FindEmail = () => {
         text={"인증번호"}
         textFontSize={"21px"}
         textWidth={"100%"}
-        textColor={styles.orange}
+        textColor={styles.black1}
         textMargin={"25px"}
         inputWidth={"472px"}
         placeholder={"인증번호를 입력해주세요."}
@@ -126,12 +128,10 @@ const FindEmail = () => {
         btnFontSize={"14px"}
         onClick={validateCode}
         bigBtn={timer}
+        provider={true}
       >
         인증번호 확인
       </TextAndInputAndBtn>
-      {completedValidation && (
-        <ValidationCheck>인증에 성공했습니다.</ValidationCheck>
-      )}
       <OriginalButton
         width={"100%"}
         position={false}
@@ -141,10 +141,10 @@ const FindEmail = () => {
         background={completedValidation}
         onClick={onChangePage}
       >
-        아이디(이메일)찾기
+        이메일찾기
       </OriginalButton>
     </ContainerWrapper>
   );
-};
+}
 
-export default FindEmail;
+export default ProviderFindEmail;
