@@ -41,6 +41,7 @@ const Market = () => {
         setList(res.data.result);
       });
   };
+
   useEffect(() => {
     if (data) {
       const first = ["모든작품"].concat(Object.keys(data.special));
@@ -122,12 +123,13 @@ const Market = () => {
     }
   };
 
-  const getCurationInfo = () => {
+  const getCurationInfo = (q) => {
+    console.log(q);
     axios
       .get("/curation/filter", {
         params: {
           page: 1,
-          q: router.query.curation,
+          q: q,
         },
       })
       .then((res) => {

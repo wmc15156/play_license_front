@@ -10,7 +10,7 @@ import fetcher from "../../../utils/fetcher";
 
 const MyPageHeader = () => {
   const router = useRouter();
-  const { data: userData, error: err } = useSWR("/auth/me", fetcher);
+  const { data: userData, error: err } = useSWR("/user/me", fetcher);
   // const [currentId, setCurrentId] = useState(null);
   const { openModal, closeModal, ModalPortal } = useModal();
   console.log(userData, "mypage userData");
@@ -73,8 +73,8 @@ const Container = styled.div`
 
 const Mypage = styled.div`
   font-family: "NotoSansCJKkr-Medium";
-  line-height: 36px;
-  font-size: 36px;
+  line-height: 24px;
+  font-size: 24px;
   margin-bottom: 44px;
   color: ${color.black2};
 `;

@@ -13,17 +13,17 @@ import fetcher from "../../../utils/fetcher";
 import Link from "next/link";
 
 const defaultStyles = {
-  transform: "scale(0.9)",
+  transform: "scale(0.8)",
   transition: "transform 2s ease",
-  opacity: 0.7,
   width: "100%",
   height: "400px",
+  filter: "brightness(50%)",
 };
 const activeStyles = {
   transform: "scale(1.0)",
   transition: "transform 2s ease",
   opacity: 1,
-  width: "1200px",
+  width: "100%",
   height: "400px",
   objectFit: "cover",
 };
@@ -49,10 +49,12 @@ const Curation = () => {
 
   useEffect(() => {
     axios.get("/curation/product", fetcher).then((res) => {
+      console.log(res);
       mutate(res.data);
     });
   });
 
+  console.log(data);
   if (!data) {
     return null;
   }
@@ -88,7 +90,7 @@ const Curation = () => {
             return (
               <div key={idx}>
                 <ImageContainer>
-                  <Overlay />
+                  {/* <Overlay /> */}
                   <TextContainer>
                     <Text1>[{curation[keyName][0].productTitle}] 등</Text1>
                     <Text2>{keyName}에 추천해요!</Text2>
@@ -135,17 +137,7 @@ const HeadSection = styled.div`
 const Title = styled.div`
   font-family: "Gotham Bold";
   font-size: 24px;
-  line-height: 2;
-`;
-
-const Overlay = styled.div`
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  z-index: 10;
-  background-color: ${color.black1};
-  opacity: 0.5;
-  position: absolute;
+  line-height: 24px;
 `;
 
 const TextContainer = styled.div`
@@ -188,6 +180,7 @@ const Text3 = styled.span`
   color: #000;
   background-color: ${color.white};
   border-radius: 25px;
+  cursor: pointer;
 `;
 
 const SliderContainer = styled.div`
@@ -258,13 +251,13 @@ const ArrowPrev = styled(IoIosArrowBack)`
   color: ${color.white};
   cursor: pointer;
   z-index: 10;
-  width: 20%;
+  width: 35%;
   height: 20%;
   transition: color 300ms;
-  .slick-arrow.slick-prev {
+  /* .slick-arrow.slick-prev {
     left: 0%;
     top: 50%;
-  }
+  } */
   &:hover {
     color: ${color.orange};
   }
@@ -274,13 +267,13 @@ const ArrowNext = styled(IoIosArrowForward)`
   color: ${color.white};
   cursor: pointer;
   z-index: 10;
-  width: 20%;
+  width: 35%;
   height: 20%;
   transition: color 300ms;
-  .slick-arrow.slick-next {
+  /* .slick-arrow.slick-next {
     right: 0%;
     top: 50%;
-  }
+  } */
   &:hover {
     color: ${color.orange};
   }

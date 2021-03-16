@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import image2 from "../../../public/assets/image/carousel1.png";
 import image3 from "../../../public/assets/image/carousel2.png";
 
-const images = [image2, image3, image2, image3];
+const images = [image2, image3];
 const defaultStyles = {
   borderRadius: "50%",
   background: color.black1,

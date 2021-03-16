@@ -18,6 +18,7 @@ const Hot = () => {
     axios
       .get("/curation/product")
       .then((res) => {
+        console.log(res);
         if (Array.isArray(res.data.hot)) {
           if (res.data.hot.length > 0) {
             setIsExist(true);

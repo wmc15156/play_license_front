@@ -19,7 +19,7 @@ const Category = ({ curation, getCurationInfo }) => {
 
   const buttonBackgroundColor = (title) => () => {
     setCurrent(title);
-    getCurationInfo();
+    getCurationInfo(title);
   };
 
   return (
