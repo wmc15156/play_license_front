@@ -12,7 +12,7 @@ import fetcher from "../../../utils/fetcher";
 
 const Header = ({ menuStatus, onCloseHandler }) => {
   const router = useRouter();
-  const { data, error } = useSWR("/auth/check/login", fetcher);
+  const { data, error } = useSWR("/user/me", fetcher);
   const [bluehover, setBlueHover] = useState(false);
   const [yellowHover, setYellowHover] = useState(false);
   const [orangeHover, setOrangeHover] = useState(false);

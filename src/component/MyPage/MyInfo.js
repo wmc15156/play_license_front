@@ -19,7 +19,7 @@ const dummies = {
 };
 
 const MyInfo = () => {
-  // const { data, error, mutate } = useSWR("/auth/me", fetcher);
+  const { data, error, mutate } = useSWR("/user/me", fetcher);
   const { ModalPortal, openModal, closeModal } = useModal();
   const [userData, setUserData] = useState({});
   const [modal, setModal] = useState("");
@@ -38,7 +38,7 @@ const MyInfo = () => {
 
   const onLogOut = () => {
     axios.post("/auth/logout").then((res) => {
-      // mutate(false, false);
+      mutate(false, false);
       router.push("/");
     });
   };

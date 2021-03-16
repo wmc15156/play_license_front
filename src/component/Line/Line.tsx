@@ -8,24 +8,34 @@ const Wrapper = styled.div`
   height: 70px;
 `;
 
-const LineWrapper = styled.hr<{ background: boolean; width: string }>`
+const LineWrapper = styled.hr<{
+  background: boolean;
+  width: string;
+  marginTop: string;
+}>`
   width: ${(p) => p.width};
   border-radius: 100px;
   height: 3px;
   background: ${(p) => (p.background ? `${styles.yellow}` : `${styles.gray1}`)};
   border: none;
   margin: 0;
+  margin-top: ${(p) => (p.marginTop ? p.marginTop : 0)};
 `;
 
 type Props = {
   background: boolean;
   width: string;
+  marginTop?: string;
 };
 
-const Line: VFC<Props> = ({ background, width }) => {
+const Line: VFC<Props> = ({ background, width, marginTop }) => {
   return (
     <Wrapper>
-      <LineWrapper background={background} width={width} />
+      <LineWrapper
+        background={background}
+        width={width}
+        marginTop={marginTop}
+      />
     </Wrapper>
   );
 };

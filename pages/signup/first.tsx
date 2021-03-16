@@ -53,19 +53,19 @@ const SignUpFirst: VFC = () => {
 
   return (
     <ContainerWrapper width={"580px"}>
-      <ProcessCircle process={1} lineWidth={'100px'} />
+      <ProcessCircle process={1} lineWidth={"100px"} />
       <Comment font={"24px"} margin={"64px"}>
         <span>개인정보 수집 및 활용</span>에 동의해주세요
       </Comment>
-      <TextBox margin={"22px"}>
+      <TextBox margin={"22px"} height={"156px"}>
         <Title>
-        PLAY LICENSE <span>개인정보처리방침</span>
+          PLAY LICENSE <span>개인정보처리방침</span>
         </Title>
         <Contents>
           <SubTitle>1. 개인정보의 수집범위</SubTitle>
           <Text1>
-            ① Play License는 회원가입 및 작품 등록과 구매 등의 서비스 제공을 위해
-            일반 회원 가입 당시 아래와 같은 개인정보를 수집하고 있습니다.
+            ① Play License는 회원가입 및 작품 등록과 구매 등의 서비스 제공을
+            위해 일반 회원 가입 당시 아래와 같은 개인정보를 수집하고 있습니다.
           </Text1>
           <Text2>
             &lt;일반 회원 가입 시 수집하는 개인정보의 범위&gt; 필수항목 : 이름,
@@ -86,12 +86,12 @@ const SignUpFirst: VFC = () => {
             서비스 안내 등에 이용
           </Text2>
           <Text1>
-            ② Play License는 회원의 개인정보를 개인정보의 수집목적 및 이용목적에서
-            고지한 범위 내에서만 사용하며 이용자의 사전 동의 없이는 동 범위를
-            초과하여 이용하거나 원칙적으로 이용자의 개인정보를 외부에 공개하지
-            않습니다. 단, 이용자들이 사전에 공개에 동의한 경우 법령의 규정에
-            의거하거나, 수사 목적으로 법령에 정해진 절차와 방법에 따라 수사기관의
-            요구가 있는 경우는 예외입니다.
+            ② Play License는 회원의 개인정보를 개인정보의 수집목적 및
+            이용목적에서 고지한 범위 내에서만 사용하며 이용자의 사전 동의 없이는
+            동 범위를 초과하여 이용하거나 원칙적으로 이용자의 개인정보를 외부에
+            공개하지 않습니다. 단, 이용자들이 사전에 공개에 동의한 경우 법령의
+            규정에 의거하거나, 수사 목적으로 법령에 정해진 절차와 방법에 따라
+            수사기관의 요구가 있는 경우는 예외입니다.
           </Text1>
           <SubTitle>3. 개인정보의 보유기간 및 이용기간</SubTitle>
           <Text1>

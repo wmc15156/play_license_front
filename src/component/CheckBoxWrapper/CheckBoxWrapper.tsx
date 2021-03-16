@@ -3,13 +3,17 @@ import { FC, memo, VFC } from "react";
 import React from "react";
 import styles from "@styles/colors";
 
-const Wrapper = styled.span<{ width: string; height: string; background }>`
+const Wrapper = styled.span<{
+  width: string;
+  height: string;
+  background: string | boolean;
+}>`
   display: inline-flex;
   border-radius: 6px;
   width: ${(p) => p.width};
   height: ${(p) => p.height};
   background-color: ${(p) =>
-    p.background ? `${styles.orange}` : `${styles.gray1}`};
+    p.background ? `${p.background}` : `${styles.gray1}`};
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -22,7 +26,7 @@ type Props = {
   height: string;
   background?: string;
   onChange?: () => void;
-  value?: boolean;
+  value?: string | boolean;
 };
 
 const CheckBoxWrapper: FC<Props> = ({
