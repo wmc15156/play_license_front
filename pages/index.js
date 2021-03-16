@@ -83,9 +83,9 @@ const BannerSection = styled.div`
   width: 100%;
   max-height: 180px;
   height: auto;
-  margin-bottom: 115px;
   max-width: 1200px;
   margin: 0 auto;
+  margin-bottom: 82px;
   display: flex;
 `;
 
@@ -93,6 +93,7 @@ const BannerWrapper = styled.div`
   width: 100%;
   display: flex;
   padding: 0 1rem;
+  margin-bottom: 16px;
 `;
 
 const Banner1 = styled.div`
