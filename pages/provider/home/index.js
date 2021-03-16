@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
+import Link from "next/link";
 import { PageContainer, PageContentContainer } from "../../../styles/PL_Frame";
 import Navi from "../../../src/component/Nav/Navigation";
-import Notice from "../../../src/PL_Component/Notice/Home_NoticeSection";
-import Faq from "../../../src/PL_Component/Faq/Home_FaqSection";
 import Home_Chart from "../../../src/PL_Component/Home/Home_Chart";
 import NoticeListItem from "../../../src/component/Form/NoticeListItem";
 import { IoIosInformationCircle } from "react-icons/io";
@@ -24,11 +23,19 @@ const notice = [
     LoLoremLoremLorem
     LoLoremLoremLoremLoremLorLoLorem`,
   },
+  {
+    id: 3,
+    title: "플레이라이선스 시범운영 안내",
+    cate: "이용방법",
+    answer: `LoLoremLoremLoremLoremLor
+    LoLoremLoremLorem
+    LoLoremLoremLoremLoremLorLoLorem`,
+  },
 ];
 const pl_home = () => {
   const router = useRouter();
-  const changeRouteHandler = () => {
-    router.push("/provider/notice");
+  const changeRouteHandler = (page) => {
+    router.push(`/provider/${page}`);
   };
   return (
     <Container>
@@ -41,16 +48,23 @@ const pl_home = () => {
             <Title>공지사항</Title>
             <NoticeContainer>
               <List>
-                {notice.map((item, idx) => (
-                  <ListItem key={item.id}>
-                    <NoticeListItem
-                      title={item.title}
-                      cate={item.cate}
-                      clickHandler={changeRouteHandler}
-                    />
-                  </ListItem>
-                ))}
+                {notice
+                  .map((item, idx) => (
+                    <ListItem key={item.id}>
+                      <NoticeListItem
+                        title={item.title}
+                        cate={item.cate}
+                        clickHandler={() => changeRouteHandler("notice")}
+                      />
+                    </ListItem>
+                  ))
+                  .slice(0, 2)}
               </List>
+              <Divider>
+                <Link href="/provider/notice">
+                  <span>모두보기</span>
+                </Link>
+              </Divider>
               <Box>
                 <Box_Head>
                   <Subtitle>고객현황</Subtitle>
@@ -96,20 +110,26 @@ const pl_home = () => {
             <Title>자주묻는질문</Title>
             <FaqContainer>
               <List>
-                {notice.map((item, idx) => (
-                  <ListItem key={item.id}>
-                    <NoticeListItem
-                      title={item.title}
-                      cate={item.cate}
-                      clickHandler={changeRouteHandler}
-                    />
-                  </ListItem>
-                ))}
+                {notice
+                  .map((item, idx) => (
+                    <ListItem key={item.id}>
+                      <NoticeListItem
+                        title={item.title}
+                        cate={item.cate}
+                        clickHandler={() => changeRouteHandler("faq")}
+                      />
+                    </ListItem>
+                  ))
+                  .slice(0, 2)}
               </List>
+
+              <Divider>
+                <Link href="/provider/faq">
+                  <span>모두보기</span>
+                </Link>
+              </Divider>
               <Box>
-                <Box_Head>
-                  <Subtitle>월간매출통계</Subtitle>
-                </Box_Head>
+                <Subtitle>월간매출통계</Subtitle>
                 <Box_Body>
                   <Home_Chart />
                 </Box_Body>
@@ -118,7 +138,12 @@ const pl_home = () => {
           </Column2>
         </Section1>
         <Section2>
-          <Title>구매분석</Title>
+          <Box>
+            <Box_Head>
+              <Subtitle>구매분석</Subtitle>
+            </Box_Head>
+            <Box_Body></Box_Body>
+          </Box>
         </Section2>
       </BodyContainer>
     </Container>
@@ -151,18 +176,33 @@ const Subtitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   color: ${color.black2};
 `;
+
 const Section1 = styled.div`
   display: flex;
   width: 100%;
   margin-bottom: 30px;
 `;
+
 const Column1 = styled.div`
   width: 50%;
   margin-right: 15px;
 `;
+
 const Column2 = styled.div`
   width: 50%;
   margin-left: 15px;
+`;
+
+const Divider = styled.div`
+  margin-top: 14px;
+  margin-bottom: 30px;
+  text-align: right;
+  font-size: 12px;
+  & > span {
+    font-family: "NotoSansCJKkr-Regular";
+    color: ${color.black3};
+    cursor: pointer;
+  }
 `;
 
 const NoticeContainer = styled.div`
@@ -172,13 +212,8 @@ const FaqContainer = styled.div`
   width: 100%;
 `;
 const Section2 = styled.div`
-  display: flex;
-  width: calc(100% - 60px);
+  width: 100%;
   height: 324px;
-  border-radius: 14px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  padding: 30px;
-  justify-content: center;
 `;
 
 const List = styled.ul`
