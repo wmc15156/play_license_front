@@ -30,7 +30,7 @@ const Etc = () => {
   });
   const [perfInfoState, setPerfInfoState] = useState({
     objective: {}, // 사용목적
-    startDate: [{ start: "", end: "" }], // 이용기간 달력
+    plan: [{ startDate: "", endDate: "" }], // 이용기간 달력
     period: "", // 이용시작일 : 디자인에 option값없어서 안넣음
     requiredMaterials: [], // 필수자료
     selectedMaterials: { select: [], input: "" }, // 선택자료(공급자가 제공선택한 자료만 표시)

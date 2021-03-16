@@ -31,7 +31,7 @@ const Edu = () => {
   const [perfInfoState, setPerfInfoState] = useState({
     objective: {}, // 활용목적
     period: "", // 이용기간 택1
-    startDate: [{ start: "", end: "" }], // 이용시작일 달력
+    plan: [{ startDate: "", endDate: "" }], // 이용시작일 달력
     requiredMaterials: [], // 필수자료
     selectedMaterials: { select: [], input: "" }, // 선택자료(공급자가 제공선택한 자료만 표시)
   });

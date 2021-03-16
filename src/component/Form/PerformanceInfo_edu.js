@@ -155,13 +155,11 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
                 <Date_Name>시작</Date_Name>
                 <label>
                   <DatePicker
-                    date={perfInfoState.startDate[0].start}
+                    date={perfInfoState.plan[0].startDate}
                     setDate={(e) =>
                       setPerfInfoState({
                         ...perfInfoState,
-                        startDate: [
-                          { ...perfInfoState.startDate[0], start: e },
-                        ],
+                        plan: [{ ...perfInfoState.plan[0], startDate: e }],
                       })
                     }
                   />
@@ -174,11 +172,11 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
                 <Date_Name>종료</Date_Name>
                 <label>
                   <DatePicker
-                    date={perfInfoState.startDate[0].end}
+                    date={perfInfoState.plan[0].endDate}
                     setDate={(e) =>
                       setPerfInfoState({
                         ...perfInfoState,
-                        startDate: [{ ...perfInfoState.startDate[0], end: e }],
+                        plan: [{ ...perfInfoState.plan[0], endDate: e }],
                       })
                     }
                   />
