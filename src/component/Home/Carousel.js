@@ -6,8 +6,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import image2 from "../../../public/assets/image/carousel1.png";
 import image3 from "../../../public/assets/image/carousel2.png";
+import { useRouter } from "next/router";
 
-const images = [image2, image3];
+const images = [
+  { img: image2, link: `/about` },
+  { img: image3, link: `/market` },
+];
 const defaultStyles = {
   borderRadius: "50%",
   background: color.black1,
@@ -25,6 +29,7 @@ const focusStyles = {
 const activeImgStyles = {
   transition: "opacity 3s ease",
   opacity: 1,
+  cursor: "pointer",
 };
 const defaultImgStyles = {
   transition: "opacity 3s ease",
@@ -32,6 +37,7 @@ const defaultImgStyles = {
 };
 
 const Carousel = () => {
+  const router = useRouter();
   const [imageIdx, setImageIdx] = useState(0);
 
   const settings = {
@@ -79,6 +85,11 @@ const Carousel = () => {
       return <div style={i === imageIdx ? focusStyles : defaultStyles}></div>;
     },
   };
+
+  const onClickImage = (href) => {
+    router.push(href);
+  };
+
   return (
     <Container>
       <StyledSlider {...settings}>
@@ -86,9 +97,10 @@ const Carousel = () => {
           <div key={idx}>
             <ImageContainer>
               <img
-                src={img}
-                alt={img}
+                src={img.img}
+                alt={img.img}
                 style={idx === imageIdx ? activeImgStyles : defaultImgStyles}
+                onClick={() => onClickImage(img.link)}
               />
             </ImageContainer>
           </div>
