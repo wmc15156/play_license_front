@@ -116,7 +116,6 @@ const ListSt = styled.ul`
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
 `;
 

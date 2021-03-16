@@ -11,30 +11,6 @@ import ContractModal from "../Modal/ContractModal";
 import useSWR from "swr";
 import fetcher from "../../../utils/fetcher";
 
-const dummies = [
-  {
-    questionId: "1",
-    contractId: "1",
-    estimateId: "1",
-    title: "네네네",
-    check: "승인완료",
-    createdAt: "2020.12.11",
-  },
-  {
-    questionId: "2",
-    estimateId: "2",
-    title: "김종욱 찾기",
-    check: "관리자검토중",
-    createdAt: "2021.01.11",
-  },
-  {
-    questionId: "3",
-    title: "버드나무",
-    check: "보완요청",
-    createdAt: "2021.02.22",
-  },
-];
-
 const PurchaseRequest = () => {
   const router = useRouter();
   const { openModal, closeModal, ModalPortal } = useModal();
@@ -43,7 +19,6 @@ const PurchaseRequest = () => {
   const [postsPerPage, setPostsPerPage] = useState(5);
   const [openDetail_Est, setOpenDetail_Est] = useState(false);
   const [openDetail_Cont, setOpenDetail_Cont] = useState(false);
-  const GET_URL = "/product/buyer/cart";
 
   //pagination
   const indexOfLast = currentPage * postsPerPage; // 5
@@ -60,13 +35,23 @@ const PurchaseRequest = () => {
     setOpenDetail_Cont(false);
   };
 
-  const detailHandler = (id) => {
-    router.push(`/qna/buy/${id}`);
+  const detailModifyHandler = (id, category) => {
+    router.push({
+      pathname: `/qna/buy/${id}/modify`,
+      query: { category: category },
+    });
+  };
+
+  const detailCheckHandler = (id, category) => {
+    router.push({
+      pathname: `/qna/buy/${id}/check`,
+      query: { category: category },
+    });
   };
 
   // GET -작품구매문의
   const getData = () => {
-    axios.get(GET_URL).then((res) => {
+    axios.get("/product/buyer/cart").then((res) => {
       if (res.status === 200) {
         console.log(res, "????????>>>>");
         setList(res.data);
@@ -101,8 +86,9 @@ const PurchaseRequest = () => {
             <TitleText>견적서</TitleText>
             <TitleText>계약서</TitleText>
           </Title>
-          {showCurrentPosts(list).map((ele) => {
+          {showCurrentPosts(list).map((ele, i) => {
             const {
+              category,
               questionId,
               contractId,
               estimateId,
@@ -111,7 +97,7 @@ const PurchaseRequest = () => {
               createdAt,
             } = ele;
             return (
-              <List key={questionId}>
+              <List key={i}>
                 <Text>{title}</Text>
                 <Text>{createdAt}</Text>
                 <Box_Status>
@@ -121,13 +107,17 @@ const PurchaseRequest = () => {
                 {/* 문의내용 자세히 */}
                 {adminCheck === "보완요청" ? (
                   <DetailText color={color.orange}>
-                    <span onClick={() => detailHandler(questionId)}>
+                    <span
+                      onClick={() => detailModifyHandler(questionId, category)}
+                    >
                       보완하기
                     </span>
                   </DetailText>
                 ) : (
                   <DetailText>
-                    <span onClick={() => detailHandler(questionId)}>
+                    <span
+                      onClick={() => detailCheckHandler(questionId, category)}
+                    >
                       자세히보기
                     </span>
                   </DetailText>
@@ -166,7 +156,7 @@ const PurchaseRequest = () => {
           />
         </PageWrapper>
       </TableWrapper>
-      {openDetail_Est && (
+      {openDetail_Est && !openDetail_Cont && (
         <ModalPortal>
           <EstImgDownloadModal
             closeBtnHandler={closeModalHandler}
@@ -174,7 +164,7 @@ const PurchaseRequest = () => {
           />
         </ModalPortal>
       )}
-      {openDetail_Cont && (
+      {!openDetail_Est && openDetail_Cont && (
         <ModalPortal>
           <ContractModal closeBtnHandler={closeModalHandler} />
         </ModalPortal>

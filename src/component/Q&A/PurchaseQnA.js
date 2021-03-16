@@ -4,8 +4,6 @@ import { FaTrash } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { memo, useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import useSWR from "swr";
-import fetcher from "../../../utils/fetcher";
 import Group from "../Form/Group";
 import UserInfo from "../Form/UserInfo";
 import PerformanceInfo_provider from "../Form/PerformanceInfo_provider";
@@ -14,58 +12,81 @@ import PerformanceInfo_etc from "../Form/PerformanceInfo_etc";
 import Btn from "../../../src/component/Button/OriginalButton";
 import useModal from "../../../utils/useModal";
 import AlertModal from "../Modal/AlertModal";
-import { data } from "./dummyData.js";
 
-const PurchaseQnA = ({ onClickHandler }) => {
-  // const { data } = useSWR(`/question/${router.query.id}`, fetcher);
+const PurchaseQnA = ({ onClickHandler, data }) => {
+  const router = useRouter();
+
   const { openModal, closeModal, ModalPortal } = useModal();
   const [isEdit, setIsEdit] = useState(true);
   const [isCancelled, setIsCancelled] = useState(false);
+
   const [groupState, setGroupState] = useState({
-    groupName: data.groupName,
-    introduction: data.introduction,
-  });
-  const [perfInfoState, setPerfInfoState] = useState({
-    objective: { 0: data.objective[0], 1: data.objective[1] }, // 교육,기타 - 사용목적,
-    planDocument: { 0: data.planDocument[0], 1: data.planDocument[1] }, // 공연 - 기획내용
-
-    plan: data.plan.map((el) => {
-      return { startDate: el.startDate, endDate: el.endDate };
-    }),
-    startDate: data.startDate.map((el) => {
-      return { startDate: el.startDate, endDate: el.endDate };
-    }),
-
-    period: data.period,
-    round: data.round, // 공연회차
-
-    place: {
-      place_select: data.place.place_select,
-      place_detail: data.place.place_detail,
-      place_etc: data.place.place_etc,
-    }, // 공연장소
-    price: data.price, // 티켓가격
-    isChangedScenario: data.isChangedScenario, // 각색여부,
-    changedRange: data.changedRange,
-    requiredMaterials: data.requiredMaterials,
-    selectedMaterials: data.selectedMaterials,
-    participant: {
-      actor: {
-        select: data.participant.actor.select,
-        input: data.participant.actor.input,
-      },
-      staff: {
-        select: data.participant.staff.select,
-        input: data.participant.staff.input,
-      },
-    }, // 공연참여인원
+    groupName: data[0].product_groupName,
+    introduction: data[0].product_introduction,
   });
 
   const [userInfoState, setUserInfoState] = useState({
-    name: data.name,
-    phone: data.phone,
-    comment: data.comment,
+    name: data[0].product_name,
+    phone: data[0].product_phone,
+    comment: data[0].product_comment,
   });
+
+  const [perfInfoState, setPerfInfoState] = useState(
+    router.query.category === "공연목적"
+      ? {
+          planDocument: {
+            0: data[0].product_planDocument[0],
+            1: data[0].product_planDocument[1],
+          }, // 공연 - 기획내용
+          plan: data[0].product_plan.map((el) => {
+            return { startDate: el.startDate, endDate: el.endDate };
+          }),
+          round: data[0].product_round, // 공연회차
+          place: {
+            place_select: data[0].product_place.place_select,
+            place_detail: data[0].product_place.place_detail,
+            place_etc: data[0].product_place.place_etc,
+          }, // 공연장소
+          price: data[0].product_price, // 티켓가격
+          isChangedScenario: data[0].product_isChangedScenario, // 각색여부,
+          changedRange: {
+            select: data[0].product_changedRange.select,
+            input: data[0].product_changedRange.input,
+          },
+          requiredMaterials: data[0].product_requiredMaterials,
+          selectedMaterials: {
+            select: data[0].product_selectedMaterials.select,
+            input: data[0].product_selectedMaterials.input,
+          },
+          participant: {
+            actor: {
+              select: data[0].product_participant.actor.select,
+              input: data[0].product_participant.actor.input,
+            },
+            staff: {
+              select: data[0].product_participant.staff.select,
+              input: data[0].product_participant.staff.input,
+            },
+          }, // 공연참여인원
+        }
+      : {
+          objective: {
+            0: data[0].product_objective[0],
+            1: data[0].product_objective[1],
+          }, // 교육,기타 - 사용목적,
+
+          plan: data[0].product_plan.map((el) => {
+            return { startDate: el.startDate, endDate: el.endDate };
+          }),
+
+          period: data[0].product_period,
+          requiredMaterials: data[0].product_requiredMaterials,
+          selectedMaterials: {
+            select: data[0].product_selectedMaterials.select,
+            input: data[0].product_selectedMaterials.input,
+          },
+        }
+  );
 
   const preventSetState = () => {
     console.log("ㄴㄴㄴㄴㄴ");
@@ -76,6 +97,35 @@ const PurchaseQnA = ({ onClickHandler }) => {
   const cancelBtnHandler = () => {
     setIsCancelled(true);
     openModal();
+  };
+
+  const withdrawHandler = () => {
+    let category = "";
+    switch (data[0].product_category.substring(0, 2)) {
+      case "공연":
+        category = "performance";
+        break;
+
+      case "교육" || "기타":
+        category = "education";
+        break;
+    }
+
+    axios
+      .patch(`/user/withdraw/${category}/${router.query.id}`)
+      .then((res) => {
+        setIsCancelled(false);
+        closeModal();
+        router.push("/mypage/01");
+      })
+      .catch((err) => console.error(err, "err"));
+
+    setIsCancelled(false);
+  };
+
+  const modalCloseHandler = () => {
+    setIsEdit(false);
+    closeModal();
   };
 
   return (
@@ -105,7 +155,7 @@ const PurchaseQnA = ({ onClickHandler }) => {
               groupStateHandler={preventSetState}
             />
           </Wrap>
-          {data && data.category === "공연목적" && (
+          {data && router.query.category.includes("공연") && (
             // 구매문의 목적 : 공연 목적인 경우
             <Wrap>
               <PerformanceInfo_provider
@@ -114,7 +164,7 @@ const PurchaseQnA = ({ onClickHandler }) => {
               />
             </Wrap>
           )}
-          {data && data.category === "교육목적" && (
+          {data && router.query.category.includes("교육") && (
             // 구매문의 목적 : 교육 목적인 경우
             <Wrap>
               <PerformanceInfo_edu
@@ -123,7 +173,7 @@ const PurchaseQnA = ({ onClickHandler }) => {
               />
             </Wrap>
           )}
-          {data && data.category === "기타목적" && (
+          {data && router.query.category.includes("기타") && (
             // 구매문의 목적 : 기타 목적인 경우
             <Wrap>
               <PerformanceInfo_etc
@@ -156,7 +206,7 @@ const PurchaseQnA = ({ onClickHandler }) => {
         <ModalPortal>
           <AlertModal
             text={"편집이 불가능한 상태입니다"}
-            onClickBtn={closeModal}
+            onClickBtn={modalCloseHandler}
           />
         </ModalPortal>
       )}
@@ -167,7 +217,7 @@ const PurchaseQnA = ({ onClickHandler }) => {
             text={"구매문의를 철회하시겠습니까?"}
             content1={"문의 철회시 더이상 구매과정이 진행되지 않습니다."}
             content2={"이대로 철회하시겠습니까?"}
-            onClickBtn={closeModal}
+            onClickBtn={withdrawHandler}
           />
         </ModalPortal>
       )}
