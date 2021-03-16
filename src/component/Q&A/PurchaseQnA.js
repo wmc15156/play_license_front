@@ -134,12 +134,16 @@ const PurchaseQnA = ({ onClickHandler, data }) => {
         <HeadSection>
           <Row1>
             <T1>{"spspsp"}</T1>
-            <DeleteBtnContainer>
-              <DeleteBtn onClick={cancelBtnHandler}>
-                <FaTrash color={color.black3} />
-                <span>문의 철회하기</span>
-              </DeleteBtn>
-            </DeleteBtnContainer>
+            {data[0].product_admin_check.includes("철회") ? (
+              <></>
+            ) : (
+              <DeleteBtnContainer>
+                <DeleteBtn onClick={cancelBtnHandler}>
+                  <FaTrash color={color.black3} />
+                  <span>문의 철회하기</span>
+                </DeleteBtn>
+              </DeleteBtnContainer>
+            )}
           </Row1>
           <T2>
             작성해주신 <span>작품구매 문의내용</span>을 확인해주세요

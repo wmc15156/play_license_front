@@ -122,7 +122,6 @@ const pl_home = () => {
                   ))
                   .slice(0, 2)}
               </List>
-
               <Divider>
                 <Link href="/provider/faq">
                   <span>모두보기</span>
