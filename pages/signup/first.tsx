@@ -112,7 +112,8 @@ const SignUpFirst: VFC = () => {
           width={"24px"}
           height={"24px"}
           onChange={onChangeTerm}
-          value={term}
+          value={term ? color.orange : false}
+          
         >
           <FaCheck size={"15px"} color={term ? "white" : "gray"} />
         </CheckBoxWrapper>

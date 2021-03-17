@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
 import BasicInput from "../BasicInput/BasicInputColor";
 import GrayBtn from "../Button/GrayShortBtn";
 import { FaCheck } from "react-icons/fa";
@@ -24,24 +24,29 @@ const items_selectMaterial = [
 ];
 
 const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
-  const nextCalendarIdx = useRef(1);
+  const handleStartDateInput = (i, e) => {
+    const planValues = [...perfInfoState.plan];
+    planValues[i]["startDate"] = e;
+    setPerfInfoState({ ...perfInfoState, plan: planValues });
+  };
 
-  // const onAddCalendarClick = useCallback(() => {
-  //   setPerfInfoState({
-  //     ...perfInfoState,
-  //     plan: [{ ...perfInfoState.plan[nextCalendarIdx], startDate: "" }],
-  //   });
-  //   setPerfInfoState({
-  //     ...perfInfoState,
-  //     plan: [{ ...perfInfoState.plan[nextCalendarIdx], endDate: "" }],
-  //   });
+  const handleEndDateInput = (i, e) => {
+    const planValues = [...perfInfoState.plan];
+    planValues[i]["endDate"] = e;
+    setPerfInfoState({ ...perfInfoState, plan: planValues });
+  };
 
-  //   nextCalendarIdx.current += 1;
-  // }, [perfInfoState.plan]);
+  const handleAddCalendars = () => {
+    setPerfInfoState({
+      ...perfInfoState,
+      plan: [...perfInfoState.plan, { startDate: "", endDate: "" }],
+    });
+  };
 
-  const onAddCalendarClick = () => {
-    console.log("ref", nextCalendarIdx);
-    // nextCalendarId.current.focus();
+  const handleRemoveCalendars = (i) => {
+    const planValues = [...perfInfoState.plan];
+    planValues.splice(i, 1);
+    setPerfInfoState({ ...perfInfoState, plan: planValues });
   };
 
   const removeSelectItemHandler = useCallback(
@@ -192,55 +197,62 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
 
           <Content>
             <InputArea>
-              <InputArea_Row1>
-                <DateArea ref={nextCalendarIdx}>
-                  <Date_>
-                    <Date_Start>
-                      <Date_Name>시작</Date_Name>
-                      <label>
-                        <DatePicker
-                          date={perfInfoState.plan[0].startDate}
-                          setDate={(e) =>
-                            setPerfInfoState({
-                              ...perfInfoState,
-                              plan: [
-                                { ...perfInfoState.plan[0], startDate: e },
-                              ],
-                            })
-                          }
+              {perfInfoState.plan.map((calendar, i) => {
+                {
+                  /* calendar = { startDate: "", endDate: "" } */
+                }
+                return (
+                  <InputArea_Row1>
+                    <DateArea>
+                      <Date_>
+                        <Date_Start>
+                          <Date_Name>시작</Date_Name>
+                          <label>
+                            <DatePicker
+                              date={calendar.startDate}
+                              setDate={(e) => handleStartDateInput(i, e)}
+                            />
+                          </label>
+                        </Date_Start>
+                        <Date_Div>
+                          <Divider />
+                        </Date_Div>
+                        <Date_End>
+                          <Date_Name>종료</Date_Name>
+                          <label>
+                            <DatePicker
+                              date={calendar.endDate}
+                              setDate={(e) => handleEndDateInput(i, e)}
+                            />
+                          </label>
+                        </Date_End>
+                      </Date_>
+                    </DateArea>
+                    {i !== 0 && (
+                      <BtnContainer>
+                        <GrayBtn
+                          size={"14px"}
+                          height={"40px"}
+                          fontColor={color.black2}
+                          onClickHandler={() => handleRemoveCalendars(i)}
+                          text={"일정삭제"}
                         />
-                      </label>
-                    </Date_Start>
-                    <Date_Div>
-                      <Divider />
-                    </Date_Div>
-                    <Date_End>
-                      <Date_Name>종료</Date_Name>
-                      <label>
-                        <DatePicker
-                          date={perfInfoState.plan[0].endDate}
-                          setDate={(e) =>
-                            setPerfInfoState({
-                              ...perfInfoState,
-                              plan: [{ ...perfInfoState.plan[0], endDate: e }],
-                            })
-                          }
+                      </BtnContainer>
+                    )}
+                    {i === 0 && (
+                      <BtnContainer>
+                        <GrayBtn
+                          size={"14px"}
+                          height={"40px"}
+                          fontColor={color.black2}
+                          onClickHandler={handleAddCalendars}
+                          text={"일정추가"}
                         />
-                      </label>
-                    </Date_End>
-                  </Date_>
-                </DateArea>
-                {/* 일정추가 시 같은 선택창 필요 */}
-                <AddBtnContainer>
-                  <GrayBtn
-                    size={"14px"}
-                    height={"40px"}
-                    fontColor={color.black2}
-                    onClickHandler={onAddCalendarClick}
-                    text={"일정추가"}
-                  />
-                </AddBtnContainer>
-              </InputArea_Row1>
+                      </BtnContainer>
+                    )}
+                  </InputArea_Row1>
+                );
+              })}
             </InputArea>
           </Content>
         </Input>
@@ -698,9 +710,10 @@ const DateArea = styled.div`
   width: 78%;
 `;
 
-const AddBtnContainer = styled.div`
+const BtnContainer = styled.div`
   display: flex;
   align-items: center;
+  margin-left: auto;
   width: 18%;
 `;
 
