@@ -150,7 +150,7 @@ const RegistQ = () => {
             width={"24px"}
             height={"24px"}
             onChange={handleChange}
-            value={isChecked}
+            value={isChecked ? color.orange : false}
           >
             <FaCheck size={"15px"} color={isChecked ? "white" : "gray"} />
           </CheckBoxWrapper>

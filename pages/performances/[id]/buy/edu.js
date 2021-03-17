@@ -115,7 +115,7 @@ const Edu = () => {
           width={"24px"}
           height={"24px"}
           onChange={handleChange}
-          value={checked}
+          value={checked ? color.orange : false}
         >
           <FaCheck size={"15px"} color={checked ? "white" : "gray"} />
         </CheckBoxWrapper>
