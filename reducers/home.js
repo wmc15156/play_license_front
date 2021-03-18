@@ -46,15 +46,17 @@ export const homeReducer = (state, action) => {
       };
 
     case SAVE_USER_EMAIL:
+      console.log(action.payload, 2);
       return {
         ...state,
         userEmail: action.payload,
       };
     case SAVE_PASSWORD_CHECK:
+      console.log(action.payload);
       return {
         ...state,
         passwordCheck: action.payload,
-      }
+      };
     default:
       throw new Error("Unhandled action type", action.type);
   }
