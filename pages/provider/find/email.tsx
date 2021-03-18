@@ -12,7 +12,6 @@ import { useRouter } from "next/router";
 import OriginalButton from "@src/component/Button/OriginalButton";
 import { SAVE_USER_EMAIL } from "@reducers/types/types";
 import { useGlobalDispatch } from "@store/homeStore";
-import { requestPhoneValidation } from "@utils/requestPhoneValidation";
 import useSWR from "swr";
 import fetcher from "@utils/fetcher";
 import { ValidationCheck } from "../../signup/second";
