@@ -1,10 +1,7 @@
 import {
-  SIGN_UP,
-  SIGN_UP_SUCCESS,
-  UserAction,
   UserState,
 } from "../reducers/user";
-import axios from "axios";
+
 
 type createPromiseThunkInput = {
   type: string;
