@@ -45,19 +45,19 @@ const Footer = () => {
             <li>
               <Menu>챗봇</Menu>
             </li>
-            <Divider>|</Divider>
+            <Divider />
             <li>
               <Link href="/faq">
                 <Menu>자주 묻는 질문</Menu>
               </Link>
             </li>
-            <Divider>|</Divider>
+            <Divider />
             <li>
               <Link href="/policy">
                 <Menu>개인정보처리방침</Menu>
               </Link>
             </li>
-            <Divider>|</Divider>
+            <Divider />
             <li>
               <Link href="/terms">
                 <Menu>이용약관</Menu>
@@ -83,7 +83,7 @@ const Background = styled.div`
   height: 410px;
 `;
 const Container = styled.div`
-  max-width: 924px;
+  max-width: 1200px;
   width: 100%;
   display: flex;
   margin: 0 auto;
@@ -173,6 +173,9 @@ const Menu = styled.div`
 
 const Divider = styled.span`
   margin: 0 12px;
+  height: 100%;
+  width: 1px;
+  background-color: ${color.black4};
 `;
 
 const BtnWapper = styled.div`

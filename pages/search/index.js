@@ -3,10 +3,10 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { debounce } from "lodash";
-import Tag from "../src/component/Tag/Tag.";
+import Tag from "../../src/component/Tag/Tag.";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import fetcher from "../utils/fetcher";
+import fetcher from "../../utils/fetcher";
 
 const Search = () => {
   const [list, setList] = useState([]);
@@ -135,7 +135,7 @@ const Search = () => {
 };
 
 const Container = styled.div`
-  max-width: 924px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -150,7 +150,7 @@ const Section1 = styled.div`
 const InputBox = styled.input.attrs({
   placeholder: "검색할 작품을 입력해주세요",
 })`
-  width: 100%;
+  width: calc(100% - 34px);
   height: 104px;
   border-radius: 14px;
   background-color: #f5f5f5;

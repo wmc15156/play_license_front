@@ -69,7 +69,6 @@ function SignupThird() {
   }, [email, validation, checkEmail]);
 
   const checkPassword = () => {
-    console.log(password);
     if (!password) {
       setPwValidationError(false);
       return;
@@ -79,7 +78,7 @@ function SignupThird() {
   };
 
   const finalCheck = name && email && checkEmail && password && phone;
-
+  console.log(finalCheck.length, "final");
   const onSubmit = () => {
     if (finalCheck) {
       const data = {
@@ -182,7 +181,7 @@ function SignupThird() {
       <OriginalButton
         margin={"64px"}
         width={"580px"}
-        background={finalCheck}
+        background={finalCheck === "" ? false : finalCheck}
         height={"60px"}
         size={"21px"}
         onClick={onSubmit}

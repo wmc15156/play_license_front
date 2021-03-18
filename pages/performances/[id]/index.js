@@ -2,24 +2,24 @@ import styled from "styled-components";
 import axios from "axios";
 import PerformanceDetail from "../../../src/component/PerformanceDetail/PerformanceDetail";
 
-const Container = styled.div`
-  max-width: 924px;
-  padding: 0 1rem;
-  margin: 0 auto;
-`;
-
 export async function getServerSideProps(context) {
+  // const performanceId = encodeURI(context.params.id);
   const performanceId = context.params.id;
-  const url = `http://makeup-api.herokuapp.com/api/v1/products/${performanceId}.json`;
+  const url = `/product/info/${performanceId}`;
   const res = await axios.get(url);
   const data = res.data;
   return {
-    props: { detail: data }, // will be passed to the page component as props
+    props: { detail: data },
   };
 }
-
 const Performance = ({ detail }) => {
+  console.log(detail, "작품디테일");
   return <Container>{detail && <PerformanceDetail item={detail} />}</Container>;
 };
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 export default Performance;

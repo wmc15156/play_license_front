@@ -51,7 +51,7 @@ const TextAndInput: FC<Props> = ({
   value,
   wrapperMargin,
   number,
-                                   onBlur,
+  onBlur,
 }) => {
   const checkPw = children === "비밀번호";
   return (
@@ -67,7 +67,7 @@ const TextAndInput: FC<Props> = ({
       {number ? (
         <NumberInput
           width={inputWidth}
-          placeHolder={placeholder}
+          placeholder={placeholder}
           onChange={onChange}
           value={value}
         />

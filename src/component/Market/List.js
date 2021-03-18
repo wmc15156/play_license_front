@@ -3,22 +3,32 @@ import Link from "next/link";
 import Tag from "../Tag/Tag.";
 import Filter from "./Filter";
 
-const List = ({ list }) => {
+const List = ({
+  list,
+  count,
+  sortListHandler,
+  filterListHandler,
+  selectedOption,
+  setOption,
+}) => {
   return (
     <Container>
       <HeadSection>
-        <Title>
-          새로 등록된 작품<span>{list.length}개</span>
-        </Title>
-        <Filter />
+        <Filter
+          count={count}
+          selectedOption={selectedOption}
+          setOption={setOption}
+          sortListHandler={sortListHandler}
+          filterListHandler={filterListHandler}
+        />
       </HeadSection>
       <ListSt>
         {list.map((item) => (
-          <Link href={`/performances/${item.id}`}>
-            <Item key={item.id}>
+          <Link href={`/performances/${item.productId}`} key={item.productId}>
+            <Item>
               <a>
                 <ItemImg>
-                  <img src={item.image_link} alt={item.name} />
+                  <img src={item.poster} alt={item.name} />
                 </ItemImg>
               </a>
               <a>
@@ -26,19 +36,19 @@ const List = ({ list }) => {
                   <div>
                     {item.brokerageConsignments.map((cate, i) => {
                       return (
-                        <Tag title={cate} id={item.id}>
+                        <Tag title={cate} id={item.productId} key={i}>
                           {cate}
                         </Tag>
                       );
                     })}
                   </div>
-                  <Ptitle>title:</Ptitle>
+                  <Ptitle>{item.title}</Ptitle>
                   <PInfo>
-                    <div>데{}</div>
+                    <div>{item.category}</div>
                     <Divider>|</Divider>
-                    <div>이{}</div>
+                    <div>{item.year}</div>
                     <Divider>|</Divider>
-                    <div>터{}</div>
+                    <div>{item.company}</div>
                   </PInfo>
                 </ItemDesc>
               </a>
@@ -52,12 +62,6 @@ const List = ({ list }) => {
 
 export default List;
 
-const Category = styled.div`
-  width: 100%;
-  height: 28px;
-  display: flex;
-`;
-
 const Divider = styled.div`
   margin: 0 6px;
 `;
@@ -66,6 +70,7 @@ const PInfo = styled.div`
   display: flex;
   font-family: "NotoSansCJKkr-Regular";
   line-height: 14px;
+  letter-spacing: -0.5px;
 `;
 const Ptitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
@@ -75,20 +80,19 @@ const Ptitle = styled.div`
 `;
 
 const ItemDesc = styled.div`
-  min-width: 276px;
+  max-width: 276px;
   display: flex;
   flex-direction: column;
 `;
 
 const ItemImg = styled.div`
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   border-radius: 8px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
 
   & > img {
-    min-width: 276px;
-    width: 100%;
+    max-width: 100%;
     height: auto;
   }
 `;
@@ -99,33 +103,25 @@ const Item = styled.li`
   max-width: 276px;
   width: 100%;
   height: auto;
-  margin-right: 5%;
+  margin-bottom: 132px;
+  margin-right: 2rem;
+  &:nth-child(4n) {
+    margin-right: 0;
+  }
 `;
 
 const ListSt = styled.ul`
   list-style: none;
+  width: 100%;
   margin: 0;
   padding: 0;
   display: flex;
-
   flex-wrap: wrap;
-`;
-
-const Title = styled.div`
-  font-family: "NotoSansCJKkr-Bold";
-  font-size: 24px;
-  line-height: 48px;
-  text-transform: uppercase;
-
-  & > span {
-    opacity: 0.3;
-    margin-left: 30px;
-  }
 `;
 
 const HeadSection = styled.div`
   display: flex;
-  margin-bottom: 40px;
+  margin-bottom: 34px;
 `;
 
 const Container = styled.div`

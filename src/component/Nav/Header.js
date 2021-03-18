@@ -1,23 +1,43 @@
 import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
-import styles from "../../styles/colors";
+import styles from "../../../styles/colors";
 import Link from "next/link";
-import Menu from "./Menu";
+import Menu from "../Menu";
 import { useRouter } from "next/router";
 import { GoSearch } from "react-icons/go";
 import { IoPersonCircleSharp, IoMenu } from "react-icons/io5";
 import useSWR from "swr";
-import fetcher from "../../utils/fetcher";
-
-// https://styled-components.com/docs/advanced#referring-to-other-components
+import fetcher from "../../../utils/fetcher";
+// import sty from "../../../styles/Login.module.css";
 
 const Header = ({ menuStatus, onCloseHandler }) => {
   const router = useRouter();
-  const { data, error } = useSWR("/auth/check/login", fetcher);
+  const { data, error } = useSWR("/user/me", fetcher);
+  const [bluehover, setBlueHover] = useState(false);
+  const [yellowHover, setYellowHover] = useState(false);
+  const [orangeHover, setOrangeHover] = useState(false);
+
+  const onOrangeHover = () => {
+    setOrangeHover(true);
+  };
+  const onOrangeLeave = () => {
+    setOrangeHover(false);
+  };
+  const onYellowHover = () => {
+    setYellowHover(true);
+  };
+  const onBlueHover = () => {
+    setBlueHover(true);
+  };
+  const onYellowLeave = () => {
+    setYellowHover(false);
+  };
+  const onBlueLeave = () => {
+    setBlueHover(false);
+  };
 
   const changePage = (page = "") => (e) => {
     e.preventDefault();
-    console.log("click");
     router.push(`/${page}`);
     if (menuStatus) {
       onCloseHandler();
@@ -47,6 +67,8 @@ const Header = ({ menuStatus, onCloseHandler }) => {
               <ListItem_M
                 onClick={changePage("login")}
                 color={router.pathname === "/login" ? styles.blue : null}
+                onMouseEnter={onBlueHover}
+                onMouseLeave={onBlueLeave}
               >
                 <Wrap>
                   <PersonIconWrapper>
@@ -54,6 +76,8 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                       size="32px"
                       color={
                         router.pathname === "/login"
+                          ? styles.white
+                          : bluehover // state
                           ? styles.white
                           : styles.blue
                       }
@@ -69,22 +93,28 @@ const Header = ({ menuStatus, onCloseHandler }) => {
             )}
             {data && (
               <ListItem_M
-                onClick={changePage("mypage")}
-                color={router.pathname === "/mypage" ? styles.blue : null}
+                onClick={changePage("mypage/01")}
+                color={router.pathname.includes("/mypage") ? styles.blue : null}
+                onMouseEnter={onBlueHover}
+                onMouseLeave={onBlueLeave}
               >
                 <Wrap>
                   <PersonIconWrapper>
                     <IoPersonCircleSharp
                       size="32px"
                       color={
-                        router.pathname === "/mypage"
+                        router.pathname.includes("/mypage")
+                          ? styles.white
+                          : bluehover
                           ? styles.white
                           : styles.blue
                       }
                     />
                   </PersonIconWrapper>
                   <Text
-                    color={router.pathname === "/mypage" ? styles.white : null}
+                    color={
+                      router.pathname.includes("/mypage") ? styles.white : null
+                    }
                   >
                     MYPAGE
                   </Text>
@@ -95,6 +125,8 @@ const Header = ({ menuStatus, onCloseHandler }) => {
             <ListItem_S
               onClick={changePage("search")}
               color={router.pathname === "/search" ? styles.yellow : null}
+              onMouseEnter={onYellowHover}
+              onMouseLeave={onYellowLeave}
             >
               <Wrap>
                 <SearchWrapper>
@@ -102,6 +134,8 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                     size="28px"
                     color={
                       router.pathname === "/search"
+                        ? styles.white
+                        : yellowHover // state
                         ? styles.white
                         : styles.yellow
                     }
@@ -114,10 +148,21 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                 </Text>
               </Wrap>
             </ListItem_S>
-            <ListItem onClick={onCloseHandler}>
+            <ListItem
+              onClick={onCloseHandler}
+              onMouseEnter={onOrangeHover}
+              onMouseLeave={onOrangeLeave}
+            >
               <Wrap>
                 <MenuIconWrapper>
-                  <IoMenu size="32px" />
+                  <IoMenu
+                    size="32px"
+                    color={
+                      orangeHover // state
+                        ? styles.white
+                        : styles.orange
+                    }
+                  />
                 </MenuIconWrapper>
                 <Text>MENU</Text>
               </Wrap>
@@ -147,6 +192,8 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                 <ListItem_M
                   onClick={changePage("login")}
                   color={router.pathname === "/login" ? styles.blue : null}
+                  onMouseEnter={onBlueHover}
+                  onMouseLeave={onBlueLeave}
                 >
                   <Wrap>
                     <PersonIconWrapper>
@@ -154,6 +201,8 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                         size="32px"
                         color={
                           router.pathname === "/login"
+                            ? styles.white
+                            : bluehover // state
                             ? styles.white
                             : styles.blue
                         }
@@ -169,15 +218,21 @@ const Header = ({ menuStatus, onCloseHandler }) => {
               )}
               {data && (
                 <ListItem_M
-                  onClick={changePage("mypage")}
-                  color={router.pathname === "/mypage" ? styles.blue : null}
+                  onClick={changePage("mypage/01")}
+                  color={
+                    router.pathname.includes("/mypage") ? styles.blue : null
+                  }
+                  onMouseEnter={onBlueHover}
+                  onMouseLeave={onBlueLeave}
                 >
                   <Wrap>
                     <PersonIconWrapper>
                       <IoPersonCircleSharp
                         size="32px"
                         color={
-                          router.pathname === "/mypage"
+                          router.pathname.includes("/mypage")
+                            ? styles.white
+                            : bluehover
                             ? styles.white
                             : styles.blue
                         }
@@ -185,7 +240,9 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                     </PersonIconWrapper>
                     <Text
                       color={
-                        router.pathname === "/mypage" ? styles.white : null
+                        router.pathname.includes("/mypage")
+                          ? styles.white
+                          : null
                       }
                     >
                       MYPAGE
@@ -197,6 +254,8 @@ const Header = ({ menuStatus, onCloseHandler }) => {
               <ListItem_S
                 onClick={changePage("search")}
                 color={router.pathname === "/search" ? styles.yellow : null}
+                onMouseEnter={onYellowHover}
+                onMouseLeave={onYellowLeave}
               >
                 <Wrap>
                   <SearchWrapper>
@@ -204,6 +263,8 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                       size="28px"
                       color={
                         router.pathname === "/search"
+                          ? styles.white
+                          : yellowHover // state
                           ? styles.white
                           : styles.yellow
                       }
@@ -216,10 +277,24 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                   </Text>
                 </Wrap>
               </ListItem_S>
-              <ListItem active={menuStatus} onClick={onCloseHandler}>
+              <ListItem
+                active={menuStatus}
+                onClick={onCloseHandler}
+                onMouseEnter={onOrangeHover}
+                onMouseLeave={onOrangeLeave}
+              >
                 <Wrap>
                   <MenuIconWrapper active={menuStatus}>
-                    <IoMenu size="32px" />
+                    <IoMenu
+                      size="32px"
+                      color={
+                        menuStatus
+                          ? styles.white
+                          : orangeHover // state
+                          ? styles.white
+                          : styles.orange
+                      }
+                    />
                   </MenuIconWrapper>
                   <Text>MENU</Text>
                 </Wrap>
@@ -236,27 +311,27 @@ const Header = ({ menuStatus, onCloseHandler }) => {
 const MenuContainer = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 924px;
+  max-width: 1200px;
   margin: 44px auto;
   padding: 0 1rem;
 `;
 
-const Container2 = styled.div`
+const Container2 = styled.nav`
   width: 100%;
   display: flex;
   align-items: center;
   z-index: auto;
 `;
 
-const Container = styled.div`
-  max-width: 924px;
+const Container = styled.nav`
+  max-width: 1200px;
   display: flex;
   margin: 44px auto;
   padding: 0 1rem;
   align-items: center;
 `;
 const LogoBox = styled.div`
-  max-width: 100%;
+  width: 25%;
   height: auto;
 `;
 
@@ -275,7 +350,8 @@ const Img = styled.img`
 
 const LogoText = styled.div`
   font-family: "FreightSansBlackSC";
-  font-size: 1.75rem;
+  font-size: 24px;
+  line-height: 24px;
   letter-spacing: 0.86px;
   &:hover {
     color: none;
@@ -288,7 +364,7 @@ const List = styled.div`
   list-style: none;
   display: flex;
   margin-left: auto;
-  width: 60%;
+  width: 45%;
   align-items: center;
 `;
 
@@ -297,10 +373,10 @@ const ListItemStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 45px;
-  margin-right: 2%;
+  width: calc(100% - 12px);
   cursor: pointer;
+  margin-right: 2%;
+  padding: 6px;
   ${(props) =>
     props.color &&
     css`
@@ -333,6 +409,7 @@ const ListItem = styled.div`
   ${ListItemStyle};
   background-color: ${(props) => (props.active ? styles.orange : null)};
   color: ${(props) => (props.active ? styles.white : styles.black1)};
+  margin-right: 0;
   &:hover {
     background-color: ${styles.orange};
   }
@@ -341,20 +418,20 @@ const ListItem = styled.div`
 const Wrap = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 65%;
-  padding-right: 2%;
-
-  & > svg:hover {
-    fill: ${styles.white};
-  }
+  justify-content: space-around;
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
 `;
 const Text = styled.div`
   display: flex;
   align-items: center;
   font-family: "Gotham Medium";
   font-size: 14px;
-  line-height: 17px;
+  line-height: 14px;
+  margin: 0;
+  margin-right: 12px;
+  margin-left: 5px;
   ${(props) =>
     props.color &&
     css`
@@ -367,14 +444,14 @@ const Text = styled.div`
 
 const SearchWrapper = styled.span`
   margin: 0;
-  padding-right: 25%;
+  /* padding-right: 25%; */
   display: flex;
   align-items: center;
 `;
 
 const PersonIconWrapper = styled.span`
   margin: 0;
-  padding-right: 25%;
+  /* padding-right: 25%; */
   display: flex;
   align-items: center;
   z-index: 2;
@@ -385,16 +462,9 @@ const PersonIconWrapper = styled.span`
 
 const MenuIconWrapper = styled.span`
   margin: 0;
-  padding-right: 25%;
+  /* padding-right: 25%; */
   display: flex;
   align-items: center;
-
-  & > svg {
-    color: ${(props) => (props.active ? styles.white : styles.orange)};
-  }
-  & > svg:hover {
-    color: ${styles.white};
-  }
 `;
 
 export default Header;

@@ -1,14 +1,17 @@
 import styled from "styled-components";
+import color from "../../../../styles/colors";
+import { FaCheck } from "react-icons/fa";
+import CheckBoxWrapper from "../../../../src/component/CheckBoxWrapper/CheckBoxWrapper";
 import { useRouter } from "next/router";
-import { useState, useRef } from "react";
+import { useState, useReducer } from "react";
 import Group from "../../../../src/component/Form/Group";
 import PerformanceInfo from "../../../../src/component/Form/PerformanceInfo_provider";
 import UserInfo from "../../../../src/component/Form/UserInfo";
 import Notice from "../../../../src/component/GrayNotice";
-import Btn from "../../../../src/component/Button/SignUpButton";
-import CheckBox from "../../../../src/component/CheckBox";
+import Btn from "../../../../src/component/Button/OriginalButton";
 import useModal from "../../../../utils/useModal";
 import AlertModal from "../../../../src/component/Modal/AlertModal";
+import axios from "axios";
 
 const notice = {
   title: "안내사항",
@@ -17,10 +20,42 @@ const notice = {
     "2. 협의되지 않은 자료의 복사, 활용은 저작권 침해로 법적 책임을 질 수 있습니다.",
 };
 
-const Performance = ({ image }) => {
+const Performance = () => {
+  const [groupState, setGroupState] = useState({
+    groupName: "",
+    introduction: "",
+  });
+  const [perfInfoState, setPerfInfoState] = useState({
+    planDocument: {}, // 기획내용
+    plan: [{ startDate: "", endDate: "" }],
+    round: "", // 공연회차
+    place: {}, // 공연장소
+    price: "", // 티켓가격
+    isChangedScenario: "", // 각색여부,
+    changedRange: { select: [], input: "" },
+    requiredMaterials: [],
+    selectedMaterials: { select: [], input: "" },
+    participant: { actor: {}, staff: {} }, // 공연참여인원
+  });
+  const [userInfoState, setUserInfoState] = useState({
+    name: "",
+    phone: "",
+    comment: "",
+  });
+
+  console.log("모든state-->>", {
+    ...groupState,
+    ...perfInfoState,
+    ...userInfoState,
+  });
   const { openModal, ModalPortal, closeModal } = useModal();
   const router = useRouter();
   const [checked, setChecked] = useState(false);
+  const [userInputData, setUserInputData] = useState({
+    ...groupState,
+    ...perfInfoState,
+    ...userInfoState,
+  });
 
   const next = () => {
     router.push(`/performances/${router.query.id}/buy/complete`);
@@ -29,16 +64,45 @@ const Performance = ({ image }) => {
   const handleChange = (e) => {
     e.persist();
     setChecked((prevState) => !prevState);
+    setUserInputData({
+      ...groupState,
+      ...perfInfoState,
+      ...userInfoState,
+      category: "공연목적용",
+      productId: Number(router.query.id),
+      participant_total:
+        Number(perfInfoState.participant.actor.input) +
+        Number(perfInfoState.participant.staff.input),
+    });
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    const {
+      plannedContents,
+      number,
+      performPlace,
+      price,
+      changeScenario,
+      requiredMaterials,
+      castMembers,
+    } = perfInfoState;
+    //TODO: 유효성 추가
     if (!checked) {
       // alert("개인정보 수집 및 이용에 동의해주세요.");
       openModal();
-      return;
     }
-    next();
+
+    console.log("구매문의버튼클릭", userInputData);
+    axios
+      .post("/product/buyer", userInputData)
+      .then((res) => {
+        console.log(res, "--res?");
+        if (res.status === 201) {
+          next();
+        }
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -55,23 +119,45 @@ const Performance = ({ image }) => {
       </Divider>
       <BoxSection>
         <Wrap>
-          <Group />
+          <Group groupState={groupState} groupStateHandler={setGroupState} />
         </Wrap>
         <Wrap>
-          <PerformanceInfo />
+          <PerformanceInfo
+            perfInfoState={perfInfoState}
+            setPerfInfoState={setPerfInfoState}
+          />
         </Wrap>
         <Wrap>
-          <UserInfo />
+          <UserInfo
+            userInfoState={userInfoState}
+            userInfoStateHandler={setUserInfoState}
+          />
         </Wrap>
       </BoxSection>
       <Notice title={notice.title} body1={notice.body1} body2={notice.body2} />
 
       <CheckSection>
-        <CheckBox checked={checked} handleChange={handleChange} />
+        <CheckBoxWrapper
+          width={"24px"}
+          height={"24px"}
+          onChange={handleChange}
+          value={checked ? color.orange : false}
+        >
+          <FaCheck size={"15px"} color={checked ? "white" : "gray"} />
+        </CheckBoxWrapper>
         <Check>안내사항을 확인했습니다</Check>
       </CheckSection>
       <BtnSection>
-        <Btn text={"구매문의 완료하기"} onClickHandler={onSubmitHandler} />
+        <Btn
+          width={"100%"}
+          background={checked}
+          margin={"0px"}
+          height={"60px"}
+          size={"21px"}
+          onClick={onSubmitHandler}
+        >
+          구매문의 완료하기
+        </Btn>
       </BtnSection>
       <ModalPortal>
         <AlertModal text={"내용을 모두 입력해주세요"} onClickBtn={closeModal} />
@@ -95,32 +181,32 @@ const HeadSection = styled.div`
 `;
 
 const T1 = styled.div`
-  opacity: 0.3;
-  font-size: 21px;
-  line-height: 36px;
+  color: ${color.black3};
+  font-size: 16px;
+  line-height: 20px;
+  margin-bottom: 20px;
 `;
 const T2 = styled.div`
-  font-size: 36px;
-  line-height: 55px;
+  font-size: 24px;
+  line-height: 26px;
 
   & > span {
-    color: #ff6f69;
+    color: ${color.orange};
   }
 `;
 const Num = styled.div`
   margin-left: auto;
-  /* margin-top: 31px; */
-  line-height: 48px;
+  line-height: 28px;
   font-size: 14px;
 `;
 const Divider = styled.div`
   display: flex;
   width: 100%;
-  margin-bottom: 89px;
+  margin-bottom: 30px;
 `;
 
 const Div1 = styled.div`
-  background-color: #ffcc5c;
+  background-color: ${color.yellow};
   border-radius: 100px;
   height: 3px;
   width: 100%;
@@ -137,7 +223,7 @@ const CheckSection = styled.div`
 
 const Check = styled.div``;
 const Wrap = styled.div`
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 `;
 const BtnSection = styled.div`
   margin-top: 44px;

@@ -173,7 +173,7 @@ const FindPassword = () => {
         background={finalCheck}
         onClick={onSubmit}
       >
-        아이디(이메일)찾기
+        비밀번호 찾기
       </OriginalButton>
     </ContainerWrapper>
   );

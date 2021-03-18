@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
+import BasicInput from "../BasicInput/BasicInputColor";
 
-const UserInfo = () => {
+const UserInfo = ({ userInfoState, userInfoStateHandler }) => {
   return (
     <Container>
       <HeadSection>
@@ -14,15 +15,40 @@ const UserInfo = () => {
       <InputSection>
         <Input>
           <SubTitle>이름</SubTitle>
-          <InputBox />
+          <BasicInput
+            width={"100%"}
+            placeholder={"이름을 적어주세요"}
+            onChange={(e) =>
+              userInfoStateHandler({ ...userInfoState, name: e.target.value })
+            }
+            value={userInfoState.name}
+          />
         </Input>
         <Input>
           <SubTitle>연락처</SubTitle>
-          <InputBox />
+          <BasicInput
+            width={"100%"}
+            placeholder={"연락처를 적어주세요"}
+            onChange={(e) =>
+              userInfoStateHandler({ ...userInfoState, phone: e.target.value })
+            }
+            value={userInfoState.phone}
+          />
         </Input>
         <Input>
           <SubTitle>남기실 말씀</SubTitle>
-          <InputBox />
+          <BasicInput
+            width={"100%"}
+            placeholder={"자유롭게 입력해주세요"}
+            onChange={(e) =>
+              userInfoStateHandler({
+                ...userInfoState,
+                comment: e.target.value,
+              })
+            }
+            background={color.gray1}
+            value={userInfoState.comment}
+          />
         </Input>
       </InputSection>
     </Container>
@@ -37,9 +63,10 @@ const Container = styled.div`
 const HeadSection = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 39px;
+  margin-bottom: 34px;
   & > p {
-    margin-top: 17px;
+    margin: 0;
+    margin-top: 14px;
     font-family: "NotoSansCJKkr-Regular";
     font-size: 12px;
     line-height: 12px;
@@ -65,7 +92,7 @@ const Input = styled.li`
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  margin-bottom: 35px;
+  margin-bottom: 28px;
 `;
 const SubTitle = styled.div`
   width: 140px;

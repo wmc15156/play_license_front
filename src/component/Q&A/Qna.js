@@ -2,72 +2,92 @@ import styled from "styled-components";
 import color from "../../../styles/colors";
 import Btn from "../Button/SignUpButton";
 import AnswerStatus from "../Tag/AnswerStatus";
+import { useRouter } from "next/router";
+import { memo, useEffect, useState } from "react";
+import useSWR from "swr";
+import fetcher from "../../../utils/fetcher";
 
-const Qna = ({ details, onClickHandler }) => {
+const Qna = ({ onClickHandler }) => {
+  const { data } = useSWR(`/question/${router.query.id}`, fetcher);
+
+  useEffect(() => {
+    if (data) {
+      setTitle(data.title);
+      setComment(data.comment);
+    }
+  }, [(data && data.title) || (data && data.comment)]);
+
+  const [title, setTitle] = useState(data ? data.title : null);
+  const [comment, setComment] = useState(data ? data.comment : null);
+
   return (
-    <Container>
-      <HeadSection>
-        <T>1:1 문의</T>
-        <StatusBox>
-          <AnswerStatus status={details.adminCheck} />
-        </StatusBox>
-      </HeadSection>
-      <Divider>
-        <Div1 />
-      </Divider>
-      <Section>
-        <Box>
-          <InputSection>
-            <Input>
-              <SubTitle>이름</SubTitle>
-              <InputBox>{details.name}</InputBox>
-            </Input>
-            <Input>
-              <SubTitle>이메일</SubTitle>
-              <InputBox>{details.email}</InputBox>
-            </Input>
-            <Input>
-              <SubTitle>연락처</SubTitle>
-              <InputBox>{details.phone}</InputBox>
-            </Input>
-            <Input>
-              <SubTitle>제목</SubTitle>
-              <InputBox>{details.title}</InputBox>
-            </Input>
-            <Input>
-              <SubTitle>문의내용</SubTitle>
-              <InputBox>{details.comment}</InputBox>
-            </Input>
-            <Input>
-              <SubTitle>답변내용</SubTitle>
-              <InputBox_resp>{details.comment}</InputBox_resp>
-            </Input>
-          </InputSection>
-        </Box>
-        <Btn text={"확인"} onClickHandler={onClickHandler} />
-      </Section>
-    </Container>
+    <>
+      {data && (
+        <Container>
+          <HeadSection>
+            <T>
+              <span>1:1 문의</span> 자세히보기
+            </T>
+            <StatusBox>
+              <AnswerStatus status={data.adminCheck} />
+            </StatusBox>
+          </HeadSection>
+          <Divider>
+            <Div1 />
+          </Divider>
+          <Section>
+            <Box>
+              <InputSection>
+                <Input>
+                  <SubTitle>이름</SubTitle>
+                  <InputBox>{data.name}</InputBox>
+                </Input>
+                <Input>
+                  <SubTitle>이메일</SubTitle>
+                  <InputBox>{data.email}</InputBox>
+                </Input>
+                <Input>
+                  <SubTitle>연락처</SubTitle>
+                  <InputBox>{data.phone}</InputBox>
+                </Input>
+                <Input>
+                  <SubTitle>제목</SubTitle>
+                  <InputBox>{data.title}</InputBox>
+                </Input>
+                <Input>
+                  <SubTitle>문의내용</SubTitle>
+                  <InputBox>{data.comment}</InputBox>
+                </Input>
+                <Input>
+                  <SubTitle>답변내용</SubTitle>
+                  <InputBox_resp>{data.comment}</InputBox_resp>
+                </Input>
+              </InputSection>
+            </Box>
+            <Btn text={"확인"} onClickHandler={onClickHandler} />
+          </Section>
+        </Container>
+      )}
+    </>
   );
 };
 
 const Container = styled.div`
   width: 100%;
-  /* background-color: #fff;
-  padding: 40px;
-  z-index: 11;
-  border-radius: 14px; */
 `;
 
 const HeadSection = styled.div`
   width: 100%;
   display: flex;
-  margin-bottom: 31px;
+  position: relative;
   align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
 `;
 
 const T = styled.div`
-  font-size: 36px;
-  line-height: 55px;
+  font-size: 24px;
+  line-height: 24px;
 
   & > span {
     color: ${color.orange};
@@ -75,13 +95,14 @@ const T = styled.div`
 `;
 
 const StatusBox = styled.div`
-  margin-left: auto;
+  position: absolute;
+  right: 0;
 `;
 
 const Divider = styled.div`
   display: flex;
   width: 100%;
-  margin-bottom: 89px;
+  margin-bottom: 30px;
 `;
 
 const Div1 = styled.div`
@@ -121,13 +142,13 @@ const SubTitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   font-size: 16px;
   line-height: 16px;
-  color: #0d0d0c;
+  color: ${color.black1};
 `;
 const InputBox = styled.div`
   font-family: "NotoSansCJKkr-Medium";
   font-size: 16px;
   line-height: 16px;
-  color: #9e9e9e;
+  color: ${color.black1};
   width: 100%;
   border-radius: 8px;
   border: 1px solid ${color.black5};
@@ -142,14 +163,13 @@ const InputBox_resp = styled.div`
   font-family: "NotoSansCJKkr-Medium";
   font-size: 16px;
   line-height: 16px;
-  color: #9e9e9e;
+  color: ${color.black2};
   width: 100%;
   border-radius: 8px;
   background-color: ${color.gray1};
   padding: 19px 20px;
   ::placeholder {
     color: ${color.black4};
-    opacity: 0.4;
   }
 `;
 
@@ -166,11 +186,10 @@ const TextBox = styled.textarea`
   padding: 19px 20px;
   ::placeholder {
     color: ${color.black4};
-    opacity: 0.4;
   }
   &:focus {
     outline: none;
   }
 `;
 
-export default Qna;
+export default memo(Qna);

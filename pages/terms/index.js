@@ -624,7 +624,7 @@ const Terms = () => {
 const Container = styled.div`
   min-height: calc(100vh - 410px);
   margin: 0 auto;
-  max-width: 924px;
+  max-width: 1200px;
   padding: 0 1rem;
 `;
 

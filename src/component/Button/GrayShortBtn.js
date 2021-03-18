@@ -1,22 +1,30 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
 
-const GrayShortBtn = ({ text, onClickHandler }) => {
-  return <Container onClick={onClickHandler}>{text}</Container>;
+const GrayShortBtn = ({ text, size, height, onClickHandler, fontColor }) => {
+  return (
+    <Container
+      size={size}
+      height={height}
+      fontColor={fontColor}
+      onClick={onClickHandler}
+    >
+      {text}
+    </Container>
+  );
 };
 const Container = styled.div`
   width: 100%;
-  /* padding: 0 10px; */
-  height: 60px;
+  height: ${(props) => (props.height ? props.height : "60px")};
   border-radius: 8px;
   background-color: ${color.gray1};
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${color.black1};
-  opacity: 0.4;
+  color: ${(props) => props.fontColor};
   font-family: "NotoSansCJKkr-Bold";
-  font-size: 21px;
+  font-size: ${(props) => (props.size ? props.size : "21px")};
   line-height: 18px;
+  cursor: pointer;
 `;
 export default GrayShortBtn;

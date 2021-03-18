@@ -1,32 +1,103 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
-import RadioButton from "../Button/RadioBtn";
-import { useState } from "react";
+import CheckBoxWrapper from "../CheckBoxWrapper/CircleCheckBoxWrapper";
 import GrayShortBtn from "../Button/GrayShortBtn";
-import OrangeShortBtn from "../Button/OrangeShortBtn";
+import OrangeShortBtn from "../Button/OriginalButton";
+import { FaCheck } from "react-icons/fa";
+import { useState, useCallback } from "react";
+import BasicInput from "../BasicInput/BasicInputColor";
+import { useRouter } from "next/router";
+
+const items = {
+  category: ["뮤지컬", "연극", "아동극"],
+  sizeOfPerformance: [
+    "소극장(300석 미만)",
+    "중극장(500석 미만)",
+    "대극장(500석 이상)",
+  ],
+  round: "",
+  price: ["무료", "유료"],
+  requiredMaterials: [
+    "대본",
+    "보컬악보",
+    "원본포스터(PSD)",
+    "연습MR",
+    "공연MR",
+    "총보(라이브 연주가 가능한 악보)",
+    "공연실황영상",
+    "무대디자인",
+    "소품디자인 및 리스트",
+    "의상디자인",
+    "음향 리스트 및 파일",
+    "안무 가이드",
+  ],
+};
 
 const Est_Performance = () => {
-  const [selected, setSelected] = useState({});
+  const router = useRouter();
+  const [selected, setSelected] = useState({
+    category: "",
+    sizeOfPerformance: "",
+    round: "",
+    price: { 0: "", 1: "" },
+    requiredMaterials: [],
+  });
 
-  const handleChange = (e) => {
-    console.log(e, "e.target.value라디오");
-    const { name, value } = e.target;
-    setSelected({ ...selected, [name]: value });
-    console.log(selected, "??");
+  console.log("perform 선택된 옵션>>>>", selected);
+
+  const removeRequireItemHandler = useCallback(
+    (itemIdx) => {
+      let array = selected.requiredMaterials;
+      array.splice(itemIdx, 1);
+      setSelected((prev) => {
+        return { ...prev, requiredMaterials: [...array] };
+      });
+    },
+    [selected.requiredMaterials]
+  );
+
+  const checkRequireHandler = (name) => {
+    if (selected.requiredMaterials.includes(name)) {
+      removeRequireItemHandler();
+    } else {
+      setSelected({
+        ...selected,
+        requiredMaterials: [...selected.requiredMaterials, name],
+      });
+    }
   };
-  const handleChangePrice = (e) => {
-    console.log(e, "e.target.value라디오");
-    const { name, value } = e.target;
-    setSelected({ ...selected, [name]: [value] });
-    console.log(selected, "??");
+
+  const radioButtonHandler = (name, val) => {
+    if (name === "price") {
+      setSelected({
+        ...selected,
+        price: { ...selected.price, 0: val },
+      });
+    } else {
+      setSelected({
+        ...selected,
+        [name]: val,
+      });
+    }
   };
 
-  const resetHandler = () => {};
+  const resetHandler = () => {
+    setSelected({
+      category: "",
+      sizeOfPerformance: "",
+      round: "",
+      price: { 0: "", 1: "" },
+      requiredMaterials: [],
+    });
+    console.log(selected, "selected??");
+  };
 
-  const nextBtnHandler = () => {};
+  const nextBtnHandler = () => {
+    router.push(`/performances/${router.query.id}/buy`);
+  };
 
   return (
-    <Container>
+    <div>
       <Title>
         *공연 또는 교육 목적이 아닌 경우, 가견적 계산이 불가하므로 ‘구매하기’로
         구매 문의를 작성해주세요.
@@ -36,152 +107,146 @@ const Est_Performance = () => {
           <Item>
             <SubTitle>공연분야</SubTitle>
             <Content>
-              <Box>
-                <RadioButton
-                  name={"genre"}
-                  text={"뮤지컬"}
-                  onClickRadio={handleChange}
-                />
-              </Box>
-              <Box>
-                <RadioButton
-                  name={"genre"}
-                  text={"연극"}
-                  onClickRadio={handleChange}
-                />
-              </Box>
-              <Box>
-                <RadioButton
-                  name={"genre"}
-                  text={"아동극"}
-                  onClickRadio={handleChange}
-                />
-              </Box>
+              {/* <CheckSection> */}
+              {items.category.map((label, index) => (
+                <CheckItem key={index}>
+                  <CheckBoxWrapper
+                    widthHeight={"20px"}
+                    checked={selected.category.includes(label)}
+                    onClick={() => radioButtonHandler("category", label)}
+                  >
+                    <FaCheck
+                      size={"15px"}
+                      color={
+                        selected.category.includes(label)
+                          ? color.white
+                          : color.black5
+                      }
+                    />
+                  </CheckBoxWrapper>
+                  <Check_label>{label}</Check_label>
+                </CheckItem>
+              ))}
+              {/* </CheckSection> */}
             </Content>
           </Item>
           <Item>
             <SubTitle>공연규모</SubTitle>
             <Content>
-              <Box>
-                <RadioButton
-                  name={"sizeOfPerformance"}
-                  text={"소극장 (300석 미만)"}
-                  onClickRadio={handleChange}
-                />
-              </Box>
-              <Box>
-                <RadioButton
-                  name={"sizeOfPerformance"}
-                  text={"중극장 (500석 미만)"}
-                  onClickRadio={handleChange}
-                />
-              </Box>
-              <Box>
-                <RadioButton
-                  name={"sizeOfPerformance"}
-                  text={"대극장 (500석 이상)"}
-                  onClickRadio={handleChange}
-                />
-              </Box>
+              {/* <CheckSection> */}
+              {items.sizeOfPerformance.map((label, index) => (
+                <CheckItem key={index}>
+                  <CheckBoxWrapper
+                    widthHeight={"20px"}
+                    checked={selected.sizeOfPerformance.includes(label)}
+                    onClick={() =>
+                      radioButtonHandler("sizeOfPerformance", label)
+                    }
+                  >
+                    <FaCheck
+                      size={"15px"}
+                      color={
+                        selected.sizeOfPerformance.includes(label)
+                          ? color.white
+                          : color.black5
+                      }
+                    />
+                  </CheckBoxWrapper>
+                  <Check_label>{label}</Check_label>
+                </CheckItem>
+              ))}
+              {/* </CheckSection> */}
             </Content>
           </Item>
           <Item>
             <SubTitle>공연회차</SubTitle>
             <Content>
               <Box>
-                <InputBox>
-                  <InputText name={"round"} onChange={handleChange} />
-                  <Text2>회차</Text2>
-                </InputBox>
+                <BasicInput
+                  width={"100%"}
+                  placeholder={"직접입력"}
+                  background={color.white}
+                  onChange={(e) =>
+                    setSelected({
+                      ...selected,
+                      round: e.target.value,
+                    })
+                  }
+                  value={selected.round}
+                />
+                {/* <Text2>회차</Text2> */}
               </Box>
             </Content>
           </Item>
           <Item>
             <SubTitle>티켓가격</SubTitle>
             <Content>
-              <Box>
-                <RadioButton
-                  name={"price"}
-                  text={"무료"}
-                  onClickRadio={handleChange}
-                />
-              </Box>
-              <Box_price>
-                <RadioButton
-                  name={"price"}
-                  text={"유료"}
-                  onClickRadio={handleChange}
-                />
-                <InputBox>
-                  <InputText name={"price_num"} onChange={handleChange} />
-                  <Text2>원/매</Text2>
-                </InputBox>
-              </Box_price>
+              {/* <CheckSection> */}
+              {items.price.map((label, index) => (
+                <CheckItem key={index}>
+                  <CheckBoxWrapper
+                    widthHeight={"20px"}
+                    checked={selected.price[0].includes(label)}
+                    onClick={() => radioButtonHandler("price", label)}
+                  >
+                    <FaCheck
+                      size={"15px"}
+                      color={
+                        selected.price[0].includes(label)
+                          ? color.white
+                          : color.black5
+                      }
+                    />
+                  </CheckBoxWrapper>
+                  <Check_label>{label}</Check_label>
+                </CheckItem>
+              ))}
+              {/* </CheckSection> */}
+              <CheckItem>
+                {selected.price[0] === "유료" && (
+                  <BasicInput
+                    width={"100%"}
+                    placeholder={"직접입력"}
+                    background={color.white}
+                    onChange={(e) =>
+                      setSelected({
+                        ...selected,
+                        price: {
+                          ...selected.price,
+                          1: e.target.value,
+                        },
+                      })
+                    }
+                    value={selected.price[1]}
+                  />
+                )}
+              </CheckItem>
             </Content>
           </Item>
           <Item>
             <SubTitle>필요자료</SubTitle>
             <Content_2>
-              <RadioButton
-                name={"selectMaterials"}
-                text={"대본"}
-                onClickRadio={handleChange}
-              />
-              <RadioButton
-                name={"selectMaterials"}
-                text={"보컬악보"}
-                onClickRadio={handleChange}
-              />
-              <RadioButton
-                name={"selectMaterials"}
-                text={"원본포스터(PSD)"}
-                onClickRadio={handleChange}
-              />
-              <RadioButton
-                name={"selectMaterials"}
-                text={"연습MR"}
-                onClickRadio={handleChange}
-              />
-              <RadioButton
-                name={"selectMaterials"}
-                text={"공연MR"}
-                onClickRadio={handleChange}
-              />
-              <RadioButton
-                name={"selectMaterials"}
-                text={"총보(라이브 연주가 가능한 악보)"}
-                onClickRadio={handleChange}
-              />
-              <RadioButton
-                name={"selectMaterials"}
-                text={"공연실황영상"}
-                onClickRadio={handleChange}
-              />
-              <RadioButton
-                name={"selectMaterials"}
-                text={"무대디자인"}
-                onClickRadio={handleChange}
-              />
-              <RadioButton
-                name={"selectMaterials"}
-                text={"소품디자인 및 리스트"}
-                onClickRadio={handleChange}
-              />
-              <RadioButton
-                name={"selectMaterials"}
-                text={"의상디자인"}
-                onClickRadio={handleChange}
-              />
-              <RadioButton
-                name={"selectMaterials"}
-                text={"음향 리스트 및 파일"}
-                onClickRadio={handleChange}
-              />
-              <RadioButton
-                name={"selectMaterials"}
-                text={"안무 가이드"}
-                onClickRadio={handleChange}
-              />
+              {/* <CheckSection> */}
+              {items.requiredMaterials.map((label, index) => (
+                <CheckItem key={index}>
+                  <CheckBoxWrapper
+                    widthHeight={"20px"}
+                    checked={selected.requiredMaterials.includes(label)}
+                    onClick={() => checkRequireHandler(label)}
+                  >
+                    <FaCheck
+                      size={"15px"}
+                      color={
+                        selected.requiredMaterials.includes(label)
+                          ? color.white
+                          : color.black5
+                      }
+                    />
+                  </CheckBoxWrapper>
+                  <Check_label>{label}</Check_label>
+                </CheckItem>
+              ))}
+              {/* </CheckSection> */}
             </Content_2>
           </Item>
         </List>
@@ -194,29 +259,47 @@ const Est_Performance = () => {
       <BottomSection>
         <Buttons>
           <Btn1>
-            <GrayShortBtn text={"초기화하기"} onClickHandler={resetHandler} />
+            <GrayShortBtn
+              text={"초기화하기"}
+              onClickHandler={resetHandler}
+              size={"18px"}
+              height={"56px"}
+              fontColor={color.black1}
+            />
           </Btn1>
           <Btn2>
-            <OrangeShortBtn text={"구매하기"} onClickHandler={nextBtnHandler} />
+            <OrangeShortBtn
+              width={"100%"}
+              background={true}
+              margin={"0px"}
+              height={"56px"}
+              size={"18px"}
+              onClick={() => nextBtnHandler()}
+            >
+              구매하기
+            </OrangeShortBtn>
           </Btn2>
         </Buttons>
       </BottomSection>
-    </Container>
+    </div>
   );
 };
-const Container = styled.div`
-  /* max-width: 924px;
-  padding: 0 1rem;
-  margin: 0 auto; */
-`;
+
 const Title = styled.p`
   font-family: "NotoSansCJKkr-Regular";
-  opacity: 0.4;
-  margin-top: 22px;
-  margin-bottom: 70px;
+  color: ${color.black3};
+  margin: 0;
+  margin-top: 20px;
+  margin-bottom: 46px;
 `;
 
-const BodySection = styled.div``;
+const BodySection = styled.div`
+  height: 400px;
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+`;
 const List = styled.ul`
   margin: 0;
   padding: 0;
@@ -225,12 +308,13 @@ const List = styled.ul`
 const Item = styled.li`
   display: flex;
   width: 100%;
-  min-height: 68px;
+  height: 65px;
 `;
 const SubTitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   display: flex;
   width: 10%;
+  align-items: baseline;
 `;
 const Content = styled.div`
   display: flex;
@@ -244,8 +328,37 @@ const Box = styled.div`
   align-items: baseline;
   width: 30%;
 `;
+
 const Box_2 = styled.div`
   width: 22.5% auto;
+`;
+const CheckSection = styled.ul`
+  font-family: "NotoSansCJKkr-Regular";
+  display: flex;
+  font-size: 16px;
+  line-height: 1;
+  /* align-items: baseline; */
+  width: 100%;
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  flex-wrap: wrap;
+  /* align-items: center; */
+`;
+
+const CheckItem = styled.div`
+  margin: 0;
+  padding: 0;
+  display: flex;
+  width: 30%;
+  margin-bottom: 30px;
+`;
+
+const Check_label = styled.div`
+  font-family: "NotoSansCJKkr-Regular";
+  margin-left: 8px;
+  letter-spacing: -0.5px;
+  min-width: 35px;
 `;
 const Box_price = styled.div`
   align-items: baseline;
@@ -256,15 +369,15 @@ const Est = styled.div`
   display: flex;
   border-radius: 8px;
   background-color: ${color.gray1};
-  margin-bottom: 35px;
-  margin-top: 78px;
-`;
-const Text = styled.div`
+  margin-bottom: 25px;
+  margin-top: 42px;
   justify-content: center;
   align-items: center;
+`;
+const Text = styled.div`
   font-family: "NotoSansCJKkr-Medium";
   font-size: 16px;
-  margin: 39px 0;
+  padding: 22px 0;
   & > span {
     font-family: "NotoSansCJKkr-Bold";
     color: ${color.orange};
@@ -313,6 +426,7 @@ const BottomSection = styled.div`
 
 const Buttons = styled.div`
   display: flex;
+  height: 56px;
 `;
 const Btn1 = styled.div`
   width: 100%;

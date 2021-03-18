@@ -30,6 +30,7 @@ type Props = {
   onBlur?: () => void;
   number?: boolean;
   bigBtn?: boolean;
+  provider?: boolean;
 };
 
 const InputAndBtn: FC<Props> = ({
@@ -46,6 +47,7 @@ const InputAndBtn: FC<Props> = ({
   number,
   onBlur,
   bigBtn,
+  provider
 }) => {
   const [initialTime, setInitialTime] = useState(180);
   return (
@@ -53,7 +55,7 @@ const InputAndBtn: FC<Props> = ({
       {number ? (
         <NumberInput
           width={inputWidth}
-          placeHolder={inputPlaceholder}
+          placeholder={inputPlaceholder}
           onChange={onChange}
           value={value}
         />
@@ -77,6 +79,7 @@ const InputAndBtn: FC<Props> = ({
         size={btnFontSize}
         position={true}
         onClick={onClick}
+        provider={provider}
       >
         {children}
       </OriginalButton>

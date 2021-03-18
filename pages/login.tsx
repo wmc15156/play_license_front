@@ -1,7 +1,7 @@
 import styles from "../styles/Login.module.css";
 import useInput from "../utils/useInput";
 import { useSelector } from "react-redux";
-
+import color from '@styles/colors';
 import { RootState } from "../reducers";
 import { useEffect, useState, FormEvent, useCallback } from "react";
 import { useRouter } from "next/router";
@@ -12,7 +12,6 @@ import fetcher from "@utils/fetcher";
 import axios from "axios";
 import CheckBoxWrapper from "@src/component/CheckBoxWrapper/CheckBoxWrapper";
 import { FaCheck } from "react-icons/fa";
-
 function Login() {
   const { data, error, revalidate, mutate } = useSWR("/user/me", fetcher);
 
@@ -105,7 +104,7 @@ function Login() {
                 width={"24px"}
                 height={"24px"}
                 onChange={onSaveEmail}
-                value={loginSave}
+                value={loginSave ? color.orange : false}
               >
                 <FaCheck size={"15px"} color={loginSave ? "white" : "gray"} />
               </CheckBoxWrapper>

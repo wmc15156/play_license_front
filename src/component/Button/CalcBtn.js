@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
 
-// performance/:id 구매하기버튼
 const CalcBtn = ({ onClickHandler }) => {
   return (
     <Container onClick={onClickHandler}>
@@ -16,14 +15,17 @@ const Container = styled.div`
   width: 100%;
   height: 60px;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  text-align: center;
+  border: 1px solid ${color.black5};
+  align-items: center;
   justify-content: center;
   font-family: "NotoSansCJKkr-Medium";
-  line-height: 18px;
+  line-height: 21px;
   font-size: 21px;
-  color: ${color.black1};
-  opacity: 0.4;
+  color: ${color.black3};
+  cursor: pointer;
+  & > span {
+    padding: 0 0.5rem;
+  }
 `;
 
 export default CalcBtn;

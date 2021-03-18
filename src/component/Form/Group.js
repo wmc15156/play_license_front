@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
+import BasicInput from "../BasicInput/BasicInputColor";
 
-const Group = () => {
+const Group = ({ groupState, groupStateHandler }) => {
   return (
     <Container>
       <HeadSection>
@@ -11,11 +12,31 @@ const Group = () => {
       <InputSection>
         <Input>
           <SubTitle>단체이름</SubTitle>
-          <InputBox />
+          <BasicInput
+            width={"100%"}
+            placeholder={"동호회명이나 동아리명 등의 이름을 적어주세요"}
+            onChange={(e) =>
+              groupStateHandler({
+                ...groupState,
+                groupName: e.target.value,
+              })
+            }
+            value={groupState.groupName}
+          />
         </Input>
         <Input>
           <SubTitle>소속소개</SubTitle>
-          <InputBox />
+          <BasicInput
+            width={"100%"}
+            placeholder={"소개말을 적어주세요"}
+            onChange={(e) =>
+              groupStateHandler({
+                ...groupState,
+                introduction: e.target.value,
+              })
+            }
+            value={groupState.introduction}
+          />
         </Input>
       </InputSection>
     </Container>
@@ -31,9 +52,10 @@ const Container = styled.div`
 const HeadSection = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 39px;
+  margin-bottom: 34px;
   & > p {
-    margin-top: 17px;
+    margin: 0;
+    margin-top: 14px;
     font-family: "NotoSansCJKkr-Regular";
     font-size: 12px;
     line-height: 12px;
@@ -59,7 +81,7 @@ const Input = styled.li`
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  margin-bottom: 35px;
+  margin-bottom: 28px;
 `;
 const SubTitle = styled.div`
   width: 140px;

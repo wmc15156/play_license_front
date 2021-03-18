@@ -4,27 +4,21 @@ import QnA_modify from "../../src/component/Q&A/Qna_modify";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
-import { useState } from "react";
 
 const DetailQnA = () => {
   const router = useRouter();
   const { data } = useSWR(`/question/${router.query.id}`, fetcher);
-  const [detail, setDetail] = useState({});
 
   const next = () => {
-    router.push("/mypage");
+    router.push("/mypage/03");
   };
 
   return (
     <>
       {data && (
         <Container>
-          {detail.adminCheck && (
-            <QnA_check details={detail} onClickHandler={next} />
-          )}
-          {!detail.adminCheck && (
-            <QnA_modify details={detail} onClickHandler={next} />
-          )}
+          {data.adminCheck && <QnA_check onClickHandler={next} />}
+          {!data.adminCheck && <QnA_modify onClickHandler={next} />}
         </Container>
       )}
     </>

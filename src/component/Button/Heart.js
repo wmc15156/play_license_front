@@ -1,25 +1,57 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { memo } from "react";
+import heartImg from "../../../public/assets/image/heart.png";
 
-const Heart = ({ state, onClickHandler }) => {
+const Heart = ({
+  state,
+  onClickHandler,
+  boxWidth,
+  heartWidth,
+  radius,
+  bgcolor,
+  shadow,
+}) => {
   return (
-    <>
-      {state && <Container onClick={onClickHandler} />}
-      {!state && <RemoveContainer onClick={onClickHandler} />}
-    </>
+    <HeartBtnBox
+      onClick={onClickHandler}
+      boxWidth={boxWidth}
+      radius={radius}
+      bgcolor={bgcolor}
+      shadow={shadow}
+    >
+      <HeartBtn state={state} heartWidth={heartWidth} />
+      {/* {state && <HeartBtn heartWidth={heartWidth} />} */}
+      {/* {!state && <GrayHeartBtn heartWidth={heartWidth} />} */}
+    </HeartBtnBox>
   );
 };
-const Container = styled.div`
-  width: 100%;
-  height: 38px;
-  background-image: url(/assets/image/heart.png);
-  background-size: 100%;
+
+const HeartBtnBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: ${(props) => props.boxWidth};
+  height: ${(props) => props.boxWidth};
+  border-radius: ${(props) => props.radius};
+  background-color: ${(props) => props.bgcolor};
+  box-shadow: ${(props) =>
+    props.shadow ? "4px 4px 10px rgba(0, 0, 0, 0.1)" : "none"};
 `;
 
-const RemoveContainer = styled.div`
-  width: 100%;
-  height: 38px;
-  background-image: url(/assets/image/heart.png);
-  background-size: 100%;
-  opacity: 0.3;
+const StyleHeartImage = css``;
+
+const HeartBtn = styled.img.attrs({ src: heartImg })`
+  width: ${(props) => props.heartWidth};
+  height: auto;
+  ${(props) =>
+    !props.state &&
+    css`
+      filter: grayscale(100%);
+    `}
 `;
-export default Heart;
+
+const GrayHeartBtn = styled.img.attrs({ src: heartImg })`
+  ${StyleHeartImage};
+`;
+export default memo(Heart);

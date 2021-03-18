@@ -1,27 +1,31 @@
 import styled from "styled-components";
+import color from "../../../styles/colors";
 import Link from "next/link";
 import Tag from "../Tag/Tag.";
 import HeartBtn from "../Button/Heart";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import useModal from "../../../utils/useModal";
+import AlertModal from "../Modal/AlertModal";
 import axios from "axios";
 
 const Favorites = () => {
   const router = useRouter();
   const GET_URL = "/product/cart";
-  // const POST_URL = `/product/${router.query.id}/add-item`;
-  // const DELETE_URL = `/product/${router.query.id}/cart`;
-
+  const { openModal, closeModal, ModalPortal } = useModal();
   const [isFav, setIsFav] = useState(true);
+  // TODO: HEART 각자 상태를 갖도록 변경
   const [list, setList] = useState([]);
 
   const getData = () => {
     axios.get(GET_URL).then((res) => {
-      console.log("res?", res);
-
       setList(res.data);
     });
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const heartBtnHandler = (id) => {
     const param = id;
@@ -34,6 +38,7 @@ const Favorites = () => {
           if (res.status === 200) {
             console.log(res, "delete resp");
             setIsFav(false);
+            closeModal();
             return;
           }
         })
@@ -58,17 +63,12 @@ const Favorites = () => {
     // console.log(isFav, "isFav????");
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
   return (
     <Container>
       {list.length > 0 && (
         <ListSt>
           {list.map((item) => (
             <Item key={item.productId}>
-              {/* <Item> */}
               <Link href={`/performances/${item.productId}`}>
                 <a>
                   <ItemImg>
@@ -101,11 +101,25 @@ const Favorites = () => {
                 </Link>
                 <Btn>
                   <HeartBtn
+                    boxWidth={"50px"}
+                    heartWidth={"26px"}
+                    radius={"50%"}
+                    bgcolor={color.white}
+                    shadow={true}
                     state={isFav}
-                    onClickHandler={() => heartBtnHandler(item.productId)}
+                    onClickHandler={openModal}
                   />
                 </Btn>
               </ItemDesc>
+
+              {isFav && (
+                <ModalPortal>
+                  <AlertModal
+                    text={"이 공연의 찜하기를 해제할까요?"}
+                    onClickBtn={() => heartBtnHandler(item.productId)}
+                  />
+                </ModalPortal>
+              )}
             </Item>
           ))}
         </ListSt>
@@ -113,7 +127,14 @@ const Favorites = () => {
       {list.length === 0 && (
         <NoList>
           <Icon>
-            <img src="/assets/image/heart.png" />
+            <HeartBtn
+              boxWidth={"70px"}
+              heartWidth={"36px"}
+              radius={"50%"}
+              bgcolor={color.white}
+              shadow={true}
+              state={true}
+            />
           </Icon>
           <Text>찜한공연이 없습니다</Text>
         </NoList>
@@ -144,14 +165,14 @@ const Icon = styled.div`
 `;
 const Text = styled.div`
   font-family: "NotoSansCJKkr-Bold";
-  size: 24px;
-  line-height: 48px;
+  font-size: 24px;
+  line-height: 24px;
   margin-left: 5%;
 `;
 
 const TagContainer = styled.div`
   width: 100%;
-  margin-top: 30px;
+  margin-top: 2.3vw;
 `;
 
 const Divider = styled.div`
@@ -167,11 +188,11 @@ const Ptitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   font-size: 18px;
   line-height: 18px;
-  margin-bottom: 12px;
+  margin-bottom: 1vw;
 `;
 
 const ItemDesc = styled.div`
-  min-width: 276px;
+  max-width: 276px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -180,12 +201,12 @@ const ItemDesc = styled.div`
 const ItemImg = styled.div`
   width: 100%;
   /* height: 100%; */
-  height: 386px;
+  /* height: 386px; */
   border-radius: 8px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
   & > img {
-    min-width: 276px;
-    width: 100%;
+    /* min-width: 276px; */
+    max-width: 100%;
     height: auto;
   }
 `;
@@ -196,7 +217,7 @@ const Item = styled.li`
   max-width: 276px;
   width: 100%;
   height: auto;
-  margin-right: 5%;
+  margin-right: 2rem;
 `;
 
 const ListSt = styled.ul`
@@ -209,12 +230,10 @@ const ListSt = styled.ul`
 `;
 
 const Btn = styled.div`
-  width: 41px;
-  height: 38px;
+  display: inline-block;
   position: absolute;
-  right: 34px;
-  top: 67.4px;
-  cursor: pointer;
+  right: 0;
+  top: 4.5vw;
 `;
 
 export default Favorites;

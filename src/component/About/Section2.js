@@ -80,7 +80,7 @@ const ImgBox = styled.div`
 
 const TextSection = styled.div`
   width: 100%;
-  max-width: 924px;
+  max-width: 1000px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -117,7 +117,7 @@ const Text1 = styled.div`
   margin: 0 auto;
   display: inline-block;
   font-family: "NotoSansCJKkr-Regular";
-  font-size: 2.2vw;
+  font-size: 2vw;
   line-height: 2.2vw;
   margin-bottom: 26px;
 `;
@@ -135,7 +135,7 @@ const Text2 = styled.div`
 
 const BtnBox = styled.div`
   display: flex;
-  max-width: 924px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 0 1rem;
 `;

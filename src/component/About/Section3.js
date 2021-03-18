@@ -50,7 +50,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   width: 100%;
-  max-width: 924px;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
 `;

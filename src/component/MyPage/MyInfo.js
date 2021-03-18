@@ -1,12 +1,41 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import color from "../../../styles/colors";
 import useSWR from "swr";
-import fetcher from "../../../utils/fetcher";
+import { memo, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import fetcher from "../../../utils/fetcher";
+import useModal from "../../../utils/useModal";
+import EmailType from "../Tag/EmailType";
+import MP_ChangePhoneNum from "../Modal/MP_ChangePhoneNum";
+import MP_ChangePassword from "../Modal/MP_ChangePassword";
+import MP_Unsubscribe from "../Modal/AlertModal2Btns";
+
+const dummies = {
+  fullName: "권보경",
+  phone: "01012345678",
+  email: "abc@abc.com",
+  password: "******",
+};
 
 const MyInfo = () => {
   const { data, error, mutate } = useSWR("/user/me", fetcher);
+  const { ModalPortal, openModal, closeModal } = useModal();
+  const [userData, setUserData] = useState({});
+  const [modal, setModal] = useState("");
   const router = useRouter();
+
+  const getUserData = () => {
+    axios
+      .get("/auth/me")
+      .then((res) => setUserData(res.data))
+      .catch((err) => console.error(err));
+  };
+  console.log(userData);
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   const onLogOut = () => {
     axios.post("/auth/logout").then((res) => {
       mutate(false, false);
@@ -14,164 +43,217 @@ const MyInfo = () => {
     });
   };
 
-  if (!data) {
-    router.push("/login");
-  }
+  const unSubscribeHandler = () => {
+    axios
+      .delete("/auth/unregister")
+      .then((res) => {
+        if (res.status === 200) {
+          closeModal();
+          router.push("/");
+        }
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const changeModalHandler = (name) => {
+    if (name === "phone") {
+      setModal("phone");
+      openModal();
+    }
+    if (name === "password") {
+      setModal("password");
+      openModal();
+    }
+    if (name === "unsubscribe") {
+      setModal("unsubscribe");
+      openModal();
+    }
+  };
+
+  // if (!data) {
+  //   router.push("/login");
+  // }
 
   return (
     <Container>
       <Box>
-        <Content>
-          <Item>
+        <List>
+          <SubTitles>
             <SubTitle>이름</SubTitle>
-            <Data>김솔</Data>
-          </Item>
-          <Item>
-            <SubTitle>휴대폰번호</SubTitle>
-            <PhoneNumber>
-              <Data>
-                <Num>010-0000-0000</Num> <ChangeBtn>변경</ChangeBtn>
-              </Data>
-            </PhoneNumber>
-          </Item>
-          <Item>
+            <SubTitle>연락처</SubTitle>
             <SubTitle>이메일</SubTitle>
-            <Data>playlicense</Data>
-          </Item>
-          <Item>
             <SubTitle>비밀번호</SubTitle>
-            <Data>
-              <ChangeBtn>변경</ChangeBtn>
-            </Data>
-          </Item>
+          </SubTitles>
           <Item>
-            <SubTitle>간편로그인 여부</SubTitle>
-            <SocialLogin>
-              <Google>
-                <Data>구글</Data>
-              </Google>
-              <Naver>
-                <Data>네이버</Data>
-              </Naver>
-              <Kakao>
-                <Data>카카오</Data>
-              </Kakao>
-            </SocialLogin>
+            <Content>
+              <Data>{userData.fullName}</Data>
+              <BtnContainer>
+                <Btn onClick={onLogOut}>로그아웃</Btn>
+              </BtnContainer>
+            </Content>
+            <Content>
+              <Data>{userData.phone}</Data>
+              <BtnContainer>
+                <ChangeBtn onClick={() => changeModalHandler("phone")}>
+                  변경
+                </ChangeBtn>
+              </BtnContainer>
+            </Content>
+            <Content>
+              <Data>{userData.email}</Data>
+              <BtnContainer>
+                <EmailType type={userData.provider} />
+              </BtnContainer>
+            </Content>
+            <Content>
+              <Data>{dummies.password}</Data>
+              <BtnContainer>
+                <ChangeBtn onClick={() => changeModalHandler("password")}>
+                  변경
+                </ChangeBtn>
+              </BtnContainer>
+            </Content>
           </Item>
-        </Content>
-        <Btn onClick={onLogOut}>로그아웃</Btn>
+        </List>
       </Box>
-      <Unsubscribe>회원탈퇴하기</Unsubscribe>
+      <Unsubscribe onClick={() => changeModalHandler("unsubscribe")}>
+        회원탈퇴하기
+      </Unsubscribe>
+      <ModalPortal>
+        {modal === "phone" && <MP_ChangePhoneNum onClickHandler={closeModal} />}
+        {modal === "password" && (
+          <MP_ChangePassword onClickHandler={closeModal} />
+        )}
+        {modal === "unsubscribe" && (
+          <MP_Unsubscribe
+            text={"회원 탈퇴를 진행하시겠습니까?"}
+            content1={
+              "탈퇴시 계정이 삭제됨과 동시에 서비스를 이용하실 수 없습니다."
+            }
+            content2={"그래도 탈퇴를 진행할까요?"}
+            onClickBtn1={unSubscribeHandler}
+            onClickBtn2={closeModal}
+          />
+        )}
+      </ModalPortal>
     </Container>
   );
 };
 
-const Container = styled.div``;
+const Container = styled.div`
+  min-height: calc(100vh - 410px);
+  width: 100%;
+`;
 const Box = styled.div`
-  position: relative;
   width: 100%;
   height: 100%;
   border-radius: 14px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1);
 `;
 
-const Content = styled.div`
-  padding: 61px 0 67px 67px;
-`;
-const Item = styled.div`
-  display: flex;
+const List = styled.ul`
   width: 100%;
-  margin-bottom: 35px;
-  justify-content: center;
-`;
-const SubTitle = styled.div`
-  width: 30%;
-  font-family: "NotoSansCJKkr-Bold";
-  font-size: 16px;
-  line-height: 16px;
-  color: #0d0d0c;
-`;
-const Data = styled.div`
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
-  font-family: "NotoSansCJKkr-Regular";
-  font-size: 16px;
-  line-height: 16px;
-  color: #0d0d0c;
-  width: 70%;
+  border-top-left-radius: 14px;
 `;
 
-const Num = styled.div`
-  margin-right: 23px;
-  display: flex;
-
-  align-items: center;
-`;
-const PhoneNumber = styled.div`
-  display: flex;
-  width: 70%;
-  align-items: center;
-`;
-
-const SocialLogin = styled.div`
+const SubTitles = styled.li`
   display: flex;
   flex-direction: column;
-  width: 70%;
-`;
-const Google = styled.div`
-  display: flex;
-  margin-bottom: 29px;
+  width: 25%;
 `;
 
-const Naver = styled.div`
+const Item = styled.li`
   display: flex;
-  margin-bottom: 29px;
-`;
-const Kakao = styled.div`
-  display: flex;
+  flex-direction: column;
+  width: 75%;
 `;
 
-const Btn = styled.div`
-  position: absolute;
+const SubTitle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  line-height: 30px;
+  font-family: "NotoSansCJKkr-Bold";
+  color: ${color.black1};
+  background-color: ${color.gray1};
+  padding: 21px 0;
+  /* height: 56px; */
+  border-bottom: 1px solid ${color.black5};
+  :first-child {
+    border-top-left-radius: 14px;
+  }
+  :last-child {
+    border: none;
+    border-bottom-left-radius: 14px;
+  }
+`;
+
+const Content = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 21px 0;
+  border-bottom: 1px solid ${color.black5};
+  :last-child {
+    border: none;
+  }
+`;
+
+const Data = styled.div`
+  display: flex;
+  line-height: 30px;
+  font-family: "NotoSansCJKkr-Regular";
+  color: ${color.black1};
+  max-width: 384px;
+  padding-left: 13%;
+`;
+
+const BtnContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 13%;
+`;
+
+const BtnStyle = css`
   border-radius: 4px;
-  background-color: #96ceb4;
-  width: 76px;
-  height: 28px;
+  padding: 8px 8.14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: ${color.white};
   font-family: "NotoSansCJKkr-Bold";
   font-size: 12px;
   letter-spacing: -0.5px;
   line-height: 12px;
-  top: 55px;
-  right: 63px;
   cursor: pointer;
 `;
 
+const Btn = styled.div`
+  ${BtnStyle};
+  background-color: ${color.blue_2};
+`;
+
 const ChangeBtn = styled.div`
-  border-radius: 4px;
-  background-color: #ff6f69;
-  width: 38px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-family: "NotoSansCJKkr-Bold";
-  font-size: 12px;
-  letter-spacing: -0.5px;
-  line-height: 12px;
+  ${BtnStyle};
+  background-color: ${color.orange};
+  padding: 8px 8px;
 `;
 
 const Unsubscribe = styled.div`
+  display: inline-block;
   font-family: "NotoSansCJKkr-Regular";
   font-size: 14px;
   line-height: 14px;
-  color: #0d0d0c;
+  color: ${color.black3};
   text-decoration: underline;
   opacity: 0.4;
-  margin-top: 43px;
+  margin-top: 30px;
   margin-bottom: 67px;
+  cursor: pointer;
 `;
-export default MyInfo;
+export default memo(MyInfo);

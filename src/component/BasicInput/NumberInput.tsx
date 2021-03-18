@@ -3,9 +3,9 @@ import styled from "styled-components";
 import styles from "@styles/colors";
 import { FC, memo } from "react";
 
-const InputWrapper = styled(InputNumber).attrs<{ placeHolder: string }>(
+const InputWrapper = styled.input.attrs<{ placeholder: string }>(
   (p) => ({
-    placeholder: p.placeHolder,
+    placeholder: p.placeholder,
   })
 )<{ width: string }>`
   width: ${(p) => p.width};
@@ -20,7 +20,7 @@ const InputWrapper = styled(InputNumber).attrs<{ placeHolder: string }>(
 
 type Props = {
   width: string;
-  placeHolder: string;
+  placeholder: string;
   onChange?: () => void;
   value?: string;
 };
@@ -28,14 +28,14 @@ type Props = {
 const NumberInput: FC<Props> = ({
   children,
   width,
-  placeHolder,
+  placeholder,
   onChange,
   value,
 }) => {
   return (
     <InputWrapper
       width={width}
-      placeHolder={placeHolder}
+      placeholder={placeholder}
       onChange={onChange}
       value={value}
     />

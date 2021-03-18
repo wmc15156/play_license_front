@@ -2,8 +2,12 @@ import styled from "styled-components";
 import styles from "@styles/colors";
 import { FC, memo } from "react";
 
-const InputWrapper = styled.input.attrs<{ placeholder: string }>((p) => ({
+const InputWrapper = styled.input.attrs<{
+  placeholder: string;
+  password: boolean;
+}>((p) => ({
   placeholder: p.placeholder,
+  // type: p.password ? "password" : null,
 }))<{ width: string }>`
   width: ${(p) => p.width};
   height: 60px;
@@ -22,6 +26,7 @@ type Props = {
   value?: string;
   onBlur?: () => void;
   checkPw?: boolean;
+  password?: boolean;
 };
 
 const InputBox: FC<Props> = ({
@@ -32,8 +37,8 @@ const InputBox: FC<Props> = ({
   value,
   onBlur,
   checkPw,
+  password,
 }) => {
-  console.log(placeholder, "asdasdas");
   return (
     <InputWrapper
       width={width}

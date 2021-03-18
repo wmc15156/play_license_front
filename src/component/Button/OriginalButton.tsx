@@ -5,38 +5,55 @@ import React, { FC, memo } from "react";
 const Wrapper = styled.div<{
   width: string;
   margin: string;
-  background: boolean;
+  background: boolean | string;
   height: string;
   size: string;
   position: boolean;
+  marginBottom?: string;
+  provider?: boolean;
 }>`
   width: ${(p) => p.width};
   height: ${(p) => p.height};
-  background-color: ${(p) =>
-    p.background ? `${styles.orange}` : `${styles.black3}`};
+  background-color: ${(
+    p //
+  ) =>
+    typeof p.background === "boolean" && p.background && p.provider
+      ? `${styles.blue_2}`
+      : typeof p.background === "boolean" && p.background
+      ? `${styles.orange}`
+      : typeof p.background === "boolean" && p.provider
+      ? `${styles.white}`
+      : typeof p.background === "boolean"
+      ? `${styles.black3}`
+      : `${p.background}`};
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  color: ${styles.white};
+  color: ${(p) =>
+    p.provider && !p.background ? `${styles.black3}` : styles.white};
   line-height: 18px;
   font-family: "NotoSansCJKkr-Bold";
   outline: 0;
   margin-top: ${(p) => p.margin};
+  margin-bottom: ${(p) => (p.marginBottom ? p.marginBottom : "0")};
   font-size: ${(p) => p.size};
   position: ${(p) => (p.position ? "absolute" : null)};
   cursor: pointer;
+  z-index: 1;
 `;
 
 type Props = {
   children: React.ReactNode;
   width: string;
   margin: string;
-  background: boolean;
+  background: boolean | string;
   height: string;
   size: string;
   position?: boolean;
   onClick?: () => void;
+  marginBottom?: string;
+  provider?: boolean;
 };
 
 const OriginalButton: FC<Props> = ({
@@ -48,7 +65,10 @@ const OriginalButton: FC<Props> = ({
   size,
   position,
   onClick,
+  marginBottom,
+  provider,
 }) => {
+  console.log(background, provider);
   return (
     <Wrapper
       width={width}
@@ -58,6 +78,8 @@ const OriginalButton: FC<Props> = ({
       size={size}
       position={position}
       onClick={onClick}
+      marginBottom={marginBottom}
+      provider={provider}
     >
       {children}
     </Wrapper>
