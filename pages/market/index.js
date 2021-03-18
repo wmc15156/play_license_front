@@ -17,8 +17,9 @@ const Market = () => {
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(16);
-  const [curation, setCuration] = useState([]); // curation blocks
+  const [curationBlock, setCurationBlock] = useState([]); // curation blocks
   const [count, setCount] = useState(0);
+  const [curation, setCuration] = useState("모든작품");
   const [selectedOption, setOption] = useState({
     numberOfMembers: "",
     category: "",
@@ -42,16 +43,31 @@ const Market = () => {
       });
   };
 
+  const getCurationInfo = (c) => {
+    console.log("get", c);
+    axios
+      .get("/curation/filter", {
+        params: {
+          page: 1,
+          q: c,
+        },
+      })
+      .then((res) => {
+        setCount(res.data.count);
+        setList(res.data.result);
+      });
+  };
+
+  useEffect(() => {
+    getCurationInfo(curation);
+  }, [curation]);
+
   useEffect(() => {
     if (data) {
       const first = ["모든작품"].concat(Object.keys(data.special));
-      setCuration((prevState) => prevState.concat(first));
+      setCurationBlock((prevState) => prevState.concat(first));
     }
   }, [data]);
-
-  useEffect(() => {
-    getAllProducts();
-  }, []);
 
   const indexOfLast = currentPage * postsPerPage; // 16
   const indexOfFirst = indexOfLast - postsPerPage; // 0
@@ -123,21 +139,6 @@ const Market = () => {
     }
   };
 
-  const getCurationInfo = (q) => {
-    console.log(q);
-    axios
-      .get("/curation/filter", {
-        params: {
-          page: 1,
-          q: q,
-        },
-      })
-      .then((res) => {
-        setCount(res.data.count);
-        setList(res.data.result);
-      });
-  };
-
   if (!data) {
     return (
       <LoaderContainer>
@@ -145,13 +146,18 @@ const Market = () => {
       </LoaderContainer>
     );
   }
-
+  console.log(curation);
   return (
     <Container>
       {data && (
         <>
-          <Curation curation={curation} getCurationInfo={getCurationInfo} />
+          <Curation
+            curation={curation}
+            setCuration={setCuration}
+            curationBlock={curationBlock}
+          />
           <List
+            listTitle={curation}
             list={showCurrentPosts(list)}
             count={count}
             sortListHandler={getSortList}

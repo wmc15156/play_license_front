@@ -2,6 +2,7 @@ import styled from "styled-components";
 import color from "../../../styles/colors";
 import { PageContainer, PageContentContainer } from "../../../styles/PL_Frame";
 import Navi from "../../../src/component/Nav/Navigation";
+import LogoBar from "../../../src/component/Nav/LogoBar";
 
 function pl_work() {
   return (
@@ -9,7 +10,9 @@ function pl_work() {
       <NavContainer>
         <Navi />
       </NavContainer>
-      <Content></Content>
+      <BodyContainer>
+        <LogoBar />
+      </BodyContainer>
     </Container>
   );
 }
@@ -22,9 +25,9 @@ const NavContainer = styled.div`
   width: 220px;
 `;
 
-const Content = styled.div`
+const BodyContainer = styled.div`
   ${PageContentContainer};
-  background-color: yellow;
+  flex-direction: column;
 `;
 
 export default pl_work;

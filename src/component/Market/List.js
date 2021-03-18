@@ -4,6 +4,7 @@ import Tag from "../Tag/Tag.";
 import Filter from "./Filter";
 
 const List = ({
+  listTitle,
   list,
   count,
   sortListHandler,
@@ -15,6 +16,7 @@ const List = ({
     <Container>
       <HeadSection>
         <Filter
+          listTitle={listTitle}
           count={count}
           selectedOption={selectedOption}
           setOption={setOption}
