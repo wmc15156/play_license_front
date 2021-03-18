@@ -12,7 +12,6 @@ import TextAndInputAndBtn from "@src/component/molecules/TextAndInputAndBtn/Text
 import { useRouter } from "next/router";
 import OriginalButton from "@src/component/Button/OriginalButton";
 import { SAVE_PASSWORD_CHECK, SAVE_USER_EMAIL } from "@reducers/types/types";
-import { useDispatch } from "react-redux";
 import { useGlobalDispatch } from "@store/homeStore";
 import useSWR from "swr";
 import fetcher from "@utils/fetcher";
