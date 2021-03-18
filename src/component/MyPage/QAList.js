@@ -8,10 +8,6 @@ import useModal from "../../../utils/useModal";
 import LoginAlert from "../Modal/AlertModal";
 import StatusBox from "../Tag/AnswerStatus";
 import Pagination from "../Pagination/Pagination";
-import QnaDetail from "../Q&A/Qna";
-import QnaDetailModify from "../Q&A/Qna_modify";
-import useSWR from "swr";
-import fetcher from "../../../utils/fetcher";
 
 const QAList = () => {
   const router = useRouter();

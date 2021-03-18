@@ -8,6 +8,7 @@ import { MdFilterList } from "react-icons/md";
 import { useState } from "react";
 
 const Filter = ({
+  listTitle,
   count,
   selectedOption,
   setOption,
@@ -21,7 +22,8 @@ const Filter = ({
     <Container>
       <Row1>
         <Title>
-          새로 등록된 작품<span>{count}개</span>
+          {listTitle}
+          <span>{count}개</span>
         </Title>
         <Wrapper>
           <Filtering onClick={openModal}>

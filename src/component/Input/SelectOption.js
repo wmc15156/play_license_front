@@ -19,7 +19,7 @@ const SelectOption = ({
         fontSize={fontSize}
         required
       >
-        <option value="" disabled selected>
+        <option value="" disabled>
           선택해주세요
         </option>
         {options.map((opt, i) => (

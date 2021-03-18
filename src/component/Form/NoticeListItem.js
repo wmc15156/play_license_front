@@ -37,6 +37,8 @@ const NoticeListItem = ({ title, cate, id, clickHandler }) => {
 const Container = styled.div`
   width: 100%;
   height: 100%;
+  padding: 14px 0;
+  border-bottom: 1px solid ${color.black5};
 `;
 
 const Wrapper = styled.div`
@@ -45,13 +47,12 @@ const Wrapper = styled.div`
   font-family: "NotoSansCJKkr-Medium";
   font-size: 16px;
   line-height: 16px;
+  height: 28px;
   color: ${color.black1};
   cursor: pointer;
-  padding: 23px 0;
   width: 100%;
   text-align: left;
   border: none;
-  border-bottom: 1px solid ${color.black5};
   outline: none;
 `;
 

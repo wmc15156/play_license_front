@@ -70,30 +70,30 @@ const Chart = () => {
 
   return (
     <Container>
-      {/* <ResponsiveContainer width={"100%"} height={"100%"}> */}
-      <BarChart width={350} height={150} data={data} margin={0}>
-        {/* <CartesianGrid strokeDasharray="3 3" /> */}
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip content={<CustomTooltip />} />
-        <Bar dataKey="amt" onClick={handleClick} barSize={10}>
-          {data.map((entry, index) => {
-            const cellColors = [color.orange, color.blue, color.blue_2];
-            return (
-              <Cell cursor="pointer" fill={cellColors[index]} key={index} />
-            );
-          })}
-        </Bar>
-      </BarChart>
-      {/* </ResponsiveContainer> */}
+      <ResponsiveContainer width={"100%"} height={"100%"}>
+        <BarChart data={data} margin={0}>
+          {/* <CartesianGrid strokeDasharray="3 3" /> */}
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip content={<CustomTooltip />} />
+          <Bar dataKey="amt" onClick={handleClick} barSize={10}>
+            {data.map((entry, index) => {
+              const cellColors = [color.orange, color.blue, color.blue_2];
+              return (
+                <Cell cursor="pointer" fill={cellColors[index]} key={index} />
+              );
+            })}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
     </Container>
   );
 };
 
 const Container = styled.div`
-  width: 100%;
   max-width: 350px;
-  height: 100%;
+  width: 100%;
+  height: 150px;
 `;
 
 export default Chart;
