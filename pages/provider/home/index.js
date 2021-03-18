@@ -170,9 +170,7 @@ const pl_home = () => {
                 <Box_Head>
                   <Subtitle>월간매출통계</Subtitle>
                 </Box_Head>
-                <Box_Body>
-                  <Home_Chart />
-                </Box_Body>
+                <Box_Body>{/* <Home_Chart /> */}</Box_Body>
               </Box>
             </FaqContainer>
           </Column2>
