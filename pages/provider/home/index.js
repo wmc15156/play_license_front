@@ -3,7 +3,7 @@ import color from "../../../styles/colors";
 import Link from "next/link";
 import { PageContainer, PageContentContainer } from "../../../styles/PL_Frame";
 import Navi from "../../../src/component/Nav/Navigation";
-import Home_Chart from "../../../src/PL_Component/Home/Home_Chart";
+// import Home_Chart from "../../../src/PL_Component/Home/Home_Chart";
 import NoticeListItem from "../../../src/component/Form/NoticeListItem";
 import { IoIosInformationCircle } from "react-icons/io";
 import { useRouter } from "next/router";
@@ -130,7 +130,7 @@ const pl_home = () => {
               <Box>
                 <Subtitle>월간매출통계</Subtitle>
                 <Box_Body>
-                  <Home_Chart />
+                  {/*<Home_Chart />*/}
                 </Box_Body>
               </Box>
             </FaqContainer>
