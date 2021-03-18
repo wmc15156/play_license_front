@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PageContainer, PageContentContainer } from "../../../styles/PL_Frame";
 import Navi from "../../../src/component/Nav/Navigation";
 import LogoBar from "../../../src/component/Nav/LogoBar";
-import Home_Chart from "../../../src/PL_Component/Home/Home_Chart";
+// import Home_Chart from "../../../src/PL_Component/Home/Home_Chart";
 import NoticeListItem from "../../../src/component/Form/NoticeListItem";
 import { IoIosInformationCircle } from "react-icons/io";
 import { useRouter } from "next/router";
@@ -170,9 +170,7 @@ const pl_home = () => {
                 <Box_Head>
                   <Subtitle>월간매출통계</Subtitle>
                 </Box_Head>
-                <Box_Body>
-                  <Home_Chart />
-                </Box_Body>
+                <Box_Body>{/* <Home_Chart /> */}</Box_Body>
               </Box>
             </FaqContainer>
           </Column2>
