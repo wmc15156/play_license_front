@@ -1,16 +1,15 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-  html,body{
+  html, body, #__next {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-size: 14px;
+    width:auto;
     height:100%;
-    width:100%;
+    background-color: #f5f5f5;
   }
-
-  
   
   a {
     color: inherit;

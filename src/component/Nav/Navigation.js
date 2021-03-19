@@ -42,22 +42,21 @@ const Navigation = () => {
 };
 
 const Container = styled.div`
-  margin: 0;
   width: 220px;
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: ${color.blue};
+  padding: 30px 0;
+  background-color: ${color.blue_3};
   color: ${color.white};
-  font-family: "NotoSansCJKkr-Bold";
+  font-family: "NotoSansCJKkr-Regular";
 `;
 
 const Section1 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 366px;
-  border-bottom: 1px solid ${color.white};
+  height: 336px;
 `;
 
 const ProfileImageContainer = styled.div`
@@ -68,7 +67,7 @@ const ProfileImageContainer = styled.div`
   height: 120px;
   border-radius: 50%;
   background-color: ${color.white};
-  margin-top: 80px;
+  margin-top: 50px;
   margin-bottom: 22px;
 
   & > img {
@@ -81,12 +80,14 @@ const ProfileName = styled.div`
   font-size: 21px;
   line-height: 24px;
   margin-bottom: 12px;
+  font-family: "NotoSansCJKkr-Bold";
 `;
 
 const Box = styled.div`
   border-radius: 4px;
-  background-color: ${color.blue_2};
-  color: ${color.white};
+  background-color: ${color.white};
+  font-family: "NotoSansCJKkr-Bold";
+  color: ${color.blue_2};
   font-size: 12px;
   line-height: 12px;
   letter-spacing: -0.5px;
@@ -94,7 +95,6 @@ const Box = styled.div`
 `;
 
 const Section2 = styled.div`
-  margin-top: 50px;
   width: 100%;
 `;
 const List = styled.ul`
@@ -109,17 +109,19 @@ const Menu = styled.li`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
-  width: 180px;
-  padding: 10px 0;
+  width: 100%;
+  padding: 30px 0;
   font-size: 18px;
   line-height: 18px;
-  margin-bottom: 40px;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-family: "NotoSansCJKkr-Bold";
+  }
   ${(props) =>
     props.focus &&
     css`
-      background-color: ${color.white};
-      color: ${color.orange};
+      background-color: rgba(255, 255, 255, 0.2);
+      font-family: "NotoSansCJKkr-Bold";
     `}
 `;
 export default Navigation;

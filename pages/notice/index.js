@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Accordion from "../../src/component/Form/AccordionMenu";
 
-const faq = [
+const notice = [
   {
     id: 1,
     title: "신규 기능 업데이트 안내 (2020.11.05)",
@@ -29,13 +29,13 @@ const faq = [
 ];
 
 const Notice = () => {
-  // const [faq, setFaq] = useState([]);
+  // const [faq, setNotice] = useState([]);
   const GET_URL = "";
   // const getData = ()=>{
-  // 등록 된 faq들 가져오기
+  // 등록 된 notice 가져오기
   // axios.get(GET_URL).then(res=>{
   // console.log(res);
-  // setFaq(res)
+  // setNotice(res)
   //   })
   // }
   // useEffect(()=>{
@@ -47,7 +47,7 @@ const Notice = () => {
       <Title>공지사항</Title>
       <Section>
         <List>
-          {faq.map((item, idx) => (
+          {notice.map((item, idx) => (
             <ListItem key={item.id}>
               <Accordion
                 title={item.title}

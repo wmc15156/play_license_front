@@ -39,7 +39,7 @@ const Curation = () => {
   const [imageIdx, setImageIdx] = useState(0);
 
   const Arrow_Next = ({ currentSlide, slideCount, ...props }) => {
-    console.log(currentSlide, slideCount, props);
+    // console.log(currentSlide, slideCount, props);
     return <ArrowNext {...props} />;
   };
 
@@ -49,12 +49,10 @@ const Curation = () => {
 
   useEffect(() => {
     axios.get("/curation/product", fetcher).then((res) => {
-      console.log(res);
       mutate(res.data);
     });
   });
 
-  console.log(data);
   if (!data) {
     return null;
   }
@@ -71,12 +69,11 @@ const Curation = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     centerMode: true,
-    centerPadding: "25%",
+    centerPadding: "17%",
     nextArrow: <Arrow_Next />,
     prevArrow: <Arrow_Prev />,
     beforeChange: (current, next) => setImageIdx(next),
   };
-  console.log(data, ";test", keyArr);
   return (
     <Container>
       <HeadSection>
@@ -86,11 +83,9 @@ const Curation = () => {
       <SliderContainer>
         <StyledSlider {...settings}>
           {keyArr.map((keyName, idx) => {
-            console.log(keyName, idx);
             return (
               <div key={idx}>
                 <ImageContainer>
-                  {/* <Overlay /> */}
                   <TextContainer>
                     <Text1>[{curation[keyName][0].productTitle}] 등</Text1>
                     <Text2>{keyName}에 추천해요!</Text2>
@@ -217,16 +212,12 @@ const StyledSlider = styled(Slider)`
   .slick-slide div {
     outline: none;
   }
-  .slick-active :not(.slick-center) div {
-    /* transform: scale(0.5); */
-    background-color: blue;
-  }
+
   .slick-active.slick-center div {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    //background-color: pink;
-    max-width: 924px;
+    max-width: 994px;
     height: auto;
     margin: 0 auto;
   }
@@ -251,7 +242,7 @@ const ArrowPrev = styled(IoIosArrowBack)`
   color: ${color.white};
   cursor: pointer;
   z-index: 10;
-  width: 35%;
+  width: 13%;
   height: 20%;
   transition: color 300ms;
   /* .slick-arrow.slick-prev {
@@ -267,7 +258,7 @@ const ArrowNext = styled(IoIosArrowForward)`
   color: ${color.white};
   cursor: pointer;
   z-index: 10;
-  width: 35%;
+  width: 13%;
   height: 20%;
   transition: color 300ms;
   /* .slick-arrow.slick-next {

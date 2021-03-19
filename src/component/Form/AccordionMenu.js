@@ -64,7 +64,7 @@ const Wrapper = styled.div`
   line-height: 16px;
   color: ${color.black1};
   cursor: pointer;
-  padding: 23px 0;
+  padding: 14px 0;
   width: 100%;
   text-align: left;
   border: none;
@@ -77,6 +77,7 @@ const Wrapper = styled.div`
   }};
   outline: none;
   transition: 0.4s;
+  height: 28px;
 `;
 
 const Categ = styled.div`
