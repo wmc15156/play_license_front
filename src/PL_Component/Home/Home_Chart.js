@@ -1,3 +1,17 @@
+
+import styled from "styled-components";
+import color from "../../../styles/colors";
+import { useState, useCallback } from "react";
+import {
+  BarChart,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
+
 // import styled from "styled-components";
 // import color from "../../../styles/colors";
 // import { useState, useCallback } from "react";
@@ -12,6 +26,7 @@
 //   Legend,
 //   ResponsiveContainer,
 // } from "recharts";
+
 
 // const data = [
 //   {

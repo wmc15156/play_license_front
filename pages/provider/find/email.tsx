@@ -12,8 +12,12 @@ import { useRouter } from "next/router";
 import OriginalButton from "@src/component/Button/OriginalButton";
 import { SAVE_USER_EMAIL } from "@reducers/types/types";
 import { useGlobalDispatch } from "@store/homeStore";
+import useSWR from "swr";
+import fetcher from "@utils/fetcher";
+import { ValidationCheck } from "../../signup/second";
 
 function ProviderFindEmail() {
+  const { data } = useSWR("/user/provider/me", fetcher);
   const router = useRouter();
 
   const [name, setName] = useInput("");
@@ -26,7 +30,7 @@ function ProviderFindEmail() {
   const requestPhoneValidation = useCallback(() => {
     if (phone) {
       axios
-        .post(`/user/phone-validation/${phone}`)
+        .post(`/user/phone-validation/provider/${phone}`)
         .then((res) => {
           alert("인증번호가 발송됐습니다.");
           setTimer(true);
@@ -34,7 +38,7 @@ function ProviderFindEmail() {
         .catch((err) => {
           if (err.response.status === 400) {
             alert("이미 존재하는 유저입니다.");
-            router.push("/exist/account");
+            router.push("/provider/exist/account");
           }
         });
     }
@@ -66,7 +70,7 @@ function ProviderFindEmail() {
         .get(`/user/find/${phone}`)
         .then((res) => {
           dispatch({ type: SAVE_USER_EMAIL, payload: res.data });
-          router.push("/find/getEmail");
+          router.push("/provider/find/getAccount");
           return;
         })
         .catch((err) => {
@@ -75,6 +79,10 @@ function ProviderFindEmail() {
       router.push("/find/getEmail");
     }
   };
+
+  if (data) {
+    router.push("/provider/home");
+  }
 
   return (
     <ContainerWrapper width={"580px"}>
@@ -132,6 +140,9 @@ function ProviderFindEmail() {
       >
         인증번호 확인
       </TextAndInputAndBtn>
+      {completedValidation && (
+        <ValidationCheck>인증에 성공했습니다.</ValidationCheck>
+      )}
       <OriginalButton
         width={"100%"}
         position={false}

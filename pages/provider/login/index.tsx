@@ -11,6 +11,10 @@ import color from "@styles/colors";
 import OriginalButton from "@src/component/Button/OriginalButton";
 import styles from "@styles/Login.module.css";
 import Link from "next/link";
+import axios from "axios";
+import useSWR from "swr";
+import fetcher from "@utils/fetcher";
+import { useRouter } from "next/router";
 
 const ImageWrapper = styled.div`
   width: 100%;
@@ -33,6 +37,11 @@ const IconWrapper = styled.div`
 `;
 
 function Login() {
+  const { data, error, revalidate, mutate } = useSWR(
+    "/user/provider/me",
+    fetcher
+  );
+  const router = useRouter();
   const [email, setEmail] = useInput("");
   const [password, setPassword] = useInput("");
   const [loginSave, setLoginSave] = useState(false);
@@ -41,7 +50,28 @@ function Login() {
     setLoginSave((prev) => !prev);
   }, [loginSave]);
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    if (!email || !password) {
+      alert("이메일 또는 패스워드를 입력해주세요.");
+      return;
+    }
+    if (email && password) {
+      const data = { email, password };
+      axios
+        .post("/auth/provider/login", data)
+        .then((res) => {
+          mutate(true, false);
+          router.push("/provider/home");
+        })
+        .catch((err) => {
+          alert("아이디 또는 비밀번호를 다시 확인해주세요.");
+        });
+    }
+  };
+
+  if (data) {
+    router.push("/provider/home");
+  }
 
   return (
     <ContainerWrapper width={"592px"}>
@@ -61,10 +91,12 @@ function Login() {
         <InputBox
           width={"100%"}
           placeholder={"비밀번호를 입력해주세요"}
-          onChange={setEmail}
+          onChange={setPassword}
           value={password}
+          checkPw={true}
         />
       </Wrapper>
+
       <IconWrapper>
         <CheckBoxWrapper
           width={"24px"}
@@ -87,11 +119,11 @@ function Login() {
         로그인하기
       </OriginalButton>
       <div className={styles.FindAccounts}>
-        <Link href="/find/email">
+        <Link href="/provider/find/email">
           <a>이메일 찾기</a>
         </Link>
         <span>|</span>
-        <Link href="/find/password">
+        <Link href="/provider/find/password">
           <a>비밀번호 찾기</a>
         </Link>
       </div>

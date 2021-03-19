@@ -8,7 +8,6 @@ import TextAndInputAndBtn from "@src/component/molecules/TextAndInputAndBtn/Text
 import { useCallback, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import InputAndBtn from "@src/component/molecules/InputAndBtn/InputAndBtn";
 import OriginalButton from "@src/component/Button/OriginalButton";
 import { useGlobalDispatch } from "@store/homeStore";
 import { SAVE_USER_EMAIL } from "@reducers/types/types";

@@ -12,11 +12,16 @@ import TextAndInputAndBtn from "@src/component/molecules/TextAndInputAndBtn/Text
 import { useRouter } from "next/router";
 import OriginalButton from "@src/component/Button/OriginalButton";
 import { SAVE_PASSWORD_CHECK, SAVE_USER_EMAIL } from "@reducers/types/types";
-import { useDispatch } from "react-redux";
+import { useGlobalDispatch } from "@store/homeStore";
+import useSWR from "swr";
+import fetcher from "@utils/fetcher";
+import { ValidationCheck } from "../../signup/second";
+
 
 function ProviderFindPassword() {
+  const { data } = useSWR("/user/provider/me", fetcher);
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useGlobalDispatch();
   const [name, setName] = useInput("");
   const [email, setEmail] = useInput("");
   const [code, setCode] = useInput("");
@@ -63,7 +68,7 @@ function ProviderFindPassword() {
   const requestPhoneValidation = useCallback(() => {
     if (phone) {
       axios
-        .post(`/user/phone-validation/${phone}`)
+        .post(`/user/phone-validation/provider/${phone}`)
         .then((res) => {
           alert("인증번호가 발송됐습니다.");
           setTimer(true);
@@ -71,7 +76,7 @@ function ProviderFindPassword() {
         .catch((err) => {
           if (err.response.status === 400) {
             alert("이미 존재하는 유저입니다.");
-            router.push("/exist/account");
+            router.push("/provider/exist/account");
           }
         });
     }
@@ -83,15 +88,20 @@ function ProviderFindPassword() {
       dispatch({ type: SAVE_PASSWORD_CHECK, payload: true });
       dispatch({ type: SAVE_USER_EMAIL, payload: email });
       axios
-        .get("/user/forgot-password/by-email", { params: { email } })
+        .get("/user/forgot-password/by-email/provider", { params: { email } })
         .then((res) => {
-          router.push("/find/getEmail");
+          console.log("here", res.data);
+          router.push("/provider/find/getAccount");
         })
         .catch((err) => {
           alert("존재하지 않는 유저입니다.");
         });
     }
   };
+
+  if (data) {
+    router.push("/provider/home");
+  }
 
   return (
     <ContainerWrapper width={"580px"}>
@@ -166,6 +176,9 @@ function ProviderFindPassword() {
       >
         인증번호 확인
       </TextAndInputAndBtn>
+      {completedValidation && (
+        <ValidationCheck>인증에 성공했습니다.</ValidationCheck>
+      )}
       <OriginalButton
         width={"100%"}
         position={false}

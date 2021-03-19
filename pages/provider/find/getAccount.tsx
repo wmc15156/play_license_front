@@ -8,6 +8,10 @@ import styled from "styled-components";
 import OriginalButton from "@src/component/Button/OriginalButton";
 import color from "@styles/colors";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import useSWR from "swr";
+import fetcher from "@utils/fetcher";
 
 const DivWrapper = styled.div`
   width: 100%;
@@ -31,7 +35,9 @@ const PasswordWrapper = styled.div`
 `;
 
 function GetAccount() {
+  const { data } = useSWR("/user/provider/me", fetcher);
   const state = useHomeState();
+  const router = useRouter();
   const { userEmail, passwordCheck } = state;
 
   const passwordComment = () => {
@@ -42,6 +48,16 @@ function GetAccount() {
       </Comment>
     );
   };
+
+  useEffect(() => {
+    if (!userEmail) {
+      router.push("/provider/login");
+    }
+  });
+
+  if (data) {
+    router.push("/provider/home");
+  }
 
   return (
     <ContainerWrapper width={"580px"}>
