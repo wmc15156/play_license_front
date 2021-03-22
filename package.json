@@ -29,7 +29,6 @@
     "redux-thunk": "^2.3.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.2.1",
-    "styled-normalize": "^8.0.7",
     "swr": "^0.4.2"
   },
   "devDependencies": {

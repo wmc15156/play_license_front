@@ -172,12 +172,12 @@ const PL_RegistQuestion = () => {
               </CheckBoxWrapper>
               <div>개인정보 수집 및 이용 동의</div>
             </CheckSection>
-            <ButtonContainer onClick={onSubmitHandler}>
+            <ButtonContainer>
               <Btn_left
                 text={"취소"}
                 size={"12px"}
                 height={"36px"}
-                // onClickHandler={}
+                onClickHandler={() => router.push("/provider/question")}
                 fontColor={color.black2}
               />
               <Margin />
@@ -187,6 +187,7 @@ const PL_RegistQuestion = () => {
                 background={true}
                 height={"36px"}
                 size={"12px"}
+                onClick={onSubmitHandler}
               >
                 문의 등록하기
               </Btn_right>

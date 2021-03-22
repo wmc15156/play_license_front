@@ -28,6 +28,7 @@ if (process.env.NODE_ENV === "production") {
   console.error = noop;
 }
 
+console.log("build?");
 const MyApp = ({ Component, pageProps }) => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,7 +39,8 @@ const MyApp = ({ Component, pageProps }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const providerPath = ["/provider", "/provider/login"];
+  console.log("1111111111build?");
+  // const providerPath = ["/provider", "/provider/login"];
 
   const buyerPath = [
     "/login",
@@ -57,8 +59,7 @@ const MyApp = ({ Component, pageProps }) => {
   ];
 
   const removeFooter = buyerPath.includes(router.pathname);
-  const PL_remove = providerPath.includes(router.pathname);
-
+  // const PL_remove = providerPath.includes(router.pathname);
   return (
     <HomeStore>
       <Head>
@@ -78,6 +79,7 @@ const MyApp = ({ Component, pageProps }) => {
       {providerWeb && (
         <PL_Layout>
           <Component {...pageProps} />
+          <div id="modal" />
         </PL_Layout>
       )}
     </HomeStore>

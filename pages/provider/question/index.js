@@ -207,9 +207,10 @@ const TextStyle = css`
 `;
 
 const DetailText = styled.div`
-  text-decoration: underline;
+  text-decoration: underline ${color.black2};
   & > span {
     cursor: pointer;
+    color: ${color.black2};
   }
   ${TextStyle}
 `;

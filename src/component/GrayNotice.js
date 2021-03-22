@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import color from "../../styles/colors";
 
-const Notice = ({ title, body1, body2, fontColor }) => {
+const Notice = ({ title, body1, body2, body3, fontColor }) => {
   return (
     <Container>
       <Box>
@@ -10,6 +10,8 @@ const Notice = ({ title, body1, body2, fontColor }) => {
           {body1}
           <br />
           {body2}
+          <br />
+          {body3}
         </Body>
       </Box>
     </Container>

@@ -3,7 +3,7 @@ import color from "../../../../styles/colors";
 import { useRouter } from "next/router";
 import { useState, useRef } from "react";
 import axios from "axios";
-import OrangeShortBtn from "../../../../src/component/Button/OrangeShortBtn";
+import OrangeShortBtn from "../../../../src/component/Button/OriginalButton";
 import GrayShortBtn from "../../../../src/component/Button/GrayShortBtn";
 
 export async function getServerSideProps(context) {
@@ -26,13 +26,6 @@ const Buying = ({ image }) => {
     router.push(`/performances/${router.query.id}/buy/${usage}`);
   };
 
-  const selectHandler = (e) => {
-    console.log(e);
-    // if(){
-    // setUsage("performance");}
-    // if(){setUsage("edu");}
-    // if(){setUsage("etc");}
-  };
   return (
     <Container>
       <HeadSection>
@@ -90,10 +83,21 @@ const Buying = ({ image }) => {
             text={"이전"}
             onClickHandler={back}
             fontColor={color.black3}
+            size={"21px"}
+            height={"60px"}
           />
         </Gray>
         <Orange>
-          <OrangeShortBtn text={"다음"} onClickHandler={next} />
+          <OrangeShortBtn
+            width={"100%"}
+            background={true}
+            margin={"0px"}
+            height={"60px"}
+            size={"21px"}
+            onClick={next}
+          >
+            다음
+          </OrangeShortBtn>
         </Orange>
       </BtnSection>
     </Container>

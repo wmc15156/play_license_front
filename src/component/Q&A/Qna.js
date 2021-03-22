@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
-import Btn from "../Button/SignUpButton";
+import Btn from "../Button/OriginalButton";
 import AnswerStatus from "../Tag/AnswerStatus";
 import { useRouter } from "next/router";
 import { memo, useEffect, useState } from "react";
@@ -64,7 +64,16 @@ const Qna = ({ onClickHandler }) => {
                 </Input>
               </InputSection>
             </Box>
-            <Btn text={"확인"} onClickHandler={onClickHandler} />
+            <Btn
+              width={"100%"}
+              background={true}
+              margin={"0px"}
+              height={"60px"}
+              size={"21px"}
+              onClick={onClickHandler}
+            >
+              확인
+            </Btn>
           </Section>
         </Container>
       )}

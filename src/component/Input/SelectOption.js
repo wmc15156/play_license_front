@@ -8,6 +8,7 @@ const SelectOption = ({
   height,
   radius,
   fontSize,
+  readOnly,
 }) => {
   return (
     <Container>
@@ -18,6 +19,7 @@ const SelectOption = ({
         borderRadius={radius}
         fontSize={fontSize}
         required
+        disabled={readOnly}
       >
         <option value="" disabled>
           선택해주세요

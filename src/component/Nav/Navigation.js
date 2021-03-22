@@ -9,12 +9,14 @@ const Navigation = () => {
 
   return (
     <Container>
-      <Section1>
+      <Section1 focus={router.pathname === "/provider/info"}>
         <ProfileImageContainer>
           <img src="/assets/image/PL/logo.png" />
         </ProfileImageContainer>
         <ProfileName>상상마루</ProfileName>
-        <Box>계정정보</Box>
+        <Link href="/provider/info">
+          <Box>계정정보</Box>
+        </Link>
       </Section1>
       <Section2>
         <List>
@@ -46,7 +48,7 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 30px 0;
+  padding-bottom: 60px;
   background-color: ${color.blue_3};
   color: ${color.white};
   font-family: "NotoSansCJKkr-Regular";
@@ -56,7 +58,12 @@ const Section1 = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 336px;
+  height: 366px;
+  ${(props) =>
+    props.focus &&
+    css`
+      background-color: rgba(255, 255, 255, 0.2);
+    `}
 `;
 
 const ProfileImageContainer = styled.div`
@@ -67,7 +74,7 @@ const ProfileImageContainer = styled.div`
   height: 120px;
   border-radius: 50%;
   background-color: ${color.white};
-  margin-top: 50px;
+  margin-top: 80px;
   margin-bottom: 22px;
 
   & > img {
@@ -92,6 +99,7 @@ const Box = styled.div`
   line-height: 12px;
   letter-spacing: -0.5px;
   padding: 8px 8.14px;
+  cursor: pointer;
 `;
 
 const Section2 = styled.div`
@@ -113,6 +121,8 @@ const Menu = styled.li`
   padding: 30px 0;
   font-size: 18px;
   line-height: 18px;
+  cursor: pointer;
+
   &:hover {
     background-color: rgba(255, 255, 255, 0.2);
     font-family: "NotoSansCJKkr-Bold";
