@@ -78,6 +78,7 @@ const MyApp = ({ Component, pageProps }) => {
       {providerWeb && (
         <PL_Layout>
           <Component {...pageProps} />
+          <div id="modal" />
         </PL_Layout>
       )}
     </HomeStore>

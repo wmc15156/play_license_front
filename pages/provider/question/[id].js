@@ -44,8 +44,8 @@ const PL_QuestionDetail = () => {
           </NavContainer>
           <BodyContainer>
             <LogoBar />
-            {data.adminCheck && <PL_CheckQnA />}
-            {!data.adminCheck && <PL_ModifyQnA />}
+            {data.adminCheck && <PL_CheckQnA data={data} next={next} />}
+            {!data.adminCheck && <PL_ModifyQnA data={data} next={next} />}
           </BodyContainer>
         </Container>
       )}

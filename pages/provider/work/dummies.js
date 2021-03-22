@@ -1,0 +1,63 @@
+export const data = {
+  list: [
+    {
+      productId: 1,
+      title: "원모어",
+      createdAt: "2020.12.11",
+      adminCheck: "관리자검토중",
+      isDataExist: null,
+    },
+    {
+      productId: 2,
+      title: "마당씨의 식탁",
+      adminCheck: "보완요청",
+      createdAt: "2020.12.10",
+      isDataExist: false,
+    },
+    {
+      productId: 3,
+      title: "네네네",
+      adminCheck: "승인완료",
+      createdAt: "2020.12.09",
+      isDataExist: true,
+    },
+  ],
+  performances: [
+    {
+      productId: 3,
+      productCate: "뮤지컬",
+      productYear: 2004,
+      productCompany: "상상마루",
+      productTitle: "네네네",
+      productImage: "/assets/image/PL/productImage.png",
+      productBrokerageConsignment: ["공연", "교육", "기타"],
+    },
+    {
+      productId: 2,
+      productCate: "뮤지컬",
+      productYear: 2004,
+      productCompany: "상상마루",
+      productTitle: "마당씨의 식탁",
+      productImage: "/assets/image/PL/productImage.png",
+      productBrokerageConsignment: ["공연", "교육", "기타"],
+    },
+    {
+      productId: 3,
+      productCate: "뮤지컬",
+      productYear: 2004,
+      productCompany: "상상마루",
+      productTitle: "네네네",
+      productImage: "/assets/image/PL/productImage.png",
+      productBrokerageConsignment: ["공연", "교육", "기타"],
+    },
+    {
+      productId: 1,
+      productCate: "뮤지컬",
+      productYear: 2004,
+      productCompany: "상상마루",
+      productTitle: "원모어",
+      productImage: "/assets/image/PL/productImage.png",
+      productBrokerageConsignment: ["공연", "교육", "기타"],
+    },
+  ],
+};

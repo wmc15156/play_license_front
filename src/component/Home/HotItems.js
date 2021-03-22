@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
 import Tag from "../Tag/Tag.";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import ShowAll from "../Button/ShowAll";
 
@@ -19,33 +18,34 @@ const HotItems = ({ list }) => {
       </HeadSection>
       <List>
         {list.map((item) => (
-          <Link href={`/performances/${item.productId}`} key={item.productId}>
-            <Item onClick={() => routeHandler(item.productId)}>
-              <ItemImg>
-                <img src={item.productImage} alt={item.productTitle} />
-              </ItemImg>
-              <ItemDesc>
-                <div>{item.productTitle}</div>
-                <TagWrapper>
-                  {item.productBrokerageConsignment.map((cate, i) => {
-                    return (
-                      <Tag title={cate.slice(0, 2)} id={item.productId} key={i}>
-                        {cate.slice(0, 2)}
-                      </Tag>
-                    );
-                  })}
-                </TagWrapper>
-                <Ptitle>{item.productTitle}</Ptitle>
-                <PInfo>
-                  <div>{item.productCate}</div>
-                  <Divider>|</Divider>
-                  <div>{item.productYear}</div>
-                  <Divider>|</Divider>
-                  <div>{item.productCompany}</div>
-                </PInfo>
-              </ItemDesc>
-            </Item>
-          </Link>
+          <Item
+            onClick={() => routeHandler(item.productId)}
+            key={item.productId}
+          >
+            <ItemImg>
+              <img src={item.productImage} alt={item.productTitle} />
+            </ItemImg>
+            <ItemDesc>
+              <div>{item.productTitle}</div>
+              <TagWrapper>
+                {item.productBrokerageConsignment.map((cate, i) => {
+                  return (
+                    <Tag title={cate.slice(0, 2)} id={item.productId} key={i}>
+                      {cate.slice(0, 2)}
+                    </Tag>
+                  );
+                })}
+              </TagWrapper>
+              <Ptitle>{item.productTitle}</Ptitle>
+              <PInfo>
+                <div>{item.productCate}</div>
+                <Divider>|</Divider>
+                <div>{item.productYear}</div>
+                <Divider>|</Divider>
+                <div>{item.productCompany}</div>
+              </PInfo>
+            </ItemDesc>
+          </Item>
         ))}
       </List>
     </Container>
