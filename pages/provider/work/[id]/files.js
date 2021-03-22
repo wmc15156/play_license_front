@@ -12,7 +12,7 @@ import fetcher from "../../../../utils/fetcher";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import StatusBox from "../../../../src/component/Tag/Purchase_AnswerStatus";
-import { data } from "../dummies_productInfo";
+import { data } from "../../../../src/PL_Component/Work/dummies_productInfo";
 import Btn from "../../../../src/component/Button/GrayShortBtn";
 import InputBox from "../../../../src/component/BasicInput/BasicInputColor";
 

@@ -16,7 +16,7 @@ import fetcher from "../../../../utils/fetcher";
 import CheckModifyPage from "../../../../src/PL_Component/Work/CheckModifyPage";
 import CheckPage from "../../../../src/PL_Component/Work/CheckPage";
 import StatusBox from "../../../../src/component/Tag/Purchase_AnswerStatus";
-import { data } from "../dummies_productInfo";
+import { data } from "../../../../src/PL_Component/Work/dummies_productInfo";
 
 function pl_workDetail() {
   const router = useRouter();

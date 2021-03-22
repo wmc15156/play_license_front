@@ -13,7 +13,7 @@ import StatusBox from "../../../src/component/Tag/Purchase_AnswerStatus";
 import DataManagementStatus from "../../../src/component/Tag/PL_DataStatus";
 import Btn from "../../../src/component/Button/OriginalButton";
 import Tag from "../../../src/component/Tag/Tag.";
-import { data } from "./dummies";
+import { data } from "../../../src/PL_Component/Work/dummies";
 
 function pl_work() {
   const router = useRouter();
