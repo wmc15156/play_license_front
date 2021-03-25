@@ -16,36 +16,43 @@ import fetcher from "../../../../utils/fetcher";
 import CheckModifyPage from "../../../../src/PL_Component/Work/CheckModifyPage";
 import CheckPage from "../../../../src/PL_Component/Work/CheckPage";
 import StatusBox from "../../../../src/component/Tag/Purchase_AnswerStatus";
-import { data } from "../../../../src/PL_Component/Work/dummies_productInfo";
+// import { data } from "../../../../src/PL_Component/Work/dummies_productInfo";
 
-function pl_workDetail() {
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+  const url = `/product/info/${id}`;
+  const res = await axios.get(url);
+  const respData = res.data;
+  return {
+    props: { data: respData },
+  };
+}
+
+function pl_workDetail({ data }) {
+  console.log(data);
   const router = useRouter();
-  // const { data } = useSWR(`${router.query.id}`, fetcher);
+  const queryId = data.productId;
   const [userInfo, setUserInfo] = useState({
-    // TODO: 계정정보 페이지 내용과 동일, 연동해서 미리 입력
-    groupName: data.groupName,
-    introduction: data.introduction,
+    company: data.company,
+    description: data.description,
     name: data.name,
     phone: data.phone,
   });
-  // /performances/:id (buyer작품상세)페이지에 뿌려지는 key이름 사용
+
   const [perfInfo, setPerfInfo] = useState({
     title: data.title,
-    purpose: data.purpose.map((item) => item),
+    brokerageConsignment: data.brokerageConsignments.map((el) => el),
+    // brokerageConsignment: data.brokerageConsignment.map((el) => el),
     year: data.year,
-    // requiredMaterials: [],
     requiredMaterials: {
       select: data.requiredMaterials.select.map((el) => el),
     },
-    selectedMaterials: {
-      select: data.selectedMaterials.select.map((el) => el),
-      input: data.selectedMaterials.input,
+    selectMaterials: {
+      select: data.selectMaterials.select.map((el) => el),
+      input: data.selectMaterials.input,
     },
     comment: data.comment,
-    category: {
-      select: data.category.select.map((el) => el),
-      input: data.category.input,
-    }, //공연분야
+    category: data.category,
     creativeStaff: {
       author: data.creativeStaff.author,
       composer: data.creativeStaff.composer,
@@ -55,35 +62,62 @@ function pl_workDetail() {
     mainAudience: data.mainAudience.map((el) => el),
     sizeOfPerformance: data.sizeOfPerformance,
     runningTime: {
-      hour: data.runningTime.hour,
-      min: data.runningTime.min,
-      intermission: data.runningTime.intermission,
+      hour: data.totalTime.hour,
+      min: data.totalTime.min,
+      intermission: data.totalTime.intermission,
     },
     castMembers: {
       women: data.castMembers.women,
       men: data.castMembers.men,
-      child: data.castMembers.child,
+      children: data.castMembers.children,
     },
-    isChangedScenario: data.isChangedScenario, //각색허용여부
-    youtubeUrl: data.youtubeUrl,
-    description: data.description,
+    changeScenario: data.changeScenario,
+    performanceVideo: data.performanceVideo,
+    planningDocument: data.plan,
     synopsis: data.synopsis,
     performanceInformationURL: data.performanceInformationURL,
-    numberList: data.numberList,
-    posterImage: data.posterImage,
-    background: { pc: data.background.pc, mobile: data.background.mobile },
+    numberList: data.numberList.map((el) => el),
+    posterURL: data.posterURL,
   });
+
+  const [inputData, setInputData] = useState({
+    ...userInfo,
+    ...perfInfo,
+    castMembers_total:
+      Number(perfInfo.castMembers.women.input) +
+      Number(perfInfo.castMembers.men.input) +
+      Number(perfInfo.castMembers.children.input),
+    isCheckInformation: true,
+  });
+
   const preventChanges = () => {
     console.log("변경 안됨 모달창");
   };
 
   const next = () => {
-    console.log("편집하기 ");
     router.push("/provider/work");
   };
 
   const back = () => {
     router.push("/provider/work");
+  };
+
+  const modifyHandler = () => {
+    let PATCH_URL = "";
+    const params = inputData;
+    console.log(params, "수정할 데이터");
+    if (router.query.id) {
+      PATCH_URL = `/product/${router.query.id}`;
+    } else {
+      PATCH_URL = queryId;
+    }
+    axios
+      .patch(PATCH_URL, params)
+      .then((res) => {
+        console.log(res, "수정성공");
+        next();
+      })
+      .catch((err) => console.log(err.response, "수정에러"));
   };
 
   return (
@@ -93,37 +127,39 @@ function pl_workDetail() {
       </NavContainer>
       <BodyContainer>
         <LogoBar />
-        <HeadSection>
-          <T2>
-            <span>{data.title}</span>작품정보관리 및 확인
-          </T2>
-          <BtnWrapper>
-            <StatusBox status={data.adminCheck}>{data.adminCheck}</StatusBox>
-          </BtnWrapper>
-        </HeadSection>
-        <Divider>
-          <Div1 />
-        </Divider>
-        <Section>
-          {data && data.adminCheck === "보완요청" ? (
-            <CheckModifyPage
-              userInfo={userInfo}
-              setUserInfo={setUserInfo}
-              perfInfo={perfInfo}
-              setPerfInfo={setPerfInfo}
-              preventChanges={preventChanges}
-              back={back}
-              next={next}
-            />
-          ) : (
-            <CheckPage
-              userInfo={userInfo}
-              perfInfo={perfInfo}
-              preventChanges={preventChanges}
-              back={back}
-            />
-          )}
-        </Section>
+        <>
+          <HeadSection>
+            <T2>
+              <span>{perfInfo.title}</span>작품정보관리 및 확인
+            </T2>
+            <BtnWrapper>
+              <StatusBox status={data.progress}>{data.progress}</StatusBox>
+            </BtnWrapper>
+          </HeadSection>
+          <Divider>
+            <Div1 />
+          </Divider>
+          <Section>
+            {data && data.progress === "보완요청" ? (
+              <CheckModifyPage
+                userInfo={userInfo}
+                setUserInfo={setUserInfo}
+                perfInfo={perfInfo}
+                setPerfInfo={setPerfInfo}
+                preventChanges={preventChanges}
+                back={back}
+                modifyHandler={modifyHandler}
+              />
+            ) : (
+              <CheckPage
+                userInfo={userInfo}
+                perfInfo={perfInfo}
+                preventChanges={preventChanges}
+                back={back}
+              />
+            )}
+          </Section>
+        </>
       </BodyContainer>
     </Container>
   );

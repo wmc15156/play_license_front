@@ -15,7 +15,6 @@ import GrayShortBtn from "../../../../src/component/Button/GrayShortBtn";
 import ProviderInfo from "../../../../src/PL_Component/Work/Form_ProviderInfo";
 import PerformanceInfo1 from "../../../../src/PL_Component/Work/Form_PerformanceInfo1";
 import PerformanceInfo2 from "../../../../src/PL_Component/Work/Form_PerformanceInfo2";
-
 import { FaCheck } from "react-icons/fa";
 import CheckBoxWrapper from "../../../../src/component/CheckBoxWrapper/CheckBoxWrapper";
 import Notice from "../../../../src/component/GrayNotice";
@@ -28,57 +27,75 @@ const notice = {
   body3: "3. 문의 내용에 보완이 필요할 경우, 추가 요청을 드릴 수 있습니다.",
 };
 
-function pl_workRegister01() {
+// export async function getServerSideProps() {
+//   const url = `/auth/provider/me`;
+//   const res = await axios.get(url);
+//   const respData = res.data;
+//   return {
+//     props: { data: respData },
+//   };
+// }
+
+function pl_workRegister01({ data }) {
+  console.log(data);
   const router = useRouter();
   const { openModal, ModalPortal, closeModal } = useModal();
   const [checked, setChecked] = useState(false);
   const [step, setStep] = useState("01");
   const [userInfo, setUserInfo] = useState({
-    // TODO: 계정정보 페이지 내용과 동일, 연동해서 미리 입력
-    groupName: "",
-    introduction: "",
+    company: "",
+    description: "",
     name: "",
     phone: "",
   });
-  // /performances/:id (buyer작품상세)페이지에 뿌려지는 key이름 사용
   const [perfInfo, setPerfInfo] = useState({
     title: "",
-    purpose: [],
+    brokerageConsignment: [],
     year: "",
-    // requiredMaterials: [],
     requiredMaterials: {
       select: [],
     },
-    selectedMaterials: {
+    selectMaterials: {
       select: [],
       input: "",
     },
     comment: "",
-    category: { select: [], input: "" }, //공연분야
+    category: "", //공연분야
     creativeStaff: { author: {}, composer: {}, writer: {} },
     genre: [],
     mainAudience: [],
     sizeOfPerformance: "",
     runningTime: { hour: "", min: "", intermission: "" },
-    castMembers: { women: "", men: "", child: "" },
-    isChangedScenario: "", //각색허용여부
-    youtubeUrl: "",
-    description: "",
+    castMembers: { women: "", men: "", children: "" },
+    changeScenario: "", //각색허용여부
+    performanceVideo: "",
+    planningDocument: "",
     synopsis: "",
+    posterURL: { filename: "", url: "" },
     performanceInformationURL: "",
-    numberList: "",
-    posterImage: "",
-    background: { pc: "", mobile: "" },
+    numberList: [""],
   });
+
   const [userInputData, setUserInputData] = useState({
     ...userInfo,
     ...perfInfo,
   });
 
-  console.log("모든state", {
-    ...userInfo,
-    ...perfInfo,
-  });
+  const getUser = () => {
+    axios
+      .get(`/auth/provider/me`)
+      .then((res) =>
+        setUserInfo({
+          company: res.data.company,
+          description: res.data.comment,
+          name: res.data.fullName,
+          phone: res.data.phone,
+        })
+      )
+      .catch((err) => console.log(err.response));
+  };
+
+  useEffect(() => getUser(), []);
 
   const back = () => router.back();
   const changeTab = (step) => {
@@ -86,11 +103,14 @@ function pl_workRegister01() {
   };
 
   const submit = () => {
-    console.log("submit :", {
-      ...userInfo,
-      ...perfInfo,
-    });
-    router.push("/provider/work/register/complete");
+    if (checked) {
+      console.log("submit :", userInputData);
+      axios
+        .post("/product/provider", userInputData)
+        .then((res) => console.log("submit resp", res))
+        .catch((err) => console.log(err.response.data));
+      // router.push("/provider/work/register/complete");
+    }
   };
 
   const handleChange = (e) => {
@@ -99,6 +119,11 @@ function pl_workRegister01() {
     setUserInputData({
       ...userInfo,
       ...perfInfo,
+      castMembers_total:
+        Number(perfInfo.castMembers.women.input) +
+        Number(perfInfo.castMembers.men.input) +
+        Number(perfInfo.castMembers.children.input),
+      isCheckInformation: checked,
     });
   };
 

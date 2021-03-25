@@ -5,6 +5,7 @@ import CheckBoxWrapper from "../../component/CheckBoxWrapper/CircleCheckBoxWrapp
 import BasicInput from "../../component/BasicInput/BasicInputColor";
 import Selector from "../../component/Input/SelectOption";
 import ImageUploader from "../../component/Input/ImageUploader";
+import GrayBtn from "../../component/Button/GrayShortBtn";
 import { useCallback } from "react";
 
 const items_category = ["연극", "뮤지컬", "기타"];
@@ -27,36 +28,42 @@ const items_mainAudience = [
 ];
 
 const PerformanceInfo2 = ({ perfInfo, setPerfInfo }) => {
-  const removeCategoryItemHandler = useCallback(
-    (name) => {
-      let array = perfInfo.category.select;
-      let itemIdx = array.indexOf(name);
-      array.splice(itemIdx, 1);
-      setPerfInfo((prev) => {
-        return {
-          ...prev,
-          category: {
-            select: [...array],
-            input: perfInfo.category.input,
-          },
-        };
-      });
-    },
-    [perfInfo.category.select]
-  );
+  const getImgURL = (name, url, filename) => {
+    setPerfInfo({
+      ...perfInfo,
+      [name]: { url: url, filename: filename },
+    });
+  };
+
+  const setNumberList = (event, idx) => {
+    const arr = [...perfInfo.numberList];
+    arr[idx] = event.target.value;
+    console.log(arr);
+
+    setPerfInfo({
+      ...perfInfo,
+      numberList: arr,
+    });
+  };
+
+  const removeNumberList = (idx) => {
+    const arr = [...perfInfo.numberList];
+    arr.splice(idx, 1);
+    setPerfInfo({ ...perfInfo, numberList: arr });
+  };
+
+  const addNumberList = () => {
+    setPerfInfo({
+      ...perfInfo,
+      numberList: [...perfInfo.numberList, ""],
+    });
+  };
 
   const checkCategoryHandler = (name) => {
-    if (perfInfo.category.select.includes(name)) {
-      removeCategoryItemHandler(name);
-    } else {
-      setPerfInfo({
-        ...perfInfo,
-        category: {
-          select: [...perfInfo.category.select, name],
-          input: perfInfo.category.input,
-        },
-      });
-    }
+    setPerfInfo({
+      ...perfInfo,
+      category: name,
+    });
   };
 
   const removeGenreItemHandler = useCallback(
@@ -150,13 +157,13 @@ const PerformanceInfo2 = ({ perfInfo, setPerfInfo }) => {
                   <CheckBox>
                     <CheckBoxWrapper
                       widthHeight={"20px"}
-                      checked={perfInfo.category.select.includes(label)}
+                      checked={perfInfo.category.includes(label)}
                       onClick={() => checkCategoryHandler(label)}
                     >
                       <FaCheck
                         size={"15px"}
                         color={
-                          perfInfo.category.select.includes(label)
+                          perfInfo.category.includes(label)
                             ? color.white
                             : color.black5
                         }
@@ -164,31 +171,12 @@ const PerformanceInfo2 = ({ perfInfo, setPerfInfo }) => {
                     </CheckBoxWrapper>
                   </CheckBox>
                   <Check_label>{label}</Check_label>
-                  {label === "기타" &&
-                    perfInfo.category.select.includes("기타") && (
-                      <>
-                        <BasicInput
-                          width={"100%"}
-                          placeholder={"직접입력"}
-                          background={color.gray1}
-                          onChange={(e) =>
-                            setPerfInfo({
-                              ...perfInfo,
-                              category: {
-                                select: [...perfInfo.category.select],
-                                input: e.target.value,
-                              },
-                            })
-                          }
-                          value={perfInfo.category.input}
-                        />
-                      </>
-                    )}
                 </CheckItem>
               ))}
             </CheckSection>
           </Content>
         </Input>
+
         <Input>
           <SubTitle>창작진</SubTitle>
           <Content>
@@ -395,6 +383,75 @@ const PerformanceInfo2 = ({ perfInfo, setPerfInfo }) => {
             </SelectorWrapper>
           </Content>
         </Input>
+
+        <Input>
+          <SubTitle>러닝타임</SubTitle>
+          <Content>
+            <Time>
+              <SelectorWrapper changeWidth={"105px"}>
+                <Selector
+                  options={Array(24)
+                    .fill()
+                    .map((ele, idx) => idx + 1)}
+                  onChange={(e) =>
+                    setPerfInfo({
+                      ...perfInfo,
+                      runningTime: {
+                        ...perfInfo.runningTime,
+                        hour: e.target.value,
+                      },
+                    })
+                  }
+                  value={perfInfo.runningTime.hour}
+                />
+              </SelectorWrapper>
+              <Time_text>시간</Time_text>
+            </Time>
+            <Time>
+              <SelectorWrapper changeWidth={"105px"}>
+                <Selector
+                  options={Array(60)
+                    .fill()
+                    .map((ele, idx) => idx++)}
+                  onChange={(e) =>
+                    setPerfInfo({
+                      ...perfInfo,
+                      runningTime: {
+                        ...perfInfo.runningTime,
+                        min: e.target.value,
+                      },
+                    })
+                  }
+                  value={perfInfo.runningTime.min}
+                />
+              </SelectorWrapper>
+              <Time_text>분</Time_text>
+            </Time>
+
+            <Time_im>
+              <Time_text switchMargin>&#40;인터미션</Time_text>
+              <SelectorWrapper changeWidth={"105px"}>
+                <Selector
+                  options={Array(60)
+                    .fill()
+                    .map((ele, idx) => idx++)}
+                  onChange={(e) =>
+                    setPerfInfo({
+                      ...perfInfo,
+                      runningTime: {
+                        ...perfInfo.runningTime,
+                        intermission: e.target.value,
+                      },
+                    })
+                  }
+                  value={perfInfo.runningTime.intermission}
+                />
+              </SelectorWrapper>
+              <Time_text>분 포함&#41;</Time_text>
+            </Time_im>
+          </Content>
+        </Input>
+
         <Input>
           <SubTitle>출연인원</SubTitle>
           <Content>
@@ -439,6 +496,7 @@ const PerformanceInfo2 = ({ perfInfo, setPerfInfo }) => {
                   />
                 </InputWrapper>
               </InputArea_Row1>
+
               <InputArea_Row1>
                 <SelectorWrapper>
                   <Selector
@@ -479,6 +537,47 @@ const PerformanceInfo2 = ({ perfInfo, setPerfInfo }) => {
                   />
                 </InputWrapper>
               </InputArea_Row1>
+
+              <InputArea_Row1>
+                <SelectorWrapper>
+                  <Selector
+                    value={perfInfo.castMembers.children["select"]}
+                    options={["아역"]}
+                    onChange={(e) =>
+                      setPerfInfo({
+                        ...perfInfo,
+                        castMembers: {
+                          ...perfInfo.castMembers,
+                          children: {
+                            ...perfInfo.castMembers.children,
+                            select: e.target.value,
+                          },
+                        },
+                      })
+                    }
+                  />
+                </SelectorWrapper>
+                <InputWrapper>
+                  <BasicInput
+                    width={"100%"}
+                    placeholder={"배우 참여인원수를 입력해주세요."}
+                    background={color.gray1}
+                    onChange={(e) =>
+                      setPerfInfo({
+                        ...perfInfo,
+                        castMembers: {
+                          ...perfInfo.castMembers,
+                          children: {
+                            ...perfInfo.castMembers.children,
+                            input: e.target.value,
+                          },
+                        },
+                      })
+                    }
+                    value={perfInfo.castMembers.children["input"]}
+                  />
+                </InputWrapper>
+              </InputArea_Row1>
             </InputArea>
           </Content>
         </Input>
@@ -486,12 +585,12 @@ const PerformanceInfo2 = ({ perfInfo, setPerfInfo }) => {
           <SubTitle>각색 허용여부</SubTitle>
           <Content>
             <Selector
-              value={perfInfo.isChangedScenario}
+              value={perfInfo.changeScenario}
               options={["각색있음", "각색없음"]}
               onChange={(e) =>
                 setPerfInfo({
                   ...perfInfo,
-                  isChangedScenario: e.target.value,
+                  changeScenario: e.target.value,
                 })
               }
             />
@@ -509,10 +608,10 @@ const PerformanceInfo2 = ({ perfInfo, setPerfInfo }) => {
                   onChange={(e) =>
                     setPerfInfo({
                       ...perfInfo,
-                      youtubeUrl: e.target.value,
+                      performanceVideo: e.target.value,
                     })
                   }
-                  value={perfInfo.youtubeUrl}
+                  value={perfInfo.performanceVideo}
                 />
               </InputArea_Row1>
             </InputArea>
@@ -531,10 +630,10 @@ const PerformanceInfo2 = ({ perfInfo, setPerfInfo }) => {
                   onChange={(e) =>
                     setPerfInfo({
                       ...perfInfo,
-                      description: e.target.value,
+                      planningDocument: e.target.value,
                     })
                   }
-                  value={perfInfo.description}
+                  value={perfInfo.planningDocument}
                 />
               </InputArea_Row1>
             </InputArea>
@@ -565,14 +664,13 @@ const PerformanceInfo2 = ({ perfInfo, setPerfInfo }) => {
         <Input>
           <SubTitle>공연포스터</SubTitle>
           <Content>
-            <ImageUploader />
-          </Content>
-        </Input>
-
-        <Input>
-          <SubTitle>배경이미지</SubTitle>
-          <Content>
-            <ImageUploader />
+            <UploadBtnWrapper>
+              <ImageUploader
+                data={perfInfo.posterURL}
+                name={"posterURL"}
+                getImgURL={getImgURL}
+              />
+            </UploadBtnWrapper>
           </Content>
         </Input>
 
@@ -603,20 +701,41 @@ const PerformanceInfo2 = ({ perfInfo, setPerfInfo }) => {
           <SubTitle>넘버리스트</SubTitle>
           <Content>
             <InputArea>
-              <InputArea_Row1>
-                <BasicInput
-                  width={"100%"}
-                  placeholder={"입력해주세요."}
-                  background={color.gray1}
-                  onChange={(e) =>
-                    setPerfInfo({
-                      ...perfInfo,
-                      numberList: e.target.value,
-                    })
-                  }
-                  value={perfInfo.numberList}
-                />
-              </InputArea_Row1>
+              {perfInfo.numberList.map((listItem, i) => {
+                return (
+                  <InputArea_Row1 key={i}>
+                    <BasicInput
+                      width={"100%"}
+                      placeholder={"입력해주세요."}
+                      background={color.gray1}
+                      onChange={(e) => setNumberList(e, i)}
+                      value={listItem}
+                    />
+                    {i !== 0 && (
+                      <BtnContainer>
+                        <GrayBtn
+                          size={"14px"}
+                          height={"40px"}
+                          fontColor={color.black2}
+                          onClickHandler={() => removeNumberList(i)}
+                          text={"삭제"}
+                        />
+                      </BtnContainer>
+                    )}
+                    {i === 0 && (
+                      <BtnContainer>
+                        <GrayBtn
+                          size={"14px"}
+                          height={"40px"}
+                          fontColor={color.black2}
+                          onClickHandler={addNumberList}
+                          text={"추가"}
+                        />
+                      </BtnContainer>
+                    )}
+                  </InputArea_Row1>
+                );
+              })}
             </InputArea>
           </Content>
         </Input>
@@ -644,6 +763,10 @@ const Input = styled.li`
   align-items: baseline;
   width: 100%;
   margin-bottom: 28px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
 const SubTitle = styled.div`
   width: 20%;
@@ -657,6 +780,12 @@ const Content = styled.div`
 `;
 const SelectorWrapper = styled.div`
   width: 207px;
+
+  ${(props) =>
+    props.changeWidth &&
+    css`
+      max-width: ${props.changeWidth};
+    `}
 `;
 
 const CheckSection = styled.ul`
@@ -682,11 +811,11 @@ const CheckItem = styled.li`
   width: 30%;
   margin-bottom: 32px;
 
-  ${(props) =>
+  /* ${(props) =>
     props.labelName === "기타" &&
     css`
       width: 100%;
-    `}
+    `} */
 `;
 
 const Check_label = styled.div`
@@ -712,6 +841,35 @@ const InputArea_Row1 = styled.div`
   margin-bottom: 22px;
 `;
 
+const Time = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 12px;
+`;
+
+const Time_text = styled.div`
+  margin-left: 12px;
+  ${(props) =>
+    props.switchMargin &&
+    css`
+      margin-left: 0;
+      margin-right: 12px;
+    `}
+`;
+const Time_im = styled.div`
+  width: 46%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const BtnContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  width: 18%;
+`;
+
 const Span = styled.span`
   width: 100%;
   color: ${color.black3};
@@ -720,6 +878,16 @@ const Span = styled.span`
   font-size: 12px;
   font-family: "NotoSansCJKkr-Regular";
   margin-left: 12px;
+`;
+
+const ImageBtns = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const UploadBtnWrapper = styled.div`
+  width: 207px;
 `;
 
 export default PerformanceInfo2;
