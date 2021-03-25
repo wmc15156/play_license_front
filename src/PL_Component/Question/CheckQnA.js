@@ -45,9 +45,7 @@ const PL_CheckQnA = ({ data, next }) => {
             </Input>
             <Input>
               <SubTitle>문의내용</SubTitle>
-              <InputBox textarea>
-                {comment.replaceAll(/(?:\r\n|\r|\n)/g, "<br />")}
-              </InputBox>
+              <InputBox textarea>{comment}</InputBox>
             </Input>
           </InputSection>
         </Box>

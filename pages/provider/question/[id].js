@@ -27,11 +27,19 @@ const data = {
   감사합니다`,
 };
 
-const PL_QuestionDetail = () => {
+// export async function getServerSideProps(context) {
+//   const id = context.params.id;
+//   const url = `/question/provider/${id}`;
+//   const res = await axios.get(url);
+//   const respData = res.data;
+//   return {
+//     props: { data: respData },
+//   };
+// }
+
+const PL_QuestionDetail = ({}) => {
   const router = useRouter();
   const { openModal, ModalPortal, closeModal } = useModal();
-  // const { data } = useSWR(`/question/${router.query.id}`, fetcher);
-
   const next = () => {
     router.push("/provider/question");
   };
