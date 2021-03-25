@@ -1,19 +1,34 @@
 import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const Navigation = () => {
   const router = useRouter();
+  const [user, setUser] = useState({});
+  const { avatar, company } = user;
+  console.log(avatar);
+  const getUserData = () => {
+    axios
+      .get("auth/provider/me")
+      .then((res) => {
+        console.log(res, "provider정보get");
+        setUser(res.data);
+      })
+      .catch((err) => console.log(err.response));
+  };
+
+  useEffect(() => getUserData(), []);
 
   return (
     <Container>
       <Section1 focus={router.pathname === "/provider/info"}>
         <ProfileImageContainer>
-          <img src="/assets/image/PL/logo.png" />
+          <img src={!avatar ? "/assets/image/PL/boy.png" : avatar} />
         </ProfileImageContainer>
-        <ProfileName>상상마루</ProfileName>
+        <ProfileName>{company}</ProfileName>
         <Link href="/provider/info">
           <Box>계정정보</Box>
         </Link>
@@ -78,7 +93,8 @@ const ProfileImageContainer = styled.div`
   margin-bottom: 22px;
 
   & > img {
-    width: 98px;
+    max-width: 80px;
+    max-height: 80%;
     height: auto;
   }
 `;

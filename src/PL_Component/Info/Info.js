@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
+import axios from "axios";
+import { useState, useEffect, useReducer, useContext } from "react";
+import { ProviderInfoContext } from "../../../reducers/providerInfo";
 import { useRouter } from "next/router";
+import TextArea from "../../component/BasicInput/TextArea";
 
-const data = {
+const dummies = {
   image: "/assets/image/PL/logo.png",
   aboutProvider: `㈜문화공작소 상상마루는 어린이와 가족을 위한 문화예술분야 소셜벤처기업으로
   ‘우리 이야기로 세계를 감동시키는 문화 상상집단’을 모토로 하고 있습니다.`,
@@ -14,7 +18,21 @@ const data = {
 
 const InfoBox = () => {
   const router = useRouter();
-  const { image, aboutProvider, fullName, phone, email, password } = data;
+  const [state, dispatch] = useContext(ProviderInfoContext);
+  const { avatar, comment, company, fullName, phone, email } = state.user;
+
+  console.log(avatar);
+  const getUserData = () => {
+    axios
+      .get("/auth/provider/me")
+      .then((res) => {
+        console.log(res);
+        dispatch({ type: "GET_INFO", info: res.data });
+      })
+      .catch((err) => console.log(err.response));
+  };
+
+  useEffect(() => getUserData(), []);
 
   const onLogOut = () => {
     // axios.post("/auth/logout").then((res) => {
@@ -22,16 +40,31 @@ const InfoBox = () => {
     router.push("/provider");
     // });
   };
+
   return (
     <div>
       <Section1>
         <ProfileImageContainer>
-          <img src={image} />
+          <img src={!avatar ? "/assets/image/PL/boy.png" : avatar} />
         </ProfileImageContainer>
         <ProfileName>
-          상상마루<Btn onClick={onLogOut}>로그아웃</Btn>
+          {company}
+          <Btn onClick={onLogOut}>로그아웃</Btn>
         </ProfileName>
-        <TextBox>{aboutProvider}</TextBox>
+        {comment && (
+          <TextArea
+            height={"100%"}
+            readOnly={true}
+            background={color.gray1}
+            placeholder={"제작사 설명을 입력하세요"}
+            fontSize={"10px"}
+            fontColor={color.black1}
+            textAlign={"center"}
+            padding={"15px 60px"}
+            value={comment}
+            borderStyle={"none"}
+          />
+        )}
       </Section1>
       <Section2>
         <Box>
@@ -53,7 +86,7 @@ const InfoBox = () => {
                 <Data>{email}</Data>
               </Content>
               <Content>
-                <Data>{password}</Data>
+                <Data>{dummies.password}</Data>
               </Content>
             </Item>
           </List>
@@ -82,7 +115,8 @@ const ProfileImageContainer = styled.div`
   margin-bottom: 32px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
   & > img {
-    width: 98px;
+    max-width: 80px;
+    max-height: 80%;
     height: auto;
   }
 `;
@@ -113,7 +147,7 @@ const Btn = styled.div`
   background-color: ${color.blue_2};
 `;
 
-const TextBox = styled.div`
+const TextBox = styled.textarea`
   font-family: "NotoSansCJKkr-Regular";
   background-color: ${color.gray1};
   border-radius: 8px;
@@ -121,6 +155,11 @@ const TextBox = styled.div`
   line-height: 15px;
   width: 326px;
   padding: 15px 60px;
+  border: none;
+  text-align: center;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const Section2 = styled.div`

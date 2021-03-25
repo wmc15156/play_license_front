@@ -7,7 +7,7 @@ import axios from "axios";
 import { useState, useCallback } from "react";
 import { IoClose } from "react-icons/io5";
 
-const MP_ChangePhoneNum = ({ onClickHandler }) => {
+const MP_ChangePhoneNum = ({ onClickHandler, role }) => {
   const [phone, setPhone] = useInput("");
   const [code, setCode] = useInput("");
   const [timer, setTimer] = useState(false);
@@ -58,15 +58,12 @@ const MP_ChangePhoneNum = ({ onClickHandler }) => {
   const postHandler = useCallback(() => {
     const param = { phone: phone };
     if (completedValidation) {
+      const PATCH_URL = role ? `/user/update/${role}` : "/user/update";
       axios
-        .patch("/user/update", param)
+        .patch(PATCH_URL, param)
         .then((res) => {
-          if (res.status === 200) {
-            alert("연락처가 변경되었습니다");
-            phone = "";
-            code = "";
-            onClickHandler();
-          }
+          alert("연락처가 변경되었습니다");
+          onClickHandler();
         })
         .catch((err) => console.log(err));
     }

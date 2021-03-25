@@ -8,7 +8,7 @@ import { useState, useCallback, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
 import { debounce } from "lodash";
 
-const MP_ChangePassword = ({ onClickHandler }) => {
+const MP_ChangePassword = ({ onClickHandler, role }) => {
   const [password, setPassword] = useInput("");
   const [newPW, setNewPW] = useInput("");
   const [checkNewPW, setCheckNewPW] = useInput("");
@@ -53,14 +53,12 @@ const MP_ChangePassword = ({ onClickHandler }) => {
   const onClickBtnHandler = ({ onClickHandler }) => {
     const param = { password: checkNewPW };
     if (validate) {
+      const PATCH_URL = role ? `/user/update/${role}` : "/user/update";
       axios
-        .patch("/user/update", param)
+        .patch(PATCH_URL, param)
         .then((res) => {
           if (res.status === 200) {
             alert("비밀번호가 변경되었습니다");
-            password = "";
-            newPW = "";
-            checkNewPW = "";
             onClickHandler();
           }
         })
