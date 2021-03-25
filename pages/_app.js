@@ -39,8 +39,14 @@ const MyApp = ({ Component, pageProps }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  console.log("1111111111build?");
-  // const providerPath = ["/provider", "/provider/login"];
+  const providerPath = [
+    "/provider",
+    "/provider/login",
+    "/provider/find/email",
+    "/provider/find/getAccount",
+    "/provider/find/password",
+    "/provider/inquiry",
+  ];
 
   const buyerPath = [
     "/login",
@@ -59,7 +65,7 @@ const MyApp = ({ Component, pageProps }) => {
   ];
 
   const removeFooter = buyerPath.includes(router.pathname);
-  // const PL_remove = providerPath.includes(router.pathname);
+  const removePLlayout = providerPath.includes(router.pathname);
   return (
     <HomeStore>
       <Head>
@@ -75,12 +81,19 @@ const MyApp = ({ Component, pageProps }) => {
           <div id="modal" />
         </Layout>
       )}
+
       {/* provider */}
-      {providerWeb && (
+      {providerWeb && !removePLlayout && (
         <PL_Layout>
           <Component {...pageProps} />
           <div id="modal" />
         </PL_Layout>
+      )}
+      {providerWeb && removePLlayout && (
+        <Layout>
+          <Component {...pageProps} />
+          <div id="modal" />
+        </Layout>
       )}
     </HomeStore>
   );

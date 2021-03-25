@@ -124,13 +124,13 @@ const Section1 = ({ item }) => {
       <SecondColumn>
         <ItemDesc>
           <div>
-            {/* {item.brokerageConsignment.map((cate, i) => {
+            {item.brokerageConsignment.map((cate, i) => {
               return (
                 <Tag title={cate} id={item.id}>
                   {cate}
                 </Tag>
               );
-            })} */}
+            })}
           </div>
           <Ptitle>{item.title}</Ptitle>
           <PInfo>
