@@ -62,16 +62,20 @@ const PL_RegistQuestion = () => {
   };
 
   const send = () => {
-    console.log("1:1문의 남기기");
-    // axios
-    //   .post("/question", params)
-    //   .then((res) => {
-    //     if (res.status === 201) {
-    //       setSuccess(true);
-    //       openModal();
-    //     }
-    //   })
-    //   .catch((err) => console.error(err));
+    console.log("1:1문의 남기기", params);
+    axios
+      .post("/question/provider", params)
+      .then((res) => {
+        // if (res.status === 201) {
+        setSuccess(true);
+        openModal();
+        // }
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          console.log("로그인모달");
+        }
+      });
   };
 
   const onSubmitHandler = (e) => {

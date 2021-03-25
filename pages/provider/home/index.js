@@ -8,7 +8,8 @@ import LogoBar from "../../../src/component/Nav/LogoBar";
 import NoticeListItem from "../../../src/component/Form/NoticeListItem";
 import { IoIosInformationCircle } from "react-icons/io";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const notice = [
   {
@@ -56,6 +57,18 @@ const Table = ({ title, list }) => {
 const pl_home = () => {
   const router = useRouter();
   const [balloon, setBalloon] = useState(false);
+  const [infoData, setInfoData] = useState({ buy: 0, count: 0, views: 0 });
+
+  const getInfoData = () => {
+    axios.get("/product/provider/info").then((res) => {
+      const { buy, count, views } = res.data;
+      setInfoData({ buy, count, views });
+    });
+  };
+
+  useEffect(() => {
+    getInfoData();
+  }, []);
 
   const changeRouteHandler = (page) => {
     router.push(`/provider/${page}`);
@@ -119,7 +132,7 @@ const pl_home = () => {
                         찜하기
                       </Box_ListItem_name>
                       <Box_ListItem_content>
-                        <span>10</span>명
+                        <span>{infoData.count}</span>명
                       </Box_ListItem_content>
                     </Box_ListItem>
                     <Box_ListItem>
@@ -128,7 +141,7 @@ const pl_home = () => {
                         조회수
                       </Box_ListItem_name>
                       <Box_ListItem_content>
-                        <span>10</span>회
+                        <span>{infoData.views}</span>회
                       </Box_ListItem_content>
                     </Box_ListItem>
                     <Box_ListItem>
@@ -137,7 +150,7 @@ const pl_home = () => {
                         판매수
                       </Box_ListItem_name>
                       <Box_ListItem_content>
-                        <span>10</span>건
+                        <span>{infoData.buy}</span>건
                       </Box_ListItem_content>
                     </Box_ListItem>
                   </Box_List>

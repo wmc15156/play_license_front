@@ -5,7 +5,7 @@ import axios from "axios";
 import List from "../../src/component/Market/List";
 import Curation from "../../src/component/Curation/CurationBlocks";
 import Pagination from "../../src/component/Pagination/Pagination";
-import Loader from "../../src/component/Loader";
+import Loader from "../../src/component/Loader/Loader";
 import useSWR from "swr";
 import fetcher from "../../utils/fetcher";
 import { useRouter } from "next/router";

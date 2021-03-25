@@ -17,7 +17,7 @@ import useModal from "../../../utils/useModal";
 import AlertModal from "../../../src/component/Modal/AlertModal";
 
 const data = {
-  adminCheck: false,
+  adminCheck: true,
   name: "상상마루",
   email: "abcde@naver.com",
   phone: "010-1234-5678",
