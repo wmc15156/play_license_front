@@ -22,11 +22,11 @@ console.log(process.env.NODE_ENV, "test");
 // tslint:disable-next-line: no-empty
 const noop = () => {};
 
-if (process.env.NODE_ENV === "production") {
-  console.log = noop;
-  console.warn = noop;
-  console.error = noop;
-}
+// if (process.env.NODE_ENV === "production") {
+//   console.log = noop;
+//   console.warn = noop;
+//   console.error = noop;
+// }
 
 console.log("build?");
 const MyApp = ({ Component, pageProps }) => {
