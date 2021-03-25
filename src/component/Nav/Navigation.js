@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
+import useModal from "../../../utils/useModal";
+import AlertModal from "../../component/Modal/AlertModal";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -7,9 +9,11 @@ import axios from "axios";
 
 const Navigation = () => {
   const router = useRouter();
+  const { openModal, closeModal, ModalPortal } = useModal();
+  const [needLogin, setNeedLogin] = useState(false);
   const [user, setUser] = useState({});
   const { avatar, company } = user;
-  console.log(avatar);
+
   const getUserData = () => {
     axios
       .get("auth/provider/me")
@@ -17,10 +21,21 @@ const Navigation = () => {
         console.log(res, "provider정보get");
         setUser(res.data);
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {
+        // if (err.response.status === 400 || err.response.status === 401) {
+        setNeedLogin(true);
+        openModal();
+        // }
+      });
   };
 
   useEffect(() => getUserData(), []);
+
+  const closeModalHandler = () => {
+    router.push("/provider/login");
+    setNeedLogin(false);
+    closeModal();
+  };
 
   return (
     <Container>
@@ -54,6 +69,15 @@ const Navigation = () => {
           </Link>
         </List>
       </Section2>
+      {needLogin && (
+        <ModalPortal>
+          <AlertModal
+            text={"로그인해주세요"}
+            onClickBtn={closeModalHandler}
+            fontSize={"14px"}
+          />
+        </ModalPortal>
+      )}
     </Container>
   );
 };
