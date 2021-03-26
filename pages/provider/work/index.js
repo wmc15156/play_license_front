@@ -36,9 +36,16 @@ function pl_work() {
   };
 
   const getListData = () => {
-    axios.get("/product/provider").then((res) => {
-      setList(res.data);
-    });
+    axios
+      .get("/product/provider")
+      .then((res) => {
+        setList(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        // setNeedLogin(true);
+        // openModal();
+      });
   };
 
   const getProductData = () => {
