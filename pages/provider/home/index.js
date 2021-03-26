@@ -60,10 +60,17 @@ const pl_home = () => {
   const [infoData, setInfoData] = useState({ buy: 0, count: 0, views: 0 });
 
   const getInfoData = () => {
-    axios.get("/product/provider/info").then((res) => {
-      const { buy, count, views } = res.data;
-      setInfoData({ buy, count, views });
-    });
+    axios
+      .get("/product/provider/info")
+      .then((res) => {
+        const { buy, count, views } = res.data;
+        setInfoData({ buy, count, views });
+      })
+      .catch((err) => {
+        console.log(err.response);
+        // setNeedLogin(true);
+        // openModal();
+      });
   };
 
   useEffect(() => {

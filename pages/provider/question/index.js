@@ -46,12 +46,19 @@ const pl_question = () => {
   };
 
   const getData = () => {
-    axios.get("/question/provider").then((res) => {
-      if (res.status === 200) {
-        console.log(res, "????????>>>>");
-        setList(res.data);
-      }
-    });
+    axios
+      .get("/question/provider")
+      .then((res) => {
+        if (res.status === 200) {
+          console.log(res, "????????>>>>");
+          setList(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err.response);
+        // setNeedLogin(true);
+        // openModal();
+      });
   };
   useEffect(() => {
     getData();

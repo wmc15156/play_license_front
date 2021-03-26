@@ -72,9 +72,7 @@ const PL_RegistQuestion = () => {
         // }
       })
       .catch((err) => {
-        if (err.response.status === 401) {
-          console.log("로그인모달");
-        }
+        console.log(err.response);
       });
   };
 
