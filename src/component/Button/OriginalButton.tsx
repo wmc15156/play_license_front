@@ -11,9 +11,11 @@ const Wrapper = styled.div<{
   position: boolean;
   marginBottom?: string;
   provider?: boolean;
+  maxWidth?: string;
 }>`
   width: ${(p) => p.width};
   height: ${(p) => p.height};
+  max-width: ${(p) => (p.maxWidth ? p.maxWidth : null)};
   background-color: ${(
     p //
   ) =>
@@ -54,6 +56,7 @@ type Props = {
   onClick?: () => void;
   marginBottom?: string;
   provider?: boolean;
+  maxWidth?: string;
 };
 
 const OriginalButton: FC<Props> = ({
@@ -67,8 +70,8 @@ const OriginalButton: FC<Props> = ({
   onClick,
   marginBottom,
   provider,
+  maxWidth,
 }) => {
-  console.log(background, provider);
   return (
     <Wrapper
       width={width}
@@ -80,6 +83,7 @@ const OriginalButton: FC<Props> = ({
       onClick={onClick}
       marginBottom={marginBottom}
       provider={provider}
+      maxWidth={maxWidth}
     >
       {children}
     </Wrapper>

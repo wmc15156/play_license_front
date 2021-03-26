@@ -14,26 +14,20 @@ const Search = () => {
   const [count, setCount] = useState(0);
   const [typingDone, setTypingDone] = useState(false);
   const [search, setSearch] = useState("");
-  // const { data, error, revalidate } = useSWR(
-  //   ["/product/search", searchInput],
-  //   fetcher
-  // );
+
   const router = useRouter();
 
-  const debounceSearchFunc = debounce(() => {
-    console.log("called debounceSomethingFunc");
-  }, 1000);
-
   const onClickHandler = (id) => () => {
-    console.log("123", id);
     router.push(`/performances/${id}`);
+  };
+
+  const removeSearch = () => {
+    setSearchInput("");
   };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log("searchInput", searchInput);
     if (!searchInput) {
-      console.log("if");
       setList([]);
       setCount(0);
       setTypingDone(false);
@@ -41,9 +35,6 @@ const Search = () => {
     }
 
     if (searchInput.length > 0) {
-      // revalidate();
-      // console.log(data, "data");
-      console.log("here");
       axios
         .get("/product/search", {
           params: {
@@ -52,7 +43,6 @@ const Search = () => {
           },
         })
         .then((res) => {
-          console.log(res.data, "뭐야");
           setList(res.data);
           setCount(res.data.length);
           setTypingDone(true);
@@ -70,12 +60,12 @@ const Search = () => {
     },
     [searchInput]
   );
-  console.log(list, typingDone, "-----");
   return (
     <Container>
       <Section1>
         <FormWrapper onSubmit={onSubmitHandler}>
           <InputBox onChange={onChangeSearchInput} value={searchInput} />
+          <img src="/assets/image/X_icon.png" onClick={removeSearch} />
         </FormWrapper>
       </Section1>
       <Section2>
@@ -135,7 +125,7 @@ const Search = () => {
 };
 
 const Container = styled.div`
-  max-width: 1200px;
+  max-width: 1228px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -150,14 +140,14 @@ const Section1 = styled.div`
 const InputBox = styled.input.attrs({
   placeholder: "검색할 작품을 입력해주세요",
 })`
-  width: calc(100% - 34px);
-  height: 104px;
+  width: 100%;
+  height: 60px;
   border-radius: 14px;
   background-color: #f5f5f5;
   border: none;
-  font-size: 36px;
-  font-family: "NotoSansCJKkr-Medium";
-  padding-left: 34px;
+  font-size: 21px;
+  font-family: "NotoSansCJKkr-Regular";
+  text-indent: 34px;
 `;
 
 const Section2 = styled.div`
@@ -212,6 +202,10 @@ const ItemImg = styled.div`
     width: 100%;
     height: auto;
   }
+
+  &:hover img {
+    cursor: pointer;
+  }
 `;
 
 const Item = styled.li`
@@ -247,6 +241,14 @@ const CounterSpan = styled.span`
 `;
 const FormWrapper = styled.form`
   width: 100%;
+  display: flex;
+  align-items: center;
+  & > img {
+    display: inline-block;
+    margin-left: 40px;
+    width: 2.3rem;
+    height: 2.3rem;
+  }
 `;
 
 const None = styled.div`

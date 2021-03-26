@@ -9,6 +9,8 @@ import wrapper from "../store/configureStore";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import HomeStore, { useHomeState } from "../store/homeStore";
+import AdminLayout from "../src/component/admin/AdminLayout/AdminLayout";
+import AdminHeader from "../src/component/admin/AdminHeader/AdminHeader";
 
 const url =
   process.env.NODE_ENV === "production"
@@ -34,13 +36,13 @@ const MyApp = ({ Component, pageProps }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const providerWeb = router.pathname.includes("/provider");
+  const adminWeb = router.pathname.includes("/admin");
 
   const onCloseHandler = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  console.log("1111111111build?");
-  // const providerPath = ["/provider", "/provider/login"];
+  const providerPath = ["/provider", "/provider/login"];
 
   const buyerPath = [
     "/login",
@@ -56,6 +58,7 @@ const MyApp = ({ Component, pageProps }) => {
     "/find/email",
     "/find/password",
     "/find/getEmail",
+    "/admin",
   ];
 
   const removeFooter = buyerPath.includes(router.pathname);
@@ -67,7 +70,7 @@ const MyApp = ({ Component, pageProps }) => {
         <title>상상마루 - playlicense</title>
       </Head>
       {/* buyer */}
-      {!providerWeb && (
+      {!providerWeb && !adminWeb && (
         <Layout>
           <Header menuStatus={isMenuOpen} onCloseHandler={onCloseHandler} />
           {!isMenuOpen && <Component {...pageProps} />}
@@ -81,6 +84,13 @@ const MyApp = ({ Component, pageProps }) => {
           <Component {...pageProps} />
           <div id="modal" />
         </PL_Layout>
+      )}
+      {adminWeb && (
+        <AdminLayout>
+          <AdminHeader />
+          <Component {...pageProps} />
+          <div id="modal" />
+        </AdminLayout>
       )}
     </HomeStore>
   );
