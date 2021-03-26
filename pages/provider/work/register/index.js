@@ -27,15 +27,6 @@ const notice = {
   body3: "3. 문의 내용에 보완이 필요할 경우, 추가 요청을 드릴 수 있습니다.",
 };
 
-// export async function getServerSideProps() {
-//   const url = `/auth/provider/me`;
-//   const res = await axios.get(url);
-//   const respData = res.data;
-//   return {
-//     props: { data: respData },
-//   };
-// }
-
 function pl_workRegister01({ data }) {
   console.log(data);
   const router = useRouter();

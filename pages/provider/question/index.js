@@ -50,7 +50,6 @@ const pl_question = () => {
       .get("/question/provider")
       .then((res) => {
         if (res.status === 200) {
-          console.log(res, "????????>>>>");
           setList(res.data);
         }
       })

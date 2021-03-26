@@ -1,30 +1,23 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
-import GrayButton from "../../../src/component/Button/GrayShortBtn";
-import OrangeButton from "../../../src/component/Button/OriginalButton";
-import { useState, useEffect, useReducer, useContext } from "react";
+import GrayButton from "../../component/Button/GrayShortBtn";
+import OrangeButton from "../../component/Button/OriginalButton";
+import { useContext } from "react";
 import axios from "axios";
-import {
-  ProviderInfoContext,
-  providerInfoReducer,
-  providerInfoInitialState,
-} from "../../../reducers/providerInfo";
+import { ProviderInfoContext } from "../../../reducers/providerInfo";
 
 const Info_ModifyBtns = ({ changeMode }) => {
   const [state, dispatch] = useContext(ProviderInfoContext);
   const saveButtonHandler = () => {
     const params = state.changed;
-    console.log("편집 저장하기 ", params);
     axios
       .patch("/user/update/provider", params)
       .then((res) => {
-        console.log(res);
         changeMode("default");
       })
       .catch((err) => console.log(err.response));
   };
 
-  console.log(state, "btns state는?");
   return (
     <Container>
       <GrayButton

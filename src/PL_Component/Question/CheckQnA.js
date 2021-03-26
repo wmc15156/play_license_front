@@ -1,14 +1,9 @@
 import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
-import axios from "axios";
-import { useRouter } from "next/router";
 import AnswerStatus from "../../component/Tag/AnswerStatus";
 import Btn from "../../component/Button/OriginalButton";
 
-import { useState } from "react";
-
 const PL_CheckQnA = ({ data, next }) => {
-  const router = useRouter();
   const { adminCheck, name, email, phone, title, comment } = data;
 
   return (

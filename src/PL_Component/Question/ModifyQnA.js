@@ -9,11 +9,11 @@ import Btn_right from "../../component/Button/OriginalButton";
 import AlertModal from "../../component/Modal/AlertModal";
 import StatusBox from "../../component/Tag/AnswerStatus";
 
-const PL_ModifyQnA = ({ data, next }) => {
+const PL_ModifyQnA = ({ data, next, id }) => {
   const router = useRouter();
   const { openModal, ModalPortal, closeModal } = useModal();
   const { adminCheck, name, email, phone, title, comment } = data;
-  const [isEmpty, setIsEmpty] = useState(false);
+  const [modalName, setModalName] = useState("");
   const [inputs, setInputs] = useState({
     name: name,
     email: email,
@@ -21,11 +21,6 @@ const PL_ModifyQnA = ({ data, next }) => {
     title: title,
     comment: comment,
   });
-
-  const handleChange = (e) => {
-    e.persist();
-    setChecked((prevState) => !prevState);
-  };
 
   const inputChangeHandler = (e) => {
     const { value, name } = e.target;
@@ -36,29 +31,23 @@ const PL_ModifyQnA = ({ data, next }) => {
     });
   };
 
-  const closeEmptyAlertModal = () => {
-    setIsEmpty(false);
+  const closeModalHandler = () => {
+    setModalName("");
     closeModal();
   };
   const modify = () => {
-    console.log("1:1문의 수정하기");
-    // axios
-    //   .post("/question", params)
-    //   .then((res) => {
-    //     if (res.status === 201) {
-    //       setSuccess(true);
-    //       openModal();
-    //     }
-    //   })
-    //   .catch((err) => console.error(err));
+    const params = { ...inputs, isChecked: "true" };
+    axios
+      .patch(`/question/provider/${id}`, params)
+      .then((res) => {
+        setModalName("success");
+        openModal();
+      })
+      .catch((err) => console.log(err.response));
   };
 
-  const onSubmitHandler = (e) => {
+  const onSubmitClickHandler = () => {
     // console.log({ ...inputs });
-    e.preventDefault();
-    // if (!isChecked) {
-    //   openModal();
-    // }
     if (
       !inputs.name ||
       !inputs.email ||
@@ -66,7 +55,7 @@ const PL_ModifyQnA = ({ data, next }) => {
       !inputs.title ||
       !inputs.comment
     ) {
-      setIsEmpty(true);
+      setModalName("empty");
       openModal();
     }
     modify();
@@ -141,7 +130,7 @@ const PL_ModifyQnA = ({ data, next }) => {
               text={"수정하기"}
               size={"12px"}
               height={"36px"}
-              onClickHandler={onSubmitHandler}
+              onClickHandler={onSubmitClickHandler}
               fontColor={color.black2}
             />
             <Margin />
@@ -158,10 +147,19 @@ const PL_ModifyQnA = ({ data, next }) => {
           </ButtonContainer>
         </BottomSection>
         <ModalPortal>
-          {!isEmpty && (
+          {modalName === "empty" && (
             <AlertModal
               text={"내용을 모두 입력해주세요"}
-              onClickBtn={closeEmptyAlertModal}
+              onClickBtn={closeModalHandler}
+            />
+          )}
+          {modalName === "success" && (
+            <AlertModal
+              text={"수정이 완료되었습니다"}
+              onClickBtn={() => {
+                closeModalHandler();
+                router.push("/provider/question");
+              }}
             />
           )}
         </ModalPortal>

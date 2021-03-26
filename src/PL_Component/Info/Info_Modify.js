@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { memo, useState, useEffect, useContext } from "react";
 import { ProviderInfoContext } from "../../../reducers/providerInfo";
+import AlertModal from "../../component/Modal/AlertModal";
 import { MdDelete } from "react-icons/md";
 
 const dummies = {
@@ -56,22 +57,25 @@ const InfoBox_Modify = () => {
       setModal("password");
       openModal();
     }
-    if (name === "unsubscribe") {
-      setModal("unsubscribe");
+    if (name === "logout") {
+      setModal("logout");
       openModal();
     }
+  };
+
+  const onLogOut = () => {
+    axios
+      .post("/auth/provider/logout")
+      .then((res) => {
+        changeModalHandler("logout");
+        openModal();
+      })
+      .catch((err) => console.log(err.response));
   };
 
   const closeModalHandler = () => {
     setModal("");
     closeModal();
-  };
-
-  const onLogOut = () => {
-    // axios.post("/auth/logout").then((res) => {
-    //   mutate(false, false);
-    router.push("/provider");
-    // });
   };
 
   const urlHandler = (url, filename) => {
@@ -181,6 +185,16 @@ const InfoBox_Modify = () => {
           <ChangePassword
             role={"provider"}
             onClickHandler={closeModalHandler}
+          />
+        )}
+        {modal === "logout" && (
+          <AlertModal
+            text={"로그아웃 되었습니다"}
+            onClickBtn={() => {
+              closeModalHandler();
+              router.push("/provider");
+            }}
+            fontSize={"14px"}
           />
         )}
       </ModalPortal>
