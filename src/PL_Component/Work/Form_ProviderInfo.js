@@ -20,10 +20,10 @@ const ProviderInfo = ({ userInfo, setUserInfo, readOnly }) => {
             onChange={(e) =>
               setUserInfo({
                 ...userInfo,
-                groupName: e.target.value,
+                company: e.target.value,
               })
             }
-            value={userInfo.groupName}
+            value={userInfo.company}
           />
         </Input>
         <Input>
@@ -38,10 +38,10 @@ const ProviderInfo = ({ userInfo, setUserInfo, readOnly }) => {
             onChange={(e) =>
               setUserInfo({
                 ...userInfo,
-                introduction: e.target.value,
+                description: e.target.value,
               })
             }
-            value={userInfo.introduction}
+            value={userInfo.description}
           />
         </Input>
         <Input>

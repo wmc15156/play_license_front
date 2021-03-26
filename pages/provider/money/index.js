@@ -8,7 +8,8 @@ import { AiFillWallet } from "react-icons/ai";
 import { HiClock } from "react-icons/hi";
 import { FaCalendarAlt } from "react-icons/fa";
 
-const month = 3;
+const date = new Date();
+const currMonth = date.getMonth() + 1;
 const list = [
   {
     id: 1,
@@ -33,7 +34,20 @@ const list = [
   },
 ];
 
-function pl_money() {
+// export async function getServerSideProps() {
+//   const url = `/${currMonth}`;
+//   const res = await axios.get(url);
+//   const respData = res.data;
+//   return {
+//     props: { data: respData },
+//   };
+// }
+
+function pl_money({ data }) {
+  // const getPrevMonthData = ()=>{
+  //   axios.get(`${currMonth-1}`).then(res=>console.log(res))
+  // }
+
   return (
     <Container>
       <NavContainer>
@@ -80,11 +94,11 @@ function pl_money() {
         <Table>
           <Table_Head>
             <Table_Head_Item>
-              {month}월 정산 예정 건 <span>{"5"}</span>건
+              {currMonth}월 정산 예정 건 <span>{"5"}</span>건
             </Table_Head_Item>
             <Divider width={"2px"} color={color.black5} />
             <Table_Head_Item>
-              {month}월 정산 금액 <span>{"615,000"}</span>원
+              {currMonth}월 정산 금액 <span>{"615,000"}</span>원
             </Table_Head_Item>
           </Table_Head>
           <Table_Subtitle>
@@ -108,10 +122,10 @@ function pl_money() {
         </Table>
         <BtnSection>
           <Btn
-            text={`${month - 1}월 정산`}
+            text={`${currMonth - 1}월 정산`}
             size={"12px"}
             height={"36px"}
-            // onClickHandler={}
+            // onClickHandler={getPrevMonthData}
             fontColor={color.black2}
           />
         </BtnSection>

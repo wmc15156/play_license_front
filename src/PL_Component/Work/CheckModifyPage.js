@@ -14,7 +14,7 @@ const CheckPage = ({
   setPerfInfo,
   preventChanges,
   back,
-  next,
+  modifyHandler,
 }) => {
   const [mode, setMode] = useState("check");
 
@@ -99,9 +99,8 @@ const CheckPage = ({
                 height={"36px"}
                 size={"12px"}
                 onClick={() => {
-                  console.log("편집 저장하기");
+                  modifyHandler();
                   changeMode("check");
-                  next();
                 }}
               >
                 편집저장

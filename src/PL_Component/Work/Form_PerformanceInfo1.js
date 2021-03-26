@@ -6,7 +6,7 @@ import CheckBoxWrapper from "../../component/CheckBoxWrapper/CircleCheckBoxWrapp
 import { FaCheck } from "react-icons/fa";
 import Selector from "../../component/Input/SelectOption";
 
-const items_purpose = ["공연 목적", "교육 목적", "기타 목적"];
+const items_brokerageConsignment = ["공연 목적", "교육 목적", "기타 목적"];
 const items_requireMaterial = ["대본", "악보", "원본 포스터"];
 const items_selectMaterial1 = ["연습MR", "공연MR", "총보"];
 const items_selectMaterial2 = [
@@ -20,42 +20,43 @@ const items_selectMaterial2 = [
 ];
 
 const PerformanceInfo1 = ({ perfInfo, setPerfInfo }) => {
-  // const isCheckedHandler = (name) => {
-  //   let names = ;
-  //   return ;
-  // };
-
   const removeSelectItemHandler = useCallback(
     (name) => {
-      let array = perfInfo.selectedMaterials.select;
+      let array = perfInfo.selectMaterials.select;
       let itemIdx = array.map((e) => e.name).indexOf(name);
       array.splice(itemIdx, 1);
       setPerfInfo((prev) => {
         return {
           ...prev,
-          selectedMaterials: {
+          selectMaterials: {
             select: [...array],
-            input: perfInfo.selectedMaterials.input,
+            input: perfInfo.selectMaterials.input,
           },
         };
       });
     },
-    [perfInfo.selectedMaterials.select]
+    [perfInfo.selectMaterials.select]
   );
 
   const checkSelectHandler = (name) => {
-    let names = perfInfo.selectedMaterials.select.map((e) => e.name);
+    let names = perfInfo.selectMaterials.select.map((e) => e.name);
     if (names.includes(name)) {
       removeSelectItemHandler(name);
     } else {
       setPerfInfo({
         ...perfInfo,
-        selectedMaterials: {
+        selectMaterials: {
           select: [
-            ...perfInfo.selectedMaterials.select,
-            { name: name, price: "", original: "", etc: "" },
+            ...perfInfo.selectMaterials.select,
+            {
+              name: name,
+              price: "",
+              originalMaterial: { url: "", filename: "" },
+              agreement: { url: "", filename: "" },
+              etc: "",
+            },
           ],
-          input: perfInfo.selectedMaterials.input,
+          input: perfInfo.selectMaterials.input,
         },
       });
     }
@@ -88,32 +89,38 @@ const PerformanceInfo1 = ({ perfInfo, setPerfInfo }) => {
         requiredMaterials: {
           select: [
             ...perfInfo.requiredMaterials.select,
-            { name: name, price: "", original: "", etc: "" },
+            {
+              name: name,
+              price: "",
+              originalMaterial: { url: "", filename: "" },
+              agreement: { url: "", filename: "" },
+              etc: "",
+            },
           ],
         },
       });
     }
   };
 
-  const removePurposeItemHandler = useCallback(
+  const removeBrokerageConsignmentHandler = useCallback(
     (name) => {
-      let array = perfInfo.purpose;
+      let array = perfInfo.brokerageConsignment;
       let itemIdx = array.indexOf(name);
       array.splice(itemIdx, 1);
       setPerfInfo((prev) => {
-        return { ...prev, purpose: [...array] };
+        return { ...prev, brokerageConsignment: [...array] };
       });
     },
-    [perfInfo.purpose]
+    [perfInfo.brokerageConsignment]
   );
 
-  const checkPurposeHandler = (name) => {
-    if (perfInfo.purpose.includes(name)) {
-      removePurposeItemHandler(name);
+  const checkBrokerageConsignmentHandler = (name) => {
+    if (perfInfo.brokerageConsignment.includes(name)) {
+      removeBrokerageConsignmentHandler(name);
     } else {
       setPerfInfo({
         ...perfInfo,
-        purpose: [...perfInfo.purpose, name],
+        brokerageConsignment: [...perfInfo.brokerageConsignment, name],
       });
     }
   };
@@ -145,18 +152,18 @@ const PerformanceInfo1 = ({ perfInfo, setPerfInfo }) => {
           <SubTitle>중개위탁 분야</SubTitle>
           <Content>
             <CheckSection>
-              {items_purpose.map((label, index) => (
+              {items_brokerageConsignment.map((label, index) => (
                 <CheckItem key={index}>
                   <CheckBox>
                     <CheckBoxWrapper
                       widthHeight={"20px"}
-                      checked={perfInfo.purpose.includes(label)}
-                      onClick={() => checkPurposeHandler(label)}
+                      checked={perfInfo.brokerageConsignment.includes(label)}
+                      onClick={() => checkBrokerageConsignmentHandler(label)}
                     >
                       <FaCheck
                         size={"15px"}
                         color={
-                          perfInfo.purpose.includes(label)
+                          perfInfo.brokerageConsignment.includes(label)
                             ? color.white
                             : color.black5
                         }
@@ -229,7 +236,7 @@ const PerformanceInfo1 = ({ perfInfo, setPerfInfo }) => {
                     <CheckBox>
                       <CheckBoxWrapper
                         widthHeight={"20px"}
-                        checked={perfInfo.selectedMaterials.select
+                        checked={perfInfo.selectMaterials.select
                           .map((e) => e.name)
                           .includes(label)}
                         onClick={() => checkSelectHandler(label)}
@@ -237,7 +244,7 @@ const PerformanceInfo1 = ({ perfInfo, setPerfInfo }) => {
                         <FaCheck
                           size={"15px"}
                           color={
-                            perfInfo.selectedMaterials.select
+                            perfInfo.selectMaterials.select
                               .map((e) => e.name)
                               .includes(label)
                               ? color.white
@@ -263,7 +270,7 @@ const PerformanceInfo1 = ({ perfInfo, setPerfInfo }) => {
                     <CheckBox>
                       <CheckBoxWrapper
                         widthHeight={"20px"}
-                        checked={perfInfo.selectedMaterials.select
+                        checked={perfInfo.selectMaterials.select
                           .map((e) => e.name)
                           .includes(label)}
                         onClick={() => checkSelectHandler(label)}
@@ -271,7 +278,7 @@ const PerformanceInfo1 = ({ perfInfo, setPerfInfo }) => {
                         <FaCheck
                           size={"15px"}
                           color={
-                            perfInfo.selectedMaterials.select
+                            perfInfo.selectMaterials.select
                               .map((e) => e.name)
                               .includes(label)
                               ? color.white
@@ -282,7 +289,7 @@ const PerformanceInfo1 = ({ perfInfo, setPerfInfo }) => {
                     </CheckBox>
                     <Check_label>{label}</Check_label>
                     {label === "기타" &&
-                      perfInfo.selectedMaterials.select.includes("기타") && (
+                      perfInfo.selectMaterials.select.includes("기타") && (
                         <>
                           <BasicInput
                             width={"100%"}
@@ -291,15 +298,13 @@ const PerformanceInfo1 = ({ perfInfo, setPerfInfo }) => {
                             onChange={(e) =>
                               setPerfInfo({
                                 ...perfInfo,
-                                selectedMaterials: {
-                                  select: [
-                                    ...perfInfo.selectedMaterials.select,
-                                  ],
+                                selectMaterials: {
+                                  select: [...perfInfo.selectMaterials.select],
                                   input: e.target.value,
                                 },
                               })
                             }
-                            value={perfInfo.selectedMaterials.input}
+                            value={perfInfo.selectMaterials.input}
                           />
                         </>
                       )}
