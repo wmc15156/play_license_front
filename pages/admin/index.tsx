@@ -1,8 +1,10 @@
 import AdminMenu from "@src/component/admin/AdminMenu/AdminMenu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BannerListHeader from "@src/component/admin/AdminBannerListHeader/BannerListHeader";
 import AdminHomeBannerTitle from "@src/component/admin/AdminHomeBannerTitle/AdminHomeBannerTitle";
-import AdminBannerList, { BannerList } from "@src/component/admin/AdminBannerList/AdminBannerList";
+import AdminBannerList, {
+  BannerList,
+} from "@src/component/admin/AdminBannerList/AdminBannerList";
 
 const menus = [
   "홈 배너 관리",
@@ -23,13 +25,11 @@ const bannerTitle = [
   "삭제",
 ];
 
-const marginRight = ["102px", "250px", "198px", "89px", "139px", "136px"];
-// dummy Data
 const dummyData: BannerList[] = [
   {
     id: 1,
     title: "서비스 소개 바로가기",
-    exposure: true,
+    exposure: false,
     desktopUrl: "http://url.com",
     mobileUrl: "http://mobile.com",
     url: "http://sangsangmaru.com",
@@ -53,7 +53,7 @@ const dummyData: BannerList[] = [
   {
     id: 4,
     title: "새로 등록된 작품",
-    exposure: false,
+    exposure: true,
     desktopUrl: "http://url.com",
     mobileUrl: "http://mobile.com",
     url: "http://sangsangmaru.com",
@@ -75,8 +75,17 @@ const dummyData: BannerList[] = [
     url: "http://sangsangmaru.com",
   },
 ];
+
+const marginRight = ["102px", "250px", "198px", "89px", "139px", "136px"];
+// dummy Data
+
 function AdminIndex() {
   const [currentMenu, setCurrentMenu] = useState("홈 배너 관리");
+  const [bannerList, setBannerList] = useState<BannerList[] | null>(dummyData);
+
+  // useEffect(() => {
+  //   setBannerList(dummyData);
+  // },[]);
 
   return (
     <>
@@ -87,7 +96,7 @@ function AdminIndex() {
       />
       <BannerListHeader />
       <AdminHomeBannerTitle titles={bannerTitle} marginRight={marginRight} />
-      <AdminBannerList lists={dummyData}/>
+      <AdminBannerList lists={bannerList} setBannerList={setBannerList} />
     </>
   );
 }

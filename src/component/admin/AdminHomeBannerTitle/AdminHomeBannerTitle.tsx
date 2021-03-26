@@ -24,7 +24,7 @@ const UlWrapper = styled.ul`
 
 const ListWrapper = styled.li<{ margin: string }>`
   margin-right: ${(p) => (p.margin ? p.margin : null)};
-
+  max-width: 60px;
   @media (max-width: 768px) {
     font-size: 0.8rem;
     margin-right: 20px;
