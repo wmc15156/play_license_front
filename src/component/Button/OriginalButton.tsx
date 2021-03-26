@@ -12,6 +12,8 @@ const Wrapper = styled.div<{
   marginBottom?: string;
   provider?: boolean;
   maxWidth?: string;
+  fontColor?: string;
+  marginRight?: string;
 }>`
   width: ${(p) => p.width};
   height: ${(p) => p.height};
@@ -33,12 +35,17 @@ const Wrapper = styled.div<{
   align-items: center;
   border-radius: 8px;
   color: ${(p) =>
-    p.provider && !p.background ? `${styles.black3}` : styles.white};
+    p.provider && !p.background
+      ? `${styles.black3}`
+      : p.fontColor
+      ? p.fontColor
+      : styles.white};
   line-height: 18px;
   font-family: "NotoSansCJKkr-Bold";
   outline: 0;
   margin-top: ${(p) => p.margin};
   margin-bottom: ${(p) => (p.marginBottom ? p.marginBottom : "0")};
+  margin-right: ${(p) => (p.marginRight ? p.marginRight : null)};
   font-size: ${(p) => p.size};
   position: ${(p) => (p.position ? "absolute" : null)};
   cursor: pointer;
@@ -57,6 +64,8 @@ type Props = {
   marginBottom?: string;
   provider?: boolean;
   maxWidth?: string;
+  fontColor?: string;
+  marginRight?: string;
 };
 
 const OriginalButton: FC<Props> = ({
@@ -71,6 +80,8 @@ const OriginalButton: FC<Props> = ({
   marginBottom,
   provider,
   maxWidth,
+  fontColor,
+  marginRight,
 }) => {
   return (
     <Wrapper
@@ -84,6 +95,8 @@ const OriginalButton: FC<Props> = ({
       marginBottom={marginBottom}
       provider={provider}
       maxWidth={maxWidth}
+      fontColor={fontColor}
+      marginRight={marginRight}
     >
       {children}
     </Wrapper>

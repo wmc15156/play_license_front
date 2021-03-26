@@ -2,6 +2,8 @@ import styled from "styled-components";
 import AdminWrapper from "@src/component/admin/AdminWrapper/AdminWrapper";
 import colors from "@styles/colors";
 import OriginalButton from "@src/component/Button/OriginalButton";
+import useModal from "@utils/useModal";
+import AddBannerModal from "@src/component/admin/Modal/AddBanner";
 
 const BannerListTitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
@@ -27,6 +29,8 @@ const BannerListHeader = () => {
     // banner 추가하기
   };
 
+  const { openModal, closeModal, ModalPortal } = useModal();
+
   return (
     <AdminWrapper height={"128px"}>
       <BannerListTitle>
@@ -42,11 +46,14 @@ const BannerListHeader = () => {
           margin={""}
           size={"16px"}
           background={true}
-          onClick={addBanner}
+          onClick={openModal}
         >
           배너 추가하기
         </OriginalButton>
       </BannerListTitle>
+      <ModalPortal>
+        <AddBannerModal />
+      </ModalPortal>
     </AdminWrapper>
   );
 };
