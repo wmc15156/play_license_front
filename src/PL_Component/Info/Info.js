@@ -5,6 +5,8 @@ import { useState, useEffect, useReducer, useContext } from "react";
 import { ProviderInfoContext } from "../../../reducers/providerInfo";
 import { useRouter } from "next/router";
 import TextArea from "../../component/BasicInput/TextArea";
+import AlertModal from "../../component/Modal/AlertModal";
+import useModal from "../../../utils/useModal";
 
 const dummies = {
   image: "/assets/image/PL/logo.png",
@@ -19,14 +21,15 @@ const dummies = {
 const InfoBox = () => {
   const router = useRouter();
   const [state, dispatch] = useContext(ProviderInfoContext);
+  const { openModal, closeModal, ModalPortal } = useModal();
+  const [modalName, setModalName] = useState("");
+
   const { avatar, comment, company, fullName, phone, email } = state.user;
 
-  console.log(avatar);
   const getUserData = () => {
     axios
       .get("/auth/provider/me")
       .then((res) => {
-        console.log(res);
         dispatch({ type: "GET_INFO", info: res.data });
       })
       .catch((err) => console.log(err.response));
@@ -35,10 +38,17 @@ const InfoBox = () => {
   useEffect(() => getUserData(), []);
 
   const onLogOut = () => {
-    // axios.post("/auth/logout").then((res) => {
-    //   mutate(false, false);
-    router.push("/provider");
-    // });
+    axios
+      .post("/auth/provider/logout")
+      .then((res) => {
+        setModalName("logout");
+        openModal();
+      })
+      .catch((err) => console.log(err.response));
+  };
+  const closeModalHandler = () => {
+    setModalName("");
+    closeModal();
   };
 
   return (
@@ -92,6 +102,18 @@ const InfoBox = () => {
           </List>
         </Box>
       </Section2>
+      {modalName === "logout" && (
+        <ModalPortal>
+          <AlertModal
+            text={"로그아웃 되었습니다"}
+            onClickBtn={() => {
+              closeModalHandler();
+              router.push("/provider");
+            }}
+            fontSize={"14px"}
+          />
+        </ModalPortal>
+      )}
     </div>
   );
 };

@@ -18,7 +18,6 @@ const Navigation = () => {
     axios
       .get("auth/provider/me")
       .then((res) => {
-        console.log(res, "provider정보get");
         setUser(res.data);
       })
       .catch((err) => {

@@ -14,8 +14,7 @@ import LogoBar from "../../../src/component/Nav/LogoBar";
 import Info from "../../../src/PL_Component/Info/Info";
 import Info_Modify from "../../../src/PL_Component/Info/Info_Modify";
 import GrayButton from "../../../src/component/Button/GrayShortBtn";
-import OrangeButton from "../../../src/component/Button/OriginalButton";
-import ModifyMode_Buttons from "../../../src/PL_Component/Info/Info_ModifyBtns";
+import ModifyMode_Buttons from "../../../src/PL_Component/Info/Btns_Info_Modify";
 import useModal from "../../../utils/useModal";
 import Modal_Unsubscribe from "../../../src/component/Modal/AlertModal2Btns";
 
@@ -48,16 +47,13 @@ const pl_info = () => {
   };
 
   const unSubscribeHandler = () => {
-    console.log("pl회원탈퇴");
-    // axios
-    //   .delete("/auth/unregister")
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       closeModal();
-    //       router.push("/");
-    //     }
-    //   })
-    //   .catch((err) => console.error(err));
+    axios
+      .delete("/auth/provider/unregister")
+      .then((res) => {
+        closeModalHandler();
+        router.push("/");
+      })
+      .catch((err) => console.error(err));
   };
   return (
     <ProviderInfoContext.Provider

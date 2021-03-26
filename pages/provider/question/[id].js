@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PageContainer, PageContentContainer } from "../../../styles/PL_Frame";
 import useSWR from "swr";
 import fetcher from "../../../utils/fetcher";
@@ -27,33 +27,43 @@ const data = {
   감사합니다`,
 };
 
-// export async function getServerSideProps(context) {
-//   const id = context.params.id;
-//   const url = `/question/provider/${id}`;
-//   const res = await axios.get(url);
-//   const respData = res.data;
-//   return {
-//     props: { data: respData },
-//   };
-// }
-
-const PL_QuestionDetail = ({}) => {
+const PL_QuestionDetail = () => {
   const router = useRouter();
+  const [questionId, setQuestionId] = useState("");
+  const [question, setQuestion] = useState({});
   const { openModal, ModalPortal, closeModal } = useModal();
+
+  const getData = () => {
+    console.log(router.query.id);
+    axios
+      .get(`/question/provider/${router.query.id}`)
+      .then((res) => {
+        console.log(res);
+        setQuestion(res.data);
+        setQuestionId(res.data.questionId);
+      })
+      .catch((err) => console.log(err.response));
+  };
+
+  useEffect(() => getData(), []);
+
   const next = () => {
     router.push("/provider/question");
   };
+
   return (
     <>
-      {data && (
+      {Object.keys(question).length && (
         <Container>
           <NavContainer>
             <Navi />
           </NavContainer>
           <BodyContainer>
             <LogoBar />
-            {data.adminCheck && <PL_CheckQnA data={data} next={next} />}
-            {!data.adminCheck && <PL_ModifyQnA data={data} next={next} />}
+            {question.adminCheck && <PL_CheckQnA data={question} next={next} />}
+            {!question.adminCheck && (
+              <PL_ModifyQnA data={question} next={next} id={questionId} />
+            )}
           </BodyContainer>
         </Container>
       )}
