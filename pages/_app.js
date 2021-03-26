@@ -42,7 +42,6 @@ const MyApp = ({ Component, pageProps }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-
   const providerPath = [
     "/provider",
     "/provider/login",
@@ -101,13 +100,13 @@ const MyApp = ({ Component, pageProps }) => {
           <Component {...pageProps} />
           <div id="modal" />
         </AdminLayout>
+      )}
 
       {providerWeb && removePLlayout && (
         <Layout>
           <Component {...pageProps} />
           <div id="modal" />
         </Layout>
-
       )}
     </HomeStore>
   );
