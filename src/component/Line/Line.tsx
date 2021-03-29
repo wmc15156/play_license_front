@@ -12,6 +12,7 @@ const LineWrapper = styled.hr<{
   background: boolean;
   width: string;
   marginTop: string;
+  height?: string;
 }>`
   width: ${(p) => p.width};
   border-radius: 100px;
@@ -26,15 +27,17 @@ type Props = {
   background: boolean;
   width: string;
   marginTop?: string;
+  height?: string;
 };
 
-const Line: VFC<Props> = ({ background, width, marginTop }) => {
+const Line: VFC<Props> = ({ background, width, marginTop,height }) => {
   return (
     <Wrapper>
       <LineWrapper
         background={background}
         width={width}
         marginTop={marginTop}
+        height={height}
       />
     </Wrapper>
   );

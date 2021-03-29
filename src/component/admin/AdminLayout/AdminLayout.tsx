@@ -15,13 +15,19 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
-  input:focus {
+  input:focus,
+  button:focus {
     outline: none;
+  }
+  button:focus {
+    cursor: pointer;
   }
   
   li {
     list-style: none;
   }
+  
+  
   
   @font-face {
     font-family: "Gotham Medium";

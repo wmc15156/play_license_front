@@ -4,7 +4,7 @@ import colors from "@styles/colors";
 const Wrapper = styled.div`
   width: 100%;
   max-width: 1920px;
-  background-color: ${colors.black5};
+  background-color: ${colors.gray1};
   height: 62px;
   display: flex;
   justify-content: center;

@@ -5,6 +5,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ToggleSwitchBtn from "@src/component/ToggleSwitch/ToggleSwitch";
 import useModal from "@utils/useModal";
 import BannerRemoveModal from "@src/component/admin/Modal/BannerRemove";
+import axios from "axios";
 export type BannerList = {
   id: number;
   title: string;
@@ -12,6 +13,7 @@ export type BannerList = {
   desktopUrl: string | undefined;
   mobileUrl: string | undefined;
   url: string | undefined;
+  order: number;
 };
 
 const UlWrapper = styled.ul`
@@ -30,16 +32,16 @@ const LiWrapper = styled.li`
   & > img {
     width: 24px;
     height: 24px;
-    border: 1px solid red;
   }
 `;
 
 type Props = {
   lists: BannerList[];
   setBannerList: Dispatch<SetStateAction<BannerList[]>>;
+  revalidate: () => Promise<boolean>;
 };
 
-const AdminBannerList: VFC<Props> = ({ lists, setBannerList }) => {
+const AdminBannerList: VFC<Props> = ({ lists, setBannerList, revalidate }) => {
   const [test, setTest] = useState(false);
   const { ModalPortal, openModal, closeModal } = useModal();
   const [removeBannerNumber, setRemoveBannerNumber] = useState(0);
@@ -50,13 +52,26 @@ const AdminBannerList: VFC<Props> = ({ lists, setBannerList }) => {
     const data = lists.map((list) =>
       list.id === id ? { ...list, exposure: !list.exposure } : list
     );
+    const findIndex = lists.findIndex((ele) => ele.id === id);
+    axios.patch(`/admin/home-banner/${id}`, { bannerList: data[findIndex] })
+      .then((res) => {
+        revalidate();
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      })
     setBannerList(data);
   };
 
   const onRemove = (id) => () => {
-    const data = lists.filter((list) => list.id !== id);
-    setBannerList(data);
-    closeModal();
+    axios.delete(`/admin/home-banner/${id}`)
+      .then((res) => {
+        revalidate();
+        closeModal();
+      })
+      .catch((err) => console.log(err.response.data))
+
+
   };
 
   const openRemoveModal = (id) => () => {
@@ -75,8 +90,22 @@ const AdminBannerList: VFC<Props> = ({ lists, setBannerList }) => {
           onDragEnd={(param) => {
             const sourceIndex = param.source.index;
             const destinationIndex = param.destination?.index;
+            let temp = null;
             if (!destinationIndex && destinationIndex !== 0) return;
+            console.log(lists[sourceIndex], lists[destinationIndex]);
+            temp = lists[sourceIndex].order;
+            lists[sourceIndex].order = lists[destinationIndex].order;
+            lists[destinationIndex].order = temp;
             lists.splice(destinationIndex, 0, lists.splice(sourceIndex, 1)[0]);
+            console.log(lists, {
+              bannerList: [lists[sourceIndex], lists[destinationIndex]],
+            });
+            axios
+              .patch("/admin/home-banner/order", {
+                bannerList: [lists[sourceIndex], lists[destinationIndex]],
+              })
+              .then((res) => console.log(res.data))
+              .catch((err) => console.log(err.response.data));
           }}
         >
           <UlWrapper>
@@ -126,7 +155,14 @@ const AdminBannerList: VFC<Props> = ({ lists, setBannerList }) => {
                                 maxWidth: "340px",
                               }}
                             >
-                              <img src={"/assets/image/Rectangle.png"} />
+                              <img
+                                style={{ height: "100px" }}
+                                src={
+                                  list.desktopUrl
+                                    ? list.desktopUrl
+                                    : "/assets/image/Rectangle.png"
+                                }
+                              />
                             </div>
                             <div
                               style={{
@@ -134,7 +170,14 @@ const AdminBannerList: VFC<Props> = ({ lists, setBannerList }) => {
                                 maxWidth: "160px",
                               }}
                             >
-                              <img src={"assets/image/Rectangle_small.png"} />
+                              <img
+                                style={{ height: "100px" }}
+                                src={
+                                  list.desktopUrl
+                                    ? list.desktopUrl
+                                    : "assets/image/Rectangle_small.png"
+                                }
+                              />
                             </div>
                             <ToggleSwitchBtn
                               on={list.exposure}
