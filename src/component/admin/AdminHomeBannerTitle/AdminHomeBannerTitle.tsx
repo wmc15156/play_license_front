@@ -36,7 +36,7 @@ type Props = {
   marginRight: Array<string>; // 각각 list간 margin right
 };
 
-const AdminHomeBannerTitle: VFC<Props> = ({ titles, marginRight }) => {
+const AdminHomeBannerTitle: VFC<Props> = ({ titles, marginRight, }) => {
   return (
     <AdminWrapper height={"56px"}>
       <UlWrapper>

@@ -3,9 +3,10 @@ import React, { FC } from "react";
 import InputBox from "@src/component/BasicInput/BasicInput";
 import NumberInput from "@src/component/BasicInput/NumberInput";
 
-export const Wrapper = styled.div<{ margin: string }>`
+export const Wrapper = styled.div<{ margin: string; justify?: boolean }>`
   width: 100%;
   display: flex;
+  justify-content: ${p => p.justify ? 'center' : null};
   margin-top: ${(p) => p.margin};
 `;
 
@@ -40,6 +41,7 @@ type Props = {
   inputHeight?: string;
   inputFontSize?: string;
   whiteType?: boolean;
+  justify?: boolean;
 };
 
 const TextAndInput: FC<Props> = ({
@@ -57,11 +59,12 @@ const TextAndInput: FC<Props> = ({
   onBlur,
   inputHeight,
   inputFontSize,
-  whiteType
+  whiteType,
+  justify,
 }) => {
   const checkPw = children === "비밀번호";
   return (
-    <Wrapper margin={wrapperMargin}>
+    <Wrapper margin={wrapperMargin} justify={justify}>
       <SpanWrapper
         width={textWidth}
         size={textFontSize}
