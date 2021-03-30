@@ -14,7 +14,7 @@ import Btn_Gray from "../../../../src/component/Button/GrayShortBtn";
 import Btn_Orange from "../../../../src/component/Button/OriginalButton";
 import InputBox from "../../../../src/component/BasicInput/BasicInputColor";
 import FileUploader from "../../../../src/component/Input/FileUploader";
-// import { data } from "../../../../src/PL_Component/Work/dummies_productInfo";
+// import { data } from "../../../../src/component/Work/dummies_productInfo";
 
 export async function getServerSideProps(context) {
   const id = context.params.id;

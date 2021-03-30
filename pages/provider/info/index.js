@@ -11,10 +11,10 @@ import { useRouter } from "next/router";
 import { PageContainer, PageContentContainer } from "../../../styles/PL_Frame";
 import Navi from "../../../src/component/Nav/Navigation";
 import LogoBar from "../../../src/component/Nav/LogoBar";
-import Info from "../../../src/PL_Component/Info/Info";
-import Info_Modify from "../../../src/PL_Component/Info/Info_Modify";
+import Info from "../../../src/provider/Info/Info";
+import Info_Modify from "../../../src/provider/Info/Info_Modify";
 import GrayButton from "../../../src/component/Button/GrayShortBtn";
-import ModifyMode_Buttons from "../../../src/PL_Component/Info/Btns_Info_Modify";
+import ModifyMode_Buttons from "../../../src/provider/Info/Btns_Info_Modify";
 import useModal from "../../../utils/useModal";
 import Modal_Unsubscribe from "../../../src/component/Modal/AlertModal2Btns";
 

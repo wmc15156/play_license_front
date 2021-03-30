@@ -7,7 +7,7 @@ import { FaCheck } from "react-icons/fa";
 import Selector from "../../component/Input/SelectOption";
 import ImageUploader from "../../component/Input/ImageUploader";
 
-const items_brokerageConsignment = ["공연 목적", "교육 목적", "기타 목적"];
+const items_brokerageConsignments = ["공연 목적", "교육 목적", "기타 목적"];
 const items_requireMaterial = ["대본", "악보", "원본 포스터"];
 const items_selectMaterial1 = ["연습MR", "공연MR", "총보"];
 const items_selectMaterial2 = [
@@ -68,18 +68,18 @@ const Form_CheckInfo = ({ perfInfo, setPerfInfo, readOnly }) => {
           <SubTitle>중개위탁 분야</SubTitle>
           <Content>
             <CheckSection>
-              {items_brokerageConsignment.map((label, index) => (
+              {items_brokerageConsignments.map((label, index) => (
                 <CheckItem key={index}>
                   <CheckBox>
                     <CheckBoxWrapper
                       widthHeight={"20px"}
-                      checked={perfInfo.brokerageConsignment.includes(label)}
+                      checked={perfInfo.brokerageConsignments.includes(label)}
                       // onClick={() => checkPurposeHandler(label)}
                     >
                       <FaCheck
                         size={"15px"}
                         color={
-                          perfInfo.brokerageConsignment.includes(label)
+                          perfInfo.brokerageConsignments.includes(label)
                             ? color.white
                             : color.black5
                         }

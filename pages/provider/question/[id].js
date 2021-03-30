@@ -9,8 +9,8 @@ import fetcher from "../../../utils/fetcher";
 
 import Navi from "../../../src/component/Nav/Navigation";
 import LogoBar from "../../../src/component/Nav/LogoBar";
-import PL_CheckQnA from "../../../src/PL_Component/Question/CheckQnA";
-import PL_ModifyQnA from "../../../src/PL_Component/Question/ModifyQnA";
+import PL_CheckQnA from "../../../src/provider/Question/CheckQnA";
+import PL_ModifyQnA from "../../../src/provider/Question/ModifyQnA";
 import Btn_left from "../../../src/component/Button/GrayShortBtn";
 import Btn_right from "../../../src/component/Button/OriginalButton";
 import useModal from "../../../utils/useModal";
