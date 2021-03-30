@@ -24,10 +24,7 @@ const BannerListTitle = styled.div`
   }
 `;
 
-const BannerListHeader = () => {
-  const addBanner = () => {
-    // banner 추가하기
-  };
+const BannerListHeader = ({revalidate, data}) => {
 
   const { openModal, closeModal, ModalPortal } = useModal();
 
@@ -35,7 +32,7 @@ const BannerListHeader = () => {
     <AdminWrapper height={"128px"}>
       <BannerListTitle>
         <p>
-          배너 리스트 <span>6개</span>
+          배너 리스트 <span>{data && data.length}개</span>
         </p>
 
         <OriginalButton
@@ -52,7 +49,7 @@ const BannerListHeader = () => {
         </OriginalButton>
       </BannerListTitle>
       <ModalPortal>
-        <AddBannerModal />
+        <AddBannerModal closeModal={closeModal} revalidate={revalidate}/>
       </ModalPortal>
     </AdminWrapper>
   );

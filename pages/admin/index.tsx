@@ -1,5 +1,5 @@
 import AdminMenu from "@src/component/admin/AdminMenu/AdminMenu";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import BannerListHeader from "@src/component/admin/AdminBannerListHeader/BannerListHeader";
 import AdminHomeBannerTitle from "@src/component/admin/AdminHomeBannerTitle/AdminHomeBannerTitle";
 import AdminBannerList, {
@@ -8,6 +8,8 @@ import AdminBannerList, {
 import color from "@styles/colors";
 import URLpage from "@src/component/admin/layout/PR/URL/Url"
 import RegisterRequest from "@src/component/admin/layout/PR/RegisterRequest/RegisterRequest"
+import useSWR from "swr";
+import fetcher from "@utils/fetcher";
 
 const buyerMenus = [
   "홈 배너 관리",
@@ -36,57 +38,6 @@ const bannerTitle = [
   "삭제",
 ];
 
-const dummyData: BannerList[] = [
-  {
-    id: 1,
-    title: "서비스 소개 바로가기",
-    exposure: false,
-    desktopUrl: "http://url.com",
-    mobileUrl: "http://mobile.com",
-    url: "http://sangsangmaru.com",
-  },
-  {
-    id: 2,
-    title: "인기작품 바로가기",
-    exposure: false,
-    desktopUrl: "http://url.com",
-    mobileUrl: "http://mobile.com",
-    url: "http://sangsangmaru.com",
-  },
-  {
-    id: 3,
-    title: "요즘 가장 핫한 작품",
-    exposure: false,
-    desktopUrl: "http://url.com",
-    mobileUrl: "http://mobile.com",
-    url: "http://sangsangmaru.com",
-  },
-  {
-    id: 4,
-    title: "새로 등록된 작품",
-    exposure: true,
-    desktopUrl: "http://url.com",
-    mobileUrl: "http://mobile.com",
-    url: "http://sangsangmaru.com",
-  },
-  {
-    id: 5,
-    title: "공개예정 작품",
-    exposure: false,
-    desktopUrl: "http://url.com",
-    mobileUrl: "http://mobile.com",
-    url: "http://sangsangmaru.com",
-  },
-  {
-    id: 6,
-    title: "예술교육을 위한 작품",
-    exposure: true,
-    desktopUrl: "http://url.com",
-    mobileUrl: "http://mobile.com",
-    url: "http://sangsangmaru.com",
-  },
-];
-
 const marginRight = ["102px", "250px", "198px", "89px", "139px", "136px"];
 // dummy Data
 
@@ -101,9 +52,23 @@ const providerTabs = {
 
 
 function AdminIndex({ adminMode }) {
+  const { data, error, revalidate, mutate } = useSWR("/admin/home-banner", fetcher, {
+    dedupingInterval: 100000,
+  });
   const [currentMenu, setCurrentMenu] = useState(buyerMenus[0]);
-  const [bannerList, setBannerList] = useState<BannerList[] | null>(dummyData);
+  const [bannerList, setBannerList] = useState<BannerList[] | null>([]);
+  const nextId = useRef(1);
+  
+  useEffect(() => {
+    if (!data) return;
+    if (!data.length) return;
+    setBannerList(data);
+    nextId.current = data.length;
+  }, [data && data.length]);
 
+  if (!data) return <div>loading</div>;
+
+  
   useEffect(() => {
     adminMode === 'buyer' ? setCurrentMenu(buyerMenus[0]) : setCurrentMenu(providerMenus[0])
     // setBannerList(dummyData);
@@ -119,9 +84,9 @@ function AdminIndex({ adminMode }) {
             setCurrentMenu={setCurrentMenu}
             color={color.orange}
           />
-          <BannerListHeader />
+          <BannerListHeader revalidate={revalidate} data={data}/>
           <AdminHomeBannerTitle titles={bannerTitle} marginRight={marginRight} />
-          <AdminBannerList lists={bannerList} setBannerList={setBannerList} />
+          <AdminBannerList lists={bannerList} setBannerList={setBannerList} revalidate={revalidate} />
         </>
       )}
       {adminMode === "provider" && (

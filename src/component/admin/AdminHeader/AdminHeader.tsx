@@ -21,7 +21,6 @@ const DivWrapper = styled.div`
   font-family: "FreightSansBlackSC";
   display: flex;
   justify-content: space-between;
-  border: 3px solid hotpink;
   box-sizing: border-box;
 
   & > img {
