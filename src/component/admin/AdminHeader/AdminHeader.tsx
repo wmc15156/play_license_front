@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import colors from "@styles/colors";
-import { memo, useState } from "react";
-import DropDown from "@src/component/admin/DropDown/DropDwon";
+import { memo, useEffect, useState } from "react";
+import DropDown from "@src/component/admin/DropDown/DropDown";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -63,7 +63,7 @@ const List = styled.li<{ backgroundColor?: boolean }>`
   }
 `;
 
-function AdminHeader() {
+function AdminHeader ({ setAdminMode }) {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("구매자 관리");
   const [menuText, setMenuText] = useState("제작사 관리");
@@ -81,11 +81,16 @@ function AdminHeader() {
     );
     // drop down close
     setOpen(() => !open);
+
   };
 
   const logout = () => {
     // logout logic;
   };
+
+  useEffect(()=>{
+    (text ==="구매자 관리") ? setAdminMode('buyer') : setAdminMode('provider')
+  }, [text])
 
   return (
     <div>
@@ -94,7 +99,7 @@ function AdminHeader() {
           <img src={"/assets/image/logo.png"} />
           <div>PLAY LICENSE &nbsp; &nbsp; 관리자</div>
         </DivWrapper>
-        <DropDown text={text} img toggle={toggle} />
+        <DropDown text={text} img color={(text === "구매자 관리") ? colors.orange : colors.blue} toggle={toggle} />
       </Wrapper>
       <ListWrapper>
         <div style={{ position: "absolute", right: "0", top: "-22px" }}>
