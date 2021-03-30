@@ -10,11 +10,12 @@ import axios from "axios";
 import Navi from "../../../../src/component/Nav/Navigation";
 import LogoBar from "../../../../src/component/Nav/LogoBar";
 import useModal from "../../../../utils/useModal";
+import AlertModal from "../../../../src/component/Modal/AlertModal";
 import OrangeShortBtn from "../../../../src/component/Button/OriginalButton";
 import GrayShortBtn from "../../../../src/component/Button/GrayShortBtn";
-import ProviderInfo from "../../../../src/PL_Component/Work/Form_ProviderInfo";
-import PerformanceInfo1 from "../../../../src/PL_Component/Work/Form_PerformanceInfo1";
-import PerformanceInfo2 from "../../../../src/PL_Component/Work/Form_PerformanceInfo2";
+import ProviderInfo from "../../../../src/provider/Work/Form_ProviderInfo";
+import PerformanceInfo1 from "../../../../src/provider/Work/Form_PerformanceInfo1";
+import PerformanceInfo2 from "../../../../src/provider/Work/Form_PerformanceInfo2";
 import { FaCheck } from "react-icons/fa";
 import CheckBoxWrapper from "../../../../src/component/CheckBoxWrapper/CheckBoxWrapper";
 import Notice from "../../../../src/component/GrayNotice";
@@ -27,11 +28,11 @@ const notice = {
   body3: "3. 문의 내용에 보완이 필요할 경우, 추가 요청을 드릴 수 있습니다.",
 };
 
-function pl_workRegister01({ data }) {
-  console.log(data);
+function pl_workRegister01() {
   const router = useRouter();
   const { openModal, ModalPortal, closeModal } = useModal();
   const [checked, setChecked] = useState(false);
+  const [modal, setModal] = useState("");
   const [step, setStep] = useState("01");
   const [userInfo, setUserInfo] = useState({
     company: "",
@@ -41,6 +42,7 @@ function pl_workRegister01({ data }) {
   });
   const [perfInfo, setPerfInfo] = useState({
     title: "",
+    brokerageConsignments: [],
     brokerageConsignment: [],
     year: "",
     requiredMaterials: {
@@ -75,38 +77,29 @@ function pl_workRegister01({ data }) {
   const getUser = () => {
     axios
       .get(`/auth/provider/me`)
-      .then((res) =>
+      .then((res) => {
         setUserInfo({
           company: res.data.company,
           description: res.data.comment,
           name: res.data.fullName,
           phone: res.data.phone,
-        })
-      )
+        });
+      })
       .catch((err) => console.log(err.response));
   };
 
   useEffect(() => getUser(), []);
 
   const back = () => router.back();
+
   const changeTab = (step) => {
     setStep(step);
-  };
-
-  const submit = () => {
-    if (checked) {
-      console.log("submit :", userInputData);
-      axios
-        .post("/product/provider", userInputData)
-        .then((res) => console.log("submit resp", res))
-        .catch((err) => console.log(err.response.data));
-      // router.push("/provider/work/register/complete");
-    }
   };
 
   const handleChange = (e) => {
     e.persist();
     setChecked((prevState) => !prevState);
+
     setUserInputData({
       ...userInfo,
       ...perfInfo,
@@ -114,10 +107,26 @@ function pl_workRegister01({ data }) {
         Number(perfInfo.castMembers.women.input) +
         Number(perfInfo.castMembers.men.input) +
         Number(perfInfo.castMembers.children.input),
-      isCheckInformation: checked,
+      isCheckInformation: true,
     });
   };
 
+  const submit = () => {
+    console.log("subbmit");
+    // if (userInputData.isCheckInformation && valid) {
+    console.log("submit :", userInputData);
+    axios
+      .post("/product/provider", userInputData)
+      .then((res) => router.push("/provider/work/register/complete"))
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response.status === 400) {
+          setModal("validation");
+          openModal();
+        }
+      });
+    // }
+  };
   return (
     <Container>
       <NavContainer>
@@ -226,6 +235,18 @@ function pl_workRegister01({ data }) {
           )}
         </BottomSection>
       </BodyContainer>
+      {modal === "validation" && (
+        <ModalPortal>
+          <AlertModal
+            text={"모두 입력해주세요"}
+            onClickBtn={() => {
+              setModal("");
+              closeModal();
+            }}
+            fontSize={"14px"}
+          />
+        </ModalPortal>
+      )}
     </Container>
   );
 }

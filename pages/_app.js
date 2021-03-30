@@ -30,10 +30,10 @@ if (process.env.NODE_ENV === "production") {
   console.error = noop;
 }
 
-console.log("build?");
 const MyApp = ({ Component, pageProps }) => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [adminMode, setAdminMode] = useState("buyer");
 
   const providerWeb = router.pathname.includes("/provider");
   const adminWeb = router.pathname.includes("/admin");
@@ -96,8 +96,8 @@ const MyApp = ({ Component, pageProps }) => {
 
       {adminWeb && (
         <AdminLayout>
-          <AdminHeader />
-          <Component {...pageProps} />
+          <AdminHeader adminMode={adminMode} setAdminMode={setAdminMode} />
+          <Component {...pageProps} adminMode={adminMode} />
           <div id="modal" />
         </AdminLayout>
       )}

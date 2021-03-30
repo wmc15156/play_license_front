@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { VscChromeClose } from "react-icons/vsc";
 import Loader from "../Loader/SmallCircle";
 
-const FileUploader = ({ data, fileURLhandler, readOnly }) => {
+const FileUploader = ({ data, fileURLhandler, readOnly, icon }) => {
   const [btnText, setBtnText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const inputFileUploader = useRef(null);
@@ -84,9 +84,11 @@ const FileUploader = ({ data, fileURLhandler, readOnly }) => {
               <Text changeStyle onClick={() => downloadFile(data.url)}>
                 {btnText}
               </Text>
-              <Icon onClick={resetFile}>
-                <VscChromeClose size={13} color={color.black4} />
-              </Icon>
+              {icon && (
+                <Icon onClick={resetFile}>
+                  <VscChromeClose size={13} color={color.black4} />
+                </Icon>
+              )}
             </>
           )}
         </Label>

@@ -117,26 +117,26 @@ const InfoBox_Modify = () => {
           {company}
           <Btn onClick={onLogOut}>로그아웃</Btn>
         </ProfileName>
-        {state.changed.comment && (
-          <TextArea
-            readOnly={false}
-            borderStyle={`2px solid ${color.black5}`}
-            background={color.white}
-            placeholder={"제작사 설명을 입력하세요"}
-            fontSize={"10px"}
-            height={"100%"}
-            fontColor={color.black1}
-            textAlign={"center"}
-            padding={"15px 60px"}
-            onChange={(e) =>
-              dispatch({
-                type: "CHANGE_COMMENT_VALUE",
-                changed: { ...state.changed, comment: e.target.value },
-              })
-            }
-            value={state.changed.comment}
-          />
-        )}
+        {/* {state.changed.comment && ( */}
+        <TextArea
+          readOnly={false}
+          borderStyle={`2px solid ${color.black5}`}
+          background={color.white}
+          placeholder={"제작사 설명을 입력하세요"}
+          fontSize={"10px"}
+          height={"100%"}
+          fontColor={color.black1}
+          textAlign={"center"}
+          padding={"15px 60px"}
+          onChange={(e) =>
+            dispatch({
+              type: "CHANGE_COMMENT_VALUE",
+              changed: { ...state.changed, comment: e.target.value },
+            })
+          }
+          value={state.changed.comment}
+        />
+        {/* )} */}
       </Section1>
       <Section2>
         <Box>

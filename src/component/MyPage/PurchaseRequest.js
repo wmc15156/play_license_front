@@ -86,67 +86,76 @@ const PurchaseRequest = () => {
             <TitleText>견적서</TitleText>
             <TitleText>계약서</TitleText>
           </Title>
-          {showCurrentPosts(list).map((ele, i) => {
-            const {
-              category,
-              questionId,
-              contractId,
-              estimateId,
-              title,
-              adminCheck,
-              createdAt,
-            } = ele;
-            return (
-              <List key={i}>
-                <Text>{title}</Text>
-                <Text>{createdAt}</Text>
-                <Box_Status>
-                  <StatusBox status={adminCheck} />
-                </Box_Status>
 
-                {/* 문의내용 자세히 */}
-                {adminCheck === "보완요청" ? (
-                  <DetailText color={color.orange}>
-                    <span
-                      onClick={() => detailModifyHandler(questionId, category)}
-                    >
-                      보완하기
-                    </span>
-                  </DetailText>
-                ) : (
-                  <DetailText>
-                    <span
-                      onClick={() => detailCheckHandler(questionId, category)}
-                    >
-                      자세히보기
-                    </span>
-                  </DetailText>
-                )}
+          {list.length === 0 && (
+            <EmptyList>
+              <span>문의내역이 없습니다</span>
+            </EmptyList>
+          )}
+          {list &&
+            showCurrentPosts(list).map((ele, i) => {
+              const {
+                category,
+                questionId,
+                contractId,
+                estimateId,
+                title,
+                adminCheck,
+                createdAt,
+              } = ele;
+              return (
+                <List key={i}>
+                  <Text>{title}</Text>
+                  <Text>{createdAt}</Text>
+                  <Box_Status>
+                    <StatusBox status={adminCheck} />
+                  </Box_Status>
 
-                {/* 견적서 */}
-                {estimateId ? (
-                  <DetailText>
-                    <span onClick={() => getDetails_Estimate(estimateId)}>
-                      자세히보기
-                    </span>
-                  </DetailText>
-                ) : (
-                  <DetailText></DetailText>
-                )}
+                  {/* 문의내용 자세히 */}
+                  {adminCheck === "보완요청" ? (
+                    <DetailText color={color.orange}>
+                      <span
+                        onClick={() =>
+                          detailModifyHandler(questionId, category)
+                        }
+                      >
+                        보완하기
+                      </span>
+                    </DetailText>
+                  ) : (
+                    <DetailText>
+                      <span
+                        onClick={() => detailCheckHandler(questionId, category)}
+                      >
+                        자세히보기
+                      </span>
+                    </DetailText>
+                  )}
 
-                {/* 계약서 */}
-                {contractId ? (
-                  <DetailText>
-                    <span onClick={() => getDetails_Contract(contractId)}>
-                      자세히보기
-                    </span>
-                  </DetailText>
-                ) : (
-                  <DetailText></DetailText>
-                )}
-              </List>
-            );
-          })}
+                  {/* 견적서 */}
+                  {estimateId ? (
+                    <DetailText>
+                      <span onClick={() => getDetails_Estimate(estimateId)}>
+                        자세히보기
+                      </span>
+                    </DetailText>
+                  ) : (
+                    <DetailText></DetailText>
+                  )}
+
+                  {/* 계약서 */}
+                  {contractId ? (
+                    <DetailText>
+                      <span onClick={() => getDetails_Contract(contractId)}>
+                        자세히보기
+                      </span>
+                    </DetailText>
+                  ) : (
+                    <DetailText></DetailText>
+                  )}
+                </List>
+              );
+            })}
         </Table>
         <PageWrapper>
           <Pagination
@@ -253,6 +262,20 @@ const Box_Status = styled.div`
   justify-content: center;
 `;
 
+const EmptyList = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  color: ${color.black3};
+  font-family: "NotoSansCJKkr-Medium";
+  font-size: 12px;
+  &:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+`;
 const Text_Status = styled.span`
   font-family: "NotoSansCJKkr-Regular";
   color: ${color.black3};

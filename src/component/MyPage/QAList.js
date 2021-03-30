@@ -64,6 +64,11 @@ const QAList = () => {
             <TitleText>진행상태</TitleText>
             <TitleText>문의일자</TitleText>
           </Title>
+          {list.length === 0 && (
+            <EmptyList>
+              <span>문의내역이 없습니다</span>
+            </EmptyList>
+          )}
           {showCurrentPosts(list).map((q) => {
             const {
               questionId,
@@ -198,5 +203,19 @@ const DetailText = styled.div`
 
 const Text = styled.div`
   ${TextStyle}
+`;
+const EmptyList = styled.li`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  color: ${color.black3};
+  font-family: "NotoSansCJKkr-Medium";
+  font-size: 12px;
+  &:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
 `;
 export default QAList;

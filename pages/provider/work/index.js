@@ -13,7 +13,7 @@ import StatusBox from "../../../src/component/Tag/Purchase_AnswerStatus";
 import DataManagementStatus from "../../../src/component/Tag/PL_DataStatus";
 import Btn from "../../../src/component/Button/OriginalButton";
 import Tag from "../../../src/component/Tag/Tag.";
-// import { data } from "../../../src/PL_Component/Work/dummies";
+// import { data } from "../../../src/provider/Work/dummies";
 
 function pl_work() {
   const router = useRouter();
@@ -148,7 +148,7 @@ function pl_work() {
                 </ItemImg>
                 <ItemDesc>
                   <Category>
-                    {item.productBrokerageConsignment.map((cate, i) => {
+                    {item.productBrokerageConsignments.map((cate, i) => {
                       return (
                         <Tag
                           title={cate.slice(0, 2)}

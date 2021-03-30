@@ -5,7 +5,7 @@ export const data = {
   name: "",
   phone: "",
   title: "마당씨의 식탁",
-  brokerageConsignment: ["공연 목적", "교육 목적"],
+  brokerageConsignments: ["공연 목적", "교육 목적"],
   year: "1",
   requiredMaterials: {
     select: [

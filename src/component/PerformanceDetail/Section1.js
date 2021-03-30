@@ -4,8 +4,8 @@ import axios from "axios";
 import styled from "styled-components";
 import color from "../../../styles/colors";
 import Tag from "../Tag/Tag.";
-import SangSangMaru from "../SangSangMaru";
-import PurchaseBtn from "../Button/PurchaseBtn";
+import CompanyInfo from "./CompanyInfo";
+import PurchaseBtn from "../Button/OriginalButton";
 import HeartBtn from "../Button/Heart";
 import CalcBtn from "../Button/CalcBtn";
 import useModal from "../../../utils/useModal";
@@ -19,32 +19,26 @@ const Section1 = ({ item }) => {
   const router = useRouter();
   const { data: userData, error: err } = useSWR("/product/cart", fetcher);
   const { openModal, closeModal, ModalPortal } = useModal();
-  const param = router.query.id;
   const POST_URL = `/product/${router.query.id}/add-item`;
   const DELETE_URL = `/product/${router.query.id}/cart`;
 
-  const [heartClickModalOpen, setHeartClickModalOpen] = useState(false);
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const [calcModalOpen, setCalcModalOpen] = useState(false);
-  const [savedStatus, setSavedStatus] = useState(false);
-
+  const [modal, setModal] = useState("");
+  const [isSaved, setIsSaved] = useState(false);
   console.log(userData);
+
   useEffect(() => {
     if (userData) {
       const data = userData.filter(
         (item) => item.productId === Number(router.query.id)
       );
       if (data.length > 0) {
-        setSavedStatus(true);
-        console.log(savedStatus);
+        setIsSaved(true);
       } else {
-        setSavedStatus(false);
-        console.log(savedStatus);
+        setIsSaved(false);
       }
     }
-  }, [savedStatus]);
+  }, []);
 
-  const [isSaved, setIsSaved] = useState(savedStatus);
   const onClickHomeBtn = () => {
     router.push("/");
   };
@@ -53,40 +47,27 @@ const Section1 = ({ item }) => {
   };
 
   const redirectHandler = () => {
+    closeModalHandler();
     router.push("/login");
   };
 
-  const heartModalHandler = () => {
-    setHeartClickModalOpen(true);
-    if (heartClickModalOpen) {
-      openModal();
-    }
-  };
-  const loginModalHandler = () => {
-    setLoginModalOpen(true);
-    if (loginModalOpen) {
-      openModal();
-    }
-  };
-  const openCalcModal = () => {
-    setCalcModalOpen(true);
-    if (calcModalOpen) {
-      openModal();
-    }
+  const closeModalHandler = () => {
+    setModal("");
+    closeModal();
   };
 
-  // const addToHeart = (e) => {
-  //   e.preventDefault();
-  //   postHandler();
-  // };
+  const openModalHandler = (name) => {
+    setModal(name);
+    openModal();
+  };
 
   const postHandler = () => {
     if (!isSaved) {
       axios
-        .post(POST_URL, param)
+        .post(POST_URL, router.query.id)
         .then((res) => {
           if (res.status === 200) {
-            heartModalHandler();
+            openModalHandler("heart");
             console.log(res, "찜하기 추가성공????");
             setIsSaved(true);
             return;
@@ -94,7 +75,7 @@ const Section1 = ({ item }) => {
         })
         .catch((err) => {
           if (err.response.status === 401) {
-            loginModalHandler();
+            openModalHandler("login");
             return;
           }
         });
@@ -124,7 +105,7 @@ const Section1 = ({ item }) => {
       <SecondColumn>
         <ItemDesc>
           <div>
-            {item.brokerageConsignment.map((cate, i) => {
+            {item.brokerageConsignments.map((cate, i) => {
               return (
                 <Tag title={cate} id={item.id}>
                   {cate}
@@ -141,13 +122,22 @@ const Section1 = ({ item }) => {
             <div>{item.company}</div>
           </PInfo>
         </ItemDesc>
-        <SangSangContainer>
-          <SangSangMaru />
-        </SangSangContainer>
+        <CompanyInfoContainer>
+          <CompanyInfo item={item} />
+        </CompanyInfoContainer>
       </SecondColumn>
 
       <BtnContainer>
-        <PurchaseBtn onClickHandler={go} />
+        <PurchaseBtn
+          width={"100%"}
+          background={true}
+          height={"60px"}
+          size={"21px"}
+          fontColor={color.white}
+          onClick={go}
+        >
+          구매하기
+        </PurchaseBtn>
         <Btns>
           <HeartContainer>
             <HeartBtn
@@ -161,27 +151,22 @@ const Section1 = ({ item }) => {
             />
           </HeartContainer>
           <CalcContainer>
-            <CalcBtn onClickHandler={() => openCalcModal()} />
+            <CalcBtn onClickHandler={() => openModalHandler("calculate")} />
           </CalcContainer>
         </Btns>
       </BtnContainer>
       <ModalPortal>
-        {loginModalOpen && (
+        {modal === "login" && (
           <AlertModal
             text={"로그인해주세요"}
             onClickBtn={() => redirectHandler()}
           />
         )}
-        {!heartClickModalOpen && calcModalOpen && (
-          <CalcModal text={"가견적 계산하기"} />
-        )}
-        {heartClickModalOpen && (
+        {modal === "calculate" && <CalcModal text={"가견적 계산하기"} />}
+        {modal === "heart" && (
           <AlertModal
             text={"찜한 공연은 마이페이지에서 확인할 수 있어요!"}
-            onClickBtn={() => {
-              closeModal();
-              setHeartClickModalOpen(false);
-            }}
+            onClickBtn={closeModalHandler}
           />
         )}
       </ModalPortal>
@@ -257,7 +242,7 @@ const Item = styled.div`
   margin-top: 40px;
 `;
 
-const SangSangContainer = styled.div`
+const CompanyInfoContainer = styled.div`
   display: flex;
   max-width: 340px;
   margin-top: auto;

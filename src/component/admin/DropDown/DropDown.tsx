@@ -3,6 +3,7 @@ import "react-dropdown/style.css";
 import styled from "styled-components";
 import colors from "@styles/colors";
 import { FC } from "react";
+import {IoIosArrowDropdownCircle} from "react-icons/io"
 
 const Wrapper = styled.div<{
   position: boolean;
@@ -16,9 +17,14 @@ const Wrapper = styled.div<{
   border-radius: 6px;
   height: 48px;
   cursor: pointer;
-    align-items: center;
-    & > img {
+  align-items: center;
+    & > span {
     margin-left: 26px;
+    line-height: 20px;
+      & > svg {
+        display: flex;
+        align-items: center;
+      }
   }
 `;
 
@@ -27,15 +33,16 @@ type Props = {
   img?: boolean;
   position?: boolean;
   flexEnd?: boolean;
+  color: string;
   toggle?: () => void
 };
 
-const DropDown: FC<Props> = ({ text, img, position,flexEnd, toggle }) => {
+const DropDown: FC<Props> = ({ text, img, position,flexEnd, toggle, color }) => {
   return (
     <>
       <Wrapper position={position} onClick={toggle}>
-        <span>{text}</span>
-        {img && <img src={"/assets/image/Arrow_Down_Circle.png"} />}
+        <div>{text}</div>
+        {img && <span><IoIosArrowDropdownCircle color={color} size={20}/></span>}
       </Wrapper>
     </>
   );

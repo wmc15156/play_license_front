@@ -8,15 +8,15 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import Navi from "../../../../src/component/Nav/Navigation";
 import LogoBar from "../../../../src/component/Nav/LogoBar";
-import ProviderInfo from "../../../../src/PL_Component/Work/Form_ProviderInfo";
+import ProviderInfo from "../../../../src/provider/Work/Form_ProviderInfo";
 import useModal from "../../../../utils/useModal";
 import axios from "axios";
 import useSWR from "swr";
 import fetcher from "../../../../utils/fetcher";
-import CheckModifyPage from "../../../../src/PL_Component/Work/CheckModifyPage";
-import CheckPage from "../../../../src/PL_Component/Work/CheckPage";
+import CheckModifyPage from "../../../../src/provider/Work/CheckModifyPage";
+import CheckPage from "../../../../src/provider/Work/CheckPage";
 import StatusBox from "../../../../src/component/Tag/Purchase_AnswerStatus";
-// import { data } from "../../../../src/PL_Component/Work/dummies_productInfo";
+// import { data } from "../../../../src/component/Work/dummies_productInfo";
 
 export async function getServerSideProps(context) {
   const id = context.params.id;
@@ -41,8 +41,8 @@ function pl_workDetail({ data }) {
 
   const [perfInfo, setPerfInfo] = useState({
     title: data.title,
-    brokerageConsignment: data.brokerageConsignments.map((el) => el),
-    // brokerageConsignment: data.brokerageConsignment.map((el) => el),
+    brokerageConsignments: data.brokerageConsignments.map((el) => el),
+    brokerageConsignment: [],
     year: data.year,
     requiredMaterials: {
       select: data.requiredMaterials.select.map((el) => el),

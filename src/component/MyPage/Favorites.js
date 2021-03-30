@@ -13,54 +13,63 @@ const Favorites = () => {
   const router = useRouter();
   const GET_URL = "/product/cart";
   const { openModal, closeModal, ModalPortal } = useModal();
-  const [isFav, setIsFav] = useState(true);
+  const [modal, setModal] = useState(false);
   // TODO: HEART 각자 상태를 갖도록 변경
   const [list, setList] = useState([]);
+  const [heartStatus, setHeartStatus] = useState(false);
+  const [ids, setIds] = useState([]);
+  const [clickedID, setClickedID] = useState();
+
+  // list에 있는 productID
+  // 연산결과 => heartStatus
 
   const getData = () => {
     axios.get(GET_URL).then((res) => {
       setList(res.data);
+
+      let idArray = res.data.map((item) => item.productId);
+      setIds([...idArray]);
     });
   };
 
+  console.log(ids, "ids");
   useEffect(() => {
     getData();
   }, []);
 
   const heartBtnHandler = (id) => {
-    const param = id;
-
-    if (isFav) {
+    console.log(id, "productID");
+    if (ids.includes(id)) {
       // remove from cart
       axios
         .delete(`/product/${id}/cart`)
         .then((res) => {
           if (res.status === 200) {
-            console.log(res, "delete resp");
-            setIsFav(false);
+            let idsArr = ids;
+            let idx = idsArr.indexOf(id);
+            idsArr.splice(idx, 1);
+            setIds([...idsArr]);
+            setModal(false);
             closeModal();
             return;
           }
         })
-        .catch((err) => console.error(err));
-
-      return;
-    } else if (!isFav) {
+        .catch((err) => console.log(err.response));
+    } else if (!ids.includes(id)) {
       axios
-        .post(`/product/${id}/add-item`, param)
+        .post(`/product/${id}/add-item`, id)
         .then((res) => {
           if (res.status === 200) {
-            console.log(res, "post resp");
-            setIsFav(true);
+            let idsArr = ids;
+            idsArr.push(id);
+            setIds([...idsArr]);
+            setModal(false);
+            closeModal();
             return;
           }
         })
-        .catch((err) => console.error(err));
-      return;
+        .catch((err) => console.log(err.response));
     }
-
-    // setIsFav(!isFav); //바꾸고 서버로
-    // console.log(isFav, "isFav????");
   };
 
   return (
@@ -72,7 +81,7 @@ const Favorites = () => {
               <Link href={`/performances/${item.productId}`}>
                 <a>
                   <ItemImg>
-                    <img src={item.poster} alt={item.title} />
+                    <img src={item.posterURL.url} alt={item.title} />
                   </ItemImg>
                 </a>
               </Link>
@@ -83,7 +92,7 @@ const Favorites = () => {
                     <TagContainer>
                       {item.brokerageConsignments.map((cate, i) => {
                         return (
-                          <Tag title={cate} id={item.id}>
+                          <Tag title={cate} key={item.productId}>
                             {cate}
                           </Tag>
                         );
@@ -106,23 +115,31 @@ const Favorites = () => {
                     radius={"50%"}
                     bgcolor={color.white}
                     shadow={true}
-                    state={isFav}
-                    onClickHandler={openModal}
+                    state={ids.includes(item.productId)}
+                    onClickHandler={() => {
+                      if (ids.includes(item.productId)) {
+                        setModal(true);
+                        openModal();
+                        setClickedID(item.productId);
+                      } else {
+                        setClickedID(item.productId);
+                        heartBtnHandler(item.productId);
+                      }
+                    }}
                   />
                 </Btn>
               </ItemDesc>
-
-              {isFav && (
-                <ModalPortal>
-                  <AlertModal
-                    text={"이 공연의 찜하기를 해제할까요?"}
-                    onClickBtn={() => heartBtnHandler(item.productId)}
-                  />
-                </ModalPortal>
-              )}
             </Item>
           ))}
         </ListSt>
+      )}
+      {modal && (
+        <ModalPortal>
+          <AlertModal
+            text={"이 공연의 찜하기를 해제할까요?"}
+            onClickBtn={() => heartBtnHandler(clickedID)}
+          />
+        </ModalPortal>
       )}
       {list.length === 0 && (
         <NoList>
@@ -200,13 +217,13 @@ const ItemDesc = styled.div`
 
 const ItemImg = styled.div`
   width: 100%;
-  /* height: 100%; */
-  /* height: 386px; */
+  height: 386px;
   border-radius: 8px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
   & > img {
-    /* min-width: 276px; */
     max-width: 100%;
+    border-radius: 8px;
+    max-height: 386px;
     height: auto;
   }
 `;

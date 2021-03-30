@@ -85,6 +85,7 @@ const Market = () => {
       sizeOfPerformance,
       mainAudience,
     } = selectedOption;
+
     if (
       numberOfMembers.length ||
       category.length ||
@@ -118,6 +119,10 @@ const Market = () => {
   };
 
   const getSortList = (sortName) => {
+    if (sortName === "선택해주세요") {
+      sortName = "";
+      getAllProducts();
+    }
     if (!(sortName === "선택해주세요")) {
       switch (sortName) {
         case "문의 많은 순":

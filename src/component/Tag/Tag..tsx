@@ -16,11 +16,11 @@ const TagWrapper = styled.span`
   display: inline-flex;
   align-items: center;
   ${(props) =>
-    props.title === "공연"
+    props.title.includes("공연")
       ? css`
           border: 3px ${styles.orange} solid;
         `
-      : props.title === "교육"
+      : props.title.includes("교육")
       ? css`
           border: 3px ${styles.yellow} solid;
         `

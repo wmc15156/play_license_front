@@ -12,6 +12,7 @@ const List = ({
   selectedOption,
   setOption,
 }) => {
+  console.log(list);
   return (
     <Container>
       <HeadSection>
@@ -30,7 +31,7 @@ const List = ({
             <Item>
               <a>
                 <ItemImg>
-                  <img src={item.poster} alt={item.name} />
+                  <img src={item.posterURL.url} alt={item.posterURL.filename} />
                 </ItemImg>
               </a>
               <a>
@@ -89,12 +90,14 @@ const ItemDesc = styled.div`
 
 const ItemImg = styled.div`
   width: 100%;
-  /* height: 100%; */
+  height: 386px;
   border-radius: 8px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
 
   & > img {
+    border-radius: 8px;
     max-width: 100%;
+    max-height: 386px;
     height: auto;
   }
 `;

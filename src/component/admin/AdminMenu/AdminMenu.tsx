@@ -31,22 +31,23 @@ const UlWrapper = styled.ul`
 `;
 
 const LiWrapper = styled.li<{ select?: boolean }>`
-  border-bottom: ${(p) => (p.select ? `2px solid ${colors.orange}` : null)};
+  border-bottom: ${(p) => (p.select ? `2px solid ${p.color}` : null)};
   height: 60px;
   display: flex;
   align-items: center;
-  color: ${(p) => (p.select ? `${colors.orange}` : null)};
+  color: ${(p) => (p.select ? `${p.color}` : null)};
 `;
 
 type Props = {
   menus: Array<string>;
   currentMenu: string;
   setCurrentMenu: Dispatch<SetStateAction<string>>;
+  color: string;
 };
 
 // change the text of the current menu when click
 
-const AdminMenu: VFC<Props> = ({ menus, currentMenu, setCurrentMenu }) => {
+const AdminMenu: VFC<Props> = ({ menus, currentMenu, setCurrentMenu, color }) => {
   const onChangeCurrentMenuText = (text: string) => () => {
     setCurrentMenu(text);
   };
@@ -58,6 +59,7 @@ const AdminMenu: VFC<Props> = ({ menus, currentMenu, setCurrentMenu }) => {
             select={currentMenu === menu}
             onClick={onChangeCurrentMenuText(menu)}
             key={i}
+            color={color}
           >
             {menu}
           </LiWrapper>
