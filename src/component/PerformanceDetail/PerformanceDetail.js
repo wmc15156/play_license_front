@@ -15,7 +15,7 @@ const PerformanceDetail = ({ item }) => {
   return (
     <Container>
       <Section1Container>
-        <Background></Background>
+        <Background />
         <Wrapper>
           <Section1 item={item} />
         </Wrapper>
@@ -68,6 +68,7 @@ const Section2 = styled.div`
 const Section3 = styled.div`
   display: flex;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 1rem;
 `;

@@ -1,6 +1,13 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 const HighlightVideo = ({ item }) => {
+  const [url, setUrl] = useState("");
+
+  useEffect(() => {
+    const { performanceVideo } = item;
+    setUrl(performanceVideo.substring(performanceVideo.lastIndexOf("/") + 1));
+  }, []);
   return (
     <Container>
       <Video>
@@ -8,7 +15,7 @@ const HighlightVideo = ({ item }) => {
           width="100%"
           height="600"
           frameBorder="0"
-          src={`${item.performanceVideo}?autoplay=1&mute=1&loop=1&autohide=1&showinfo=0&controls=0`}
+          src={`https://www.youtube.com/embed/${url}?autoplay=1&mute=1&loop=1&autohide=1&showinfo=0&controls=0`}
         ></iframe>
       </Video>
     </Container>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styled from "styled-components";
-import color from "../../styles/colors";
+import color from "../../../styles/colors";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 

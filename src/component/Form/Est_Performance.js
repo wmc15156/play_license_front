@@ -46,8 +46,9 @@ const Est_Performance = () => {
   console.log("perform 선택된 옵션>>>>", selected);
 
   const removeRequireItemHandler = useCallback(
-    (itemIdx) => {
+    (name) => {
       let array = selected.requiredMaterials;
+      let itemIdx = array.indexOf(name);
       array.splice(itemIdx, 1);
       setSelected((prev) => {
         return { ...prev, requiredMaterials: [...array] };
@@ -58,7 +59,7 @@ const Est_Performance = () => {
 
   const checkRequireHandler = (name) => {
     if (selected.requiredMaterials.includes(name)) {
-      removeRequireItemHandler();
+      removeRequireItemHandler(name);
     } else {
       setSelected({
         ...selected,

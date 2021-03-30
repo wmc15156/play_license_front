@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import heartImg from "../../../public/assets/image/heart.png";
 
 const Heart = ({
@@ -11,6 +11,10 @@ const Heart = ({
   bgcolor,
   shadow,
 }) => {
+  const [status, setStatus] = useState(state);
+
+  useEffect(() => setStatus(state), [status]);
+
   return (
     <HeartBtnBox
       onClick={onClickHandler}
@@ -20,8 +24,6 @@ const Heart = ({
       shadow={shadow}
     >
       <HeartBtn state={state} heartWidth={heartWidth} />
-      {/* {state && <HeartBtn heartWidth={heartWidth} />} */}
-      {/* {!state && <GrayHeartBtn heartWidth={heartWidth} />} */}
     </HeartBtnBox>
   );
 };
@@ -39,8 +41,6 @@ const HeartBtnBox = styled.div`
     props.shadow ? "4px 4px 10px rgba(0, 0, 0, 0.1)" : "none"};
 `;
 
-const StyleHeartImage = css``;
-
 const HeartBtn = styled.img.attrs({ src: heartImg })`
   width: ${(props) => props.heartWidth};
   height: auto;
@@ -51,7 +51,4 @@ const HeartBtn = styled.img.attrs({ src: heartImg })`
     `}
 `;
 
-const GrayHeartBtn = styled.img.attrs({ src: heartImg })`
-  ${StyleHeartImage};
-`;
 export default memo(Heart);

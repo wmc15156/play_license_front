@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import styles from "../../../styles/colors";
 import Link from "next/link";
-import Menu from "../Menu";
+import Menu from "./Menu";
 import { useRouter } from "next/router";
 import { GoSearch } from "react-icons/go";
 import { IoPersonCircleSharp, IoMenu } from "react-icons/io5";
