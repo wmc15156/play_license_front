@@ -17,7 +17,7 @@ const LineWrapper = styled.hr<{
   width: ${(p) => p.width};
   border-radius: 100px;
   height: 3px;
-  background: ${(p) => (p.background ? `${styles.yellow}` : `${styles.gray1}`)};
+  background: ${(p) => (p.background ? `${styles.yellow}` : `${styles.black5}`)};
   border: none;
   margin: 0;
   margin-top: ${(p) => (p.marginTop ? p.marginTop : 0)};
