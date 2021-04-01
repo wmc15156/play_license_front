@@ -7,7 +7,8 @@ type WrapperProps = {
 };
 
 const Wrapper = styled.div<{ width: string }>`
-  width: ${(p) => p.width};
+  width: 100%;
+  max-width: ${p => p.width};
   display: flex;
   justify-content: center;
   flex-wrap: wrap;

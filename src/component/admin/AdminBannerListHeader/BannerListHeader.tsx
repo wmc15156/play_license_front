@@ -24,34 +24,70 @@ const BannerListTitle = styled.div`
   }
 `;
 
-const BannerListHeader = ({revalidate, data}) => {
-
+const BannerListHeader = ({
+  revalidate,
+  data,
+  currentMenu,
+  curationList,
+  isValid,
+  setCurrentMenu,
+  subContainer,
+  setSubContainer,
+}) => {
   const { openModal, closeModal, ModalPortal } = useModal();
 
   return (
-    <AdminWrapper height={"128px"}>
-      <BannerListTitle>
-        <p>
-          배너 리스트 <span>{data && data.length}개</span>
-        </p>
+    <div>
+      {subContainer ? (
+        <AdminWrapper height={"128px"}>
+          <BannerListTitle>
+            <p>
+              {currentMenu === "홈 배너 관리"
+                ? "배너 리스트"
+                : currentMenu === "큐레이션 관리"
+                ? "등록된 큐레이션"
+                : null}{" "}
+              <span>
+                {currentMenu === "홈 배너 관리"
+                  ? data && data.length
+                  : currentMenu === "큐레이션 관리"
+                  ? curationList && curationList?.length
+                  : null}
+                개
+              </span>
+            </p>
 
-        <OriginalButton
-          width={"100%"}
-          maxWidth={"150px"}
-          position={false}
-          height={"48px"}
-          margin={""}
-          size={"16px"}
-          background={true}
-          onClick={openModal}
-        >
-          배너 추가하기
-        </OriginalButton>
-      </BannerListTitle>
-      <ModalPortal>
-        <AddBannerModal closeModal={closeModal} revalidate={revalidate}/>
-      </ModalPortal>
-    </AdminWrapper>
+            <OriginalButton
+              width={"100%"}
+              maxWidth={"150px"}
+              position={false}
+              height={"48px"}
+              margin={""}
+              size={"16px"}
+              background={true}
+              onClick={
+                currentMenu === "큐레이션 관리"
+                  ? () => {
+                      setSubContainer(false);
+                    }
+                  : openModal
+              }
+            >
+              {currentMenu === "홈 배너 관리"
+                ? "배너 추가하기"
+                : currentMenu === "큐레이션 관리"
+                ? "큐레이션 추가하기"
+                : null}
+            </OriginalButton>
+          </BannerListTitle>
+          <ModalPortal>
+            {currentMenu === "홈 배너 관리" ? (
+              <AddBannerModal closeModal={closeModal} revalidate={revalidate} />
+            ) : null}
+          </ModalPortal>
+        </AdminWrapper>
+      ) : null}
+    </div>
   );
 };
 export default BannerListHeader;
