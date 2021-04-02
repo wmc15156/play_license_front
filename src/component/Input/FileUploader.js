@@ -75,7 +75,7 @@ const FileUploader = ({ data, fileURLhandler, readOnly, icon }) => {
             <>
               <Text changeStyle>{btnText}</Text>
               <Icon onClick={resetFile}>
-                <Loader />
+                <Loader color={color.blue} />
               </Icon>
             </>
           )}

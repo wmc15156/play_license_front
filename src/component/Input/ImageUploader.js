@@ -5,7 +5,17 @@ import { useEffect, useState, useRef } from "react";
 import { FiPlusSquare } from "react-icons/fi";
 import { IoDownloadOutline } from "react-icons/io5";
 
-const ImageUploader = ({ name, data, getImgURL, readOnly }) => {
+const ImageUploader = ({
+  width,
+  name,
+  data,
+  getImgURL,
+  icon, // t/f
+  backgroundColor,
+  borderStyle,
+  fontColor,
+  readOnly,
+}) => {
   const inputImageUploader = useRef(null);
   const [btnText, setBtnText] = useState("");
 
@@ -57,19 +67,29 @@ const ImageUploader = ({ name, data, getImgURL, readOnly }) => {
 
   return (
     <Container>
-      <Label onClick={handleClick}>
+      <Label
+        width={width}
+        onClick={handleClick}
+        backgroundColor={backgroundColor}
+        borderStyle={borderStyle}
+        fontColor={fontColor}
+      >
         {btnText.includes("업로드") ? (
           <>
-            <Icon>
-              <FiPlusSquare size={20} />
-            </Icon>
+            {icon && (
+              <Icon>
+                <FiPlusSquare size={20} />
+              </Icon>
+            )}
             <Text>{btnText}</Text>
           </>
         ) : (
           <>
-            <Icon>
-              <IoDownloadOutline size={22} />
-            </Icon>
+            {icon && (
+              <Icon>
+                <IoDownloadOutline size={22} />
+              </Icon>
+            )}
             <Text>{btnText}</Text>
           </>
         )}
@@ -87,13 +107,17 @@ const Container = styled.div`
   width: 100%;
 `;
 const Label = styled.div`
-  width: calc(100% - 32px);
-  background-color: ${color.orange};
+  width: ${(props) =>
+    props.width ? `calc(${props.width} - 32px)` : "calc(100% - 32px)"};
+  background-color: ${(props) =>
+    props.backgroundColor ? props.backgroundColor : color.orange};
+
   border-radius: 8px;
   padding: 10px 16px;
   display: flex;
-  color: ${color.white};
+  color: ${(props) => (props.fontColor ? props.fontColor : color.white)};
   align-items: center;
+  border: ${(props) => (props.borderStyle ? props.borderStyle : null)};
   &:focus {
     outline: none;
   }
@@ -114,7 +138,7 @@ const Text = styled.div`
 
 const Uploader = styled.input.attrs({
   type: "file",
-  accept: "image/* ",
+  // accept: "image/* ",
 })`
   display: none;
   &:focus {

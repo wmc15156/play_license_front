@@ -6,10 +6,33 @@ import AdminBannerList, {
   BannerList,
 } from "@src/component/admin/AdminBannerList/AdminBannerList";
 import color from "@styles/colors";
-import URLpage from "@src/component/admin/layout/PR/URL/Url"
-import RegisterRequest from "@src/component/admin/layout/PR/RegisterRequest/RegisterRequest"
+import URLpage from "@src/component/admin/layout/PR/URL/Url";
+import RegisterRequest from "@src/component/admin/layout/PR/RegisterRequest/RegisterRequest";
+import Notice from "@src/component/admin/layout/PR/Notice/Notice";
+import FAQ from "@src/component/admin/layout/PR/FAQ/FAQ";
+import Question from "@src/component/admin/layout/PR/1:1/1:1";
 import useSWR from "swr";
 import fetcher from "@utils/fetcher";
+
+const dummyData: BannerList[] = [
+  {
+    id: 1,
+    title: "서비스 소개 바로가기",
+    exposure: false,
+    desktopUrl: "http://url.com",
+    mobileUrl: "http://mobile.com",
+    url: "http://sangsangmaru.com",
+  },
+  {
+    id: 2,
+    title: "인기작품 바로가기",
+    exposure: false,
+    desktopUrl: "http://url.com",
+    mobileUrl: "http://mobile.com",
+    url: "http://sangsangmaru.com",
+  },
+]
+
 
 const buyerMenus = [
   "홈 배너 관리",
@@ -45,28 +68,30 @@ const providerTabs = {
   
 "작품 및 제작사 등록 문의 URL": <URLpage />,
 "작품 등록 문의 관리": <RegisterRequest />,
-// "공지사항": ,
-// "자주 묻는 질문": ,
-// "1:1 문의 관리": ,
+"공지사항": <Notice />,
+"자주 묻는 질문": <FAQ /> ,
+"1:1 문의 관리": <Question />,
 }
 
 
+
 function AdminIndex({ adminMode }) {
-  const { data, error, revalidate, mutate } = useSWR("/admin/home-banner", fetcher, {
-    dedupingInterval: 100000,
-  });
+  // const { data, error, revalidate, mutate } = useSWR("/admin/home-banner", fetcher, {
+  //   dedupingInterval: 100000,
+  // });
   const [currentMenu, setCurrentMenu] = useState(buyerMenus[0]);
-  const [bannerList, setBannerList] = useState<BannerList[] | null>([]);
+  // const [bannerList, setBannerList] = useState<BannerList[] | null>([]);
+  const [bannerList, setBannerList] = useState<BannerList[] | null>(dummyData);
   const nextId = useRef(1);
   
-  useEffect(() => {
-    if (!data) return;
-    if (!data.length) return;
-    setBannerList(data);
-    nextId.current = data.length;
-  }, [data && data.length]);
+  // useEffect(() => {
+  //   if (!data) return;
+  //   if (!data.length) return;
+  //   setBannerList(data);
+  //   nextId.current = data.length;
+  // }, [data && data.length]);
 
-  if (!data) return <div>loading</div>;
+  // if (!data) return <div>loading</div>;
 
   
   useEffect(() => {
@@ -84,9 +109,11 @@ function AdminIndex({ adminMode }) {
             setCurrentMenu={setCurrentMenu}
             color={color.orange}
           />
-          <BannerListHeader revalidate={revalidate} data={data}/>
+          {/* <BannerListHeader revalidate={revalidate} data={data}/> */}
+          <BannerListHeader/>
           <AdminHomeBannerTitle titles={bannerTitle} marginRight={marginRight} />
-          <AdminBannerList lists={bannerList} setBannerList={setBannerList} revalidate={revalidate} />
+          {/* <AdminBannerList lists={bannerList} setBannerList={setBannerList} revalidate={revalidate} /> */}
+          <AdminBannerList lists={bannerList} setBannerList={setBannerList} />
         </>
       )}
       {adminMode === "provider" && (

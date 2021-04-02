@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
 
-const Loader = () => {
+const Loader = ({ color }) => {
   return (
     <Container>
       <LoaderStyle />
@@ -22,7 +22,8 @@ const LoaderStyle = styled.div`
   position: absolute;
   border: 3px solid ${color.black5};
   border-radius: 50%;
-  border-top: 3px solid ${color.orange};
+  border-top: ${(props) =>
+    props.color ? props.color : `3px solid ${color.orange}`};
   width: 12px;
   height: 12px;
   -webkit-animation: spin 1s linear infinite; /* Safari */
