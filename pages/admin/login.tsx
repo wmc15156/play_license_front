@@ -9,6 +9,9 @@ import color from "@styles/colors";
 import { FaCheck } from "react-icons/fa";
 import OriginalButton from "@src/component/Button/OriginalButton";
 import axios from "axios";
+import { useRouter } from "next/router";
+import useSWR from "swr";
+import fetcher from "@utils/fetcher";
 
 export const ImageWrapper = styled.div`
   max-width: 770px;
@@ -32,6 +35,8 @@ const IconWrapper = styled.div`
 `;
 
 function AdminLogin() {
+  const { data, error } = useSWR("/admin/me", fetcher);
+  const router = useRouter();
   const [email, setEmail] = useInput("");
   const [password, setPassword] = useInput("");
   const [loginSave, setLoginSave] = useState(false);
@@ -47,54 +52,72 @@ function AdminLogin() {
     }
     if (email && password) {
       const data = { email, password };
+      axios
+        .post("/admin/login", data)
+        .then((res) => {
+          router.push("/admin");
+        })
+        .catch((err) => {
+          console.error(err.response.data);
+        });
     }
   };
 
+  if (data) {
+    router.push("/admin");
+    return null;
+  }
   return (
-    <ContainerWrapper width="580px">
-      <ImageWrapper>
-        <img src={"/assets/image/title.png"} />
-      </ImageWrapper>
-      <Wrapper margin={"86px"}>
-        <InputBox
-          width={"100%"}
-          placeholder={"이메일을 입력해주세요"}
-          onChange={setEmail}
-          value={email}
-        />
-      </Wrapper>
-      <Wrapper margin={"12px"}>
-        <InputBox
-          width={"100%"}
-          placeholder={"비밀번호를 입력해주세요"}
-          onChange={setPassword}
-          value={password}
-          checkPw={true}
-        />
-      </Wrapper>
-      <IconWrapper>
-        <CheckBoxWrapper
-          width={"24px"}
-          height={"24px"}
-          onChange={onSaveEmail}
-          value={loginSave ? color.pink : ""}
-        >
-          <FaCheck size={"15px"} color={loginSave ? "white" : "gray"} />
-        </CheckBoxWrapper>
-        <span>이메일 저장</span>
-      </IconWrapper>
+    <>
+      {data === false ? (
+        <>
+          <ContainerWrapper width="580px">
+            <ImageWrapper>
+              <img src={"/assets/image/title.png"} />
+            </ImageWrapper>
+            <Wrapper margin={"86px"}>
+              <InputBox
+                width={"100%"}
+                placeholder={"이메일을 입력해주세요"}
+                onChange={setEmail}
+                value={email}
+              />
+            </Wrapper>
+            <Wrapper margin={"12px"}>
+              <InputBox
+                width={"100%"}
+                placeholder={"비밀번호를 입력해주세요"}
+                onChange={setPassword}
+                value={password}
+                checkPw={true}
+              />
+            </Wrapper>
+            <IconWrapper>
+              <CheckBoxWrapper
+                width={"24px"}
+                height={"24px"}
+                onChange={onSaveEmail}
+                value={loginSave ? color.pink : ""}
+              >
+                <FaCheck size={"15px"} color={loginSave ? "white" : "gray"} />
+              </CheckBoxWrapper>
+              <span>이메일 저장</span>
+            </IconWrapper>
 
-      <OriginalButton
-        margin={"26px"}
-        width={"580px"}
-        background={color.pink}
-        height={"60px"}
-        size={"21px"}
-        onClick={onSubmit}
-      >
-        로그인하기
-      </OriginalButton>
-    </ContainerWrapper>
+            <OriginalButton
+              margin={"26px"}
+              width={"580px"}
+              background={color.pink}
+              height={"60px"}
+              size={"21px"}
+              onClick={onSubmit}
+            >
+              로그인하기
+            </OriginalButton>
+          </ContainerWrapper>
+        </>
+      ) : null}
+    </>
   );
 }
 

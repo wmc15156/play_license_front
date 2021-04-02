@@ -12,6 +12,7 @@ import useSWR from "swr";
 import fetcher from "@utils/fetcher";
 import AdminCurationLists from "@src/component/admin/AdminCurationList/CurationLists";
 import AddCuration from "@src/component/admin/AdminAddCuration/AddCuration";
+import { useRouter } from "next/router";
 
 const buyerMenus = [
   "홈 배너 관리",
@@ -162,6 +163,11 @@ function AdminIndex({ adminMode }) {
     }
   );
 
+  const { data: userLogin, error: userLoginError } = useSWR(
+    "/admin/me",
+    fetcher
+  );
+  const router = useRouter();
   const [open, setOpen] = useState(false);
 
   const [currentMenu, setCurrentMenu] = useState(buyerMenus[0]);
@@ -192,7 +198,7 @@ function AdminIndex({ adminMode }) {
         subContainer={subContainer}
       />
     ),
-    "배너 추가하기": <AddCuration />,
+    "배너 추가하기": <AddCuration setSubContainer={setSubContainer} />,
   };
   useEffect(() => {
     if (!data) return;
@@ -209,7 +215,13 @@ function AdminIndex({ adminMode }) {
   }, [adminMode]);
 
   if (!data) return <div>loading</div>;
+  if (userLogin === false) {
+    router.push("/admin/login");
+  }
 
+  if (!userLogin) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       {adminMode === "buyer" && (

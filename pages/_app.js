@@ -68,8 +68,11 @@ const MyApp = ({ Component, pageProps }) => {
     "/admin",
   ];
 
+  const adminPath = ["/admin/login"];
+
   const removeFooter = buyerPath.includes(router.pathname);
   const removePLlayout = providerPath.includes(router.pathname);
+  const removeAdminHeader = adminPath.includes(router.pathname);
   return (
     <HomeStore>
       <Head>
@@ -96,7 +99,9 @@ const MyApp = ({ Component, pageProps }) => {
 
       {adminWeb && (
         <AdminLayout>
-          <AdminHeader adminMode={adminMode} setAdminMode={setAdminMode} />
+          {!removeAdminHeader && (
+            <AdminHeader adminMode={adminMode} setAdminMode={setAdminMode} />
+          )}
           <Component {...pageProps} adminMode={adminMode} />
           <div id="modal" />
         </AdminLayout>
