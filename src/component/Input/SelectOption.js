@@ -9,6 +9,7 @@ const SelectOption = ({
   radius,
   fontSize,
   readOnly,
+  defaultOption,
 }) => {
   return (
     <Container>
@@ -21,8 +22,8 @@ const SelectOption = ({
         required
         disabled={readOnly}
       >
-        <option value="" disabled>
-          선택해주세요
+        <option value="">
+          {defaultOption ? defaultOption : "선택해주세요"}
         </option>
         {options.map((opt, i) => (
           <option key={i} value={opt}>

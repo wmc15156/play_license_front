@@ -8,6 +8,7 @@ const CircleCheckbox = ({
   onClick,
   children,
   cursor,
+  color,
 }) => {
   return (
     <Circle
@@ -15,6 +16,7 @@ const CircleCheckbox = ({
       onClick={onClick}
       checked={checked}
       cursor={cursor}
+      color={color ? color : null}
     >
       {children}
     </Circle>
@@ -31,7 +33,8 @@ const Circle = styled.span`
     props.checked &&
     css`
       border: none;
-      background-color: ${color.orange};
+      background-color: ${(props) =>
+        props.color ? props.color : color.orange};
       width: ${(props) => props.widthHeight};
       height: ${(props) => props.widthHeight};
     `}

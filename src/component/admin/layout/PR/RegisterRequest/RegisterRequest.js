@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import color from "../../../../../../styles/colors";
-import Header from "./ContentHeader";
+import Header from "../../../common/ContentHeader2";
 import { TabContainer } from "../../../../../../styles/PL_Frame";
 import Pagination from "../../../../../../src/component/Pagination/Pagination";
 import StatusBox from "../../../../../../src/component/Tag/Purchase_AnswerStatus";
@@ -65,8 +65,12 @@ const RegisterRequest = () => {
       {tab && Tab[tab]}
       {!tab && (
         <>
-          <Header />
-          작품등록문의 관리 페이지 table
+          <Header
+            titleText={"등록문의"}
+            countText={`${123}건`}
+            placeholder={"이름을 검색해보세요"}
+            optionsArr1={["진행상태"]}
+          />
           <TableWrapper>
             <Table>
               <Table_Title>
