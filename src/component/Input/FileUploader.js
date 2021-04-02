@@ -11,6 +11,7 @@ const FileUploader = ({ data, fileURLhandler, readOnly, icon }) => {
   const inputFileUploader = useRef(null);
 
   useEffect(() => {
+    console.log(" fileupload data", data);
     if (data.filename) {
       setBtnText(data.filename);
     } else {
