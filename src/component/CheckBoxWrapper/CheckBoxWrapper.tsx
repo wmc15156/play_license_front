@@ -7,9 +7,10 @@ const Wrapper = styled.span<{
   width: string;
   height: string;
   background: string | boolean;
+  borderRadius?: string;
 }>`
   display: inline-flex;
-  border-radius: 6px;
+  border-radius: ${(p) => (p.borderRadius ? p.borderRadius : "6px")};
   width: ${(p) => p.width};
   height: ${(p) => p.height};
   background-color: ${(p) =>
@@ -27,6 +28,7 @@ type Props = {
   background?: string;
   onChange?: () => void;
   value?: string | boolean;
+  borderRadius?: string;
 };
 
 const CheckBoxWrapper: FC<Props> = ({
@@ -35,6 +37,7 @@ const CheckBoxWrapper: FC<Props> = ({
   height,
   onChange,
   value,
+  borderRadius,
 }) => {
   return (
     <Wrapper
@@ -42,6 +45,7 @@ const CheckBoxWrapper: FC<Props> = ({
       height={height}
       background={value}
       onClick={onChange}
+      borderRadius={borderRadius}
     >
       {children}
     </Wrapper>

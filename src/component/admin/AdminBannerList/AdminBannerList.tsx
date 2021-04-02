@@ -53,8 +53,6 @@ type Props = {
   subContainer: boolean;
 };
 
-const maxWidth = ["104px", "191px", "267px", "192px", "154px", "236px", "47px"];
-
 const AdminBannerList: VFC<Props> = ({
   lists,
   setBannerList,

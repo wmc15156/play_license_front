@@ -11,6 +11,92 @@ import { useState } from "react";
 import TextAndDropDown from "@src/component/molecules/TextAndDropDown/TextAndDropDown";
 import styled from "styled-components";
 import OriginalButton from "@src/component/Button/OriginalButton";
+import useModal from "@utils/useModal";
+import BannerRemoveModal from "@src/component/admin/Modal/BannerRemove";
+import RegisterCuation from "@src/component/admin/Modal/RegisterCuation";
+
+const productList = [
+  {
+    productId: 1,
+    title: "네네네",
+    poster: {
+      filename: "123.jpg",
+      url:
+        "https://user-images.githubusercontent.com/60249156/108516807-007d2200-730a-11eb-99c8-119db6f45da4.png",
+    },
+    brokerageConsignments: ["공연", "교육", "기타"],
+    category: "뮤지컬",
+    year: "2021",
+    company: "네이버",
+  },
+  {
+    productId: 2,
+    title: "네네네",
+    poster: {
+      filename: "123.jpg",
+      url:
+        "https://user-images.githubusercontent.com/60249156/108516807-007d2200-730a-11eb-99c8-119db6f45da4.png",
+    },
+    brokerageConsignments: ["공연", "교육", "기타"],
+    category: "뮤지컬",
+    year: "2021",
+    company: "네이버",
+  },
+  {
+    productId: 3,
+    title: "네네네",
+    poster: {
+      filename: "123.jpg",
+      url:
+        "https://user-images.githubusercontent.com/60249156/108516807-007d2200-730a-11eb-99c8-119db6f45da4.png",
+    },
+    brokerageConsignments: ["공연", "교육", "기타"],
+    category: "뮤지컬",
+    year: "2021",
+    company: "네이버",
+  },
+  {
+    productId: 4,
+    title: "네네네",
+    poster: {
+      filename: "123.jpg",
+      url:
+        "https://user-images.githubusercontent.com/60249156/108516807-007d2200-730a-11eb-99c8-119db6f45da4.png",
+    },
+    brokerageConsignments: ["공연", "교육", "기타"],
+    category: "뮤지컬",
+    year: "2021",
+    company: "네이버",
+  },
+  {
+    productId: 5,
+    title: "네네네",
+    poster: {
+      filename: "123.jpg",
+      url:
+        "https://user-images.githubusercontent.com/60249156/108516807-007d2200-730a-11eb-99c8-119db6f45da4.png",
+    },
+    brokerageConsignments: ["공연", "교육", "기타"],
+    category: "뮤지컬",
+    year: "2021",
+    company: "네이버",
+  },
+];
+
+type Post = {
+  filename: string;
+  url: string;
+}
+
+export type ProductLists = {
+  productId: number,
+  poster: Post;
+  brokerageConsignments: Array<string>;
+  category: string;
+  year: string;
+  company: string;
+  title: string;
+}
 
 const UlWrapper = styled.ul<{ fontColor: boolean }>`
   position: relative;
@@ -40,7 +126,7 @@ const LiWrapper = styled.li<{ fontColor: boolean }>`
   z-index: 2;
 `;
 
-const DivWrapper = styled.div<{ margin: string; flexEnd?: boolean }>`
+export const DivWrapper = styled.div<{ margin: string; flexEnd?: boolean }>`
   //      나란히 있는 두개 컴포넌트
   width: 100%;
   max-width: 722px;
@@ -54,8 +140,9 @@ const AddCuration = () => {
   const [curationName, setCurationName] = useInput("");
   const [kind, setKind] = useState("디폴트");
   const [subKind, setSubKind] = useState("스페셜");
-
+  const { ModalPortal, openModal, closeModal } = useModal();
   const [open, setOpen] = useState(false);
+  const [productLists, setProductLists] = useState(productList);
 
   const toggle = () => {
     setOpen((prevState) => !prevState);
@@ -122,6 +209,7 @@ const AddCuration = () => {
           margin={""}
           background={colors.black4}
           size={"14px"}
+          onClick={openModal}
         >
           작품등록하기
         </OriginalButton>
@@ -149,6 +237,10 @@ const AddCuration = () => {
           등록하기
         </OriginalButton>
       </DivWrapper>
+
+      <ModalPortal>
+        <RegisterCuation productLists={productLists} closeModal={closeModal}/>
+      </ModalPortal>
     </ContainerWrapper>
   );
 };

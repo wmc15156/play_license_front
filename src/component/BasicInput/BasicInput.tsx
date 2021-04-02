@@ -8,14 +8,14 @@ const InputWrapper = styled.input.attrs<{
 }>((p) => ({
   placeholder: p.placeholder,
   // type: p.password ? "password" : null,
-}))<{ width: string; height?: string; fontSize?: string; whiteType?: boolean }>`
+}))<{ width: string; height?: string; fontSize?: string; whiteType?: boolean, fontFamily?: string; }>`
   width: ${(p) => p.width};
   height: ${(p) => (p.height ? p.height : "60px")};
   text-indent: 22.5px;
   background-color: ${(p) => (p.whiteType ? styles.white : styles.gray1)};
   border-radius: 8px;
   font-size: ${(p) => (p.fontSize ? p.fontSize : "16px")};
-  font-family: "NotoSansCJKkr-Regular";
+  font-family: ${p => p.fontFamily ? p.fontFamily : "NotoSansCJKkr-Regular"};
   border: ${(p) => (p.whiteType ? "1px solid #E6E6E6" : "none")};
 `;
 
@@ -30,6 +30,7 @@ type Props = {
   inputHeight?: string;
   fontSize?: string;
   whiteType?: boolean;
+  fontFamily?: string;
 };
 
 const InputBox: FC<Props> = ({

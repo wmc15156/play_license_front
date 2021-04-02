@@ -42,7 +42,7 @@ type TagProps = {
   title: string;
 };
 
-const Tag: FC = ({ children, title }: TagProps) => {
+const Tag: FC<TagProps> = ({ children, title }) => {
   return <TagWrapper title={title}>{children}</TagWrapper>;
 };
 
