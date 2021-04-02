@@ -199,6 +199,8 @@ const Button = styled.button`
     outline: none;
   }
   & > span {
+    display: flex;
+    align-items: center;
     margin-left: 3%;
   }
 `;
