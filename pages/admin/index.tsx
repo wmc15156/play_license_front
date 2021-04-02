@@ -236,7 +236,11 @@ function AdminIndex({ adminMode }) {
             currentMenu={currentMenu}
             subContainer={subContainer}
           />
-          {!subContainer ? <AddCuration /> : contentsList[currentMenu]}
+          {!subContainer ? (
+            <AddCuration setSubContainer={setSubContainer} />
+          ) : (
+            contentsList[currentMenu]
+          )}
         </>
       )}
       {adminMode === "provider" && (
