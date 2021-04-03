@@ -1,7 +1,7 @@
 import styles from "../styles/Login.module.css";
 import useInput from "../utils/useInput";
 import { useSelector } from "react-redux";
-import color from '@styles/colors';
+import color from "@styles/colors";
 import { RootState } from "../reducers";
 import { useEffect, useState, FormEvent, useCallback } from "react";
 import { useRouter } from "next/router";
@@ -136,7 +136,7 @@ function Login() {
                   src="https://user-images.githubusercontent.com/60249156/107981737-03280080-7006-11eb-9536-1c26c58f5c04.png"
                 />
               </a>
-              <a href={`http://localhost:8000/api/auth/naver/callback`}>
+              <a href={`${url}/api/auth/naver/callback`}>
                 <img
                   className={styles.Logo}
                   src="https://user-images.githubusercontent.com/60249156/107981747-058a5a80-7006-11eb-80c1-c8bfa6fed440.png"

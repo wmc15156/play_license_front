@@ -145,7 +145,6 @@ const marginRight = ["102px", "250px", "198px", "89px", "139px", "136px"];
 // dummy Data
 
 const providerTabs = {
-  
 "작품 및 제작사 등록 문의 URL": <URLpage />,
 "작품 등록 문의 관리": <RegisterRequest />,
 "공지사항": <Notice />,
@@ -161,7 +160,6 @@ export type CurationList = {
   productCount: number;
   order: number;
 };
-
 
 function AdminIndex({ adminMode }) {
   // const { data, error, revalidate, mutate } = useSWR(
@@ -227,14 +225,18 @@ const revalidate=async()=>{return false};
     // setBannerList(dummyData);
   }, [adminMode]);
 
-  // if (!data) return <div>loading</div>;
-  // if (userLogin === false) {
-  //   router.push("/admin/login");
-  // }
+  useEffect(() => {
+    if (!userLogin) {
+      router.push("/admin/login");
+    }
+  }, [userLogin]);
 
-  // if (!userLogin) {
-  //   return <div>Loading...</div>;
-  // }
+  if (userLogin === false) {
+    router.push("/admin/login");
+  }
+
+  if (!data) return <div>loading</div>;
+
   return (
     <>
       {adminMode === "buyer" && (

@@ -87,7 +87,7 @@ const OriginalButton: FC<Props> = ({
   marginRight,
   borderStyle
 }) => {
-  console.log(typeof background, "back", provider);
+  console.log(typeof background, "back", provider, background);
   return (
     <Wrapper
       width={width}
