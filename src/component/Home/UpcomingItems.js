@@ -27,7 +27,7 @@ const UpcomingItems = ({ list }) => {
                   {}년 {}월 중
                 </Text2>
               </UpcomingDate>
-              <img src={item.productImage} alt={item.productTitle} />
+              <img src={item.productImage.url} alt={item.productTitle} />
             </ItemImg>
             <ItemDesc>
               <TagWrapper>

@@ -43,7 +43,7 @@ function Sns() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { error } = useSelector((staet: RootState) => staet.users?.signUpData);
+  const { error } = useSelector((state: RootState) => state.users?.signUpData);
 
   useEffect(() => {
     console.log(error);
