@@ -7,55 +7,23 @@ import useModal from "@utils/useModal";
 import BannerRemoveModal from "@src/component/admin/Modal/BannerRemove";
 import axios from "axios";
 import { CurationList } from "../../../../pages/admin";
-export type BannerList = {
-  id: number;
-  title: string;
-  exposure: boolean;
-  desktopUrl: string | undefined;
-  mobileUrl: string | undefined;
-  url: string | undefined;
-  order: number;
-};
-
-export const UlWrapper = styled.ul`
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-`;
-
-export const LiWrapper = styled.li`
-  width: 100%;
-  max-width: 1200px;
-  height: 128px;
-  border-bottom: 1px solid ${colors.black5};
-  display: flex;
-  align-items: center;
-  & img {
-    width: 24px;
-    height: 24px;
-  }
-
-  & > div {
-    display: flex;
-    justify-content: center;
-  }
-`;
-
-export const DivWrapper = styled.div<{ maxWidth: string }>`
-  width: 100%;
-  max-width: ${(p) => p.maxWidth};
-`;
+import {
+  LiWrapper,
+  UlWrapper,
+} from "@src/component/admin/AdminBannerList/AdminBannerList";
 
 type Props = {
-  lists: BannerList[];
-  setBannerList: Dispatch<SetStateAction<BannerList[]>>;
-  revalidate: () => Promise<boolean>;
-  subContainer: boolean;
+  lists: CurationList[];
+  setCurationList: Dispatch<SetStateAction<CurationList[]>>;
+  revalidate?: () => Promise<boolean>;
+  subContainer: boolean
 };
 
-const AdminBannerList: VFC<Props> = ({
+const maxWidth = ["104px", "191px", "267px", "192px", "154px", "236px", "47px"];
+
+const AdminCurationLists: VFC<Props> = ({
   lists,
-  setBannerList,
+  setCurationList,
   revalidate,
   subContainer,
 }) => {
@@ -78,7 +46,7 @@ const AdminBannerList: VFC<Props> = ({
       .catch((err) => {
         console.log(err.response.data);
       });
-    setBannerList(data);
+    setCurationList(data);
   };
 
   const onRemove = (id) => () => {
@@ -170,7 +138,7 @@ const AdminBannerList: VFC<Props> = ({
                                 maxWidth: "191px",
                               }}
                             >
-                              <span>{list.title}</span>
+                              <span>{list.curationName}</span>
                             </div>
                             <div
                               style={{
@@ -178,34 +146,13 @@ const AdminBannerList: VFC<Props> = ({
                                 maxWidth: "267px",
                               }}
                             >
-                              <img
-                                style={{ height: "100px", width: "267px" }}
-                                src={
-                                  list.desktopUrl
-                                    ? list.desktopUrl
-                                    : "/assets/image/Rectangle.png"
-                                }
-                              />
+                              <span>{list.kinds}</span>
                             </div>
+
                             <div
                               style={{
                                 width: "100%",
                                 maxWidth: "192px",
-                              }}
-                            >
-                              <img
-                                style={{ height: "100px", width: "100px" }}
-                                src={
-                                  list.desktopUrl
-                                    ? list.desktopUrl
-                                    : "assets/image/Rectangle_small.png"
-                                }
-                              />
-                            </div>
-                            <div
-                              style={{
-                                width: "100%",
-                                maxWidth: "154px",
                                 paddingLeft: "70px",
                                 boxSizing: "border-box",
                               }}
@@ -217,8 +164,17 @@ const AdminBannerList: VFC<Props> = ({
                               />
                             </div>
 
+                            <div
+                              style={{
+                                width: "100%",
+                                maxWidth: "154px",
+                              }}
+                            >
+                              <span>{list.productCount}</span>
+                            </div>
+
                             <div style={{ width: "100%", maxWidth: "223px" }}>
-                              <span>{list.url}</span>
+                              <span>수정하기</span>
                             </div>
                             <div style={{ maxWidth: "26px", width: "100px" }}>
                               <img
@@ -252,4 +208,4 @@ const AdminBannerList: VFC<Props> = ({
     </>
   );
 };
-export default AdminBannerList;
+export default AdminCurationLists;

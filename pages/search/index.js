@@ -92,7 +92,7 @@ const Search = () => {
                       <div>
                         {item.brokerageConsignments.map((cate, i) => {
                           return (
-                            <Tag title={cate} id={item.id}>
+                            <Tag title={cate} key={item.id}>
                               {cate}
                             </Tag>
                           );

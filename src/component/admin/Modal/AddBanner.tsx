@@ -114,8 +114,7 @@ const AddBannerModal = ({ closeModal, revalidate }) => {
     // TODO: CSS 설정필요
     // TODO: Desktop/mobile 기본 이미지 변경(X로 된거)
     let bannerList = null;
-    console.log(data);
-    if(data) {
+    if (data) {
       bannerList = {
         title: bannerName,
         desktopUrl: desktopImage ? desktopImage.url : "",
@@ -126,11 +125,10 @@ const AddBannerModal = ({ closeModal, revalidate }) => {
       };
     }
 
-
     if (bannerName && url) {
       console.log(bannerList);
       axios
-        .post("/admin/home-banner", bannerList)
+        .post("/admin/home-banner", { bannerList })
         .then((res) => {
           console.log("order", order);
           setOrder((prevState) => {

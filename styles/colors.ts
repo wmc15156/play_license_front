@@ -15,4 +15,5 @@ export default {
   black4: "#C8C8C8",
   black5: "#E6E6E6",
   orange: "#FF6B39",
+  orange2: "#E8673C"
 };

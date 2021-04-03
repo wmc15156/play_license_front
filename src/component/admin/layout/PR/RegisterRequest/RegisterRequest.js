@@ -45,12 +45,12 @@ const RegisterRequest = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
 
-  const indexOfLast = currentPage * postsPerPage;
-  const indexOfFirst = indexOfLast - postsPerPage; // 0
+    const indexOfLast = currentPage * postsPerPage;
+    const indexOfFirst = indexOfLast - postsPerPage; // 0
 
-  const showCurrentPosts = (tmp) => {
-    let currentPosts = 0;
-    currentPosts = tmp.slice(indexOfFirst, indexOfLast);
+    const showCurrentPosts = (tmp) => {
+      let currentPosts = 0;
+      currentPosts = tmp.slice(indexOfFirst, indexOfLast);
     return currentPosts;
   };
 

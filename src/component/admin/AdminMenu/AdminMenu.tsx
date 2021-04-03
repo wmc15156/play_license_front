@@ -43,18 +43,26 @@ type Props = {
   currentMenu: string;
   setCurrentMenu: Dispatch<SetStateAction<string>>;
   color: string;
+  setSubContainer?: Dispatch<SetStateAction<boolean>>;
 };
 
 // change the text of the current menu when click
 
-const AdminMenu: VFC<Props> = ({ menus, currentMenu, setCurrentMenu, color }) => {
+const AdminMenu: VFC<Props> = ({
+  menus,
+  currentMenu,
+  setCurrentMenu,
+  color,
+  setSubContainer,
+}) => {
   const onChangeCurrentMenuText = (text: string) => () => {
     setCurrentMenu(text);
+    setSubContainer(true);
   };
   return (
     <Wrapper>
       <UlWrapper>
-        {menus.map((menu,i) => (
+        {menus.map((menu, i) => (
           <LiWrapper
             select={currentMenu === menu}
             onClick={onChangeCurrentMenuText(menu)}

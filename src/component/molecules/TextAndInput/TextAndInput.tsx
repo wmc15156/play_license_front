@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { FC } from "react";
 import InputBox from "@src/component/BasicInput/BasicInput";
 import NumberInput from "@src/component/BasicInput/NumberInput";
+import colors from "@styles/colors";
 
 export const Wrapper = styled.div<{ margin: string; justify?: boolean }>`
   width: 100%;
@@ -10,17 +11,17 @@ export const Wrapper = styled.div<{ margin: string; justify?: boolean }>`
   margin-top: ${(p) => p.margin};
 `;
 
-const SpanWrapper = styled.span<{
+export const SpanWrapper = styled.span<{
   width: string;
   size: string;
-  color: string;
+  color?: string;
   textMargin: string;
 }>`
   display: flex;
   align-items: center;
   font-size: ${(p) => p.size};
   font-family: "NotoSansCJKkr-Bold";
-  color: ${(p) => p.color};
+  color: ${(p) => p.color ? p.color : `${colors.black1}`};
   width: ${(p) => p.width};
   margin-right: ${(p) => p.textMargin};
 `;
