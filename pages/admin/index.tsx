@@ -17,26 +17,6 @@ import AdminCurationLists from "@src/component/admin/AdminCurationList/CurationL
 import AddCuration from "@src/component/admin/AdminAddCuration/AddCuration";
 import { useRouter } from "next/router";
 
-const dummyData: BannerList[] = [
-  {
-    id: 1,
-    title: "서비스 소개 바로가기",
-    exposure: false,
-    desktopUrl: "http://url.com",
-    mobileUrl: "http://mobile.com",
-    url: "http://sangsangmaru.com",
-  },
-  {
-    id: 2,
-    title: "인기작품 바로가기",
-    exposure: false,
-    desktopUrl: "http://url.com",
-    mobileUrl: "http://mobile.com",
-    url: "http://sangsangmaru.com",
-  },
-]
-
-
 const buyerMenus = [
   "홈 배너 관리",
   "큐레이션 관리",
