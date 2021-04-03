@@ -2,21 +2,34 @@ import styled, { css } from "styled-components";
 import color from "../../../../../../styles/colors";
 import StatusBox from "../../../../../../src/component/Tag/Purchase_AnswerStatus";
 import FileUploader from "../../../../../../src/component/Input/FileUploader";
-import { useState } from "react";
-
-const selected = {
-  select: [
-    {
-      name: "선택자료1",
-      price: "$100",
-      originalMaterial: { url: "url.com", filename: "filename1" },
-      agreement: { url: "url.com", filename: "filename1" },
-    },
-  ],
-};
+import Price from "../../../common/Input+Button";
+import { useEffect, useState } from "react";
 
 const Tab_Selected = () => {
   const [isReadOnly, setIsReadOnly] = useState(true);
+  const [selected, setSelected] = useState([
+    {
+      id: 1,
+      name: "총보 (라이브 연주 악보)",
+      price: "100000",
+      originalMaterial: { url: "url.com", filename: "filename1" },
+      agreement: { url: "url.com", filename: "filename1" },
+      isDeleted: true,
+    },
+    {
+      id: 2,
+      name: "공연실황영상",
+      price: "150000",
+      originalMaterial: { url: "url.com", filename: "filename1" },
+      agreement: { url: "url.com", filename: "filename1" },
+      isDeleted: false,
+    },
+  ]);
+
+  console.log(selected[0].isDeleted);
+  const priceBtnHandler = () => {
+    console.log("가격 등록 버튼 클릭");
+  };
   return (
     <Container>
       <Table>
@@ -24,30 +37,45 @@ const Tab_Selected = () => {
           <TitleText1>분류</TitleText1>
           <TitleText2>종류</TitleText2>
           <TitleText3>가격</TitleText3>
-          <TitleText3>원본자료</TitleText3>
-          <TitleText3>위탁동의서</TitleText3>
+          <TitleText4>원본자료</TitleText4>
+          <TitleText4>위탁동의서</TitleText4>
           <TitleText>자료삭제</TitleText>
         </Table_Title>
-        {selected.select.map((item, idx) => {
+        {selected.map((item, idx) => {
           return (
             <List key={idx}>
               <Text1>필수</Text1>
               <Text2>{item.name}</Text2>
-              <Text3>{item.price}</Text3>
               <Text3>
+                <PriceInputWrpper>
+                  <Price
+                    text={"원"}
+                    del={item.isDeleted}
+                    value={Number(selected[idx].price)}
+                    onChange={(e) => {
+                      let arr = [...selected];
+                      arr[idx] = { ...selected[idx], price: e.target.value };
+                      setSelected(arr);
+                    }}
+                    btnText={"등록"}
+                    btnClick={priceBtnHandler}
+                  />
+                </PriceInputWrpper>
+              </Text3>
+              <Text4>
                 <FileUploader
                   icon={false}
                   readOnly={isReadOnly}
                   data={item.originalMaterial}
                 />
-              </Text3>
-              <Text3>
+              </Text4>
+              <Text4>
                 <FileUploader
                   icon={false}
                   readOnly={isReadOnly}
                   data={item.agreement}
                 />
-              </Text3>
+              </Text4>
               <Text>
                 <StatusBox
                   status
@@ -55,7 +83,10 @@ const Tab_Selected = () => {
                   fontColor={color.black1}
                   borderColor={color.black2}
                   onClick={() => {
-                    console.log("자료삭제");
+                    console.log("자료삭제, post", item.id, idx + 1);
+                    let arr = [...selected];
+                    arr[idx] = { ...selected[idx], isDeleted: true };
+                    setSelected(arr);
                   }}
                 >
                   {"자료삭제"}
@@ -116,13 +147,13 @@ const TitleTextStyle = css`
 
 const TitleText = styled.div`
   ${TitleTextStyle}
-  width: calc(21% - 20px);
+  width: calc(15% - 20px);
 `;
 
 const TitleText1 = styled.div`
   ${TitleTextStyle};
   padding-left: 20px;
-  width: calc(9% - 20px);
+  width: calc(10% - 20px);
 `;
 
 const TitleText2 = styled.div`
@@ -131,7 +162,15 @@ const TitleText2 = styled.div`
 `;
 const TitleText3 = styled.div`
   ${TitleTextStyle};
-  width: 17%;
+  width: 26%;
+`;
+const TitleText4 = styled.div`
+  ${TitleTextStyle};
+  width: 15%;
+`;
+
+const PriceInputWrpper = styled.div`
+  width: 90%;
 `;
 
 const TextStyle = css`
@@ -153,12 +192,12 @@ const DetailText = styled.div`
 
 const Text = styled.div`
   ${TextStyle} /* padding-left: 20px; */
-  width: calc(21% - 20px);
+  width: calc(15% - 20px);
 `;
 const Text1 = styled.div`
   ${TextStyle};
   padding-left: 20px;
-  width: calc(9% - 20px);
+  width: calc(10% - 20px);
 `;
 
 const Text2 = styled.div`
@@ -168,6 +207,10 @@ const Text2 = styled.div`
 
 const Text3 = styled.div`
   ${TextStyle};
-  width: 17%;
+  width: 26%;
+`;
+const Text4 = styled.div`
+  ${TextStyle};
+  width: 15%;
 `;
 export default Tab_Selected;

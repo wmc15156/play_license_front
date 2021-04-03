@@ -2,11 +2,11 @@ import styled from "styled-components";
 import color from "../../../styles/colors";
 import BasicInput from "../../component/BasicInput/BasicInputColor";
 
-const ProviderInfo = ({ userInfo, setUserInfo, readOnly }) => {
+const ProviderInfo = ({ userInfo, setUserInfo, readOnly, themeColor }) => {
   return (
     <Container>
       <HeadSection>
-        <Title>제작사 정보</Title>
+        <Title color={themeColor ? themeColor : null}>제작사 정보</Title>
         <p>등록하시는 제작사에 대한 정보를 알려주세요.</p>
       </HeadSection>
       <InputSection>
@@ -101,7 +101,7 @@ const HeadSection = styled.div`
   }
 `;
 const Title = styled.div`
-  color: ${color.orange};
+  color: ${(props) => (props.color ? props.color : color.orange)};
   font-family: "NotoSansCJKkr-Bold";
   line-height: 18px;
   font-size: 18px;

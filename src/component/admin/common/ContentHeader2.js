@@ -1,26 +1,35 @@
 import styled from "styled-components";
-import color from "../../../../../../styles/colors";
-import Input from "../../../../BasicInput/BasicInputColor";
-import Select from "../../../../Input/SelectOption";
+import color from "../../../../styles/colors";
+import Input from "../../BasicInput/BasicInputColor";
+import Select from "../../Input/SelectOption";
 import { useState } from "react";
 import { GoSearch } from "react-icons/go";
 
-const ContentHeader = () => {
+const ContentHeader = ({
+  titleText,
+  placeholder,
+  countText,
+  optionsArr1,
+  optionsArr2,
+}) => {
   const [inputText, setInputText] = useState("");
   const [selected, setSelected] = useState("");
+  const [selected2, setSelected2] = useState("");
   return (
     <Container>
       <TextWrapper>
-        등록문의 <span>{"123건"}</span>
+        {titleText} <span>{countText}</span>
       </TextWrapper>
-      <InputArea>
+      <InputArea resize={optionsArr2 ? optionsArr2 : null}>
         <Search>
-          <Input_Name>검색</Input_Name>
+          <Input_Name resize={optionsArr2 ? optionsArr2 : null}>
+            검색
+          </Input_Name>
           <Search_Input>
             <Input
               height={"40px"}
               background={color.gray1}
-              placeholder={"이름을 검색해보세요"}
+              placeholder={placeholder}
               fontSize={"14px"}
               fontColor={color.black3}
               onChange={setInputText}
@@ -38,17 +47,33 @@ const ContentHeader = () => {
           </Search_Input>
         </Search>
         <Filter>
-          <Input_Name>필터</Input_Name>
-          <Filter_Input>
+          <Input_Name resize={optionsArr2 ? optionsArr2 : null}>
+            필터
+          </Input_Name>
+          <Filter_Input resize={optionsArr2 ? optionsArr2 : null}>
             <Select
               value={selected}
               onChange={setSelected}
-              options={["진행상태"]}
+              options={optionsArr1}
               height={"40px"}
               radius={"8px"}
               fontSize={"14px"}
+              defaultOption={"카테고리"}
             />
           </Filter_Input>
+          {optionsArr2 && (
+            <Filter_Input resize={optionsArr2 ? optionsArr2 : null}>
+              <Select
+                value={selected2}
+                onChange={setSelected2}
+                options={optionsArr2}
+                height={"40px"}
+                radius={"8px"}
+                fontSize={"14px"}
+                defaultOption={"진행상태"}
+              />
+            </Filter_Input>
+          )}
         </Filter>
       </InputArea>
     </Container>
@@ -80,20 +105,21 @@ const TextWrapper = styled.div`
 const InputArea = styled.div`
   display: flex;
   margin-left: auto;
-  width: 60%;
+  width: ${(props) => (props.resize ? "75%" : "60%")};
   justify-content: space-between;
 `;
 
 const Input_Name = styled.div`
   display: inline-block;
   font-family: "NotoSansCJKkr-Bold";
-  margin-right: 20px;
+  margin-right: ${(props) => (props.resize ? "0" : "15px")};
   width: 30px;
 `;
 const Search = styled.div`
   display: flex;
   align-items: center;
   width: 60%;
+  justify-content: space-between;
 `;
 const Search_Input = styled.div`
   position: relative;
@@ -103,11 +129,12 @@ const Search_Input = styled.div`
 const Filter = styled.div`
   display: flex;
   align-items: center;
-  width: 35%;
+  width: 37%;
+  justify-content: space-between;
 `;
 const Filter_Input = styled.div`
   height: 40px;
-  width: 90%;
+  width: ${(props) => (props.resize ? "40%" : "90%")};
 `;
 
 export default ContentHeader;

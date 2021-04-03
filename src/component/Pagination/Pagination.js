@@ -23,7 +23,7 @@ const Pagination = ({ itemsPerPage, totalItems, paginate, color }) => {
               setIsFocus(number);
             }}
           >
-            <Text>{number}</Text>
+            <Text color={color}>{number}</Text>
           </ListItem>
         ))}
       </List>
@@ -67,7 +67,7 @@ const ListItem = styled.li`
 const Text = styled.span`
   &:hover {
     border: none;
-    color: ${color.orange};
+    color: ${(props) => (props.color ? props.color : color.orange)};
   }
 `;
 export default Pagination;

@@ -14,6 +14,7 @@ const Wrapper = styled.div<{
   maxWidth?: string;
   fontColor?: string;
   marginRight?: string;
+  borderStyle?: string;
 }>`
   width: ${(p) => p.width};
   height: ${(p) => p.height};
@@ -50,6 +51,7 @@ const Wrapper = styled.div<{
   position: ${(p) => (p.position ? "absolute" : null)};
   cursor: pointer;
   z-index: 1;
+  border: ${p=>p.borderStyle ? p.borderStyle:null}
 `;
 
 type Props = {
@@ -66,6 +68,7 @@ type Props = {
   maxWidth?: string;
   fontColor?: string;
   marginRight?: string;
+  borderStyle?: string;
 };
 
 const OriginalButton: FC<Props> = ({
@@ -82,6 +85,7 @@ const OriginalButton: FC<Props> = ({
   maxWidth,
   fontColor,
   marginRight,
+  borderStyle
 }) => {
   return (
     <Wrapper
@@ -97,6 +101,7 @@ const OriginalButton: FC<Props> = ({
       maxWidth={maxWidth}
       fontColor={fontColor}
       marginRight={marginRight}
+      borderStyle={borderStyle}
     >
       {children}
     </Wrapper>

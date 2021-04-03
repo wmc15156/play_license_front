@@ -39,7 +39,7 @@ const CheckBox = styled.input`
   width: 42px;
   height: 26px;
   &:checked + ${CheckBoxLabel} {
-    background: ${colors.orange};
+    background: ${props=> props.color ? props.color : colors.orange};
     &::after {
       content: "";
       display: block;
@@ -55,14 +55,15 @@ const CheckBox = styled.input`
 type Props = {
   on: boolean;
   switchBtnHandler: () => void;
+  color?: string;
   marginRight?: string; // optional
 };
 
-const ToggleSwitchBtn: VFC<Props> = ({ on, switchBtnHandler, marginRight }) => {
+const ToggleSwitchBtn: VFC<Props> = ({ on, switchBtnHandler, color, marginRight }) => {
   return (
     <div>
       <CheckBoxWrapper marginRight={marginRight} onClick={switchBtnHandler}>
-        <CheckBox id="checkbox" type="checkbox" checked={on} />
+        <CheckBox id="checkbox" type="checkbox" checked={on} color={color}/>
         <CheckBoxLabel />
       </CheckBoxWrapper>
     </div>

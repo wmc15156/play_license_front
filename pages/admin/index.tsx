@@ -8,6 +8,9 @@ import AdminBannerList, {
 import color from "@styles/colors";
 import URLpage from "@src/component/admin/layout/PR/URL/Url";
 import RegisterRequest from "@src/component/admin/layout/PR/RegisterRequest/RegisterRequest";
+import Notice from "@src/component/admin/layout/PR/Notice/Notice";
+import FAQ from "@src/component/admin/layout/PR/FAQ/FAQ";
+import Question from "@src/component/admin/layout/PR/1:1/1:1";
 import useSWR from "swr";
 import fetcher from "@utils/fetcher";
 import AdminCurationLists from "@src/component/admin/AdminCurationList/CurationLists";
@@ -138,12 +141,13 @@ const marginRight = ["102px", "250px", "198px", "89px", "139px", "136px"];
 // dummy Data
 
 const providerTabs = {
-  "작품 및 제작사 등록 문의 URL": <URLpage />,
-  "작품 등록 문의 관리": <RegisterRequest />,
-  // "공지사항": ,
-  // "자주 묻는 질문": ,
-  // "1:1 문의 관리": ,
-};
+  
+"작품 및 제작사 등록 문의 URL": <URLpage />,
+"작품 등록 문의 관리": <RegisterRequest />,
+"공지사항": <Notice />,
+"자주 묻는 질문": <FAQ /> ,
+"1:1 문의 관리": <Question />,
+}
 
 export type CurationList = {
   id: number;
@@ -153,6 +157,7 @@ export type CurationList = {
   productCount: number;
   order: number;
 };
+
 
 function AdminIndex({ adminMode }) {
   const { data, error, revalidate, mutate } = useSWR(

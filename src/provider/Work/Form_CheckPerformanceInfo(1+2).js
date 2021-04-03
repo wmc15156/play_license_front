@@ -6,6 +6,7 @@ import CheckBoxWrapper from "../../component/CheckBoxWrapper/CircleCheckBoxWrapp
 import { FaCheck } from "react-icons/fa";
 import Selector from "../../component/Input/SelectOption";
 import ImageUploader from "../../component/Input/ImageUploader";
+import Uploader from "../../component/Input/FileUploader";
 
 const items_brokerageConsignments = ["공연 목적", "교육 목적", "기타 목적"];
 const items_requireMaterial = ["대본", "악보", "원본 포스터"];
@@ -38,11 +39,18 @@ const items_mainAudience = [
   "일반(15세~성인)",
 ];
 
-const Form_CheckInfo = ({ perfInfo, setPerfInfo, readOnly }) => {
+const Form_CheckInfo = ({
+  perfInfo,
+  setPerfInfo,
+  readOnly,
+  titleColor,
+  themeColor,
+  role,
+}) => {
   return (
     <Container>
       <HeadSection>
-        <Title>작품 정보</Title>
+        <Title color={titleColor ? titleColor : null}>작품 정보</Title>
         <p>판매하실 작품에 대한 정보를 입력해주세요.</p>
       </HeadSection>
       <InputSection>
@@ -72,6 +80,7 @@ const Form_CheckInfo = ({ perfInfo, setPerfInfo, readOnly }) => {
                 <CheckItem key={index}>
                   <CheckBox>
                     <CheckBoxWrapper
+                      color={themeColor}
                       widthHeight={"20px"}
                       checked={perfInfo.brokerageConsignments.includes(label)}
                       // onClick={() => checkPurposeHandler(label)}
@@ -120,6 +129,7 @@ const Form_CheckInfo = ({ perfInfo, setPerfInfo, readOnly }) => {
                 <CheckItem key={index}>
                   <CheckBox>
                     <CheckBoxWrapper
+                      color={themeColor}
                       widthHeight={"20px"}
                       checked={perfInfo.requiredMaterials.select
                         .map((e) => e.name)
@@ -154,6 +164,7 @@ const Form_CheckInfo = ({ perfInfo, setPerfInfo, readOnly }) => {
                   <CheckItem key={index} labelName={label}>
                     <CheckBox>
                       <CheckBoxWrapper
+                        color={themeColor}
                         widthHeight={"20px"}
                         checked={perfInfo.selectMaterials.select
                           .map((e) => e.name)
@@ -189,6 +200,7 @@ const Form_CheckInfo = ({ perfInfo, setPerfInfo, readOnly }) => {
                   <CheckItem key={index} labelName={label}>
                     <CheckBox>
                       <CheckBoxWrapper
+                        color={themeColor}
                         widthHeight={"20px"}
                         checked={perfInfo.selectMaterials.select
                           .map((e) => e.name)
@@ -263,6 +275,7 @@ const Form_CheckInfo = ({ perfInfo, setPerfInfo, readOnly }) => {
                 <CheckItem key={index} labelName={label}>
                   <CheckBox>
                     <CheckBoxWrapper
+                      color={themeColor}
                       widthHeight={"20px"}
                       checked={perfInfo.category.includes(label)}
                       // onClick={() => checkCategoryHandler(label)}
@@ -427,6 +440,7 @@ const Form_CheckInfo = ({ perfInfo, setPerfInfo, readOnly }) => {
                 <CheckItem key={index}>
                   <CheckBox>
                     <CheckBoxWrapper
+                      color={themeColor}
                       widthHeight={"20px"}
                       checked={perfInfo.genre.includes(label)}
                       // onClick={() => checkGenreHandler(label)}
@@ -455,6 +469,7 @@ const Form_CheckInfo = ({ perfInfo, setPerfInfo, readOnly }) => {
                 <CheckItem key={index}>
                   <CheckBox>
                     <CheckBoxWrapper
+                      color={themeColor}
                       widthHeight={"20px"}
                       checked={perfInfo.mainAudience.includes(label)}
                       // onClick={() => checkMainAudienceHandler(label)}
@@ -792,12 +807,21 @@ const Form_CheckInfo = ({ perfInfo, setPerfInfo, readOnly }) => {
           <SubTitle>공연포스터</SubTitle>
           <Content>
             <UploadBtnWrapper>
-              <ImageUploader
-                readOnly={readOnly}
-                data={perfInfo.posterURL}
-                name={"posterURL"}
-                // getImgURL={getImgURL}
-              />
+              {role ? (
+                <Uploader
+                  readOnly={readOnly}
+                  data={perfInfo.posterURL}
+                  // fileURLhandler={getImgURL}
+                />
+              ) : (
+                <ImageUploader
+                  backgroundColor={themeColor}
+                  readOnly={readOnly}
+                  data={perfInfo.posterURL}
+                  name={"posterURL"}
+                  // getImgURL={getImgURL}
+                />
+              )}
             </UploadBtnWrapper>
           </Content>
         </Input>
@@ -871,10 +895,10 @@ const HeadSection = styled.div`
   }
 `;
 const Title = styled.div`
-  color: ${color.orange};
+  color: ${(props) => (props.color ? props.color : color.orange)};
   font-family: "NotoSansCJKkr-Bold";
-  line-height: 24px;
-  font-size: 24px;
+  line-height: 18px;
+  font-size: 18px;
 `;
 
 const InputSection = styled.ul`
