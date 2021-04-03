@@ -9,8 +9,7 @@ import Uploader from "../../../Input/ImageUploader";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-// 1:1문의 자세히보기 클릭
-const FAQdetail = ({ url, id, closeModalHandler }) => {
+const FAQdetail = ({ url, id, closeModalHandler, pageType }) => {
   const [mode, setMode] = useState("check");
   const [readOnly, setReadOnly] = useState(null);
   const [data, setData] = useState({
@@ -39,8 +38,8 @@ const FAQdetail = ({ url, id, closeModalHandler }) => {
   return (
     <Container>
       <HeadSection>
-        <T>
-          <span>1:1 문의</span>관리
+        <T pageType={pageType}>
+          <span>FAQ</span> {mode === "check" ? " 자세히보기" : " 수정하기"}
         </T>
       </HeadSection>
       <div>
@@ -122,8 +121,14 @@ const FAQdetail = ({ url, id, closeModalHandler }) => {
                   getImgURL={getImgURL}
                   icon={false}
                   backgroundColor={color.white}
-                  borderStyle={`1px solid ${color.blue}`}
-                  fontColor={color.blue}
+                  borderStyle={
+                    pageType === "provider"
+                      ? `1px solid ${color.blue}`
+                      : `1px solid ${color.orange}`
+                  }
+                  fontColor={
+                    pageType === "provider" ? color.blue : color.orange
+                  }
                   width={"100px"}
                 />
               </UploadWrapper>
@@ -146,11 +151,13 @@ const FAQdetail = ({ url, id, closeModalHandler }) => {
                 <Btn2>
                   <Btn_Color
                     width={"100%"}
-                    background={color.blue}
+                    background={
+                      pageType === "provider" ? color.blue : color.orange
+                    }
                     margin={"0px"}
                     height={"36px"}
                     size={"12px"}
-                    // onClick={() => nextBtnHandler()}
+                    onClick={() => closeModalHandler()}
                   >
                     등록하기
                   </Btn_Color>
@@ -161,7 +168,9 @@ const FAQdetail = ({ url, id, closeModalHandler }) => {
                 <Btn1>
                   <Btn_Color
                     width={"100%"}
-                    background={color.blue}
+                    background={
+                      pageType === "provider" ? color.blue : color.orange
+                    }
                     margin={"0px"}
                     height={"36px"}
                     size={"12px"}
@@ -210,7 +219,8 @@ const T = styled.div`
   line-height: 24px;
 
   & > span {
-    color: ${color.blue};
+    color: ${(props) =>
+      props.pageType === "provider" ? color.blue : color.orange};
   }
 `;
 

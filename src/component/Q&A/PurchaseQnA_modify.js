@@ -187,7 +187,11 @@ const PurchaseQnA_modify = ({ onClickHandler, data }) => {
       </Divider>
       <BoxSection>
         <Wrap>
-          <Group groupState={groupState} groupStateHandler={setGroupState} />
+          <Group
+            groupState={groupState}
+            groupStateHandler={setGroupState}
+            readOnly={false}
+          />
         </Wrap>
         {data && router.query.category.includes("공연") && (
           // 구매문의 목적 : 공연 목적인 경우
@@ -195,6 +199,7 @@ const PurchaseQnA_modify = ({ onClickHandler, data }) => {
             <PerformanceInfo_provider
               perfInfoState={perfInfoState}
               setPerfInfoState={setPerfInfoState}
+              readOnly={false}
             />
           </Wrap>
         )}
@@ -204,6 +209,7 @@ const PurchaseQnA_modify = ({ onClickHandler, data }) => {
             <PerformanceInfo_edu
               perfInfoState={perfInfoState}
               setPerfInfoState={setPerfInfoState}
+              readOnly={false}
             />
           </Wrap>
         )}
@@ -213,6 +219,7 @@ const PurchaseQnA_modify = ({ onClickHandler, data }) => {
             <PerformanceInfo_etc
               perfInfoState={perfInfoState}
               setPerfInfoState={setPerfInfoState}
+              readOnly={false}
             />
           </Wrap>
         )}
@@ -220,6 +227,7 @@ const PurchaseQnA_modify = ({ onClickHandler, data }) => {
           <UserInfo
             userInfoState={userInfoState}
             userInfoStateHandler={setUserInfoState}
+            readOnly={false}
           />
         </Wrap>
       </BoxSection>

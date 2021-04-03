@@ -81,7 +81,7 @@ const ImageUploader = ({
                 <FiPlusSquare size={20} />
               </Icon>
             )}
-            <Text>{btnText}</Text>
+            <Text fontColor={fontColor}>{btnText}</Text>
           </>
         ) : (
           <>
@@ -130,7 +130,7 @@ const Icon = styled.div`
 const Text = styled.div`
   display: flex;
   width: 100%;
-  color: ${color.white};
+  color: ${(props) => (props.fontColor ? props.fontColor : color.white)};
   font-family: "NotoSansCJKkr-Bold";
   align-items: center;
   justify-content: center;

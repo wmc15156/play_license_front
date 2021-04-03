@@ -7,41 +7,50 @@ import StatusBox from "../../../../../../src/component/Tag/Purchase_AnswerStatus
 import Tab_Container from "../../../common/Wrapper/Tab_Container";
 import { useEffect, useState } from "react";
 
-const titleArr = ["제작사", "작품명", "문의일자", "진행상태", "상세보기"];
+const titleArr = ["작품명", "목적", "문의자", "진행상태", "견적서", "상세보기"];
 const listArr = [
   {
     id: 1,
-    company: "상상마루",
+    name: "이궁금",
     title: "배쓰맨 (Man of Bath)",
     createdAt: "2020.12.24",
     progress: "관리자검토중",
+    brokerageConsignments: ["교육"],
+    requestPurpose: "perform",
   },
   {
     id: 2,
-    company: "상상마루",
+    name: "이궁금",
     title: "배쓰맨 (Man of Bath)",
     createdAt: "2020.12.25",
     progress: "보완요청",
+    brokerageConsignments: ["공연", "기타"],
+    requestPurpose: "etc",
   },
   {
     id: 3,
-    company: "상상마루",
+    name: "이궁금",
     title: "배쓰맨 (Man of Bath)",
     createdAt: "2020.12.26",
     progress: "승인완료",
+    brokerageConsignments: ["공연", "교육"],
+    requestPurpose: "edu",
   },
   {
     id: 4,
-    company: "상상마루",
+    name: "이궁금",
     title: "배쓰맨 (Man of Bath)",
     createdAt: "2020.12.27",
     progress: "관리자검토중",
+    brokerageConsignments: ["공연", "교육", "기타"],
+    requestPurpose: "perform",
   },
 ];
 
-const RegisterRequest = () => {
+const Question_Buy = () => {
   const [tab, setTab] = useState("");
   const [requestId, setRequestId] = useState(null);
+  const [purpose, setPurpose] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
 
@@ -60,8 +69,9 @@ const RegisterRequest = () => {
     detail: (
       <Tab_Container
         id={requestId}
-        pageType={"provider"}
-        infoBtnColor={color.blue_4}
+        pageType={"buyer"}
+        purpose={purpose}
+        infoBtnColor={color.orange2}
       />
     ),
   };
@@ -72,12 +82,20 @@ const RegisterRequest = () => {
       {!tab && (
         <>
           <Header
-            pageType={"provider"}
-            titleText={"등록문의"}
-            countText={`${123}건`}
-            placeholder={"이름을 검색해보세요"}
-            optionsArr1={["진행상태"]}
-            defaultOption1={"진행상태"}
+            pageType={"buyer"}
+            titleText={"등록된 문의"}
+            countText={`${listArr.length}건`}
+            placeholder={"작품이름을 검색해보세요"}
+            optionsArr1={["공연", "교육", "기타"]}
+            defaultOption1={"목적"}
+            optionsArr2={[
+              "관리자검토중",
+              "보완요청",
+              "제작사검토중",
+              "승인완료",
+              "철회완료",
+            ]}
+            defaultOption2={"진행상태"}
           />
           <TableWrapper>
             <Table>
@@ -95,8 +113,10 @@ const RegisterRequest = () => {
                 showCurrentPosts(listArr).map((item, idx) => {
                   return (
                     <List key={idx}>
-                      <Text>{item.company}</Text>
                       <Text>{item.title}</Text>
+
+                      <Text>{item.name}</Text>
+
                       <Text>{item.createdAt}</Text>
 
                       <Text>
@@ -104,6 +124,8 @@ const RegisterRequest = () => {
                           {item.progress}
                         </StatusBox>
                       </Text>
+
+                      <DetailText>견적서</DetailText>
 
                       <Text>
                         <StatusBox
@@ -113,6 +135,7 @@ const RegisterRequest = () => {
                           borderColor={color.black2}
                           onClick={() => {
                             setRequestId(item.id);
+                            setPurpose(item.requestPurpose);
                             setTab("detail");
                           }}
                         >
@@ -220,4 +243,10 @@ const TextStyle = css`
 const Text = styled.div`
   ${TextStyle}
 `;
-export default RegisterRequest;
+const DetailText = styled.div`
+  ${TextStyle};
+  text-decoration: underline;
+  text-decoration-color: ${color.black2};
+  color: ${color.black2};
+`;
+export default Question_Buy;

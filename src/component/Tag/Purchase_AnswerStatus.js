@@ -32,7 +32,7 @@ const Box = styled.div`
   line-height: 12px;
   letter-spacing: -0.5px;
   border-radius: 4px;
-  cursor: ${(props) => (props.onClick ? "pointer" : "none")};
+  cursor: ${(props) => (props.onClick ? "pointer" : "default")};
 
   ${(props) => {
     if (
@@ -70,6 +70,12 @@ const Box = styled.div`
         background-color: ${color.gray1};
         border: none;
         color: ${color.black3};
+      `;
+    } else if (typeof props.status === "boolean" && props.status === true) {
+      return css`
+        background-color: ${color.white};
+        color: ${color.black4};
+        border: 1px solid ${color.black4};
       `;
     } else {
       return css`

@@ -9,8 +9,12 @@ import color from "@styles/colors";
 import URLpage from "@src/component/admin/layout/PR/URL/Url";
 import RegisterRequest from "@src/component/admin/layout/PR/RegisterRequest/RegisterRequest";
 import Notice from "@src/component/admin/layout/PR/Notice/Notice";
-import FAQ from "@src/component/admin/layout/PR/FAQ/FAQ";
-import Question from "@src/component/admin/layout/PR/1:1/1:1";
+import PR_FAQ from "@src/component/admin/layout/PR/FAQ/FAQ";
+import PR_Question from "@src/component/admin/layout/PR/1:1/1:1";
+import Works from "@src/component/admin/layout/BY/Works/Works";
+import Question_Buy from "@src/component/admin/layout/BY/Question_Buy/Question_Buy";
+import BY_FAQ from "@src/component/admin/layout/BY/FAQ/FAQ";
+// import BY_Question from "@src/component/admin/layout/BY/1:1/1:1";
 import useSWR from "swr";
 import fetcher from "@utils/fetcher";
 import AdminCurationLists from "@src/component/admin/AdminCurationList/CurationLists";
@@ -141,12 +145,12 @@ const marginRight = ["102px", "250px", "198px", "89px", "139px", "136px"];
 // dummy Data
 
 const providerTabs = {
-  "작품 및 제작사 등록 문의 URL": <URLpage />,
-  "작품 등록 문의 관리": <RegisterRequest />,
-  공지사항: <Notice />,
-  "자주 묻는 질문": <FAQ />,
-  "1:1 문의 관리": <Question />,
-};
+"작품 및 제작사 등록 문의 URL": <URLpage />,
+"작품 등록 문의 관리": <RegisterRequest />,
+"공지사항": <Notice />,
+"자주 묻는 질문": <PR_FAQ /> ,
+"1:1 문의 관리": <PR_Question />,
+}
 
 export type CurationList = {
   id: number;
@@ -158,14 +162,15 @@ export type CurationList = {
 };
 
 function AdminIndex({ adminMode }) {
-  const { data, error, revalidate, mutate } = useSWR(
-    "/admin/home-banner",
-    fetcher,
-    {
-      dedupingInterval: 100000,
-    }
-  );
-
+  // const { data, error, revalidate, mutate } = useSWR(
+  //   "/admin/home-banner",
+  //   fetcher,
+  //   {
+  //     dedupingInterval: 100000,
+  //   }
+  // );
+const data =[{id:1, title:"aa", exposure:true, desktopUrl:'',mobileUrl:"", order:1, url:""}];
+const revalidate=async()=>{return false};
   const { data: userLogin, error: userLoginError } = useSWR(
     "/admin/me",
     fetcher
@@ -186,23 +191,26 @@ function AdminIndex({ adminMode }) {
   };
 
   const contentsList = {
-    "홈 배너 관리": (
+    "홈 배너 관리": 
       <AdminBannerList
         lists={bannerList}
         setBannerList={setBannerList}
         revalidate={revalidate}
         subContainer={subContainer}
-      />
-    ),
-    "큐레이션 관리": (
+      />,
+    "큐레이션 관리": 
       <AdminCurationLists
         lists={curationList}
         setCurationList={setCurationList}
         subContainer={subContainer}
-      />
-    ),
+      />,
     "배너 추가하기": <AddCuration setSubContainer={setSubContainer} />,
+    "작품관리": <Works />,
+    "구매문의": <Question_Buy />,
+    '자주 묻는 질문': <BY_FAQ />,
+    // '1:1 문의 관리': <BY_Question/>
   };
+
   useEffect(() => {
     if (!data) return;
     if (!data.length) return;
@@ -232,36 +240,52 @@ function AdminIndex({ adminMode }) {
   return (
     <>
       {adminMode === "buyer" && (
-        <>
-          <AdminMenu
-            menus={buyerMenus}
-            currentMenu={currentMenu}
-            setCurrentMenu={setCurrentMenu}
-            color={color.orange}
-            setSubContainer={setSubContainer}
-          />
-          <BannerListHeader
-            revalidate={revalidate}
-            data={data}
-            currentMenu={currentMenu}
-            curationList={curationList}
-            isValid={buyerMenus.includes(currentMenu)}
-            setCurrentMenu={setCurrentMenu}
-            subContainer={subContainer}
-            setSubContainer={setSubContainer}
-          />
-          <AdminHomeBannerTitle
-            titles={bannerTitle}
-            currentMenu={currentMenu}
-            subContainer={subContainer}
-          />
-          {!subContainer ? (
-            <AddCuration setSubContainer={setSubContainer} />
+        (currentMenu === '홈 배너 관리') || (currentMenu === '큐레이션 관리')|| (currentMenu === '배너 추가하기') ?
+          (
+            <>
+              <AdminMenu
+                menus={buyerMenus}
+                currentMenu={currentMenu}
+                setCurrentMenu={setCurrentMenu}
+                color={color.orange}
+                setSubContainer={setSubContainer}
+              />
+              <BannerListHeader
+                revalidate={revalidate}
+                data={data}
+                currentMenu={currentMenu}
+                curationList={curationList}
+                isValid={buyerMenus.includes(currentMenu)}
+                setCurrentMenu={setCurrentMenu}
+                subContainer={subContainer}
+                setSubContainer={setSubContainer}
+              />
+              <AdminHomeBannerTitle
+                titles={bannerTitle}
+                currentMenu={currentMenu}
+                subContainer={subContainer}
+              />
+              {!subContainer ? (
+                <AddCuration setSubContainer={setSubContainer} />
+              ) : (
+                contentsList[currentMenu]
+              )}
+            </>
           ) : (
-            contentsList[currentMenu]
-          )}
-        </>
-      )}
+          <>
+            <AdminMenu
+              menus={buyerMenus}
+              currentMenu={currentMenu}
+              setCurrentMenu={setCurrentMenu}
+              color={color.orange}
+            />
+            {contentsList[currentMenu]}
+          </>
+          )
+        )
+      }
+
+
       {adminMode === "provider" && (
         <>
           <AdminMenu

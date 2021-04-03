@@ -1,23 +1,26 @@
 import styled from "styled-components";
-import color from "../../../../styles/colors";
-import Input from "../../BasicInput/BasicInputColor";
-import Select from "../../Input/SelectOption";
+import color from "../../../../../styles/colors";
+import Input from "../../../BasicInput/BasicInputColor";
+import Select from "../../../Input/SelectOption";
 import { useState } from "react";
 import { GoSearch } from "react-icons/go";
 
 const ContentHeader = ({
+  pageType,
   titleText,
   placeholder,
   countText,
   optionsArr1,
+  defaultOption1,
   optionsArr2,
+  defaultOption2,
 }) => {
   const [inputText, setInputText] = useState("");
   const [selected, setSelected] = useState("");
   const [selected2, setSelected2] = useState("");
   return (
     <Container>
-      <TextWrapper>
+      <TextWrapper pageType={pageType}>
         {titleText} <span>{countText}</span>
       </TextWrapper>
       <InputArea resize={optionsArr2 ? optionsArr2 : null}>
@@ -41,7 +44,7 @@ const ContentHeader = ({
                 position: "absolute",
                 right: 8,
                 top: 9,
-                color: color.blue,
+                color: pageType === "buyer" ? color.orange : color.blue,
               }}
             />
           </Search_Input>
@@ -58,7 +61,7 @@ const ContentHeader = ({
               height={"40px"}
               radius={"8px"}
               fontSize={"14px"}
-              defaultOption={"카테고리"}
+              defaultOption={defaultOption1}
             />
           </Filter_Input>
           {optionsArr2 && (
@@ -70,7 +73,7 @@ const ContentHeader = ({
                 height={"40px"}
                 radius={"8px"}
                 fontSize={"14px"}
-                defaultOption={"진행상태"}
+                defaultOption={defaultOption2}
               />
             </Filter_Input>
           )}
@@ -98,7 +101,8 @@ const TextWrapper = styled.div`
 
   & > span {
     margin-left: 20px;
-    color: ${color.blue_2};
+    color: ${(props) =>
+      props.pageType === "buyer" ? color.yellow : color.blue_2};
   }
 `;
 

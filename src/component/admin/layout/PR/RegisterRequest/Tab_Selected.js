@@ -24,6 +24,14 @@ const Tab_Selected = () => {
       agreement: { url: "url.com", filename: "filename1" },
       isDeleted: false,
     },
+    {
+      id: 3,
+      name: "abc",
+      price: "200000",
+      originalMaterial: { url: "", filename: "" },
+      agreement: { url: "url.com", filename: "filename1" },
+      isDeleted: false,
+    },
   ]);
 
   console.log(selected[0].isDeleted);
@@ -50,7 +58,7 @@ const Tab_Selected = () => {
                 <PriceInputWrpper>
                   <Price
                     text={"원"}
-                    del={item.isDeleted}
+                    isInactive={item.isDeleted}
                     value={Number(selected[idx].price)}
                     onChange={(e) => {
                       let arr = [...selected];
@@ -67,6 +75,7 @@ const Tab_Selected = () => {
                   icon={false}
                   readOnly={isReadOnly}
                   data={item.originalMaterial}
+                  isInactive={item.isDeleted}
                 />
               </Text4>
               <Text4>
@@ -74,11 +83,12 @@ const Tab_Selected = () => {
                   icon={false}
                   readOnly={isReadOnly}
                   data={item.agreement}
+                  isInactive={item.isDeleted}
                 />
               </Text4>
               <Text>
                 <StatusBox
-                  status
+                  status={item.isDeleted}
                   background={color.white}
                   fontColor={color.black1}
                   borderColor={color.black2}
