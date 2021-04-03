@@ -97,7 +97,7 @@ const Section1 = ({ item }) => {
   return (
     <Item>
       <ItemImg>
-        <img src={item.poster} alt={item.title} />
+        <img src={item.posterURL.url} alt={item.title} />
       </ItemImg>
       <HouseIcon onClick={onClickHomeBtn}>
         <HiHome size="21" color={color.black3} />

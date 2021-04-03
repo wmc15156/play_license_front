@@ -12,6 +12,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import fetcher from "@utils/fetcher";
+// import { ReactCompoent as AdminLogo }from '../../public/assets/image/title.svg'
 
 export const ImageWrapper = styled.div`
   max-width: 770px;
@@ -73,7 +74,7 @@ function AdminLogin() {
         <>
           <ContainerWrapper width="580px">
             <ImageWrapper>
-              <img src={"/assets/image/title.png"} />
+              <img src={"/assets/image/title.svg"} />
             </ImageWrapper>
             <Wrapper margin={"86px"}>
               <InputBox

@@ -22,7 +22,7 @@ const NewItems = ({ list }) => {
             key={item.productId}
           >
             <ItemImg>
-              <img src={item.productImage} alt={item.productTitle} />
+              <img src={item.productImage.url} alt={item.productTitle} />
             </ItemImg>
             <ItemDesc>
               <Category>
