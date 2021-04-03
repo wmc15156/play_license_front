@@ -27,7 +27,7 @@ const Wrapper = styled.div<{
       ? `${styles.orange}`
       : typeof p.background === "boolean" && p.provider
       ? `${styles.white}`
-      : typeof p.background === "boolean"
+      : typeof p.background === "boolean" || p.background === ""
       ? `${styles.black3}`
       : `${p.background}`};
   display: flex;
@@ -83,6 +83,7 @@ const OriginalButton: FC<Props> = ({
   fontColor,
   marginRight,
 }) => {
+  console.log(typeof background, "back", provider);
   return (
     <Wrapper
       width={width}

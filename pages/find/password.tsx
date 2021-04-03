@@ -76,7 +76,8 @@ const FindPassword = () => {
         });
     }
   };
-  const finalCheck = email && name && phone && code && completedValidation;
+  const finalCheck: boolean =
+    email && name && phone && code && completedValidation;
   const onSubmit = () => {
     if (finalCheck) {
       dispatch({ type: SAVE_PASSWORD_CHECK, payload: true });
