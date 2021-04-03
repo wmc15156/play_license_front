@@ -171,10 +171,10 @@ function AdminIndex({ adminMode }) {
   // );
 const data =[{id:1, title:"aa", exposure:true, desktopUrl:'',mobileUrl:"", order:1, url:""}];
 const revalidate=async()=>{return false};
-  // const { data: userLogin, error: userLoginError } = useSWR(
-  //   "/admin/me",
-  //   fetcher
-  // );
+  const { data: userLogin, error: userLoginError } = useSWR(
+    "/admin/me",
+    fetcher
+  );
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
