@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import colors from "@styles/colors";
-import React, { FC, VFC } from "react";
+import React, { Dispatch, FC, SetStateAction, useState, VFC } from "react";
 import Comment from "@src/component/Comment/Comment";
 import { SpanWrapper } from "@src/component/molecules/TextAndInput/TextAndInput";
 import BasicInput from "@src/component/BasicInput/BasicInput";
@@ -12,6 +12,7 @@ import CheckBoxWrapper from "@src/component/CheckBoxWrapper/CheckBoxWrapper";
 import color from "@styles/colors";
 import { FaCheck } from "react-icons/fa";
 import OriginalButton from "@src/component/Button/OriginalButton";
+import { element } from "prop-types";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -115,13 +116,44 @@ const Ptitle = styled.div`
 type Props = {
   productLists: ProductLists[];
   closeModal: any;
+  selectProduct: ProductLists[];
+  select: (productId: number) => any;
+  checkboxArray: Array<number>;
+  setShowProduct: Dispatch<SetStateAction<boolean>>;
+  setSelectProduct: Dispatch<SetStateAction<ProductLists[]>>;
+  setCheckboxArray: Dispatch<SetStateAction<number[]>>;
 };
 
-const RegisterCuration: VFC<Props> = ({ productLists, closeModal }) => {
+const RegisterCuration: VFC<Props> = ({
+  productLists,
+  closeModal,
+  selectProduct,
+  select,
+  checkboxArray,
+  setShowProduct,
+  setSelectProduct,
+  setCheckboxArray,
+}) => {
   const [search, setSearch] = useInput("");
-  const [selectProduct, setSelectProduct] = useInput("");
-  const onClickHandler = (id) => () => {
-    console.log("click");
+  const onSubmit = () => {
+    console.log(selectProduct);
+    if (selectProduct.length < 3) {
+      alert("큐레이션 등록시 3개 이상의 작품을 선택해주세요");
+      return;
+    }
+    if (selectProduct.length > 10) {
+      alert("큐레이션 등록시 작품 등록은 10개까지 가능해요.");
+      return;
+    }
+    setShowProduct(true);
+    closeModal();
+  };
+
+  const canceledSelect = () => {
+    setSelectProduct([]);
+    setCheckboxArray([]);
+    setShowProduct(false);
+    closeModal();
   };
 
   return (
@@ -151,7 +183,9 @@ const RegisterCuration: VFC<Props> = ({ productLists, closeModal }) => {
             productLists.map((item, i) => (
               <Item
                 key={item.productId}
-                onClick={onClickHandler(item.productId)}
+                onClick={() => {
+                  select(item.productId)();
+                }}
               >
                 <a>
                   <ItemImg>
@@ -163,7 +197,7 @@ const RegisterCuration: VFC<Props> = ({ productLists, closeModal }) => {
                     <div>
                       {item.brokerageConsignments.map((cate, i) => {
                         return (
-                          <Tag title={cate} key={item.productId}>
+                          <Tag title={cate} key={i}>
                             {cate}
                           </Tag>
                         );
@@ -173,8 +207,12 @@ const RegisterCuration: VFC<Props> = ({ productLists, closeModal }) => {
                       <CheckBoxWrapper
                         width={"24px"}
                         height={"24px"}
-                        onChange={setSelectProduct}
-                        value={selectProduct ? color.pink : ""}
+                        onChange={select(item.productId)}
+                        value={
+                          checkboxArray.includes(item.productId)
+                            ? color.pink
+                            : ""
+                        }
                         borderRadius={"50%"}
                       >
                         <FaCheck
@@ -212,7 +250,7 @@ const RegisterCuration: VFC<Props> = ({ productLists, closeModal }) => {
           size={"12px"}
           fontColor={colors.black2}
           marginRight={"20px"}
-          onClick={closeModal}
+          onClick={canceledSelect}
         >
           선택취소
         </OriginalButton>
@@ -223,6 +261,7 @@ const RegisterCuration: VFC<Props> = ({ productLists, closeModal }) => {
           margin={""}
           background={colors.orange}
           size={"12px"}
+          onClick={onSubmit}
         >
           선택완료
         </OriginalButton>

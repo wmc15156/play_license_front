@@ -7,13 +7,14 @@ import TextAndInput, {
 } from "@src/component/molecules/TextAndInput/TextAndInput";
 import colors from "@styles/colors";
 import useInput from "@utils/useInput";
-import { useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import TextAndDropDown from "@src/component/molecules/TextAndDropDown/TextAndDropDown";
 import styled from "styled-components";
 import OriginalButton from "@src/component/Button/OriginalButton";
 import useModal from "@utils/useModal";
 import BannerRemoveModal from "@src/component/admin/Modal/BannerRemove";
 import RegisterCuation from "@src/component/admin/Modal/RegisterCuation";
+import RegisterProductList from "@src/component/admin/AdminRegisterProductList/ResisterProductList";
 
 const productList = [
   {
@@ -86,17 +87,17 @@ const productList = [
 type Post = {
   filename: string;
   url: string;
-}
+};
 
 export type ProductLists = {
-  productId: number,
+  productId: number;
   poster: Post;
   brokerageConsignments: Array<string>;
   category: string;
   year: string;
   company: string;
   title: string;
-}
+};
 
 const UlWrapper = styled.ul<{ fontColor: boolean }>`
   position: relative;
@@ -136,16 +137,34 @@ export const DivWrapper = styled.div<{ margin: string; flexEnd?: boolean }>`
   z-index: 1;
 `;
 
-const AddCuration = () => {
+type Props = {
+  setSubContainer: Dispatch<SetStateAction<boolean>>;
+};
+
+const AddCuration: FC<Props> = ({ setSubContainer }) => {
   const [curationName, setCurationName] = useInput("");
   const [kind, setKind] = useState("디폴트");
   const [subKind, setSubKind] = useState("스페셜");
   const { ModalPortal, openModal, closeModal } = useModal();
   const [open, setOpen] = useState(false);
   const [productLists, setProductLists] = useState(productList);
-
+  const [selectProduct, setSelectProduct] = useState<ProductLists[]>([]);
+  const [checkboxArray, setCheckboxArray] = useState<Array<number>>([]);
+  const [showProduct, setShowProduct] = useState(false);
   const toggle = () => {
     setOpen((prevState) => !prevState);
+  };
+
+  const goBack = () => {
+    console.log("here");
+    setSubContainer(true);
+  };
+
+  const removeSelectedProduct = (id) => () => {
+    const removeProduct = selectProduct.filter((prod) => prod.productId !== id);
+    const removeCheckbox = checkboxArray.filter((ele) => ele !== id);
+    setSelectProduct(removeProduct);
+    setCheckboxArray(removeCheckbox);
   };
 
   const onChangeKind = () => {
@@ -153,7 +172,29 @@ const AddCuration = () => {
     setSubKind((prevState) => (prevState === "디폴트" ? "스페셜" : "디폴트"));
     toggle();
   };
-  console.log("addCuration");
+
+  const select = (id) => () => {
+    const product = selectProduct.filter((product) => product.productId === id);
+
+    if (!product.length) {
+      const oneProduct = productLists.filter(
+        (product) => product.productId === id
+      );
+      setCheckboxArray((prevState) => [...prevState, id]);
+      setSelectProduct((prevState) => [...prevState, ...oneProduct]);
+      return;
+    }
+    const removeProduct = selectProduct.filter(
+      (product) => product.productId !== id
+    );
+    setSelectProduct(removeProduct);
+    const removeCheckbox = checkboxArray.filter((ele) => ele !== id);
+    setCheckboxArray(removeCheckbox);
+  };
+
+  const onSubmitHandler = () => {
+    console.log(selectProduct);
+  };
   return (
     <ContainerWrapper width={"722px"}>
       <Comment font={"18px"} margin={"50px"}>
@@ -214,6 +255,26 @@ const AddCuration = () => {
           작품등록하기
         </OriginalButton>
       </DivWrapper>
+      {showProduct && (
+        <div style={{ marginTop: "22px", position: "relative" }}>
+          {showProduct &&
+            selectProduct.map((product) => (
+              <RegisterProductList
+                key={product.productId}
+                title={product.title}
+                removeSelectedProduct={removeSelectedProduct}
+                id={product.productId}
+              />
+            ))}
+          <Line
+            background={false}
+            width={"630px"}
+            height={"2px"}
+            wrapperHeight={"0"}
+            position={true}
+          />
+        </div>
+      )}
       <DivWrapper margin={"20px"} flexEnd={true}>
         <OriginalButton
           width={"100px"}
@@ -223,6 +284,7 @@ const AddCuration = () => {
           size={"12px"}
           fontColor={colors.black2}
           marginRight={"20px"}
+          onClick={goBack}
         >
           이전으로
         </OriginalButton>
@@ -233,13 +295,23 @@ const AddCuration = () => {
           margin={""}
           background={colors.orange}
           size={"12px"}
+          onClick={onSubmitHandler}
         >
           등록하기
         </OriginalButton>
       </DivWrapper>
 
       <ModalPortal>
-        <RegisterCuation productLists={productLists} closeModal={closeModal}/>
+        <RegisterCuation
+          productLists={productLists}
+          closeModal={closeModal}
+          selectProduct={selectProduct}
+          select={select}
+          checkboxArray={checkboxArray}
+          setShowProduct={setShowProduct}
+          setSelectProduct={setSelectProduct}
+          setCheckboxArray={setCheckboxArray}
+        />
       </ModalPortal>
     </ContainerWrapper>
   );
