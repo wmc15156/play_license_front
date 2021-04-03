@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import color from "../../../../../../styles/colors";
-import Header from "../../../common/ContentHeader";
+import Header from "../../../common/Header/ContentHeader";
 import { TabContainer } from "../../../../../../styles/PL_Frame";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ToggleSwitchBtn from "../../../../../../src/component/ToggleSwitch/ToggleSwitch";
@@ -110,6 +110,8 @@ const FAQ = () => {
         titleText={"등록된 FAQ"}
         count={`${9}개`}
         btnText={"FAQ 추가하기"}
+        pageType={"provider"}
+        btnBodyColor={color.blue_4}
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <TableWrapper>

@@ -5,17 +5,24 @@ import { useState, useRef, useEffect } from "react";
 import { VscChromeClose } from "react-icons/vsc";
 import Loader from "../Loader/SmallCircle";
 
-const FileUploader = ({ data, fileURLhandler, readOnly, icon }) => {
+const FileUploader = ({
+  data,
+  btnName,
+  fileURLhandler,
+  readOnly,
+  icon,
+  isInactive,
+}) => {
   const [btnText, setBtnText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const inputFileUploader = useRef(null);
 
   useEffect(() => {
-    console.log(" fileupload data", data);
+    // console.log(" fileupload data", data);
     if (data.filename) {
       setBtnText(data.filename);
     } else {
-      setBtnText("파일첨부");
+      setBtnText(btnName ? btnName : "파일첨부");
     }
   }, [data]);
 
@@ -67,14 +74,14 @@ const FileUploader = ({ data, fileURLhandler, readOnly, icon }) => {
   return (
     <Container>
       {btnText.includes("파일첨부") ? (
-        <Label onClick={handleClick}>
-          <Text>{btnText}</Text>
+        <Label onClick={handleClick} isInactive={isInactive}>
+          <Text isInactive={isInactive}>{btnText}</Text>
         </Label>
       ) : (
         <Label changeStyle>
           {isLoading && (
             <>
-              <Text changeStyle>{btnText}</Text>
+              <FileText>{btnText}</FileText>
               <Icon onClick={resetFile}>
                 <Loader color={color.blue} />
               </Icon>
@@ -82,9 +89,16 @@ const FileUploader = ({ data, fileURLhandler, readOnly, icon }) => {
           )}
           {!isLoading && (
             <>
-              <Text changeStyle onClick={() => downloadFile(data.url)}>
+              <FileText
+                isInactive={isInactive}
+                onClick={() =>
+                  isInactive === true
+                    ? console.log("nothing downloaded")
+                    : downloadFile(data.url)
+                }
+              >
                 {btnText}
-              </Text>
+              </FileText>
               {icon && (
                 <Icon onClick={resetFile}>
                   <VscChromeClose size={13} color={color.black4} />
@@ -111,7 +125,10 @@ const Label = styled.div`
   display: flex;
   align-items: center;
   width: 80px;
-  border: 1px solid ${color.black3};
+  border: ${(props) =>
+    props.isInactive
+      ? `1px solid ${color.black4}`
+      : `1px solid ${color.black3}`};
   border-radius: 8px;
   justify-content: center;
 
@@ -133,6 +150,7 @@ const Icon = styled.div`
   display: flex;
   align-items: center;
 `;
+
 const Text = styled.div`
   display: inline-block;
   font-family: "NotoSansCJKkr-Bold";
@@ -140,19 +158,19 @@ const Text = styled.div`
   font-size: 12px;
   line-height: 12px;
   padding: 8px 18px;
-  color: ${color.black3};
+  color: ${(props) => (props.isInactive ? color.black4 : color.black3)};
+`;
 
-  ${(props) =>
-    props.changeStyle &&
-    css`
-      display: block;
-      padding: 0;
-      color: ${color.black1};
-      text-decoration: underline;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    `}
+const FileText = styled.div`
+  display: block;
+  padding: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-decoration: underline;
+  text-decoration-color: ${(props) =>
+    props.isInactive ? color.black4 : color.black1};
+  color: ${(props) => (props.isInactive ? color.black4 : color.black1)};
 `;
 
 const Uploader = styled.input.attrs({

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import color from "../../../../../../styles/colors";
-import Header from "../../../common/ContentHeader2";
+import Header from "../../../common/Header/ContentHeader2";
 import { TabContainer } from "../../../../../../styles/PL_Frame";
 import useModal from "../../../../../../utils/useModal";
 import Pagination from "../../../../../../src/component/Pagination/Pagination";
@@ -61,11 +61,14 @@ const Question = () => {
   return (
     <Container>
       <Header
+        pageType={"provider"}
         titleText={"1:1 문의관리"}
         countText={`${48}개`}
         placeholder={"이메일, 제목, 내용을 검색해보세요"}
         optionsArr1={["1"]}
+        defaultOption1={"카테고리"}
         optionsArr2={["답변요청", "답변완료 "]}
+        defaultOption2={"상태변경"}
       />
 
       <TableWrapper>

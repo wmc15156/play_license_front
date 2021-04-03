@@ -1,10 +1,10 @@
 import styled, { css } from "styled-components";
 import color from "../../../../../../styles/colors";
-import Header from "../../../common/ContentHeader2";
+import Header from "../../../common/Header/ContentHeader2";
 import { TabContainer } from "../../../../../../styles/PL_Frame";
 import Pagination from "../../../../../../src/component/Pagination/Pagination";
 import StatusBox from "../../../../../../src/component/Tag/Purchase_AnswerStatus";
-import Tab_Container from "./Tab_Container";
+import Tab_Container from "../../../common/Wrapper/Tab_Container";
 import { useEffect, useState } from "react";
 
 const titleArr = ["제작사", "작품명", "문의일자", "진행상태", "상세보기"];
@@ -45,19 +45,25 @@ const RegisterRequest = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(10);
 
-    const indexOfLast = currentPage * postsPerPage;
-    const indexOfFirst = indexOfLast - postsPerPage; // 0
+  const indexOfLast = currentPage * postsPerPage;
+  const indexOfFirst = indexOfLast - postsPerPage; // 0
 
-    const showCurrentPosts = (tmp) => {
-      let currentPosts = 0;
-      currentPosts = tmp.slice(indexOfFirst, indexOfLast);
+  const showCurrentPosts = (tmp) => {
+    let currentPosts = 0;
+    currentPosts = tmp.slice(indexOfFirst, indexOfLast);
     return currentPosts;
   };
 
   useEffect(() => setTab(""), []);
 
   const Tab = {
-    detail: <Tab_Container id={requestId} />,
+    detail: (
+      <Tab_Container
+        id={requestId}
+        pageType={"provider"}
+        infoBtnColor={color.blue_4}
+      />
+    ),
   };
 
   return (
@@ -66,10 +72,12 @@ const RegisterRequest = () => {
       {!tab && (
         <>
           <Header
+            pageType={"provider"}
             titleText={"등록문의"}
             countText={`${123}건`}
             placeholder={"이름을 검색해보세요"}
             optionsArr1={["진행상태"]}
+            defaultOption1={"진행상태"}
           />
           <TableWrapper>
             <Table>
@@ -99,7 +107,7 @@ const RegisterRequest = () => {
 
                       <Text>
                         <StatusBox
-                          status
+                          status={false}
                           background={color.white}
                           fontColor={color.black1}
                           borderColor={color.black2}

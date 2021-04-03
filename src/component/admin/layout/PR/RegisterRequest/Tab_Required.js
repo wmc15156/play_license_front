@@ -7,16 +7,28 @@ import { useState } from "react";
 const required = {
   select: [
     {
+      id: 1,
       name: "필수자료1",
       price: "라이선스 비용에 포함",
       originalMaterial: { url: "url.com", filename: "filename1" },
       agreement: { url: "url.com", filename: "filename1" },
+      isDeleted: false,
     },
   ],
 };
 
 const Tab_Required = () => {
   const [isReadOnly, setIsReadOnly] = useState(true);
+  const [selected, setSelected] = useState([
+    {
+      id: 1,
+      name: "필수자료1",
+      price: "라이선스 비용에 포함",
+      originalMaterial: { url: "url.com", filename: "filename1" },
+      agreement: { url: "url.com", filename: "filename1" },
+      isDeleted: false,
+    },
+  ]);
   return (
     <Container>
       <Table>
@@ -28,7 +40,7 @@ const Tab_Required = () => {
           <TitleText3>위탁동의서</TitleText3>
           <TitleText>자료삭제</TitleText>
         </Table_Title>
-        {required.select.map((item, idx) => {
+        {selected.map((item, idx) => {
           return (
             <List key={idx}>
               <Text1>필수</Text1>
@@ -39,6 +51,7 @@ const Tab_Required = () => {
                   icon={false}
                   readOnly={isReadOnly}
                   data={item.originalMaterial}
+                  isInactive={item.isDeleted}
                 />
               </Text3>
               <Text3>
@@ -46,16 +59,20 @@ const Tab_Required = () => {
                   icon={false}
                   readOnly={isReadOnly}
                   data={item.agreement}
+                  isInactive={item.isDeleted}
                 />
               </Text3>
               <Text>
                 <StatusBox
-                  status
+                  status={item.isDeleted}
                   background={color.white}
                   fontColor={color.black1}
                   borderColor={color.black2}
                   onClick={() => {
                     console.log("자료삭제");
+                    let arr = [...selected];
+                    arr[idx] = { ...selected[idx], isDeleted: true };
+                    setSelected(arr);
                   }}
                 >
                   {"자료삭제"}
@@ -140,15 +157,6 @@ const TextStyle = css`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-`;
-
-const DetailText = styled.div`
-  text-decoration: underline ${color.black2};
-  & > span {
-    cursor: pointer;
-    color: ${color.black2};
-  }
-  ${TextStyle}
 `;
 
 const Text = styled.div`
