@@ -21,7 +21,11 @@ const items_selectMaterial = [
   "기타",
 ];
 
-const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
+const AboutPerformance_edu = ({
+  perfInfoState,
+  setPerfInfoState,
+  readOnly,
+}) => {
   const removeSelectItemHandler = useCallback(
     (name) => {
       let array = perfInfoState.selectedMaterials.select;
@@ -89,6 +93,8 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
             <InputArea>
               <InputArea_Row1>
                 <Selector
+                  height={"40px"}
+                  readOnly={readOnly}
                   value={perfInfoState.objective[0]}
                   options={[
                     "교육자료개발",
@@ -111,6 +117,8 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
               <InputArea_Row1>
                 {perfInfoState.objective[0] === "기타" && (
                   <BasicInput
+                    height={"40px"}
+                    readOnly={readOnly}
                     width={"100%"}
                     placeholder={"직접입력"}
                     background={color.white}
@@ -135,6 +143,8 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
           <Content>
             <SelectorWrapper>
               <Selector
+                height={"40px"}
+                readOnly={readOnly}
                 value={perfInfoState.period}
                 options={["A형(6개월)", "B형(12개월)"]}
                 onChange={(e) =>
@@ -246,6 +256,8 @@ const AboutPerformance_edu = ({ perfInfoState, setPerfInfoState }) => {
                       ) && (
                         <>
                           <BasicInput
+                            height={"40px"}
+                            readOnly={readOnly}
                             width={"100%"}
                             placeholder={"직접입력"}
                             background={color.gray1}

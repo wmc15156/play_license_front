@@ -4,12 +4,19 @@ import InputWithText from "../../BasicInput/InputWithText";
 import Btn from "../../Button/GrayShortBtn";
 import { useState, useEffect } from "react";
 
-const Price = ({ del, value = 0, onChange, text, btnText, btnClick }) => {
+const Price = ({
+  isInactive,
+  value = 0,
+  onChange,
+  text,
+  btnText,
+  btnClick,
+}) => {
   const [deleted, setDeleted] = useState();
   return (
     <Container>
-      {del && <span>{value}원</span>}
-      {!del && (
+      {isInactive && <span>{value}원</span>}
+      {!isInactive && (
         <>
           <InputWrapper btnText={btnText}>
             <InputWithText

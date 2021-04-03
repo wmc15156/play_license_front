@@ -2,7 +2,7 @@ import styled from "styled-components";
 import color from "../../../styles/colors";
 import BasicInput from "../BasicInput/BasicInputColor";
 
-const Group = ({ groupState, groupStateHandler }) => {
+const Group = ({ groupState, groupStateHandler, readOnly }) => {
   return (
     <Container>
       <HeadSection>
@@ -13,7 +13,9 @@ const Group = ({ groupState, groupStateHandler }) => {
         <Input>
           <SubTitle>단체이름</SubTitle>
           <BasicInput
+            height={"40px"}
             width={"100%"}
+            readOnly={readOnly}
             placeholder={"동호회명이나 동아리명 등의 이름을 적어주세요"}
             onChange={(e) =>
               groupStateHandler({
@@ -27,6 +29,8 @@ const Group = ({ groupState, groupStateHandler }) => {
         <Input>
           <SubTitle>소속소개</SubTitle>
           <BasicInput
+            height={"40px"}
+            readOnly={readOnly}
             width={"100%"}
             placeholder={"소개말을 적어주세요"}
             onChange={(e) =>

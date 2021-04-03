@@ -2,7 +2,7 @@ import styled from "styled-components";
 import color from "../../../styles/colors";
 import BasicInput from "../BasicInput/BasicInputColor";
 
-const UserInfo = ({ userInfoState, userInfoStateHandler }) => {
+const UserInfo = ({ userInfoState, userInfoStateHandler, readOnly }) => {
   return (
     <Container>
       <HeadSection>
@@ -16,6 +16,8 @@ const UserInfo = ({ userInfoState, userInfoStateHandler }) => {
         <Input>
           <SubTitle>이름</SubTitle>
           <BasicInput
+            height={"40px"}
+            readOnly={readOnly}
             width={"100%"}
             placeholder={"이름을 적어주세요"}
             onChange={(e) =>
@@ -27,6 +29,8 @@ const UserInfo = ({ userInfoState, userInfoStateHandler }) => {
         <Input>
           <SubTitle>연락처</SubTitle>
           <BasicInput
+            height={"40px"}
+            readOnly={readOnly}
             width={"100%"}
             placeholder={"연락처를 적어주세요"}
             onChange={(e) =>
@@ -38,6 +42,8 @@ const UserInfo = ({ userInfoState, userInfoStateHandler }) => {
         <Input>
           <SubTitle>남기실 말씀</SubTitle>
           <BasicInput
+            height={"40px"}
+            readOnly={readOnly}
             width={"100%"}
             placeholder={"자유롭게 입력해주세요"}
             onChange={(e) =>

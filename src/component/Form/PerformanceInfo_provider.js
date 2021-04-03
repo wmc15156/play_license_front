@@ -23,7 +23,7 @@ const items_selectMaterial = [
   "기타",
 ];
 
-const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
+const AboutPerformance = ({ perfInfoState, setPerfInfoState, readOnly }) => {
   const handleStartDateInput = (i, e) => {
     const planValues = [...perfInfoState.plan];
     planValues[i]["startDate"] = e;
@@ -150,6 +150,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
             <InputArea>
               <InputArea_Row1>
                 <Selector
+                  height={"40px"}
+                  readOnly={readOnly}
                   value={perfInfoState.planDocument[0]}
                   options={[
                     "동호회 작품 발표",
@@ -173,6 +175,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
               <InputArea_Row1>
                 {perfInfoState.planDocument[0] === "기타" && (
                   <BasicInput
+                    height={"40px"}
+                    readOnly={readOnly}
                     width={"100%"}
                     placeholder={"직접입력"}
                     background={color.white}
@@ -262,6 +266,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
           <Content>
             <SelectorWrapper>
               <Selector
+                height={"40px"}
+                readOnly={readOnly}
                 value={perfInfoState.round}
                 options={[1, 2, 3]}
                 onChange={(e) =>
@@ -281,6 +287,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
               <InputArea_Row1>
                 <SelectorWrapper>
                   <Selector
+                    height={"40px"}
+                    readOnly={readOnly}
                     value={perfInfoState.place["place_select"]}
                     options={[1, 2, 3]}
                     onChange={(e) =>
@@ -296,6 +304,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                 </SelectorWrapper>
                 <InputWrapper>
                   <BasicInput
+                    height={"40px"}
+                    readOnly={readOnly}
                     width={"100%"}
                     placeholder={"구체적 장소를 입력해주세요."}
                     background={color.gray1}
@@ -313,6 +323,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                 </InputWrapper>
               </InputArea_Row1>
               <BasicInput
+                height={"40px"}
+                readOnly={readOnly}
                 width={"100%"}
                 placeholder={
                   "비고사항 입력 (예시 : 상설공연장이 아닌 강당입니다.)"
@@ -339,6 +351,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
             <InputArea>
               <InputArea_Row1>
                 <BasicInput
+                  height={"40px"}
+                  readOnly={readOnly}
                   width={"100%"}
                   placeholder={"1매당 가격을 입력해주세요."}
                   background={color.gray1}
@@ -359,6 +373,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
 
           <Content>
             <Selector
+              height={"40px"}
+              readOnly={readOnly}
               value={perfInfoState.isChangedScenario}
               options={["각색있음", "각색없음"]}
               onChange={(e) =>
@@ -399,6 +415,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                     {label === "기타" &&
                       perfInfoState.changedRange.select.includes("기타") && (
                         <BasicInput
+                          height={"40px"}
+                          readOnly={readOnly}
                           width={"100%"}
                           placeholder={"직접입력"}
                           background={color.gray1}
@@ -482,6 +500,9 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                       ) && (
                         <>
                           <BasicInput
+                            fontSize={"14px"}
+                            height={"40px"}
+                            readOnly={readOnly}
                             width={"100%"}
                             placeholder={"직접입력"}
                             background={color.gray1}
@@ -514,6 +535,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
               <InputArea_Row1>
                 <SelectorWrapper>
                   <Selector
+                    height={"40px"}
+                    readOnly={readOnly}
                     options={["배우"]}
                     onChange={(e) =>
                       setPerfInfoState({
@@ -532,6 +555,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                 </SelectorWrapper>
                 <InputWrapper>
                   <BasicInput
+                    height={"40px"}
+                    readOnly={readOnly}
                     width={"100%"}
                     placeholder={"배우 참여인원수를 입력해주세요."}
                     background={color.gray1}
@@ -554,6 +579,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
               <InputArea_Row1>
                 <SelectorWrapper>
                   <Selector
+                    height={"40px"}
+                    readOnly={readOnly}
                     value={perfInfoState.participant.staff["select"]}
                     options={["스텝"]}
                     onChange={(e) =>
@@ -572,6 +599,8 @@ const AboutPerformance = ({ perfInfoState, setPerfInfoState }) => {
                 </SelectorWrapper>
                 <InputWrapper>
                   <BasicInput
+                    height={"40px"}
+                    readOnly={readOnly}
                     width={"100%"}
                     placeholder={"스텝 참여인원수를 입력해주세요."}
                     background={color.gray1}
