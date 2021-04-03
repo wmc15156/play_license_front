@@ -12,6 +12,7 @@ const FileUploader = ({
   readOnly,
   icon,
   isInactive,
+  color,
 }) => {
   const [btnText, setBtnText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -21,8 +22,10 @@ const FileUploader = ({
     // console.log(" fileupload data", data);
     if (data.filename) {
       setBtnText(data.filename);
+    } else if (typeof btnName === "string" && btnName.length > 0) {
+      setBtnText(btnName);
     } else {
-      setBtnText(btnName ? btnName : "파일첨부");
+      setBtnText("파일첨부");
     }
   }, [data]);
 
@@ -73,9 +76,15 @@ const FileUploader = ({
 
   return (
     <Container>
-      {btnText.includes("파일첨부") ? (
-        <Label onClick={handleClick} isInactive={isInactive}>
-          <Text isInactive={isInactive}>{btnText}</Text>
+      {btnText.includes("파일첨부") || btnText.includes("업로드") ? (
+        <Label
+          color={color ? color : null}
+          onClick={handleClick}
+          isInactive={isInactive}
+        >
+          <Text isInactive={isInactive} color={color ? color : null}>
+            {btnText}
+          </Text>
         </Label>
       ) : (
         <Label changeStyle>
@@ -83,7 +92,7 @@ const FileUploader = ({
             <>
               <FileText>{btnText}</FileText>
               <Icon onClick={resetFile}>
-                <Loader color={color.blue} />
+                <Loader color={color} />
               </Icon>
             </>
           )}
@@ -125,10 +134,19 @@ const Label = styled.div`
   display: flex;
   align-items: center;
   width: 80px;
-  border: ${(props) =>
+  ${(props) =>
     props.isInactive
-      ? `1px solid ${color.black4}`
-      : `1px solid ${color.black3}`};
+      ? css`
+          border: 1px solid ${color.black4};
+        `
+      : css`
+          border: 1px solid ${color.black3};
+        `};
+  ${(props) =>
+    props.color &&
+    css`
+      border: 1px solid ${props.color};
+    `};
   border-radius: 8px;
   justify-content: center;
 
@@ -158,7 +176,19 @@ const Text = styled.div`
   font-size: 12px;
   line-height: 12px;
   padding: 8px 18px;
-  color: ${(props) => (props.isInactive ? color.black4 : color.black3)};
+  ${(props) =>
+    props.isInactive
+      ? css`
+          color: color.black4;
+        `
+      : css`
+          color: color.black3;
+        `};
+  ${(props) =>
+    props.color &&
+    css`
+      color: ${props.color};
+    `};
 `;
 
 const FileText = styled.div`

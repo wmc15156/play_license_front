@@ -10,6 +10,7 @@ import { useState } from "react";
 import { values } from "lodash";
 
 const Modal_AddItem = ({
+  pageType,
   closeModalHandler,
   title,
   itemArr,
@@ -48,7 +49,7 @@ const Modal_AddItem = ({
   return (
     <Container>
       <HeadSection>
-        <T>
+        <T pageType={pageType}>
           <span>{title}</span> 추가하기
         </T>
       </HeadSection>
@@ -144,13 +145,12 @@ const Modal_AddItem = ({
               <SubTitle>첨부파일</SubTitle>
               <UploadWrapper>
                 <Uploader
+                  btnName={"업로드"}
                   readOnly={false}
                   data={newItem.file}
                   fileURLhandler={getFileURL}
                   icon
-                  backgroundColor={color.white}
-                  borderStyle={`1px solid ${color.blue}`}
-                  fontColor={color.blue}
+                  color={pageType === "provider" ? color.blue : color.orange}
                   width={"100px"}
                 />
               </UploadWrapper>
@@ -171,7 +171,7 @@ const Modal_AddItem = ({
             <Btn2>
               <Btn_Color
                 width={"100%"}
-                background={color.blue}
+                background={pageType === "provider" ? color.blue : color.orange}
                 margin={"0px"}
                 height={"36px"}
                 size={"12px"}
@@ -209,7 +209,8 @@ const T = styled.div`
   line-height: 24px;
 
   & > span {
-    color: ${color.blue};
+    color: ${(props) =>
+      props.pageType === "provider" ? color.blue : color.orange};
   }
 `;
 
