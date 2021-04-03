@@ -38,6 +38,7 @@ const MyInfo = () => {
 
   const onLogOut = () => {
     axios.post("/auth/logout").then((res) => {
+      console.log(res.data);
       mutate(false, false);
       router.push("/");
     });
