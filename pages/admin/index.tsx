@@ -8,13 +8,14 @@ import AdminBannerList, {
 import color from "@styles/colors";
 import URLpage from "@src/component/admin/layout/PR/URL/Url";
 import RegisterRequest from "@src/component/admin/layout/PR/RegisterRequest/RegisterRequest";
-import Notice from "@src/component/admin/layout/PR/Notice/Notice";
+import PR_Notice from "@src/component/admin/layout/PR/Notice/Notice";
 import PR_FAQ from "@src/component/admin/layout/PR/FAQ/FAQ";
 import PR_Question from "@src/component/admin/layout/PR/1:1/1:1";
 import Works from "@src/component/admin/layout/BY/Works/Works";
 import Question_Buy from "@src/component/admin/layout/BY/Question_Buy/Question_Buy";
 import BY_FAQ from "@src/component/admin/layout/BY/FAQ/FAQ";
 // import BY_Question from "@src/component/admin/layout/BY/1:1/1:1";
+import BY_Notice from "@src/component/admin/layout/BY/Notice/Notice"
 import useSWR from "swr";
 import fetcher from "@utils/fetcher";
 import AdminCurationLists from "@src/component/admin/AdminCurationList/CurationLists";
@@ -28,6 +29,7 @@ const buyerMenus = [
   "구매문의",
   "자주 묻는 질문",
   "1:1 문의 관리",
+  "공지사항",
 ];
 
 const providerMenus = [
@@ -147,7 +149,7 @@ const marginRight = ["102px", "250px", "198px", "89px", "139px", "136px"];
 const providerTabs = {
 "작품 및 제작사 등록 문의 URL": <URLpage />,
 "작품 등록 문의 관리": <RegisterRequest />,
-"공지사항": <Notice />,
+"공지사항": <PR_Notice />,
 "자주 묻는 질문": <PR_FAQ /> ,
 "1:1 문의 관리": <PR_Question />,
 }
@@ -208,7 +210,8 @@ const revalidate=async()=>{return false};
     "작품관리": <Works />,
     "구매문의": <Question_Buy />,
     '자주 묻는 질문': <BY_FAQ />,
-    // '1:1 문의 관리': <BY_Question/>
+    // '1:1 문의 관리': <BY_Question/>,
+    '공지사항': <BY_Notice />
   };
 
   useEffect(() => {

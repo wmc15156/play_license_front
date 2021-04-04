@@ -5,9 +5,9 @@ const Noticetab = () => {
   return (
     <div>
       <Notice
-        pageType={"provider"}
-        btnBodyColor={color.blue_4}
-        mainColor={color.blue}
+        pageType={"buyer"}
+        btnBodyColor={color.orange2}
+        mainColor={color.orange}
       />
     </div>
   );

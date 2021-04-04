@@ -9,7 +9,13 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 // 1:1문의 자세히보기 클릭
-const Modal_Noticedetail = ({ url, id, closeModalHandler }) => {
+const Modal_Noticedetail = ({
+  url,
+  id,
+  closeModalHandler,
+  pageType,
+  mainColor,
+}) => {
   const [mode, setMode] = useState("check");
   const [readOnly, setReadOnly] = useState(true);
   const [data, setData] = useState({
@@ -50,7 +56,7 @@ const Modal_Noticedetail = ({ url, id, closeModalHandler }) => {
   return (
     <Container>
       <HeadSection>
-        <T>
+        <T pageType={pageType}>
           <span>공지사항</span> {mode === "check" ? "자세히보기" : "수정하기"}
         </T>
       </HeadSection>
@@ -94,6 +100,7 @@ const Modal_Noticedetail = ({ url, id, closeModalHandler }) => {
                 readOnly={readOnly}
                 imgSrc={file.url}
                 background={color.gray1}
+                iconColor={mainColor}
               />
             )}
 
@@ -103,6 +110,7 @@ const Modal_Noticedetail = ({ url, id, closeModalHandler }) => {
                 readOnly={readOnly}
                 imgSrc={file.url}
                 borderStyle={`1px solid ${color.black5}`}
+                iconColor={mainColor}
                 clickIconHandler={() =>
                   setData({
                     ...data,
@@ -142,7 +150,7 @@ const Modal_Noticedetail = ({ url, id, closeModalHandler }) => {
                 <Btn2>
                   <Btn_Color
                     width={"100%"}
-                    background={color.blue}
+                    background={mainColor}
                     margin={"0px"}
                     height={"36px"}
                     size={"12px"}
@@ -157,7 +165,7 @@ const Modal_Noticedetail = ({ url, id, closeModalHandler }) => {
                 <Btn1>
                   <Btn_Color
                     width={"100%"}
-                    background={color.blue}
+                    background={mainColor}
                     margin={"0px"}
                     height={"36px"}
                     size={"12px"}
@@ -206,7 +214,8 @@ const T = styled.div`
   line-height: 24px;
 
   & > span {
-    color: ${color.blue};
+    color: ${(props) =>
+      props.pageType === "provider" ? color.blue : color.orange};
   }
 `;
 

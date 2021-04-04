@@ -5,7 +5,7 @@ import BasicInput from "../../../BasicInput/BasicInputColor";
 import TextArea from "../../../BasicInput/TextArea";
 import Btn_Gray from "../../../Button/GrayShortBtn";
 import Btn_Color from "../../../Button/OriginalButton";
-import Uploader from "../../../Input/ImageUploader";
+import Uploader from "../../../Input/FileUploader";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -21,10 +21,10 @@ const FAQdetail = ({ url, id, closeModalHandler, pageType }) => {
     file: { filename: "", url: "" },
   });
 
-  const getImgURL = (name, url, filename) => {
+  const getImgURL = (url, filename) => {
     setData({
       ...data,
-      [name]: { url: url, filename: filename },
+      file: { url: url, filename: filename },
     });
   };
 
@@ -116,19 +116,12 @@ const FAQdetail = ({ url, id, closeModalHandler, pageType }) => {
               <SubTitle>첨부파일</SubTitle>
               <UploadWrapper>
                 <Uploader
-                  name={"file"}
+                  btnName={"업로드"}
+                  readOnly={false}
                   data={file}
-                  getImgURL={getImgURL}
-                  icon={false}
-                  backgroundColor={color.white}
-                  borderStyle={
-                    pageType === "provider"
-                      ? `1px solid ${color.blue}`
-                      : `1px solid ${color.orange}`
-                  }
-                  fontColor={
-                    pageType === "provider" ? color.blue : color.orange
-                  }
+                  fileURLhandler={getImgURL}
+                  icon
+                  color={pageType === "provider" ? color.blue : color.orange}
                   width={"100px"}
                 />
               </UploadWrapper>
