@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import color from "../../../styles/colors";
+import colors from "../../../styles/colors";
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import { VscChromeClose } from "react-icons/vsc";
@@ -110,7 +110,7 @@ const FileUploader = ({
               </FileText>
               {icon && (
                 <Icon onClick={resetFile}>
-                  <VscChromeClose size={13} color={color.black4} />
+                  <VscChromeClose size={13} color={colors.black4} />
                 </Icon>
               )}
             </>
@@ -137,10 +137,10 @@ const Label = styled.div`
   ${(props) =>
     props.isInactive
       ? css`
-          border: 1px solid ${color.black4};
+          border: 1px solid ${colors.black4};
         `
       : css`
-          border: 1px solid ${color.black3};
+          border: 1px solid ${colors.black3};
         `};
   ${(props) =>
     props.color &&
@@ -179,10 +179,10 @@ const Text = styled.div`
   ${(props) =>
     props.isInactive
       ? css`
-          color: color.black4;
+          color: ${colors.black4};
         `
       : css`
-          color: color.black3;
+          color: ${colors.black3};
         `};
   ${(props) =>
     props.color &&
@@ -199,8 +199,8 @@ const FileText = styled.div`
   overflow: hidden;
   text-decoration: underline;
   text-decoration-color: ${(props) =>
-    props.isInactive ? color.black4 : color.black1};
-  color: ${(props) => (props.isInactive ? color.black4 : color.black1)};
+    props.isInactive ? colors.black4 : colors.black1};
+  color: ${(props) => (props.isInactive ? colors.black4 : colors.black1)};
 `;
 
 const Uploader = styled.input.attrs({

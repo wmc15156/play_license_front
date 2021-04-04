@@ -10,6 +10,7 @@ const InputTextAndImg = ({
   height,
   background,
   clickIconHandler,
+  iconColor,
 }) => {
   return (
     <Container
@@ -24,7 +25,7 @@ const InputTextAndImg = ({
             <img src={imgSrc} />
             {mode === "modify" && (
               <Icon onClick={clickIconHandler}>
-                <HiMinusCircle color={color.blue} size={29} />
+                <HiMinusCircle color={iconColor} size={29} />
               </Icon>
             )}
           </Image>
