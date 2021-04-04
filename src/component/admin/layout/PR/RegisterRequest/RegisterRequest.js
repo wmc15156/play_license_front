@@ -74,7 +74,7 @@ const RegisterRequest = () => {
           <Header
             pageType={"provider"}
             titleText={"등록문의"}
-            countText={`${123}건`}
+            countText={`${listArr.length}건`}
             placeholder={"이름을 검색해보세요"}
             optionsArr1={["진행상태"]}
             defaultOption1={"진행상태"}
