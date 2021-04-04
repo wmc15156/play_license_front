@@ -143,6 +143,8 @@ const Question = ({
               // url={}
               closeModalHandler={closeModalHandler}
               readOnly={true}
+              pageType={pageType}
+              mainColor={mainColor}
             />
           )}
           {!isChecked && (

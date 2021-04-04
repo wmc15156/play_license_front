@@ -117,20 +117,18 @@ const QuestionDetail = ({
                 </Btn2>
               </>
             ) : (
-              <>
-                <Btn2>
-                  <Btn_right
-                    width={"100%"}
-                    background={mainColor}
-                    margin={"0px"}
-                    height={"36px"}
-                    size={"12px"}
-                    // onClick={() => nextBtnHandler()}
-                  >
-                    확인
-                  </Btn_right>
-                </Btn2>
-              </>
+              <Btn2>
+                <Btn_right
+                  width={"100%"}
+                  background={mainColor}
+                  margin={"0px"}
+                  height={"36px"}
+                  size={"12px"}
+                  onClick={() => closeModalHandler()}
+                >
+                  확인
+                </Btn_right>
+              </Btn2>
             )}
           </ButtonContainer>
         </BottomSection>
