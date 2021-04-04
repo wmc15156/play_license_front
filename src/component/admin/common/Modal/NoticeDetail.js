@@ -129,6 +129,8 @@ const Modal_Noticedetail = ({
                   data={file}
                   fileURLhandler={getImgURL}
                   icon
+                  btnName={"업로드"}
+                  color={mainColor}
                 />
               </UploadWrapper>
             </Input>

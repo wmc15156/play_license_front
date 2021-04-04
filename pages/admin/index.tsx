@@ -14,7 +14,7 @@ import PR_Question from "@src/component/admin/layout/PR/1:1/1:1";
 import Works from "@src/component/admin/layout/BY/Works/Works";
 import Question_Buy from "@src/component/admin/layout/BY/Question_Buy/Question_Buy";
 import BY_FAQ from "@src/component/admin/layout/BY/FAQ/FAQ";
-// import BY_Question from "@src/component/admin/layout/BY/1:1/1:1";
+import BY_Question from "@src/component/admin/layout/BY/1:1/1:1";
 import BY_Notice from "@src/component/admin/layout/BY/Notice/Notice"
 import useSWR from "swr";
 import fetcher from "@utils/fetcher";
@@ -210,7 +210,7 @@ const revalidate=async()=>{return false};
     "작품관리": <Works />,
     "구매문의": <Question_Buy />,
     '자주 묻는 질문': <BY_FAQ />,
-    // '1:1 문의 관리': <BY_Question/>,
+    '1:1 문의 관리': <BY_Question/>,
     '공지사항': <BY_Notice />
   };
 

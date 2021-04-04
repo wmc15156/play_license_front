@@ -118,7 +118,7 @@ const Notice = ({ pageType, btnBodyColor, mainColor }) => {
       <Header
         onClick={() => openModalHandler("add")}
         titleText={"공지사항"}
-        count={`${12}개`}
+        count={`${list.length}개`}
         btnText={"공지 추가하기"}
         pageType={pageType}
         btnBodyColor={btnBodyColor}

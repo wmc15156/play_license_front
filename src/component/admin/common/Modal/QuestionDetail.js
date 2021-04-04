@@ -14,6 +14,8 @@ const QuestionDetail = ({
   closeModalHandler,
   isChecked,
   readOnly,
+  pageType,
+  mainColor,
 }) => {
   const [data, setData] = useState({
     id: 1,
@@ -34,11 +36,14 @@ const QuestionDetail = ({
   return (
     <Container>
       <HeadSection>
-        <T>
+        <T pageType={pageType}>
           <span>1:1 문의</span>관리
         </T>
         <StatusBox>
-          <AnswerStatus status={isChecked} color={color.blue_4} />
+          <AnswerStatus
+            status={isChecked}
+            color={pageType === "provider" ? color.blue_4 : color.orange}
+          />
         </StatusBox>
       </HeadSection>
       <div>
@@ -101,7 +106,7 @@ const QuestionDetail = ({
                 <Btn2>
                   <Btn_right
                     width={"100%"}
-                    background={color.blue}
+                    background={mainColor}
                     margin={"0px"}
                     height={"36px"}
                     size={"12px"}
@@ -116,7 +121,7 @@ const QuestionDetail = ({
                 <Btn2>
                   <Btn_right
                     width={"100%"}
-                    background={color.blue}
+                    background={mainColor}
                     margin={"0px"}
                     height={"36px"}
                     size={"12px"}
@@ -156,7 +161,8 @@ const T = styled.div`
   line-height: 24px;
 
   & > span {
-    color: ${color.blue};
+    color: ${(props) =>
+      props.pageType === "provider" ? color.blue : color.orange};
   }
 `;
 
