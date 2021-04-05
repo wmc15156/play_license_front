@@ -66,10 +66,12 @@ const Footer = () => {
           </QuickMenu>
           <BtnWapper>
             <Button onClick={onClickHandler}>
-              Back to the TOP
-              <span>
-                <IoIosArrowUp />
-              </span>
+              <BtnText>
+                <span>Back to the TOP</span>
+                <Icon>
+                  <IoIosArrowUp size={16} />
+                </Icon>
+              </BtnText>
             </Button>
           </BtnWapper>
         </RightSection>
@@ -192,17 +194,26 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   background-color: ${color.white};
+
   color: ${color.black3};
   padding: 5%;
   cursor: pointer;
   &:focus {
     outline: none;
   }
-  & > span {
-    display: flex;
-    align-items: center;
-    margin-left: 3%;
-  }
+`;
+
+const BtnText = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Icon = styled.span`
+  display: flex;
+  align-items: center;
+  margin-left: 3%;
 `;
 
 export default Footer;

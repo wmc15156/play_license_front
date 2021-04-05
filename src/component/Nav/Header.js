@@ -73,7 +73,7 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                 <Wrap>
                   <PersonIconWrapper>
                     <IoPersonCircleSharp
-                      size="32px"
+                      size={30}
                       color={
                         router.pathname === "/login"
                           ? styles.white
@@ -101,7 +101,7 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                 <Wrap>
                   <PersonIconWrapper>
                     <IoPersonCircleSharp
-                      size="32px"
+                      size={30}
                       color={
                         router.pathname.includes("/mypage")
                           ? styles.white
@@ -131,7 +131,7 @@ const Header = ({ menuStatus, onCloseHandler }) => {
               <Wrap>
                 <SearchWrapper>
                   <GoSearch
-                    size="28px"
+                    size={26}
                     color={
                       router.pathname === "/search"
                         ? styles.white
@@ -156,7 +156,7 @@ const Header = ({ menuStatus, onCloseHandler }) => {
               <Wrap>
                 <MenuIconWrapper>
                   <IoMenu
-                    size="32px"
+                    size={30}
                     color={
                       orangeHover // state
                         ? styles.white
@@ -198,7 +198,7 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                   <Wrap>
                     <PersonIconWrapper>
                       <IoPersonCircleSharp
-                        size="32px"
+                        size={30}
                         color={
                           router.pathname === "/login"
                             ? styles.white
@@ -228,7 +228,7 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                   <Wrap>
                     <PersonIconWrapper>
                       <IoPersonCircleSharp
-                        size="32px"
+                        size={26}
                         color={
                           router.pathname.includes("/mypage")
                             ? styles.white
@@ -260,7 +260,7 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                 <Wrap>
                   <SearchWrapper>
                     <GoSearch
-                      size="28px"
+                      size={26}
                       color={
                         router.pathname === "/search"
                           ? styles.white
@@ -286,7 +286,7 @@ const Header = ({ menuStatus, onCloseHandler }) => {
                 <Wrap>
                   <MenuIconWrapper active={menuStatus}>
                     <IoMenu
-                      size="32px"
+                      size={30}
                       color={
                         menuStatus
                           ? styles.white
@@ -416,17 +416,16 @@ const ListItem = styled.div`
 `;
 
 const Wrap = styled.div`
+  width: 100%;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 100%;
-  height: 32px;
-  line-height: 32px;
 `;
 const Text = styled.div`
+  font-family: "Gotham Medium";
   display: flex;
   align-items: center;
-  font-family: "Gotham Medium";
   font-size: 14px;
   line-height: 14px;
   margin: 0;
@@ -447,6 +446,7 @@ const SearchWrapper = styled.span`
   /* padding-right: 25%; */
   display: flex;
   align-items: center;
+  height: 26px;
 `;
 
 const PersonIconWrapper = styled.span`
@@ -454,7 +454,8 @@ const PersonIconWrapper = styled.span`
   /* padding-right: 25%; */
   display: flex;
   align-items: center;
-  z-index: 2;
+  /* z-index: 2; */
+  height: 26px;
   &:hover {
     color: ${styles.white};
   }
@@ -465,6 +466,7 @@ const MenuIconWrapper = styled.span`
   /* padding-right: 25%; */
   display: flex;
   align-items: center;
+  height: 26px;
 `;
 
 export default Header;
