@@ -179,6 +179,7 @@ const InfoBox_Modify = () => {
           <ChangePhoneNum
             role={"provider"}
             onClickHandler={closeModalHandler}
+            textColor={color.blue}
           />
         )}
         {modal === "password" && (
