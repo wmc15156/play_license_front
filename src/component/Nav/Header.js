@@ -425,11 +425,11 @@ const Wrap = styled.div`
 const Text = styled.div`
   font-family: "Gotham Medium";
   height: 32px;
-  background-color: yellowgreen;
+  border: 1px solid yellowgreen;
   display: flex;
   align-items: center;
   font-size: 14px;
-  /* line-height: 14px; */
+  line-height: 13px;
   margin: 0;
   margin-right: 12px;
   margin-left: 5px;
