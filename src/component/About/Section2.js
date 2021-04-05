@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import color from "../../../styles/colors";
 
-const Section2 = () => {
+const Section2 = ({ changeRouteHandler }) => {
   return (
     <Container>
       <HeadSection>
@@ -28,7 +28,10 @@ const Section2 = () => {
       </HeadSection>
       <BtnBox>
         <Btn>
-          <img src="/assets/image/SI_PL login.png" />
+          <img
+            src="/assets/image/SI_PL login.png"
+            onClick={() => changeRouteHandler("/login")}
+          />
           <BtnText>
             다양한 공연 라이선스 창작물들을 구매하고 싶다면? 지금 바로
             ‘구매할래요!’ 버튼을 통해 &lt;PLAY LICENSE&gt;에 로그인하여, 정당한
@@ -36,7 +39,10 @@ const Section2 = () => {
           </BtnText>
         </Btn>
         <Btn>
-          <img src="/assets/image/SI_PL provider.png" />
+          <img
+            src="/assets/image/SI_PL provider.png"
+            onClick={() => changeRouteHandler("/provider")}
+          />
           <BtnText>
             다양한 공연 라이선스 창작물들을 판매하고 싶다면? 지금 바로
             ‘판매할래요!’ 버튼을 통해 &lt;PL 제작사 센터&gt;로 이동하여, 정당한
