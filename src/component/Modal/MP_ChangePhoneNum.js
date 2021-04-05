@@ -7,7 +7,7 @@ import axios from "axios";
 import { useState, useCallback } from "react";
 import { IoClose } from "react-icons/io5";
 
-const MP_ChangePhoneNum = ({ onClickHandler, role }) => {
+const MP_ChangePhoneNum = ({ onClickHandler, role, textColor }) => {
   const [phone, setPhone] = useInput("");
   const [code, setCode] = useInput("");
   const [timer, setTimer] = useState(false);
@@ -79,7 +79,7 @@ const MP_ChangePhoneNum = ({ onClickHandler, role }) => {
       </HeadSection>
       <BodySection>
         <Content>
-          <SubTitle>연락처</SubTitle>
+          <SubTitle textColor={textColor ? textColor : null}>연락처</SubTitle>
           <InputArea>
             <Input
               inputWidth={"472px"}
@@ -96,7 +96,7 @@ const MP_ChangePhoneNum = ({ onClickHandler, role }) => {
           </InputArea>
         </Content>
         <Content>
-          <SubTitle>인증번호</SubTitle>
+          <SubTitle textColor={textColor ? textColor : null}>인증번호</SubTitle>
           <InputArea>
             <Input
               inputWidth={"472px"}
@@ -174,7 +174,7 @@ const SubTitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   font-size: 21px;
   align-items: center;
-  color: ${color.orange};
+  color: ${(props) => (props.textColor ? props.textColor : color.orange)};
 `;
 const InputArea = styled.div`
   display: flex;
