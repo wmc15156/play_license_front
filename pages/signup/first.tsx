@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { STORE_FIRST_SIGNUP_DATA } from "../../reducers/user";
 import { memo, useState, VFC } from "react";
 import axios from "axios";
-import ContainerWrapper from "@src/component/ContainerWrapper/ContainerWrapper";
+import ContainerWrapper from "@src/component/ContainerWrapper/TopToBottom";
 import ProcessCircle from "@src/component/molecules/ProcessCircle/ProcessCircle";
 import Comment from "@src/component/Comment/Comment";
 import TextBox from "@src/component/TextBox/TextBox";

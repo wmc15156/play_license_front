@@ -1,4 +1,4 @@
-import ContainerWrapper from "@src/component/ContainerWrapper/ContainerWrapper";
+import ContainerWrapper from "@src/component/ContainerWrapper/CenterWrapper";
 import styled from "styled-components";
 import Line from "@src/component/Line/Line";
 import { Wrapper } from "@src/component/molecules/TextAndInput/TextAndInput";
@@ -17,8 +17,10 @@ import fetcher from "@utils/fetcher";
 import { useRouter } from "next/router";
 
 const ImageWrapper = styled.div`
-  width: 762px;
-  margin-top: 146px;
+  max-width: 762px;
+  width: 100%;
+  display:flex;
+  justify-content:center;
   margin-bottom: 64px;
   & > img {
     display: inline-block;

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import ContainerWrapper from "../../src/component/ContainerWrapper/ContainerWrapper";
+import ContainerWrapper from "../../src/component/ContainerWrapper/CenterWrapper";
 import styled from "styled-components";
 import { Wrapper } from "@src/component/molecules/TextAndInput/TextAndInput";
 import InputBox from "@src/component/BasicInput/BasicInput";
@@ -16,8 +16,10 @@ import fetcher from "@utils/fetcher";
 
 export const ImageWrapper = styled.div`
   max-width: 770px;
-  width: 120%;
-  margin-top: 126px;
+  width: 100%;
+  display:flex;
+  justify-content:center;
+  /* margin-top: 126px; */
 
   & > img {
     display: inline-block;
@@ -70,7 +72,8 @@ function AdminLogin() {
   }
   return (
     <>
-      {data === false ? (
+      {/* {data === false ? ( */}
+      {!data ? ( 
         <>
           <ContainerWrapper width="580px">
             <ImageWrapper>
@@ -98,7 +101,7 @@ function AdminLogin() {
                 width={"24px"}
                 height={"24px"}
                 onChange={onSaveEmail}
-                value={loginSave ? color.pink : ""}
+                value={loginSave ? color.orange : ""}
               >
                 <FaCheck size={"15px"} color={loginSave ? "white" : "gray"} />
               </CheckBoxWrapper>
@@ -108,7 +111,7 @@ function AdminLogin() {
             <OriginalButton
               margin={"26px"}
               width={"580px"}
-              background={color.pink}
+              background={color.orange}
               height={"60px"}
               size={"21px"}
               onClick={onSubmit}

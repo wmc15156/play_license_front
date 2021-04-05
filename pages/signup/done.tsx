@@ -1,4 +1,4 @@
-import ContainerWrapper from "@src/component/ContainerWrapper/ContainerWrapper";
+import ContainerWrapper from "@src/component/ContainerWrapper/TopToBottom";
 import ProcessCircle from "@src/component/molecules/ProcessCircle/ProcessCircle";
 import Comment from "@src/component/Comment/Comment";
 import styled from "styled-components";

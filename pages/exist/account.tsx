@@ -1,4 +1,4 @@
-import ContainerWrapper from "@src/component/ContainerWrapper/ContainerWrapper";
+import ContainerWrapper from "@src/component/ContainerWrapper/TopToBottom";
 import Comment from "@src/component/Comment/Comment";
 import ShadowBox from "@src/component/ShadowBox/ShadowBox";
 import OriginalButton from "@src/component/Button/OriginalButton";

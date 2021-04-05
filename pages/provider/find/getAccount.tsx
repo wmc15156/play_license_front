@@ -1,4 +1,4 @@
-import ContainerWrapper from "@src/component/ContainerWrapper/ContainerWrapper";
+import ContainerWrapper from "@src/component/ContainerWrapper/TopToBottom";
 import ProviderHeader from "@src/component/Provider/Header";
 import Comment from "@src/component/Comment/Comment";
 import { useHomeState } from "@store/homeStore";

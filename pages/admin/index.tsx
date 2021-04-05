@@ -228,15 +228,15 @@ const revalidate=async()=>{return false};
     // setBannerList(dummyData);
   }, [adminMode]);
 
-  useEffect(() => {
-    if (!userLogin) {
-      router.push("/admin/login");
-    }
-  }, [userLogin]);
+  // useEffect(() => {
+  //   if (!userLogin) {
+  //     router.push("/admin/login");
+  //   }
+  // }, [userLogin]);
 
-  if (userLogin === false) {
-    router.push("/admin/login");
-  }
+  // if (userLogin === false) {
+  //   router.push("/admin/login");
+  // }
 
   if (!data) return <div>loading</div>;
 

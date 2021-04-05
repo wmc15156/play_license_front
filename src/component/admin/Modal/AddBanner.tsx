@@ -2,7 +2,7 @@ import styled from "styled-components";
 import colors from "@styles/colors";
 import TextAndInput from "@src/component/molecules/TextAndInput/TextAndInput";
 import styles from "@styles/colors";
-import ContainerWrapper from "@src/component/ContainerWrapper/ContainerWrapper";
+import ContainerWrapper from "@src/component/ContainerWrapper/TopToBottom";
 import { useRef, useState } from "react";
 import useInput from "@utils/useInput";
 import Line from "@src/component/Line/Line";
