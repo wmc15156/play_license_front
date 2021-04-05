@@ -12,31 +12,42 @@ import useModal from "../../../utils/useModal";
 import AlertModal from "../Modal/AlertModal";
 import CalcModal from "../Modal/CalcModal";
 import { HiHome } from "react-icons/hi";
-import useSWR from "swr";
-import fetcher from "../../../utils/fetcher";
 
 const Section1 = ({ item }) => {
   const router = useRouter();
-  const { data: userData, error: err } = useSWR("/product/cart", fetcher);
   const { openModal, closeModal, ModalPortal } = useModal();
   const POST_URL = `/product/${router.query.id}/add-item`;
   const DELETE_URL = `/product/${router.query.id}/cart`;
 
   const [modal, setModal] = useState("");
   const [isSaved, setIsSaved] = useState(false);
-  console.log(userData);
+
+  const getHeartStatus = () => {
+    axios
+      .get("/product/cart")
+      .then((res) => {
+        if (res.data) {
+          const data = res.data.filter(
+            (item) => item.productId === Number(router.query.id)
+          );
+          if (data.length > 0) {
+            setIsSaved(true);
+          } else {
+            setIsSaved(false);
+          }
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          return;
+        } else {
+          console.log(err.response);
+        }
+      });
+  };
 
   useEffect(() => {
-    if (userData) {
-      const data = userData.filter(
-        (item) => item.productId === Number(router.query.id)
-      );
-      if (data.length > 0) {
-        setIsSaved(true);
-      } else {
-        setIsSaved(false);
-      }
-    }
+    getHeartStatus();
   }, []);
 
   const onClickHomeBtn = () => {
