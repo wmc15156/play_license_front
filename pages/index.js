@@ -133,7 +133,6 @@ const NewSection = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: yellowgreen;
 `;
 const CurationSection = styled.div`
   width: 100%;
