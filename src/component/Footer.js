@@ -208,6 +208,7 @@ const BtnText = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 10px;
 `;
 
 const Icon = styled.span`

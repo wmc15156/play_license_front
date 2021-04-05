@@ -425,7 +425,6 @@ const Wrap = styled.div`
 const Text = styled.div`
   font-family: "Gotham Medium";
   height: 32px;
-  border: 1px solid yellowgreen;
   display: flex;
   align-items: center;
   font-size: 14px;
@@ -433,6 +432,7 @@ const Text = styled.div`
   margin: 0;
   margin-right: 12px;
   margin-left: 5px;
+  padding-top: 12px;
   ${(props) =>
     props.color &&
     css`
