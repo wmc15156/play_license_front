@@ -12,11 +12,11 @@ import { useRouter } from "next/router";
 
 const Market = () => {
   const router = useRouter();
-  const { data, error, mutate } = useSWR("/curation/product", fetcher);
   const [isLoading, setIsLoading] = useState(false);
   const [list, setList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(16);
+  const [sortName, setSortName] = useState("");
   const [curationBlock, setCurationBlock] = useState([]); // curation blocks
   const [count, setCount] = useState(0);
   const [curation, setCuration] = useState("모든작품");
@@ -30,6 +30,8 @@ const Market = () => {
   // console.log("선택된 필터옵션s>>", selectedOption);
 
   const getAllProducts = () => {
+    console.log("get 모든작품");
+    setIsLoading(true);
     axios
       .get("/curation/filter", {
         params: {
@@ -40,11 +42,17 @@ const Market = () => {
       .then((res) => {
         setCount(res.data.count);
         setList(res.data.result);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(true);
+        console.log(err.response);
       });
   };
 
   const getCurationInfo = (c) => {
-    console.log("get", c);
+    console.log("get 큐레이션", c);
+    setIsLoading(true);
     axios
       .get("/curation/filter", {
         params: {
@@ -55,19 +63,27 @@ const Market = () => {
       .then((res) => {
         setCount(res.data.count);
         setList(res.data.result);
+        setIsLoading(false);
       });
   };
 
   useEffect(() => {
+    if (!!router.query.curation) {
+      setCuration(router.query.curation);
+    } else {
+      setCuration("모든작품");
+    }
     getCurationInfo(curation);
   }, [curation]);
 
   useEffect(() => {
-    if (data) {
-      const first = ["모든작품"].concat(Object.keys(data.special));
-      setCurationBlock((prevState) => prevState.concat(first));
-    }
-  }, [data]);
+    axios.get("/curation/product").then((res) => {
+      if (res.data) {
+        const first = ["모든작품"].concat(Object.keys(res.data.special));
+        setCurationBlock((prevState) => prevState.concat(first));
+      }
+    });
+  }, []);
 
   const indexOfLast = currentPage * postsPerPage; // 16
   const indexOfFirst = indexOfLast - postsPerPage; // 0
@@ -107,23 +123,29 @@ const Market = () => {
 
   const getFilteredList = () => {
     console.log("필터된 리스트 가져오기 클릭", selectedOption);
+    setIsLoading(true);
     axios
       .get("/product/filter", {
         params: selectedOption,
       })
       .then((res) => {
-        console.log(res, "???");
-        setCount(res.data.length);
-        setList(res.data);
-      });
+        if (res.status === 200) {
+          // console.log(res, "???");
+          setCount(res.data.length);
+          setList(res.data);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => console.log(err.response));
   };
 
   const getSortList = (sortName) => {
-    if (sortName === "선택해주세요") {
+    console.log("sort통과 sortname", sortName);
+    setIsLoading(true);
+    if (!sortName) {
       sortName = "";
       getAllProducts();
-    }
-    if (!(sortName === "선택해주세요")) {
+    } else if (sortName) {
       switch (sortName) {
         case "문의 많은 순":
           sortName = "inquiry";
@@ -136,31 +158,29 @@ const Market = () => {
           break;
       }
 
-      // console.log("sort 선택된 항목이름", sortName);
+      console.log("sort통과 sortname", sortName);
       axios.get(`/product/filter/${sortName}`).then((res) => {
         setCount(res.data.length);
         setList(res.data);
+        setIsLoading(false);
       });
     }
   };
 
-  if (!data) {
-    return (
-      <LoaderContainer>
-        <Loader />
-      </LoaderContainer>
-    );
-  }
-  console.log(curation);
   return (
     <Container>
-      {data && (
+      <Curation
+        curation={curation}
+        setCuration={setCuration}
+        curationBlock={curationBlock}
+      />
+      {isLoading && (
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
+      )}
+      {!isLoading && (
         <>
-          <Curation
-            curation={curation}
-            setCuration={setCuration}
-            curationBlock={curationBlock}
-          />
           <List
             listTitle={curation}
             list={showCurrentPosts(list)}
@@ -169,6 +189,8 @@ const Market = () => {
             filterListHandler={getFilteredList}
             selectedOption={selectedOption}
             setOption={setOption}
+            sortName={sortName}
+            setSortName={setSortName}
           />
           <Pagination
             itemsPerPage={postsPerPage}
@@ -194,7 +216,7 @@ const LoaderContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: calc(100vh - 467px);
   width: 100%;
 `;
 
