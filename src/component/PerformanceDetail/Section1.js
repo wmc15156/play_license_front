@@ -21,12 +21,14 @@ const Section1 = ({ item }) => {
 
   const [modal, setModal] = useState("");
   const [isSaved, setIsSaved] = useState(false);
+  const [isMember, setIsMember] = useState(false);
 
   const getHeartStatus = () => {
     axios
       .get("/product/cart")
       .then((res) => {
         if (res.data) {
+          setIsMember(true);
           const data = res.data.filter(
             (item) => item.productId === Number(router.query.id)
           );
@@ -39,6 +41,7 @@ const Section1 = ({ item }) => {
       })
       .catch((err) => {
         if (err.response.status === 401) {
+          setIsMember(false);
           return;
         } else {
           console.log(err.response);
@@ -54,7 +57,11 @@ const Section1 = ({ item }) => {
     router.push("/");
   };
   const go = () => {
-    router.push(`/performances/${router.query.id}/buy`);
+    if (isMember) {
+      router.push(`/performances/${router.query.id}/buy`);
+    } else {
+      openModalHandler("login");
+    }
   };
 
   const redirectHandler = () => {
