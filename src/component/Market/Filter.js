@@ -5,7 +5,7 @@ import FilterModal from "../Modal/FilterModal";
 import Selector from "../Input/SelectOption";
 import FilterBar from "../Input/Bar_ShowSeletedOptions";
 import { MdFilterList } from "react-icons/md";
-import { useState } from "react";
+import { useState, memo } from "react";
 
 const Filter = ({
   listTitle,
@@ -14,8 +14,10 @@ const Filter = ({
   setOption,
   filterListHandler,
   sortListHandler,
+  sortName,
+  setSortName,
 }) => {
-  const [filterValue, setFilterValue] = useState("선택해주세요");
+  // const [filterValue, setFilterValue] = useState("");
   const { openModal, closeModal, ModalPortal } = useModal();
 
   return (
@@ -43,15 +45,12 @@ const Filter = ({
           <Selector
             radius={"6px"}
             height={"48px"}
-            value={filterValue}
-            options={[
-              "선택해주세요",
-              "문의 많은 순",
-              "최신 작품 순",
-              "최신 등록 순",
-            ]}
+            value={sortName}
+            defaultOption={"선택해주세요"}
+            options={["문의 많은 순", "최신 작품 순", "최신 등록 순"]}
             onChange={(e) => {
-              setFilterValue(e.target.value);
+              console.log(e.target.value);
+              setSortName(e.target.value);
               sortListHandler(e.target.value);
             }}
           />
@@ -121,4 +120,4 @@ const FilterBarSection = styled.div`
   width: 100%;
 `;
 
-export default Filter;
+export default memo(Filter);

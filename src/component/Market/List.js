@@ -11,6 +11,8 @@ const List = ({
   filterListHandler,
   selectedOption,
   setOption,
+  sortName,
+  setSortName,
 }) => {
   console.log(list);
   return (
@@ -23,6 +25,8 @@ const List = ({
           setOption={setOption}
           sortListHandler={sortListHandler}
           filterListHandler={filterListHandler}
+          sortName={sortName}
+          setSortName={setSortName}
         />
       </HeadSection>
       <ListSt>
