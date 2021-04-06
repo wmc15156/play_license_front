@@ -30,7 +30,6 @@ const Market = () => {
   // console.log("선택된 필터옵션s>>", selectedOption);
 
   const getAllProducts = () => {
-    console.log("get 모든작품");
     setIsLoading(true);
     axios
       .get("/curation/filter", {
@@ -40,11 +39,13 @@ const Market = () => {
         },
       })
       .then((res) => {
+        console.log(res.data, "jhereererer");
         setCount(res.data.count);
         setList(res.data.result);
         setIsLoading(false);
       })
       .catch((err) => {
+        console.log(err.response.data);
         setIsLoading(true);
         console.log(err.response);
       });
@@ -67,24 +68,6 @@ const Market = () => {
       });
   };
 
-  useEffect(() => {
-    if (!!router.query.curation) {
-      setCuration(router.query.curation);
-    } else {
-      setCuration("모든작품");
-    }
-    getCurationInfo(curation);
-  }, [curation]);
-
-  useEffect(() => {
-    axios.get("/curation/product").then((res) => {
-      if (res.data) {
-        const first = ["모든작품"].concat(Object.keys(res.data.special));
-        setCurationBlock((prevState) => prevState.concat(first));
-      }
-    });
-  }, []);
-
   const indexOfLast = currentPage * postsPerPage; // 16
   const indexOfFirst = indexOfLast - postsPerPage; // 0
   const showCurrentPosts = (tmp) => {
@@ -92,34 +75,6 @@ const Market = () => {
     currentPosts = tmp.slice(indexOfFirst, indexOfLast);
     return currentPosts; // 한 페이지에 뿌릴 작품들
   };
-
-  useEffect(() => {
-    const {
-      numberOfMembers,
-      category,
-      genre,
-      sizeOfPerformance,
-      mainAudience,
-    } = selectedOption;
-
-    if (
-      numberOfMembers.length ||
-      category.length ||
-      genre.length ||
-      sizeOfPerformance.length ||
-      mainAudience.length
-    ) {
-      getFilteredList();
-    } else if (
-      numberOfMembers === "" &&
-      category === "" &&
-      genre === "" &&
-      sizeOfPerformance === "" &&
-      mainAudience === ""
-    ) {
-      getAllProducts();
-    }
-  }, [selectedOption]);
 
   const getFilteredList = () => {
     console.log("필터된 리스트 가져오기 클릭", selectedOption);
@@ -166,6 +121,52 @@ const Market = () => {
       });
     }
   };
+
+  useEffect(() => {
+    if (!!router.query.curation) {
+      setCuration(router.query.curation);
+    } else {
+      setCuration("모든작품");
+    }
+    getCurationInfo(router.query.curation);
+  }, [curation]);
+
+  useEffect(() => {
+    axios.get("/curation/product").then((res) => {
+      if (res.data) {
+        const first = ["모든작품"].concat(Object.keys(res.data.special));
+        setCurationBlock((prevState) => prevState.concat(first));
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    const {
+      numberOfMembers,
+      category,
+      genre,
+      sizeOfPerformance,
+      mainAudience,
+    } = selectedOption;
+
+    if (
+      numberOfMembers.length ||
+      category.length ||
+      genre.length ||
+      sizeOfPerformance.length ||
+      mainAudience.length
+    ) {
+      getFilteredList();
+    } else if (
+      numberOfMembers === "" &&
+      category === "" &&
+      genre === "" &&
+      sizeOfPerformance === "" &&
+      mainAudience === ""
+    ) {
+      getAllProducts();
+    }
+  }, [selectedOption]);
 
   return (
     <Container>
