@@ -4,6 +4,7 @@ import { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useGlobalDispatch, useHomeState } from "../../../store/homeStore";
 import image2 from "../../../public/assets/image/carousel1.png";
 import image3 from "../../../public/assets/image/carousel2.png";
 import { useRouter } from "next/router";
@@ -38,7 +39,39 @@ const defaultImgStyles = {
 
 const Carousel = () => {
   const router = useRouter();
+  const state = useHomeState();
+  const dispatch = useGlobalDispatch();
+  const [isExist, setIsExist] = useState(true);
   const [imageIdx, setImageIdx] = useState(0);
+
+  // const getList = () => {
+  //   axios
+  //     .get("/curation/product")
+  //     .then((res) => {
+  //       console.log(res);
+  //       if (Array.isArray(res.data.banner)) {
+  //         if (res.data.banner.length > 0) {
+  //           setIsExist(true);
+  //           dispatch({ type: "fetchBannerImages", banners: res.data.banner });
+  //           return;
+  //         } else {
+  //           setIsExist(false);
+  //           return;
+  //         }
+  //       } else {
+  //         setIsExist(false);
+  //         return;
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setIsExist(false);
+  //       console.log(err.response);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   getList();
+  // }, []);
 
   const settings = {
     dots: true,
@@ -93,7 +126,21 @@ const Carousel = () => {
   return (
     <Container>
       <StyledSlider {...settings}>
-        {images.map((img, idx) => (
+        {/* API 완성 후 images 응답데이터 객체로 변경 */}
+        {isExist &&
+          images.map((img, idx) => (
+            <div key={idx}>
+              <ImageContainer>
+                <img
+                  src={img.img}
+                  alt={img.img}
+                  style={idx === imageIdx ? activeImgStyles : defaultImgStyles}
+                  onClick={() => onClickImage(img.link)}
+                />
+              </ImageContainer>
+            </div>
+          ))}
+        {/* {!isExist && images.map((img, idx) => (
           <div key={idx}>
             <ImageContainer>
               <img
@@ -104,7 +151,7 @@ const Carousel = () => {
               />
             </ImageContainer>
           </div>
-        ))}
+        ))} */}
       </StyledSlider>
     </Container>
   );

@@ -127,6 +127,7 @@ const Divider = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  margin-bottom: 105px;
 `;
 const NewSection = styled.div`
   width: 100%;

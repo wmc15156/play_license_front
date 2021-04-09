@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
 import { useState } from "react";
 
-const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
+const Pagination = ({ itemsPerPage, totalItems, paginate, color }) => {
   const [isFocus, setIsFocus] = useState(1);
   const pageNumbers = [];
 
@@ -16,13 +16,14 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
         {pageNumbers.map((number) => (
           <ListItem
             key={number}
+            color={color}
             focus={isFocus === number}
             onClick={() => {
               paginate(number);
               setIsFocus(number);
             }}
           >
-            <Text>{number}</Text>
+            <Text color={color}>{number}</Text>
           </ListItem>
         ))}
       </List>
@@ -50,16 +51,23 @@ const ListItem = styled.li`
   margin: 0 5px;
   width: 21px;
   color: ${(props) => (props.focus ? color.orange : color.black4)};
+
+  ${(props) =>
+    props.color &&
+    css`
+      color: ${(props) => (props.focus ? props.color : color.black4)};
+    `};
+
   &:hover {
     cursor: pointer;
-    color: ${color.orange};
+    color: ${(props) => (props.color ? props.color : color.orange)};
   }
 `;
 
 const Text = styled.span`
   &:hover {
     border: none;
-    color: ${color.orange};
+    color: ${(props) => (props.color ? props.color : color.orange)};
   }
 `;
 export default Pagination;

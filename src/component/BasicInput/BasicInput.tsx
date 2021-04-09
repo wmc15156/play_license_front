@@ -8,15 +8,15 @@ const InputWrapper = styled.input.attrs<{
 }>((p) => ({
   placeholder: p.placeholder,
   // type: p.password ? "password" : null,
-}))<{ width: string }>`
+}))<{ width: string; height?: string; fontSize?: string; whiteType?: boolean, fontFamily?: string; }>`
   width: ${(p) => p.width};
-  height: 60px;
+  height: ${(p) => (p.height ? p.height : "60px")};
   text-indent: 22.5px;
-  background-color: ${styles.gray1};
+  background-color: ${(p) => (p.whiteType ? styles.white : styles.gray1)};
   border-radius: 8px;
-  font-size: 16px;
-  font-family: "NotoSansCJKkr-Regular";
-  border: none;
+  font-size: ${(p) => (p.fontSize ? p.fontSize : "16px")};
+  font-family: ${p => p.fontFamily ? p.fontFamily : "NotoSansCJKkr-Regular"};
+  border: ${(p) => (p.whiteType ? "1px solid #E6E6E6" : "none")};
 `;
 
 type Props = {
@@ -27,6 +27,10 @@ type Props = {
   onBlur?: () => void;
   checkPw?: boolean;
   password?: boolean;
+  inputHeight?: string;
+  fontSize?: string;
+  whiteType?: boolean;
+  fontFamily?: string;
 };
 
 const InputBox: FC<Props> = ({
@@ -38,6 +42,9 @@ const InputBox: FC<Props> = ({
   onBlur,
   checkPw,
   password,
+  inputHeight,
+  fontSize,
+  whiteType,
 }) => {
   return (
     <InputWrapper
@@ -47,6 +54,9 @@ const InputBox: FC<Props> = ({
       value={value}
       onBlur={onBlur}
       type={checkPw ? "password" : null}
+      height={inputHeight}
+      fontSize={fontSize}
+      whiteType={whiteType}
     />
   );
 };

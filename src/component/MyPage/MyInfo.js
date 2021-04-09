@@ -15,7 +15,7 @@ const dummies = {
   fullName: "권보경",
   phone: "01012345678",
   email: "abc@abc.com",
-  password: "******",
+  password: "**********",
 };
 
 const MyInfo = () => {
@@ -38,6 +38,7 @@ const MyInfo = () => {
 
   const onLogOut = () => {
     axios.post("/auth/logout").then((res) => {
+      console.log(res.data);
       mutate(false, false);
       router.push("/");
     });

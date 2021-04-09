@@ -1,15 +1,20 @@
 import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect, useReducer, useContext } from "react";
+import {
+  ProviderInfoContext,
+  providerInfoReducer,
+  providerInfoInitialState,
+} from "../../../reducers/providerInfo";
 import { useRouter } from "next/router";
 import { PageContainer, PageContentContainer } from "../../../styles/PL_Frame";
 import Navi from "../../../src/component/Nav/Navigation";
 import LogoBar from "../../../src/component/Nav/LogoBar";
-import Info from "../../../src/PL_Component/Info/Info";
-import Info_Modify from "../../../src/PL_Component/Info/Info_Modify";
+import Info from "../../../src/provider/Info/Info";
+import Info_Modify from "../../../src/provider/Info/Info_Modify";
 import GrayButton from "../../../src/component/Button/GrayShortBtn";
-import OrangeButton from "../../../src/component/Button/OriginalButton";
+import ModifyMode_Buttons from "../../../src/provider/Info/Btns_Info_Modify";
 import useModal from "../../../utils/useModal";
 import Modal_Unsubscribe from "../../../src/component/Modal/AlertModal2Btns";
 
@@ -25,8 +30,8 @@ const pl_info = () => {
   };
 
   const changeMode = (modeName) => {
-    console.log("change mode -->", modeName);
     setMode(modeName);
+    window.scrollTo(0, 0);
   };
 
   const changeModalHandler = (name) => {
@@ -41,96 +46,68 @@ const pl_info = () => {
     closeModal();
   };
 
-  const saveButtonHandler = () => {
-    console.log("편집 저장하기 ");
-    // axios
-    //   .patch()
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    changeMode("modify");
-    //     }
-    //   })
-    //   .catch((err) => console.error(err));
-  };
-
   const unSubscribeHandler = () => {
-    console.log("pl회원탈퇴");
-    // axios
-    //   .delete("/auth/unregister")
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       closeModal();
-    //       router.push("/");
-    //     }
-    //   })
-    //   .catch((err) => console.error(err));
+    axios
+      .delete("/auth/provider/unregister")
+      .then((res) => {
+        closeModalHandler();
+        router.push("/");
+      })
+      .catch((err) => console.error(err));
   };
   return (
-    <Container>
-      <NavContainer>
-        <Navi />
-      </NavContainer>
-      <BodyContainer>
-        <LogoBar />
-        {modeComponent[mode]}
-        <>
-          {mode === "default" && (
-            <>
-              <BtnContainer>
-                <GrayButton
-                  text={"편집하기"}
-                  size={"12px"}
-                  height={"36px"}
-                  fontColor={color.black2}
-                  onClickHandler={() => changeMode("modify")}
-                />
-              </BtnContainer>
-              <Unsubscribe onClick={() => changeModalHandler("unsubscribe")}>
-                회원탈퇴하기
-              </Unsubscribe>
-            </>
-          )}
-          {mode === "modify" && (
-            <>
-              <BtnContainer>
-                <GrayButton
-                  text={"취소"}
-                  size={"12px"}
-                  height={"36px"}
-                  fontColor={color.black2}
-                  onClickHandler={() => changeMode("default")}
-                />
-                <Margin />
-                <OrangeButton
-                  width={"100%"}
-                  background={true}
-                  margin={"0px"}
-                  height={"36px"}
-                  size={"12px"}
-                  onClick={saveButtonHandler}
-                >
-                  저장하기
-                </OrangeButton>
-              </BtnContainer>
-            </>
-          )}
-        </>
+    <ProviderInfoContext.Provider
+      value={useReducer(providerInfoReducer, providerInfoInitialState)}
+    >
+      <Container>
+        <NavContainer>
+          <Navi />
+        </NavContainer>
+        <BodyContainer>
+          <LogoBar />
+          {modeComponent[mode]}
+          <>
+            {mode === "default" && (
+              <>
+                <BtnContainer>
+                  <GrayButton
+                    text={"편집하기"}
+                    size={"12px"}
+                    height={"36px"}
+                    fontColor={color.black2}
+                    onClickHandler={() => changeMode("modify")}
+                  />
+                </BtnContainer>
+                <Unsubscribe onClick={() => changeModalHandler("unsubscribe")}>
+                  회원탈퇴하기
+                </Unsubscribe>
+              </>
+            )}
+            {mode === "modify" && (
+              <>
+                <BtnContainer>
+                  <ModifyMode_Buttons changeMode={changeMode} />
+                </BtnContainer>
+              </>
+            )}
+          </>
 
-        <ModalPortal>
-          {mode === "default" && modal === "unsubscribe" && (
-            <Modal_Unsubscribe
-              text={"회원 탈퇴를 진행하시겠습니까?"}
-              content1={
-                "탈퇴시 계정이 삭제됨과 동시에 서비스를 이용하실 수 없습니다."
-              }
-              content2={"그래도 탈퇴를 진행할까요?"}
-              onClickBtn1={unSubscribeHandler}
-              onClickBtn2={closeModalHandler}
-            />
-          )}
-        </ModalPortal>
-      </BodyContainer>
-    </Container>
+          <ModalPortal>
+            {mode === "default" && modal === "unsubscribe" && (
+              <Modal_Unsubscribe
+                text={"회원 탈퇴를 진행하시겠습니까?"}
+                content1={
+                  "탈퇴시 계정이 삭제됨과 동시에 서비스를 이용하실 수 없습니다."
+                }
+                content2={"그래도 탈퇴를 진행할까요?"}
+                onClickBtn1={unSubscribeHandler}
+                onClickBtn2={closeModalHandler}
+              />
+            )}
+          </ModalPortal>
+        </BodyContainer>
+      </Container>
+    </ProviderInfoContext.Provider>
   );
 };
 
@@ -170,8 +147,5 @@ const Unsubscribe = styled.div`
   display: flex;
   width: 25%;
   justify-content: flex-end;
-`;
-const Margin = styled.div`
-  width: 20px;
 `;
 export default pl_info;

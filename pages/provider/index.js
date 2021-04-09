@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import color from "../../styles/colors";
-import ContainerWrapper from "../../src/component/ContainerWrapper/ContainerWrapper";
+import ContainerWrapper from "../../src/component/ContainerWrapper/TopToBottom";
 import OriginalButton from "../../src/component/Button/OriginalButton";
 import { useRouter } from "next/router";
 

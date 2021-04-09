@@ -15,7 +15,7 @@ const About = ({ item }) => {
               <Icon />
               기획의도
             </SubTitle>
-            <Desc>{item.description}</Desc>
+            <Desc>{item.plan}</Desc>
           </Item>
           <Divider />
           <Item>
@@ -35,9 +35,15 @@ const About = ({ item }) => {
               <Text>
                 <Text_L>창작진</Text_L>
                 <Text_R>
-                  <Text_R_Ptag>작가 {item.creativeStaff.author}</Text_R_Ptag>
-                  <Text_R_Ptag>작곡 {item.creativeStaff.composer}</Text_R_Ptag>
-                  <Text_R_Ptag>각본 {item.creativeStaff.writer}</Text_R_Ptag>
+                  <Text_R_Ptag>
+                    작가 {item.creativeStaff.author.input}
+                  </Text_R_Ptag>
+                  <Text_R_Ptag>
+                    작곡 {item.creativeStaff.composer.input}
+                  </Text_R_Ptag>
+                  <Text_R_Ptag>
+                    각본 {item.creativeStaff.writer.input}
+                  </Text_R_Ptag>
                 </Text_R>
               </Text>
               <Text>
@@ -46,11 +52,19 @@ const About = ({ item }) => {
               </Text>
               <Text>
                 <Text_L>장르</Text_L>
-                <Text_R>{item.genre}</Text_R>
+                <Text_R>
+                  {item.genre.map((item, i) => {
+                    return <span>{item}</span>;
+                  })}
+                </Text_R>
               </Text>
               <Text>
                 <Text_L>주 관람층</Text_L>
-                <Text_R>{item.mainAudience}</Text_R>
+                <Text_R>
+                  {item.mainAudience.map((item, i) => {
+                    return <Text_R_Ptag>{item}</Text_R_Ptag>;
+                  })}
+                </Text_R>
               </Text>
               <Text>
                 <Text_L>공연규모</Text_L>
@@ -59,19 +73,23 @@ const About = ({ item }) => {
               <Text>
                 <Text_L>출연인원</Text_L>
                 <Text_R>
-                  <Text_R_Ptag>여자 {item.castMembers.women}</Text_R_Ptag>
-                  <Text_R_Ptag>남자 {item.castMembers.men}</Text_R_Ptag>
+                  <Text_R_Ptag>여자 {item.castMembers.women.input}</Text_R_Ptag>
+                  <Text_R_Ptag>남자 {item.castMembers.men.input}</Text_R_Ptag>
                   <Text_R_Ptag>아기는 인형으로 대체</Text_R_Ptag>
                 </Text_R>
               </Text>
               <Text>
                 <Text_L>셋리스트</Text_L>
-                <Text_R>{item.product_link}</Text_R>
+                <Text_R>
+                  {item.numberList.map((item, i) => {
+                    return <Text_R_Ptag>{item}</Text_R_Ptag>;
+                  })}
+                </Text_R>
               </Text>
               <Text noBorder={true}>
                 <Text_L>관련정보</Text_L>
                 <Text_R
-                  deco={true}
+                  deco
                   onClick={() =>
                     onClickInfoLink(item.performanceInformationURL)
                   }
@@ -91,6 +109,7 @@ const Container = styled.div`
   color: ${color.black1};
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const Box1 = styled.div`
@@ -104,6 +123,7 @@ const List = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%;
 `;
 const Item = styled.li`
   display: flex;
@@ -153,6 +173,7 @@ const Text_R = styled.div`
   font-size: 16px;
   width: 50%;
   padding-left: 4%;
+
   ${(props) =>
     props.deco &&
     css`
@@ -161,6 +182,10 @@ const Text_R = styled.div`
       color: ${color.orange};
       cursor: pointer;
     `}
+
+  &>span {
+    margin-right: 10px;
+  }
 `;
 
 const Text_R_Ptag = styled.p`

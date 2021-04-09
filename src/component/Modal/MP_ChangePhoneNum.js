@@ -7,7 +7,7 @@ import axios from "axios";
 import { useState, useCallback } from "react";
 import { IoClose } from "react-icons/io5";
 
-const MP_ChangePhoneNum = ({ onClickHandler }) => {
+const MP_ChangePhoneNum = ({ onClickHandler, role, textColor }) => {
   const [phone, setPhone] = useInput("");
   const [code, setCode] = useInput("");
   const [timer, setTimer] = useState(false);
@@ -58,15 +58,12 @@ const MP_ChangePhoneNum = ({ onClickHandler }) => {
   const postHandler = useCallback(() => {
     const param = { phone: phone };
     if (completedValidation) {
+      const PATCH_URL = role ? `/user/update/${role}` : "/user/update";
       axios
-        .patch("/user/update", param)
+        .patch(PATCH_URL, param)
         .then((res) => {
-          if (res.status === 200) {
-            alert("연락처가 변경되었습니다");
-            phone = "";
-            code = "";
-            onClickHandler();
-          }
+          alert("연락처가 변경되었습니다");
+          onClickHandler();
         })
         .catch((err) => console.log(err));
     }
@@ -82,7 +79,7 @@ const MP_ChangePhoneNum = ({ onClickHandler }) => {
       </HeadSection>
       <BodySection>
         <Content>
-          <SubTitle>연락처</SubTitle>
+          <SubTitle textColor={textColor ? textColor : null}>연락처</SubTitle>
           <InputArea>
             <Input
               inputWidth={"472px"}
@@ -99,7 +96,7 @@ const MP_ChangePhoneNum = ({ onClickHandler }) => {
           </InputArea>
         </Content>
         <Content>
-          <SubTitle>인증번호</SubTitle>
+          <SubTitle textColor={textColor ? textColor : null}>인증번호</SubTitle>
           <InputArea>
             <Input
               inputWidth={"472px"}
@@ -177,7 +174,7 @@ const SubTitle = styled.div`
   font-family: "NotoSansCJKkr-Bold";
   font-size: 21px;
   align-items: center;
-  color: ${color.orange};
+  color: ${(props) => (props.textColor ? props.textColor : color.orange)};
 `;
 const InputArea = styled.div`
   display: flex;

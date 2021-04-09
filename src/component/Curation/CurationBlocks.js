@@ -2,21 +2,9 @@ import styled from "styled-components";
 import color from "../../../styles/colors";
 import { useEffect, memo } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 // 등록되어 있는 큐레이션들이 보여지는 컴포넌트
-const Category = ({ curationBlock, curation, setCuration }) => {
-  const router = useRouter();
-
-  useEffect(() => {
-    // 홈-큐레이션->market접속시 필요
-    if (router.query.curation) {
-      setCuration(router.query.curation);
-    } else {
-      setCuration("모든작품");
-    }
-  }, [curation]);
-
+const Curation = ({ curationBlock, curation, setCuration }) => {
   const buttonBackgroundColor = (title) => () => {
     setCuration(title);
   };
@@ -64,4 +52,4 @@ const Box = styled.div`
   cursor: pointer;
 `;
 
-export default memo(Category);
+export default memo(Curation);

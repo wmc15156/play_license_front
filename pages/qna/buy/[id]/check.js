@@ -15,6 +15,8 @@ const Detail_PurchaseRequest = () => {
     router.push("/mypage/01");
   };
 
+  console.log(data);
+
   return (
     <>
       {data && (

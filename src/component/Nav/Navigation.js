@@ -1,19 +1,48 @@
 import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
+import useModal from "../../../utils/useModal";
+import AlertModal from "../../component/Modal/AlertModal";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 const Navigation = () => {
   const router = useRouter();
+  const { openModal, closeModal, ModalPortal } = useModal();
+  const [needLogin, setNeedLogin] = useState(false);
+  const [user, setUser] = useState({});
+  const { avatar, company } = user;
+
+  const getUserData = () => {
+    axios
+      .get("auth/provider/me")
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch((err) => {
+        // if (err.response.status === 400 || err.response.status === 401) {
+        setNeedLogin(true);
+        openModal();
+        // }
+      });
+  };
+
+  useEffect(() => getUserData(), []);
+
+  const closeModalHandler = () => {
+    router.push("/provider/login");
+    setNeedLogin(false);
+    closeModal();
+  };
 
   return (
     <Container>
       <Section1 focus={router.pathname === "/provider/info"}>
         <ProfileImageContainer>
-          <img src="/assets/image/PL/logo.png" />
+          <img src={!avatar ? "/assets/image/PL/boy.png" : avatar} />
         </ProfileImageContainer>
-        <ProfileName>상상마루</ProfileName>
+        <ProfileName>{company}</ProfileName>
         <Link href="/provider/info">
           <Box>계정정보</Box>
         </Link>
@@ -39,6 +68,15 @@ const Navigation = () => {
           </Link>
         </List>
       </Section2>
+      {needLogin && (
+        <ModalPortal>
+          <AlertModal
+            text={"로그인해주세요"}
+            onClickBtn={closeModalHandler}
+            fontSize={"14px"}
+          />
+        </ModalPortal>
+      )}
     </Container>
   );
 };
@@ -78,7 +116,8 @@ const ProfileImageContainer = styled.div`
   margin-bottom: 22px;
 
   & > img {
-    width: 98px;
+    max-width: 80px;
+    max-height: 80%;
     height: auto;
   }
 `;

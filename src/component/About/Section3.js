@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import color from "../../../styles/colors";
 
-const Section3 = () => {
+const Section3 = ({ changeRouteHandler }) => {
   return (
     <Container>
       <img src="/assets/image/SI_section3.svg" />
@@ -13,7 +13,10 @@ const Section3 = () => {
           <Text>
             플레이라이선스 회원 누구나 이용할 수 있으며, 작품 이용금액은 기간,
             제공자료, 라이선스 이용시 발생하는 이익 등을 종합하여 상호 협의하에
-            책정됩니다. <span> 예상비용 알아보러 가기</span>
+            책정됩니다.
+            <span onClick={() => changeRouteHandler("/market")}>
+              예상비용 알아보러 가기
+            </span>
           </Text>
         </Title_R>
         <Title_L>
@@ -24,7 +27,9 @@ const Section3 = () => {
             PL제작사 센터란 플레이라이선스가 인증한 공연 제작사 혹은 창작사만
             작품 판매 등록 및 서비스를 이용할 수 있는 자사 웹사이트 이며, 저작권
             보호와 더불어 정당한 경제적 가치 창출을 보장합니다.
-            <span>PL 제작사센터 바로가기</span>
+            <span onClick={() => changeRouteHandler("/provider")}>
+              PL 제작사센터 바로가기
+            </span>
           </Text>
         </Title_L>
       </Wrapper>

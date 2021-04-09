@@ -6,7 +6,7 @@ import Line from "@src/component/Line/Line";
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
-  margin-top: 30px;
+  /* margin-top: 30px; */
 `;
 
 type Props = {

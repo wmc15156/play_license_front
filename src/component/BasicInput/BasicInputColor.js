@@ -12,6 +12,7 @@ const InputBox = ({
   fontSize,
   fontColor,
   readOnly,
+  align,
 }) => {
   return (
     <Container>
@@ -24,6 +25,7 @@ const InputBox = ({
         fontColor={fontColor}
         onChange={onChange}
         value={value}
+        align={align}
       >
         {children}
       </Input>
@@ -33,12 +35,13 @@ const InputBox = ({
 
 const Container = styled.div`
   width: 100%;
+  position: relative;
 `;
 
 const Input = styled.input.attrs({
   placeholderTextColor: color.black4,
 })`
-  width: calc(100% - 13px);
+  width: calc(100% - 39px);
   height: calc(${(props) => props.height} - 24px);
   background-color: ${(props) => props.background};
   border-radius: 8px;
@@ -46,8 +49,9 @@ const Input = styled.input.attrs({
   border: 1px solid ${color.black5};
   font-size: ${(props) => props.fontSize};
   line-height: 14px;
-  padding: 12px 0 12px 13px;
+  padding: 12px 26px 12px 13px;
   color: ${(props) => (props.fontColor ? props.fontColor : color.black1)};
+  text-align: ${(props) => (props.align ? props.align : "left")};
 
   &:focus {
     outline: none;

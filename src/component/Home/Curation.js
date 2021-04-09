@@ -74,6 +74,7 @@ const Curation = () => {
     prevArrow: <Arrow_Prev />,
     beforeChange: (current, next) => setImageIdx(next),
   };
+
   return (
     <Container>
       <HeadSection>
@@ -83,6 +84,7 @@ const Curation = () => {
       <SliderContainer>
         <StyledSlider {...settings}>
           {keyArr.map((keyName, idx) => {
+            console.log(curation[keyName], "curation");
             return (
               <div key={idx}>
                 <ImageContainer>

@@ -7,29 +7,66 @@ import {
 import Navi from "../../../../src/component/Nav/Navigation";
 import LogoBar from "../../../../src/component/Nav/LogoBar";
 import axios from "axios";
-import useSWR from "swr";
-import fetcher from "../../../../utils/fetcher";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import StatusBox from "../../../../src/component/Tag/Purchase_AnswerStatus";
-import { data } from "../../../../src/PL_Component/Work/dummies_productInfo";
-import Btn from "../../../../src/component/Button/GrayShortBtn";
+import Btn_Gray from "../../../../src/component/Button/GrayShortBtn";
+import Btn_Orange from "../../../../src/component/Button/OriginalButton";
 import InputBox from "../../../../src/component/BasicInput/BasicInputColor";
+import FileUploader from "../../../../src/component/Input/FileUploader";
+// import { data } from "../../../../src/component/Work/dummies_productInfo";
 
-const files = () => {
+export async function getServerSideProps(context) {
+  const id = context.params.id;
+  const url = `/product/info/${id}`;
+  const res = await axios.get(url);
+  const respData = res.data;
+  return {
+    props: { data: respData },
+  };
+}
+
+const files = ({ data }) => {
+  console.log("axios data", data);
   const router = useRouter();
+  const queryId = data.productId;
+  const [isReadOnly, setIsReadOnly] = useState(false);
   const [required, setRequired] = useState({
     ...data.requiredMaterials,
   });
   const [selected, setSelected] = useState({
-    ...data.selectedMaterials,
+    ...data.selectMaterials,
   });
 
-  console.log("저장될 데이터", {
-    ...data,
-    ...required,
-    ...selected,
-  });
+  console.log("필수", { ...required }, "선택", { ...selected });
+
+  const setMode = () => {
+    if (data.progress === "보완요청") {
+      setIsReadOnly(false);
+    } else {
+      setIsReadOnly(true);
+    }
+  };
+
+  useEffect(() => {
+    setMode();
+  }, []);
+
+  const submitHandler_Required = () => {
+    const params_rm = { requiredMaterials: { ...required } };
+    axios
+      .patch(`/product/requirements/${queryId}`, params_rm)
+      .then((res) => console.log(res, "patch required resp"))
+      .catch((err) => console.log(err.response.data));
+  };
+
+  const submitHandler_Selected = () => {
+    const params_sm = { selectMaterials: { ...selected } };
+    axios
+      .patch(`/product/selectMaterial/${queryId}`, params_sm)
+      .then((res) => console.log(res, "patch selectMaterial"))
+      .catch((err) => console.log(err.response.data));
+  };
 
   const back = () => {
     router.back();
@@ -46,15 +83,13 @@ const files = () => {
             <span>{data.title}</span>자료관리
           </T2>
           <BtnWrapper>
-            <StatusBox status={data.adminCheck}>{data.adminCheck}</StatusBox>
+            <StatusBox status={data.progress}>{data.progress}</StatusBox>
           </BtnWrapper>
         </HeadSection>
         <Divider>
           <Div />
         </Divider>
         <Section>
-          {/* 보완요청 => 업로드페이지 */}
-          {/* 이외 => 업로드 안되는페이지? */}
           <Title>필수제공자료</Title>
           <Table>
             <Table_Title>
@@ -65,26 +100,64 @@ const files = () => {
               <TitleText3>위탁동의서</TitleText3>
               <TitleText>비고</TitleText>
             </Table_Title>
-            {required.select.map((file, idx) => {
+            {required.select.map((item, idx) => {
               return (
                 <List key={idx}>
                   <Text1>필수</Text1>
-                  <Text2>{file.name}</Text2>
-                  <Text3>{file.price}</Text3>
-                  <Text3>{`${file.original} 버튼`}</Text3>
-                  <Text3>{`${file.original} 위탁동의서 버튼`}</Text3>
+                  <Text2>{item.name}</Text2>
+                  <Text3>{item.price}</Text3>
+                  <Text3>
+                    <FileUploader
+                      readOnly={isReadOnly}
+                      data={item.originalMaterial}
+                      fileURLhandler={(url, filename) => {
+                        console.log("required file변경", url, filename);
+                        const arr = [...required.select];
+                        arr[idx] = {
+                          ...required.select[idx],
+                          originalMaterial: {
+                            url: url,
+                            filename: filename,
+                          },
+                        };
+                        setRequired({
+                          select: arr,
+                        });
+                      }}
+                    />
+                  </Text3>
+                  <Text3>
+                    <FileUploader
+                      readOnly={isReadOnly}
+                      data={item.agreement}
+                      fileURLhandler={(url, filename) => {
+                        console.log("required file변경", url, filename);
+                        const arr = [...required.select];
+                        arr[idx] = {
+                          ...required.select[idx],
+                          agreement: {
+                            url: url,
+                            filename: filename,
+                          },
+                        };
+                        setRequired({
+                          select: arr,
+                        });
+                      }}
+                    />
+                  </Text3>
                   <Text>
                     <InputBox
+                      readOnly={isReadOnly}
                       height={"28px"}
                       onChange={(e) => {
+                        const arr = [...required.select];
+                        arr[idx] = {
+                          ...required.select[idx],
+                          etc: e.target.value,
+                        };
                         setRequired({
-                          select: [
-                            ...required.select,
-                            {
-                              ...required.select[idx],
-                              etc: e.target.value,
-                            },
-                          ],
+                          select: arr,
                         });
                       }}
                       value={required.select[idx].etc}
@@ -94,6 +167,21 @@ const files = () => {
               );
             })}
           </Table>
+
+          <BtnContainer>
+            {data.progress === "보완요청" && (
+              <Btn_Orange
+                width={"100%"}
+                background={true}
+                margin={"0px"}
+                height={"36px"}
+                size={"12px"}
+                onClick={submitHandler_Required}
+              >
+                자료등록
+              </Btn_Orange>
+            )}
+          </BtnContainer>
 
           <Divider>
             <Div lineStyle />
@@ -109,27 +197,64 @@ const files = () => {
               <TitleText3>위탁동의서</TitleText3>
               <TitleText>비고</TitleText>
             </Table_Title>
-            {selected.select.map((file, idx) => {
+            {selected.select.map((item, idx) => {
               return (
                 <List key={idx}>
                   <Text1>선택</Text1>
-                  <Text2>{file.name}</Text2>
-                  <Text3>{file.price}</Text3>
-                  <Text3>{`${file.original} 버튼`}</Text3>
-                  <Text3>{`${file.original} 위탁동의서 버튼`}</Text3>
+                  <Text2>{item.name}</Text2>
+                  <Text3>{item.price}</Text3>
+                  <Text3>
+                    <FileUploader
+                      readOnly={isReadOnly}
+                      data={item.originalMaterial} //{url:"",filname:""}
+                      fileURLhandler={(url, filename) => {
+                        console.log("selected file변경", url, filename);
+                        const arr = [...selected.select];
+                        arr[idx] = {
+                          ...selected.select[idx],
+                          originalMaterial: {
+                            url: url,
+                            filename: filename,
+                          },
+                        };
+                        setSelected({
+                          select: arr,
+                        });
+                      }}
+                    />
+                  </Text3>
+                  <Text3>
+                    <FileUploader
+                      readOnly={isReadOnly}
+                      data={item.agreement}
+                      fileURLhandler={(url, filename) => {
+                        console.log("selected file변경", url, filename);
+                        const arr = [...selected.select];
+                        arr[idx] = {
+                          ...selected.select[idx],
+                          agreement: {
+                            url: url,
+                            filename: filename,
+                          },
+                        };
+                        setSelected({
+                          select: arr,
+                        });
+                      }}
+                    />
+                  </Text3>
                   <Text>
                     <InputBox
+                      readOnly={isReadOnly}
                       height={"28px"}
                       onChange={(e) => {
+                        const arr = [...selected.select];
+                        arr[idx] = {
+                          ...selected.select[idx],
+                          etc: e.target.value,
+                        };
                         setSelected({
-                          ...selected,
-                          select: [
-                            ...selected.select,
-                            {
-                              ...selected.select[idx],
-                              etc: e.target.value,
-                            },
-                          ],
+                          select: arr,
                         });
                       }}
                       value={selected.select[idx].etc}
@@ -139,6 +264,21 @@ const files = () => {
               );
             })}
           </Table>
+
+          <BtnContainer>
+            {data.progress === "보완요청" && (
+              <Btn_Orange
+                width={"100%"}
+                background={true}
+                margin={"0px"}
+                height={"36px"}
+                size={"12px"}
+                onClick={submitHandler_Selected}
+              >
+                자료등록
+              </Btn_Orange>
+            )}
+          </BtnContainer>
         </Section>
         <BottomSection>
           <NoticeBox>
@@ -152,7 +292,7 @@ const files = () => {
             </p>
           </NoticeBox>
           <BtnContainer>
-            <Btn
+            <Btn_Gray
               text={"이전"}
               size={"12px"}
               height={"36px"}
@@ -208,7 +348,7 @@ const Divider = styled.div`
   display: flex;
   width: 100%;
   margin-top: 28px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 `;
 
 const Div = styled.div`
@@ -221,6 +361,7 @@ const Div = styled.div`
     css`
       background-color: ${color.black5};
       height: 1px;
+      margin-top: 12px;
     `}
 `;
 
@@ -228,7 +369,7 @@ const Section = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 `;
 const Title = styled.div`
   width: 100%;
@@ -244,25 +385,18 @@ const Table = styled.ul`
   padding: 0;
   display: flex;
   width: 100%;
-  /* height: 100%; */
   flex-direction: column;
   border-radius: 10px;
   border: 2px solid ${color.gray1};
-  /* box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1); */
-  margin-bottom: 44px;
 `;
 const Table_Title = styled.li`
   display: flex;
-  /* width: calc(100% - 20px); */
   width: 100%;
   background-color: ${color.gray1};
   text-align: center;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   height: 60px;
-  /* &:first-child {
-    padding-left: 20px;
-  } */
 `;
 
 const List = styled.li`
@@ -327,7 +461,6 @@ const Text = styled.div`
 `;
 const Text1 = styled.div`
   ${TextStyle};
-  /* padding-left: 20px; */
   padding-left: 20px;
   width: calc(9% - 20px);
 `;
@@ -367,7 +500,7 @@ const NoticeBox = styled.div`
 const BtnContainer = styled.div`
   display: flex;
   width: 12.5%;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-left: auto;
 `;
 export default files;

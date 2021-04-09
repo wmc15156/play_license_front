@@ -15,7 +15,7 @@ import AlertModal from "../Modal/AlertModal";
 
 const PurchaseQnA = ({ onClickHandler, data }) => {
   const router = useRouter();
-
+  console.log(data[0], "here");
   const { openModal, closeModal, ModalPortal } = useModal();
   const [isEdit, setIsEdit] = useState(true);
   const [isCancelled, setIsCancelled] = useState(false);
@@ -39,6 +39,7 @@ const PurchaseQnA = ({ onClickHandler, data }) => {
             1: data[0].product_planDocument[1],
           }, // 공연 - 기획내용
           plan: data[0].product_plan.map((el) => {
+            console.log("----------");
             return { startDate: el.startDate, endDate: el.endDate };
           }),
           round: data[0].product_round, // 공연회차
@@ -157,6 +158,7 @@ const PurchaseQnA = ({ onClickHandler, data }) => {
             <Group
               groupState={groupState}
               groupStateHandler={preventSetState}
+              readOnly={true}
             />
           </Wrap>
           {data && router.query.category.includes("공연") && (
@@ -165,6 +167,7 @@ const PurchaseQnA = ({ onClickHandler, data }) => {
               <PerformanceInfo_provider
                 perfInfoState={perfInfoState}
                 setPerfInfoState={preventSetState}
+                readOnly={true}
               />
             </Wrap>
           )}
@@ -174,6 +177,7 @@ const PurchaseQnA = ({ onClickHandler, data }) => {
               <PerformanceInfo_edu
                 perfInfoState={perfInfoState}
                 setPerfInfoState={preventSetState}
+                readOnly={true}
               />
             </Wrap>
           )}
@@ -183,6 +187,7 @@ const PurchaseQnA = ({ onClickHandler, data }) => {
               <PerformanceInfo_etc
                 perfInfoState={perfInfoState}
                 setPerfInfoState={preventSetState}
+                readOnly={true}
               />
             </Wrap>
           )}
@@ -190,6 +195,7 @@ const PurchaseQnA = ({ onClickHandler, data }) => {
             <UserInfo
               userInfoState={userInfoState}
               userInfoStateHandler={preventSetState}
+              readOnly={true}
             />
           </Wrap>
         </BoxSection>

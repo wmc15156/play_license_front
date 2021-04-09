@@ -13,13 +13,13 @@ import StatusBox from "../../../src/component/Tag/Purchase_AnswerStatus";
 import DataManagementStatus from "../../../src/component/Tag/PL_DataStatus";
 import Btn from "../../../src/component/Button/OriginalButton";
 import Tag from "../../../src/component/Tag/Tag.";
-import { data } from "../../../src/PL_Component/Work/dummies";
+// import { data } from "../../../src/provider/Work/dummies";
 
 function pl_work() {
   const router = useRouter();
   const { openModal, closeModal, ModalPortal } = useModal();
-  const [needLogin, setNeedLogin] = useState(false);
-  // const [list, setList] = useState([]);
+  const [list, setList] = useState([]);
+  const [product, setProduct] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(3);
 
@@ -35,25 +35,31 @@ function pl_work() {
     router.push(`/provider/work/${id}`);
   };
 
-  const getData = () => {
-    // axios
-    //   .get(GET_URL)
-    //   .then((res) => {
-    //     if (res.status === 200) {
-    //       console.log(res, "????????>>>>");
-    //       setList(res.data);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     if (err.response.status === 401) {
-    //       // 모달 로그인하고오기 창
-    //       setNeedLogin(true);
-    //     }
-    //   });
+  const getListData = () => {
+    axios
+      .get("/product/provider")
+      .then((res) => {
+        setList(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        // setNeedLogin(true);
+        // openModal();
+      });
+  };
+
+  const getProductData = () => {
+    axios
+      .get("/product/provider/sold/info")
+      .then((res) => {
+        setProduct(res.data);
+      })
+      .catch((err) => console.log(err.response.data));
   };
 
   useEffect(() => {
-    getData();
+    getListData();
+    getProductData();
   }, []);
 
   return (
@@ -87,28 +93,21 @@ function pl_work() {
               <TitleText>작품정보관리</TitleText>
               <TitleText>자료관리</TitleText>
             </Table_Title>
-            {data.list.length === 0 && (
+            {list.length === 0 && (
               <EmptyList>
                 <span>작품 내역이 없습니다</span>
               </EmptyList>
             )}
-            {data.list.length > 0 &&
-              showCurrentPosts(data.list).map((q, idx) => {
-                const {
-                  productId,
-                  title,
-                  createdAt,
-                  adminCheck,
-                  product,
-                  isDataExist,
-                } = q;
+            {list.length > 0 &&
+              showCurrentPosts(list).map((q, idx) => {
+                const { productId, title, createdAt, progress } = q;
                 return (
                   <List key={idx}>
                     <Text>{title}</Text>
                     <Text>{createdAt}</Text>
 
                     <Text>
-                      <StatusBox status={adminCheck}>{adminCheck}</StatusBox>
+                      <StatusBox status={progress}>{progress}</StatusBox>
                     </Text>
                     <DetailText>
                       <span onClick={() => onClickHandler(productId)}>
@@ -117,7 +116,7 @@ function pl_work() {
                     </DetailText>
                     <Text>
                       <DataManagementStatus
-                        status={adminCheck}
+                        status={progress}
                         onClick={() => onClickHandler(`${productId}/files`)}
                       />
                     </Text>
@@ -128,16 +127,20 @@ function pl_work() {
           <PageWrapper>
             <Pagination
               itemsPerPage={postsPerPage}
-              totalItems={data.list.length}
+              totalItems={list.length}
               paginate={setCurrentPage}
             />
           </PageWrapper>
         </TableWrapper>
         <Divider />
         <ProductListTitle>판매중인 작품 바로가기</ProductListTitle>
-
+        {product.length === 0 && (
+          <EmptyList>
+            <span>판매중인 작품이 없습니다</span>
+          </EmptyList>
+        )}
         <Performance_List>
-          {data.performances.map((item, idx) => (
+          {product.map((item, idx) => (
             <Link href={`/performances/${item.productId}`} key={idx}>
               <Item key={item.productId}>
                 <ItemImg>
@@ -145,7 +148,7 @@ function pl_work() {
                 </ItemImg>
                 <ItemDesc>
                   <Category>
-                    {item.productBrokerageConsignment.map((cate, i) => {
+                    {item.productBrokerageConsignments.map((cate, i) => {
                       return (
                         <Tag
                           title={cate.slice(0, 2)}

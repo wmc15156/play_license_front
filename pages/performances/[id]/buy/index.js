@@ -1,7 +1,9 @@
 import styled, { css } from "styled-components";
 import color from "../../../../styles/colors";
 import { useRouter } from "next/router";
-import { useState, useRef } from "react";
+import { useState } from "react";
+import useModal from "../../../../utils/useModal";
+import AlertModal from "../../../../src/component/Modal/AlertModal";
 import axios from "axios";
 import OrangeShortBtn from "../../../../src/component/Button/OriginalButton";
 import GrayShortBtn from "../../../../src/component/Button/GrayShortBtn";
@@ -17,13 +19,28 @@ export async function getServerSideProps(context) {
 }
 
 const Buying = ({ image }) => {
+  const { openModal, closeModal, ModalPortal } = useModal();
   const [usage, setUsage] = useState("");
+  const [modal, setModal] = useState("");
   const [isClicked, setIsClicked] = useState(false);
   const router = useRouter();
 
   const back = () => router.back();
   const next = () => {
-    router.push(`/performances/${router.query.id}/buy/${usage}`);
+    if (usage) {
+      router.push(`/performances/${router.query.id}/buy/${usage}`);
+    } else {
+      openModalHandler("usage");
+    }
+  };
+
+  const openModalHandler = (name) => {
+    setModal(name);
+    openModal();
+  };
+  const closeModalHandler = () => {
+    setModal("");
+    closeModal();
   };
 
   return (
@@ -41,7 +58,7 @@ const Buying = ({ image }) => {
       </Divider>
       <Section>
         <ItemImg>
-          <img src={image.poster} alt={image.title} />
+          <img src={image.posterURL.url} alt={image.title} />
         </ItemImg>
         <SelectList>
           <Item_Per
@@ -100,6 +117,14 @@ const Buying = ({ image }) => {
           </OrangeShortBtn>
         </Orange>
       </BtnSection>
+      <ModalPortal>
+        {modal === "usage" && (
+          <AlertModal
+            text={"구매목적을 선택해주세요"}
+            onClickBtn={closeModalHandler}
+          />
+        )}
+      </ModalPortal>
     </Container>
   );
 };
@@ -239,15 +264,15 @@ const Orange = styled.div`
   width: 30%;
 `;
 const ItemImg = styled.div`
-  max-width: 276px;
-  width: 100%;
-  height: 100%;
+  width: 276px;
+  height: 386px;
   border-radius: 8px;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.05);
   margin-right: 33px;
 
   & > img {
-    max-width: 100%;
+    min-width: 276px;
+    width: 100%;
     height: auto;
   }
 `;

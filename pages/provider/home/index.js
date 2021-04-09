@@ -4,11 +4,12 @@ import Link from "next/link";
 import { PageContainer, PageContentContainer } from "../../../styles/PL_Frame";
 import Navi from "../../../src/component/Nav/Navigation";
 import LogoBar from "../../../src/component/Nav/LogoBar";
-// import Home_Chart from "../../../src/PL_Component/Home/Home_Chart";
+import Home_Chart from "../../../src/provider/Home/Home_Chart";
 import NoticeListItem from "../../../src/component/Form/NoticeListItem";
 import { IoIosInformationCircle } from "react-icons/io";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const notice = [
   {
@@ -56,6 +57,25 @@ const Table = ({ title, list }) => {
 const pl_home = () => {
   const router = useRouter();
   const [balloon, setBalloon] = useState(false);
+  const [infoData, setInfoData] = useState({ buy: 0, count: 0, views: 0 });
+
+  const getInfoData = () => {
+    axios
+      .get("/product/provider/info")
+      .then((res) => {
+        const { buy, count, views } = res.data;
+        setInfoData({ buy, count, views });
+      })
+      .catch((err) => {
+        console.log(err.response);
+        // setNeedLogin(true);
+        // openModal();
+      });
+  };
+
+  useEffect(() => {
+    getInfoData();
+  }, []);
 
   const changeRouteHandler = (page) => {
     router.push(`/provider/${page}`);
@@ -119,7 +139,7 @@ const pl_home = () => {
                         찜하기
                       </Box_ListItem_name>
                       <Box_ListItem_content>
-                        <span>10</span>명
+                        <span>{infoData.count}</span>명
                       </Box_ListItem_content>
                     </Box_ListItem>
                     <Box_ListItem>
@@ -128,7 +148,7 @@ const pl_home = () => {
                         조회수
                       </Box_ListItem_name>
                       <Box_ListItem_content>
-                        <span>10</span>회
+                        <span>{infoData.views}</span>회
                       </Box_ListItem_content>
                     </Box_ListItem>
                     <Box_ListItem>
@@ -137,7 +157,7 @@ const pl_home = () => {
                         판매수
                       </Box_ListItem_name>
                       <Box_ListItem_content>
-                        <span>10</span>건
+                        <span>{infoData.buy}</span>건
                       </Box_ListItem_content>
                     </Box_ListItem>
                   </Box_List>
@@ -170,7 +190,9 @@ const pl_home = () => {
                 <Box_Head>
                   <Subtitle>월간매출통계</Subtitle>
                 </Box_Head>
-                <Box_Body>{/* <Home_Chart /> */}</Box_Body>
+                <Box_Body>
+                  <Home_Chart />
+                </Box_Body>
               </Box>
             </FaqContainer>
           </Column2>

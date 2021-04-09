@@ -1,4 +1,4 @@
-import ContainerWrapper from "@src/component/ContainerWrapper/ContainerWrapper";
+import ContainerWrapper from "@src/component/ContainerWrapper/CenterWrapper";
 import styled from "styled-components";
 import Line from "@src/component/Line/Line";
 import { Wrapper } from "@src/component/molecules/TextAndInput/TextAndInput";
@@ -17,13 +17,16 @@ import fetcher from "@utils/fetcher";
 import { useRouter } from "next/router";
 
 const ImageWrapper = styled.div`
+  max-width: 762px;
   width: 100%;
-  margin-top: 146px;
+  display:flex;
+  justify-content:center;
   margin-bottom: 64px;
   & > img {
     display: inline-block;
-    width: 100%;
-    height: 131px;
+    width: 762px;
+    height: 188px;
+    max-width: 762px;
   }
 `;
 
@@ -76,7 +79,7 @@ function Login() {
   return (
     <ContainerWrapper width={"592px"}>
       <ImageWrapper>
-        <img src={"/assets/image/title.png"} />
+        <img src={"/assets/image/provider_logo.svg"} />
       </ImageWrapper>
       <Line background={true} width={"580px"} />
       <Wrapper margin={"22px"}>

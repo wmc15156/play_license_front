@@ -1,4 +1,4 @@
-import ContainerWrapper from "@src/component/ContainerWrapper/ContainerWrapper";
+import ContainerWrapper from "@src/component/ContainerWrapper/TopToBottom";
 import ProcessCircle from "@src/component/molecules/ProcessCircle/ProcessCircle";
 import TextAndInput from "@src/component/molecules/TextAndInput/TextAndInput";
 import styles from "@styles/colors";
@@ -76,9 +76,8 @@ function SignupThird() {
     const isValid = passwordValidation(password);
     setPwValidationError(isValid);
   };
-
-  const finalCheck = name && email && checkEmail && password && phone;
-  console.log(finalCheck.length, "final");
+  console.log(checkEmail, "here", !!checkEmail);
+  const finalCheck = !!name && !!email && !checkEmail && !!password && !!phone;
   const onSubmit = () => {
     if (finalCheck) {
       const data = {
@@ -104,6 +103,7 @@ function SignupThird() {
   if (data) {
     return router.push("/login");
   }
+  console.log(finalCheck, "finalCheck");
   return (
     <ContainerWrapper width={"580px"}>
       <ProcessCircle process={3} lineWidth={"100px"} />
@@ -181,7 +181,7 @@ function SignupThird() {
       <OriginalButton
         margin={"64px"}
         width={"580px"}
-        background={finalCheck === "" ? false : finalCheck}
+        background={finalCheck}
         height={"60px"}
         size={"21px"}
         onClick={onSubmit}

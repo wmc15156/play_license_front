@@ -3,7 +3,7 @@ import color from "../../../styles/colors";
 import axios from "axios";
 import { FaCheck } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PageContainer, PageContentContainer } from "../../../styles/PL_Frame";
 
 import Navi from "../../../src/component/Nav/Navigation";
@@ -34,6 +34,22 @@ const PL_RegistQuestion = () => {
   });
   const { name, email, phone, title, comment } = inputs;
 
+  const getUser = () => {
+    axios
+      .get(`/auth/provider/me`)
+      .then((res) => {
+        console.log("sdfsaf", res);
+        setInputs({
+          name: res.data.company,
+          email: res.data.email,
+          phone: res.data.phone,
+        });
+      })
+      .catch((err) => console.log(err.response));
+  };
+
+  useEffect(() => getUser(), []);
+
   const handleChange = (e) => {
     e.persist();
     setChecked((prevState) => !prevState);
@@ -62,16 +78,18 @@ const PL_RegistQuestion = () => {
   };
 
   const send = () => {
-    console.log("1:1문의 남기기");
-    // axios
-    //   .post("/question", params)
-    //   .then((res) => {
-    //     if (res.status === 201) {
-    //       setSuccess(true);
-    //       openModal();
-    //     }
-    //   })
-    //   .catch((err) => console.error(err));
+    console.log("1:1문의 남기기", params);
+    axios
+      .post("/question/provider", params)
+      .then((res) => {
+        // if (res.status === 201) {
+        setSuccess(true);
+        openModal();
+        // }
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   const onSubmitHandler = (e) => {
@@ -119,6 +137,7 @@ const PL_RegistQuestion = () => {
                   name="name"
                   placeholder="이름을 입력해주세요."
                   onChange={inputChangeHandler}
+                  value={name}
                 />
               </Input>
               <Input>
@@ -127,6 +146,7 @@ const PL_RegistQuestion = () => {
                   name="email"
                   placeholder="이메일을 입력해주세요."
                   onChange={inputChangeHandler}
+                  value={email}
                 />
               </Input>
               <Input>
@@ -135,6 +155,7 @@ const PL_RegistQuestion = () => {
                   name="phone"
                   placeholder="연락처를 입력해주세요."
                   onChange={inputChangeHandler}
+                  value={phone}
                 />
               </Input>
               <Input>
@@ -143,6 +164,7 @@ const PL_RegistQuestion = () => {
                   name="title"
                   placeholder="제목을 입력해주세요."
                   onChange={inputChangeHandler}
+                  value={title}
                 />
               </Input>
               <Input>
@@ -151,6 +173,7 @@ const PL_RegistQuestion = () => {
                   name="comment"
                   placeholder="문의내용을 입력해주세요."
                   onChange={inputChangeHandler}
+                  value={comment}
                 />
               </Input>
             </InputSection>

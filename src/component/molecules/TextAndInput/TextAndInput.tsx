@@ -2,24 +2,26 @@ import styled from "styled-components";
 import React, { FC } from "react";
 import InputBox from "@src/component/BasicInput/BasicInput";
 import NumberInput from "@src/component/BasicInput/NumberInput";
+import colors from "@styles/colors";
 
-export const Wrapper = styled.div<{ margin: string }>`
+export const Wrapper = styled.div<{ margin: string; justify?: boolean }>`
   width: 100%;
   display: flex;
+  justify-content: ${p => p.justify ? 'center' : null};
   margin-top: ${(p) => p.margin};
 `;
 
-const SpanWrapper = styled.span<{
+export const SpanWrapper = styled.span<{
   width: string;
   size: string;
-  color: string;
+  color?: string;
   textMargin: string;
 }>`
   display: flex;
   align-items: center;
   font-size: ${(p) => p.size};
   font-family: "NotoSansCJKkr-Bold";
-  color: ${(p) => p.color};
+  color: ${(p) => p.color ? p.color : `${colors.black1}`};
   width: ${(p) => p.width};
   margin-right: ${(p) => p.textMargin};
 `;
@@ -37,6 +39,10 @@ type Props = {
   wrapperMargin: string;
   number: boolean;
   onBlur?: () => void;
+  inputHeight?: string;
+  inputFontSize?: string;
+  whiteType?: boolean;
+  justify?: boolean;
 };
 
 const TextAndInput: FC<Props> = ({
@@ -52,10 +58,14 @@ const TextAndInput: FC<Props> = ({
   wrapperMargin,
   number,
   onBlur,
+  inputHeight,
+  inputFontSize,
+  whiteType,
+  justify,
 }) => {
   const checkPw = children === "비밀번호";
   return (
-    <Wrapper margin={wrapperMargin}>
+    <Wrapper margin={wrapperMargin} justify={justify}>
       <SpanWrapper
         width={textWidth}
         size={textFontSize}
@@ -79,6 +89,9 @@ const TextAndInput: FC<Props> = ({
           value={value}
           checkPw={checkPw}
           onBlur={onBlur}
+          inputHeight={inputHeight}
+          fontSize={inputFontSize}
+          whiteType={whiteType}
         />
       )}
     </Wrapper>

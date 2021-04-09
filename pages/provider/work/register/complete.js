@@ -6,6 +6,7 @@ import {
 } from "../../../../styles/PL_Frame";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import Navi from "../../../../src/component/Nav/Navigation";
 import LogoBar from "../../../../src/component/Nav/LogoBar";
@@ -13,6 +14,19 @@ import Btn from "../../../../src/component/Button/OriginalButton";
 
 const PL_EndOfRegistration = () => {
   const router = useRouter();
+
+  const [company, setCompany] = useState("");
+  const getUser = () => {
+    axios
+      .get(`/auth/provider/me`)
+      .then((res) => {
+        setCompany(res.data.company);
+      })
+      .catch((err) => console.log(err.response));
+  };
+
+  useEffect(() => getUser(), []);
+
   return (
     <Container>
       <NavContainer>
@@ -21,7 +35,7 @@ const PL_EndOfRegistration = () => {
       <BodyContainer>
         <LogoBar />
         <HeadSection>
-          <T1>{}님의</T1>
+          <T1>{company} 님의</T1>
           <T2>
             <span>작품 판매 등록</span> 문의가 완료되었습니다!
           </T2>

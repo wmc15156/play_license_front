@@ -1,4 +1,4 @@
-import ContainerWrapper from "@src/component/ContainerWrapper/ContainerWrapper";
+import ContainerWrapper from "@src/component/ContainerWrapper/TopToBottom";
 import Comment from "@src/component/Comment/Comment";
 import Line from "@src/component/Line/Line";
 import TextAndInput from "@src/component/molecules/TextAndInput/TextAndInput";

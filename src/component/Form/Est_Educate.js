@@ -52,8 +52,9 @@ const Est_Educate = () => {
   //   console.log(selected, "??");
   // };
   const removeRequireItemHandler = useCallback(
-    (itemIdx) => {
+    (name) => {
       let array = selected.requiredMaterials;
+      let itemIdx = array.indexOf(name);
       array.splice(itemIdx, 1);
       setSelected((prev) => {
         return { ...prev, requiredMaterials: [...array] };
@@ -64,7 +65,7 @@ const Est_Educate = () => {
 
   const checkRequireHandler = (name) => {
     if (selected.requiredMaterials.includes(name)) {
-      removeRequireItemHandler();
+      removeRequireItemHandler(name);
     } else {
       setSelected({
         ...selected,

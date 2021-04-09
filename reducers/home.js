@@ -1,6 +1,7 @@
 import { SAVE_PASSWORD_CHECK, SAVE_USER_EMAIL } from "@reducers/types/types";
 
 export const homeInitialState = {
+  banners: [],
   new: [],
   hot: [],
   curation: [],
@@ -12,6 +13,12 @@ export const homeInitialState = {
 
 export const homeReducer = (state, action) => {
   switch (action.type) {
+    // case "fetchBannerImages": {
+    //   return {
+    //     ...state,
+    //     banners: action.banners,
+    //   };
+    // }
     case "fetchHotPerformances": {
       return {
         ...state,
@@ -46,13 +53,13 @@ export const homeReducer = (state, action) => {
       };
 
     case SAVE_USER_EMAIL:
-      console.log(action.payload, 2);
+      // console.log(action.payload, 2);
       return {
         ...state,
         userEmail: action.payload,
       };
     case SAVE_PASSWORD_CHECK:
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         passwordCheck: action.payload,
